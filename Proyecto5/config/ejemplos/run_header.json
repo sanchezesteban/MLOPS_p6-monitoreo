@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-ejemplo-001",
+  "commit": "0000000",
+  "model_sha256": "a7d41259ca50e264255390c00e6bc74c7997cf3d3498671142dd2a226a18824c",
+  "config_sha256": "b06564034b497a22717e0b906e39fbe21c113b53cf45b156c7e94afd28f5549e",
+  "data_manifest_sha256": "213c7a51d180d53d77326e9ef8d3f68f980edfb2a52974ba291b936b20292718",
+  "runtime": "ejemplo: onnxruntime CPU",
+  "hardware": "ejemplo: x86_64, Windows 11",
+  "virtual_mode": true,
+  "t_start_utc": "2026-10-30T18:00:00Z"
+}

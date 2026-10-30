@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-ejemplo-001",
+  "synthetic": false,
+  "error": null,
+  "received": true,
+  "frame_id": "seq01_f0008",
+  "event": null,
+  "detections_ref": "seq01_f0008",
+  "state_before": "ADVANCING",
+  "state_after": "ADVANCING",
+  "action": "FORWARD",
+  "reason": "via_libre",
+  "speed": 0.4,
+  "steering": 0.0,
+  "t_decision_ms": 812.5,
+  "t_command_ms": 813.0,
+  "valid_until_ms": 1013.0
+}
