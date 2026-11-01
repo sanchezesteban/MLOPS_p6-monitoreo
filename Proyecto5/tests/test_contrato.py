@@ -86,6 +86,11 @@ def _comando_mal(base, cambio):
 COMANDOS_INVALIDOS = {
     "stop_con_velocidad": ("comando_stop", lambda d: d.update(speed=0.3)),
     "stop_con_giro": ("comando_stop", lambda d: d.update(steering=-0.5)),
+    "stop_con_vencimiento": ("comando_stop", lambda d: d.update(valid_until_ms=1000.0)),
+    "referencia_a_otro_cuadro": (
+        "comando_forward",
+        lambda d: d.update(detections_ref="seq01_f0009"),
+    ),
     "forward_sin_velocidad": ("comando_forward", lambda d: d.update(speed=0.0)),
     "forward_sin_vencimiento": ("comando_forward", lambda d: d.update(valid_until_ms=None)),
     "forward_ya_vencido": ("comando_forward", lambda d: d.update(valid_until_ms=800.0)),

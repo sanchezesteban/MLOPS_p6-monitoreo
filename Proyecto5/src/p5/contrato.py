@@ -2,7 +2,8 @@
 
 Dos capas: el JSON Schema de `config/schemas/` revisa forma, tipos y rangos; este
 modulo agrega las reglas entre campos (caja dentro del cuadro, `status` coherente
-con `error_msg`, `STOP` con velocidad cero, numeros finitos). Un mensaje es valido
+con `error_msg`, `STOP` con velocidad cero y sin vencimiento, `frame_id` igual a
+`detections_ref` cuando ambos existen, numeros finitos). Un mensaje es valido
 solo si pasa las dos. Los validadores devuelven dataclasses inmutables.
 """
 
@@ -157,11 +158,19 @@ def _command_rules(d: dict[str, Any]) -> list[str]:
     action, speed, steering = d["action"], d["speed"], d["steering"]
     if d["frame_id"] is None and d["event"] is None:
         errores.append("frame_id o event debe ser no nulo")
+    if (
+        d["frame_id"] is not None
+        and d["detections_ref"] is not None
+        and d["frame_id"] != d["detections_ref"]
+    ):
+        errores.append("frame_id y detections_ref deben coincidir")
     if d["t_command_ms"] < d["t_decision_ms"]:
         errores.append("t_command_ms no puede ser anterior a t_decision_ms")
     if action == "STOP":
         if speed != 0 or steering != 0:
             errores.append("STOP exige speed=0 y steering=0")
+        if d["valid_until_ms"] is not None:
+            errores.append("STOP exige valid_until_ms=null")
     else:
         if speed <= 0:
             errores.append(f"{action} exige speed>0")

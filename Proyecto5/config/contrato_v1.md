@@ -67,7 +67,7 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 | `run_id` | string | |
 | `frame_id` | string o `null` | Cuadro que disparó la decisión; `null` en eventos de reloj o de sistema |
 | `event` | string o `null` | `watchdog`, `stale_frame`, `detector_error`, `emergency`, `rearm`, `shutdown`, …; `null` si la decisión es por un cuadro normal |
-| `detections_ref` | string o `null` | `frame_id` del evento de percepción cuyas detecciones alimentaron la decisión; `null` si no se usó ninguna (watchdog, emergencia, cuadro vencido o con error) |
+| `detections_ref` | string o `null` | `frame_id` del evento de percepción cuyas detecciones alimentaron la decisión; `null` si no se usó ninguna (watchdog, emergencia, cuadro vencido o con error); si `frame_id` y `detections_ref` son no nulos, deben ser iguales |
 | `state_before`, `state_after` | string | Estados de la política (los define el grupo B en su configuración) |
 | `action` | `FORWARD` / `STEER_LEFT` / `STEER_RIGHT` / `STOP` | |
 | `reason` | string no vacío | Motivo legible (p. ej. `obstaculo_centro_riesgo`) |
@@ -75,7 +75,7 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 | `steering` | número en [-1, 1] | Negativo = izquierda, positivo = derecha, 0 = recto |
 | `t_decision_ms` | número ≥ 0 | Instante en que la política decidió |
 | `t_command_ms` | número ≥ `t_decision_ms` | Instante en que el adaptador recibió el comando |
-| `valid_until_ms` | número o `null` | Vencimiento del comando; obligatorio y `> t_command_ms` en acciones de movimiento; `null` solo en `STOP` |
+| `valid_until_ms` | número o `null` | Vencimiento del comando; obligatorio y `> t_command_ms` en acciones de movimiento; debe ser `null` en `STOP` |
 | `received` | bool | `true` si el adaptador lo aceptó y registró |
 | `error` | string o `null` | Error asociado (detector, configuración, rechazo del adaptador) |
 | `synthetic` | bool | `true` si viene de detecciones sintéticas |
@@ -97,6 +97,6 @@ Sobre el ancho `W` del cuadro original:
 1. `status=ok` con `detections=[]` es un **cuadro válido sin objetos**: puede autorizar avance si la política lo permite.
 2. `status=error` (excepción, timeout, salida malformada o no finita, imagen ilegible), `status=stale` y la **ausencia de cuadros** (corte de entrada detectado por el watchdog) **nunca** equivalen a vía libre. Con `error`, `detections` va vacía.
 3. Vencimiento: un cuadro está vencido si `t_now_ms − t_capture_ms > max_frame_age_ms`. El grupo B lo comprueba al recibir aunque A lo haya marcado `ok`; un cuadro vencido se rechaza y no reanuda movimiento. `max_frame_age_ms` y el plazo del watchdog viven en la configuración de la política (grupo B).
-4. `STOP` ⇒ `speed = 0`, `steering = 0` y cancela el comando previo de inmediato, aunque este no haya vencido.
+4. `STOP` ⇒ `speed = 0`, `steering = 0` y `valid_until_ms = null`; cancela el comando previo de inmediato, aunque este no haya vencido.
 5. Movimiento (`FORWARD`, `STEER_LEFT`, `STEER_RIGHT`) ⇒ `speed > 0` y `valid_until_ms` definido. `FORWARD` va con `steering = 0`, `STEER_LEFT` con `steering < 0` y `STEER_RIGHT` con `steering > 0`. Al llegar `valid_until_ms` sin un comando nuevo, el adaptador se detiene sin esperar otro cuadro.
 6. Las etiquetas reales y las acciones esperadas nunca forman parte de estos mensajes: la política decide solo con el evento de percepción y su propio estado.
