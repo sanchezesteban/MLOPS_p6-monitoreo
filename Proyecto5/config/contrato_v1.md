@@ -15,9 +15,10 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 
 ## Reloj y unidades
 
-- Todos los `t_*_ms` son milisegundos en el **reloj de la ejecución**: relativo al inicio de la reproducción de la secuencia, monotónico y controlable. Las pruebas lo avanzan a mano para disparar watchdog y vencimientos sin esperar al reloj físico.
-- `t_capture_ms` es estrictamente creciente dentro de una `sequence_id`.
-- `frame_id` es único dentro de un `run_id` (incluye la secuencia, p. ej. `seq01_f0007`).
+- Todos los `t_*_ms` (`t_capture_ms`, `t_decision_ms`, `t_command_ms`, `valid_until_ms`) son milisegundos en el **reloj de la ejecución**: un solo origen por `run_id`, monotónico y controlable. Las pruebas lo avanzan a mano para disparar watchdog y vencimientos sin esperar al reloj físico.
+- El manifiesto guarda el tiempo relativo a la secuencia; el reproductor suma un desfase por secuencia y deja un hueco mayor que el plazo del watchdog entre secuencias.
+- `t_capture_ms` es estrictamente creciente dentro del `run_id`.
+- `frame_id` es único dentro de un `run_id` y empieza con `{sequence_id}_` (p. ej. `seq01_f0007`).
 - Hashes: SHA-256 en hex minúsculas (64 caracteres) calculado sobre los bytes del archivo.
 - Caja `bbox`: formato `xyxy` = `[x1, y1, x2, y2]` en píxeles del **cuadro original** (no del tensor redimensionado), origen arriba a la izquierda, `x` hacia la derecha, `y` hacia abajo. `0 ≤ x1 < x2 ≤ image_width`, `0 ≤ y1 < y2 ≤ image_height`.
 
@@ -43,14 +44,14 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 | `schema_version` | string | `"1.0"` |
 | `run_id` | string | Igual al de la cabecera |
 | `sequence_id` | string | |
-| `frame_id` | string | Único en la corrida |
-| `t_capture_ms` | número ≥ 0 | Relativo al inicio de la secuencia, creciente |
-| `image_path` | string o `null` | Ruta del cuadro; `null` solo si `status=error` y no hubo archivo |
+| `frame_id` | string | Único en la corrida; empieza con `{sequence_id}_` |
+| `t_capture_ms` | número ≥ 0 | Reloj de la ejecución (mismo origen que los tiempos del comando), estrictamente creciente en el `run_id` |
+| `image_path` | string o `null` | Ruta del cuadro relativa a la carpeta de datos (`--datos`), separador `/`; `null` solo si `status=error` y no hubo archivo |
 | `image_sha256` | hex64 o `null` | Hash de los bytes del cuadro; `null` solo con `status=error` |
 | `image_width`, `image_height` | entero ≥ 1 o `null` | `null` solo con `status=error` (imagen ilegible) |
 | `model_sha256` | hex64 | Pesos que produjeron las detecciones |
 | `config_sha256` | hex64 | Configuración efectiva (umbral de confianza, NMS) |
-| `status` | `ok` / `stale` / `error` | Ver reglas |
+| `status` | `ok` / `stale` / `error` | A emite solo `ok` o `error`; `stale` lo asigna B al recibir (regla 3) |
 | `error_msg` | string o `null` | Obligatorio con `error` y `stale`; `null` con `ok` |
 | `synthetic` | bool | `true` si las detecciones no vienen del detector real (pruebas de política) |
 | `detections` | lista | Vacía si no hay objetos; siempre presente |
@@ -95,8 +96,8 @@ Sobre el ancho `W` del cuadro original:
 ## Reglas
 
 1. `status=ok` con `detections=[]` es un **cuadro válido sin objetos**: puede autorizar avance si la política lo permite.
-2. `status=error` (excepción, timeout, salida malformada o no finita, imagen ilegible), `status=stale` y la **ausencia de cuadros** (corte de entrada detectado por el watchdog) **nunca** equivalen a vía libre. Con `error`, `detections` va vacía.
-3. Vencimiento: un cuadro está vencido si `t_now_ms − t_capture_ms > max_frame_age_ms`. El grupo B lo comprueba al recibir aunque A lo haya marcado `ok`; un cuadro vencido se rechaza y no reanuda movimiento. `max_frame_age_ms` y el plazo del watchdog viven en la configuración de la política (grupo B).
+2. `status=error` (excepción, timeout, salida malformada o no finita, imagen ilegible), `status=stale` y la **ausencia de cuadros** (corte de entrada detectado por el watchdog) **nunca** equivalen a vía libre. A emite solo `ok` o `error`; `stale` lo asigna B al recibir (regla 3). Con `error` o `stale`, `detections` va vacía.
+3. Vencimiento: un cuadro está vencido si `t_now_ms − t_capture_ms > max_frame_age_ms`, o si `t_now_ms < t_capture_ms` (reloj inconsistente ⇒ `STOP`). El grupo B lo comprueba al recibir y lo marca `stale`; un cuadro vencido se rechaza y no reanuda movimiento. `max_frame_age_ms` y el plazo del watchdog viven en la configuración de la política (grupo B).
 4. `STOP` ⇒ `speed = 0`, `steering = 0` y `valid_until_ms = null`; cancela el comando previo de inmediato, aunque este no haya vencido.
 5. Movimiento (`FORWARD`, `STEER_LEFT`, `STEER_RIGHT`) ⇒ `speed > 0` y `valid_until_ms` definido. `FORWARD` va con `steering = 0`, `STEER_LEFT` con `steering < 0` y `STEER_RIGHT` con `steering > 0`. Al llegar `valid_until_ms` sin un comando nuevo, el adaptador se detiene sin esperar otro cuadro.
 6. Las etiquetas reales y las acciones esperadas nunca forman parte de estos mensajes: la política decide solo con el evento de percepción y su propio estado.

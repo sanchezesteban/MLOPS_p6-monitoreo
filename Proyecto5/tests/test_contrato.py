@@ -138,9 +138,36 @@ def test_secuencia_detecta_ids_repetidos_y_tiempo_no_creciente():
     assert any("repetido" in e for e in validar_secuencia([ok, ok]))
 
 
+def test_secuencia_rechaza_otro_run_id_y_frame_id_sin_prefijo():
+    ok = validar_evento(ejemplo("ok"))
+    otro_run = validar_evento({**ejemplo("vacio"), "run_id": "run-otro"})
+    sin_prefijo = validar_evento({**ejemplo("vacio"), "frame_id": "f0008"})
+    assert any("run_id" in e for e in validar_secuencia([ok, otro_run]))
+    assert any("no empieza con seq01_" in e for e in validar_secuencia([ok, sin_prefijo]))
+
+
+def test_secuencia_exige_tiempo_creciente_en_todo_el_run():
+    a = validar_evento(ejemplo("ok"))
+    b = validar_evento(
+        {**ejemplo("vacio"), "sequence_id": "seq02", "frame_id": "seq02_f0001", "t_capture_ms": 0}
+    )
+    assert any("no supera" in e for e in validar_secuencia([a, b]))
+
+
+def test_stale_con_detecciones_se_rechaza():
+    data = {**ejemplo("stale"), "detections": copy.deepcopy(ejemplo("ok")["detections"])}
+    with pytest.raises(ContratoError, match="status=stale"):
+        validar_evento(data)
+
+
 def test_vencimiento():
     assert not esta_vencido(t_capture_ms=700, t_now_ms=1000, max_frame_age_ms=300)
     assert esta_vencido(t_capture_ms=700, t_now_ms=1001, max_frame_age_ms=300)
+
+
+def test_reloj_inconsistente_cuenta_como_vencido():
+    assert esta_vencido(t_capture_ms=700, t_now_ms=699, max_frame_age_ms=300)
+    assert not esta_vencido(t_capture_ms=700, t_now_ms=700, max_frame_age_ms=300)
 
 
 @pytest.mark.parametrize(

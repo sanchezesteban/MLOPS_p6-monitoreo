@@ -136,8 +136,8 @@ def _event_rules(d: dict[str, Any]) -> list[str]:
         errores.append("error_msg debe ser null con status=ok")
     if status in ("error", "stale") and not d["error_msg"]:
         errores.append(f"error_msg es obligatorio con status={status}")
-    if status == "error" and d["detections"]:
-        errores.append("detections debe ir vacia con status=error")
+    if status in ("error", "stale") and d["detections"]:
+        errores.append(f"detections debe ir vacia con status={status}")
     if status != "error":
         for campo in ("image_path", "image_sha256", "image_width", "image_height"):
             if d[campo] is None:
@@ -207,24 +207,32 @@ def validar_run_header(data: Any) -> RunHeader:
 
 
 def validar_secuencia(eventos: list[PerceptionEvent]) -> list[str]:
-    """Problemas de orden en una corrida: `frame_id` repetido o `t_capture_ms` no creciente."""
+    """Problemas de una corrida: otro `run_id`, `frame_id` repetido o sin prefijo de su
+    secuencia, o `t_capture_ms` no creciente (el reloj es uno solo por `run_id`)."""
     errores: list[str] = []
     vistos: set[str] = set()
-    ultimo: dict[str, float] = {}
+    previo: float | None = None
     for ev in eventos:
+        if ev.run_id != eventos[0].run_id:
+            errores.append(f"{ev.frame_id}: run_id {ev.run_id} distinto de {eventos[0].run_id}")
+        if not ev.frame_id.startswith(f"{ev.sequence_id}_"):
+            errores.append(f"{ev.frame_id}: frame_id no empieza con {ev.sequence_id}_")
         if ev.frame_id in vistos:
             errores.append(f"frame_id repetido: {ev.frame_id}")
         vistos.add(ev.frame_id)
-        previo = ultimo.get(ev.sequence_id)
         if previo is not None and ev.t_capture_ms <= previo:
             errores.append(f"{ev.frame_id}: t_capture_ms {ev.t_capture_ms} no supera {previo}")
-        ultimo[ev.sequence_id] = ev.t_capture_ms
+        previo = ev.t_capture_ms
     return errores
 
 
 def esta_vencido(t_capture_ms: float, t_now_ms: float, max_frame_age_ms: float) -> bool:
-    """Regla 3 del contrato: vencido si la edad del cuadro supera `max_frame_age_ms`."""
-    return t_now_ms - t_capture_ms > max_frame_age_ms
+    """Regla 3 del contrato: vencido si la edad del cuadro supera `max_frame_age_ms`.
+
+    Un cuadro "del futuro" (`t_now_ms < t_capture_ms`) indica reloj inconsistente y
+    tambien cuenta como vencido, para que la politica emita STOP.
+    """
+    return t_now_ms < t_capture_ms or t_now_ms - t_capture_ms > max_frame_age_ms
 
 
 def zonas_ocupadas(bbox: tuple[float, float, float, float], width: int) -> frozenset[Zone]:
