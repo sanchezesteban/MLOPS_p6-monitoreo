@@ -23,7 +23,7 @@ La política es un módulo puro. Decide **solo** con el evento de percepción y 
 
 | Parámetro | Valor | Justificación |
 |---|---:|---|
-| `clases_obstaculo` | person, chair, bottle, cup, backpack, suitcase, potted plant, dog, cat | Objetos del dominio interior que el auto puede encontrar en el piso. **Tentativa** hasta que se elija el detector (P5-03) |
+| `clases_obstaculo` | person, dog, cat | Clases acordadas por los PM con el detector elegido (P5-03), con los nombres COCO que entrega el detector. Otro objeto no se trata como obstáculo (límite conocido) |
 | `confianza.umbral` | 0.50 | Desde aquí la detección es un obstáculo cierto y puede detener al auto |
 | `confianza.minimo_incierto` | 0.30 | Entre 0.30 y 0.50 la detección es incierta: reduce la velocidad, pero no detiene ni libera. Debajo de 0.30 se ignora |
 | `zonas.limite_izquierda` / `limite_derecha` | 1/3 y 2/3 del ancho | Los mismos tercios del contrato v1 |
@@ -74,8 +74,13 @@ Una zona de destino está libre si no hay ningún obstáculo en riesgo en ella, 
 
 Bloquear es inmediato (un solo cuadro con obstáculo cierto) y liberar pide `cuadros_liberar` cuadros. La histéresis es asimétrica a favor de la seguridad.
 
+## Límites conocidos
+
+- Solo `person`, `dog` y `cat` cuentan como obstáculo. Cualquier otro objeto (caja, silla, pared, juguete) no se trata como obstáculo y la política puede avanzar hacia él.
+- Si un obstáculo físico de esas clases no sale como `person`, `dog` o `cat` en el detector (por ejemplo, un peluche que el detector clasifica como `teddy bear`), tampoco se trata como obstáculo. Los obstáculos de las secuencias deben comprobarse antes con el detector.
+- La cercanía es un proxy por la posición de la caja en el cuadro, no una distancia calibrada. Un comando registrado en el adaptador virtual no prueba que el auto frene físicamente.
+
 ## Pendiente de acordar
 
-- Clases definitivas, cuando se elija el detector (P5-03, #55).
 - Velocidades y giro definitivos, según el adaptador y la ficha del auto (P5-11, #63; P5-05, #57).
 - Dónde viven `max_frame_age_ms`, el plazo del watchdog y la duración de un comando (`valid_until_ms`), y quién marca `stale` (P5-12, #64). La política ya responde STOP a `status=stale`.

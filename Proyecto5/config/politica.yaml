@@ -3,16 +3,10 @@
 # Justificacion de cada valor en `docs/politica.md`.
 version: 1
 
-# Clases que la politica trata como obstaculo, por `class_name` del detector.
-# TENTATIVA: se ajusta cuando quede elegido el detector (P5-03, #55).
+# Clases que la politica trata como obstaculo, por `class_name` del detector (nombres COCO).
+# Acordadas por los PM con el detector elegido (P5-03, #55); otra clase se ignora.
 clases_obstaculo:
   - person
-  - chair
-  - bottle
-  - cup
-  - backpack
-  - suitcase
-  - potted plant
   - dog
   - cat
 
