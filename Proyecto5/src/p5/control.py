@@ -73,15 +73,19 @@ class AdaptadorVirtual(ControladorMotores):
     def enviar(self, comando: dict[str, Any]) -> None:
         if self._cerrado:
             return
+        # t_command_ms es "el instante en que el adaptador lo recibio" (contrato): lo pone
+        # el adaptador con su propio reloj, nunca el valor que trae la politica.
+        recibido_en = self._reloj()
+        datos = {**comando, "t_command_ms": recibido_en} if isinstance(comando, dict) else comando
         try:
-            valido = validar_comando(comando)
+            valido = validar_comando(datos)
             if valido.run_id != self._run_id:
                 raise ContratoError(
                     "comando",
                     [f"run_id {valido.run_id!r} no coincide con la corrida {self._run_id!r}"],
                 )
         except ContratoError as exc:
-            frame_id = comando.get("frame_id") if isinstance(comando, dict) else None
+            frame_id = datos.get("frame_id") if isinstance(datos, dict) else None
             frame_id = frame_id if isinstance(frame_id, str) else None
             self._escribir(
                 self._comando_stop(
@@ -89,6 +93,7 @@ class AdaptadorVirtual(ControladorMotores):
                     error=str(exc)[:500],
                     frame_id=frame_id,
                     event="comando_rechazado",
+                    ahora=recibido_en,
                 )
             )
             return
@@ -103,8 +108,9 @@ class AdaptadorVirtual(ControladorMotores):
     def cerrar(self) -> None:
         if self._cerrado:
             return
-        if self._ultimo_estado != "STOPPED":
-            self.stop("shutdown")
+        # Siempre deja un STOP de cierre en la bitacora (C10), incluso si el ultimo
+        # comando ya era STOP -- es la unica forma de ver que el cierre en si ocurrio.
+        self.stop("shutdown")
         self._archivo.close()
         self._cerrado = True
 
@@ -114,8 +120,9 @@ class AdaptadorVirtual(ControladorMotores):
         error: str | None = None,
         frame_id: str | None = None,
         event: str = "adaptador_stop",
+        ahora: float | None = None,
     ) -> dict[str, Any]:
-        ahora = self._reloj()
+        ahora = self._reloj() if ahora is None else ahora
         comando = {
             "schema_version": "1.0",
             "run_id": self._run_id,

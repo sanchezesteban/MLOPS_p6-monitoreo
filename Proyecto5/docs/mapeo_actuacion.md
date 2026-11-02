@@ -50,6 +50,8 @@ STOP es la saturación segura — no hace falta clamping campo por campo.
 ## Evidencia
 
 [`docs/evidencia/log-ejemplo.jsonl`](evidencia/log-ejemplo.jsonl): una corrida real contra
-`src/p5/control.py` (no inventada) con un comando `FORWARD` válido, un comando inválido
-(`speed=1.7`, rechazado con el detalle del schema en `error`) y un `stop("vencimiento_watchdog")`
-directo, con reloj inyectado para que los tiempos sean reproducibles.
+`src/p5/control.py` (no inventada) con un comando `FORWARD` válido (`t_command_ms` puesto por el
+adaptador al recibirlo, no el del ejemplo), un comando inválido (`speed=1.7`, rechazado con el
+`frame_id` original conservado y el detalle del schema en `error`), un `stop("vencimiento_watchdog")`
+directo, y el `STOP` de `cerrar()` (razón `shutdown`) que siempre queda en la bitácora al cerrar,
+con reloj inyectado para que los tiempos sean reproducibles.

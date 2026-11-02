@@ -28,7 +28,8 @@ def _reloj_fijo(valor: float):
 
 def test_comando_valido_se_registra_con_received_true(tmp_path):
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    # 900.0: posterior a t_decision_ms (812.5) y anterior a valid_until_ms (1013.0) del ejemplo.
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=_reloj_fijo(900.0))
 
     adaptador.enviar(ejemplo("comando_forward"))
 
@@ -38,31 +39,34 @@ def test_comando_valido_se_registra_con_received_true(tmp_path):
     assert linea["speed"] == 0.4
     assert linea["steering"] == 0.0
     assert linea["valid_until_ms"] == 1013.0
+    assert linea["t_command_ms"] == 900.0  # lo puso el adaptador, no el 813.0 del ejemplo
     validar_comando(linea)  # sigue siendo un comando valido del contrato
     adaptador.cerrar()
 
 
 def test_comando_stop_tambien_se_registra(tmp_path):
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=_reloj_fijo(800.0))
 
     adaptador.enviar(ejemplo("comando_stop"))
-    adaptador.cerrar()
 
     (linea,) = leer_lineas(log_path)
     assert linea["action"] == "STOP" and linea["received"] is True
+    assert linea["error"] is None  # confirma que fue aceptado, no rechazado
+    adaptador.cerrar()
 
 
 def test_varios_comandos_se_acumulan_sin_pisarse(tmp_path):
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    contador = iter([900.0, 950.0, 1000.0])
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=lambda: next(contador))
 
     adaptador.enviar(ejemplo("comando_forward"))
     adaptador.enviar(ejemplo("comando_stop"))
-    adaptador.cerrar()
 
     lineas = leer_lineas(log_path)
     assert [linea["action"] for linea in lineas] == ["FORWARD", "STOP"]
+    adaptador.cerrar()
 
 
 COMANDOS_INVALIDOS = {
@@ -83,7 +87,6 @@ def test_comando_invalido_no_se_ejecuta_y_termina_en_stop(tmp_path, caso):
     COMANDOS_INVALIDOS[caso](base)
 
     adaptador.enviar(base)  # nunca lanza
-    adaptador.cerrar()
 
     (linea,) = leer_lineas(log_path)
     assert linea["action"] == "STOP"
@@ -94,6 +97,7 @@ def test_comando_invalido_no_se_ejecuta_y_termina_en_stop(tmp_path, caso):
     assert linea["frame_id"] == "seq01_f0008"  # se conserva para poder rastrear el comando (4.1)
     assert linea["detections_ref"] is None
     validar_comando(linea)  # el STOP de rechazo tambien es valido
+    adaptador.cerrar()
 
 
 def test_stop_directo_registra_razon_y_usa_el_reloj_inyectado(tmp_path):
@@ -101,7 +105,6 @@ def test_stop_directo_registra_razon_y_usa_el_reloj_inyectado(tmp_path):
     adaptador = AdaptadorVirtual(log_path, run_id="run-test", reloj=_reloj_fijo(4242.0))
 
     adaptador.stop("vencimiento")
-    adaptador.cerrar()
 
     (linea,) = leer_lineas(log_path)
     assert linea["action"] == "STOP"
@@ -109,19 +112,20 @@ def test_stop_directo_registra_razon_y_usa_el_reloj_inyectado(tmp_path):
     assert linea["t_decision_ms"] == 4242.0 and linea["t_command_ms"] == 4242.0
     assert linea["valid_until_ms"] is None
     validar_comando(linea)
+    adaptador.cerrar()
 
 
 def test_stop_despues_de_un_comando_arrastra_el_ultimo_estado(tmp_path):
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=_reloj_fijo(900.0))
 
     adaptador.enviar(ejemplo("comando_forward"))
     adaptador.stop("emergencia")
-    adaptador.cerrar()
 
     _, stop = leer_lineas(log_path)
     assert stop["state_before"] == "ADVANCING"
     assert stop["state_after"] == "STOPPED"
+    adaptador.cerrar()
 
 
 def test_cerrar_es_idempotente(tmp_path):
@@ -130,29 +134,21 @@ def test_cerrar_es_idempotente(tmp_path):
     adaptador.cerrar()  # no debe lanzar
 
 
-def test_cerrar_registra_stop_shutdown_si_no_estaba_detenido(tmp_path):
+@pytest.mark.parametrize("ejemplo_previo", ["comando_forward", "comando_stop"])
+def test_cerrar_siempre_registra_stop_shutdown(tmp_path, ejemplo_previo):
+    """C10: el STOP de cierre debe verse en la bitacora incluso si ya estaba detenido
+    (p. ej. emergencia -> cerrar)."""
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=_reloj_fijo(900.0))
 
-    adaptador.enviar(ejemplo("comando_forward"))  # queda en ADVANCING, no detenido
+    adaptador.enviar(ejemplo(ejemplo_previo))
     adaptador.cerrar()
 
-    _, cierre = leer_lineas(log_path)
+    cierre = leer_lineas(log_path)[-1]
     assert cierre["action"] == "STOP"
     assert cierre["reason"] == "shutdown"
     assert cierre["event"] == "adaptador_stop"
     validar_comando(cierre)
-
-
-def test_cerrar_no_duplica_stop_si_ya_estaba_detenido(tmp_path):
-    log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
-
-    adaptador.enviar(ejemplo("comando_stop"))  # ya queda en STOPPED
-    adaptador.cerrar()
-
-    lineas = leer_lineas(log_path)
-    assert len(lineas) == 1  # el STOP del propio comando basta, cerrar() no agrega otro
 
 
 def test_enviar_y_stop_despues_de_cerrar_se_ignoran_sin_lanzar(tmp_path):
@@ -169,19 +165,21 @@ def test_enviar_y_stop_despues_de_cerrar_se_ignoran_sin_lanzar(tmp_path):
 
 def test_tiempos_del_reloj_inyectado_quedan_en_orden_cronologico(tmp_path):
     log_path = tmp_path / "comandos.jsonl"
-    contador = iter([10.0, 20.0])
+    contador = iter([10.0, 20.0, 30.0])
     adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=lambda: next(contador))
 
     invalido = copy.deepcopy(ejemplo("comando_forward"))
     invalido["speed"] = 5.0
     adaptador.enviar(invalido)  # rechazado: consume el primer tiempo (10.0)
     adaptador.stop("vencimiento")  # consume el segundo (20.0)
-    adaptador.cerrar()  # ya esta STOPPED: no debe volver a leer el reloj (se agotaria el iter)
+    adaptador.cerrar()  # siempre registra shutdown: consume el tercero (30.0)
 
-    rechazo, vencimiento = leer_lineas(log_path)
+    rechazo, vencimiento, cierre = leer_lineas(log_path)
     assert rechazo["t_command_ms"] == 10.0
     assert vencimiento["t_command_ms"] == 20.0
+    assert cierre["t_command_ms"] == 30.0
     assert vencimiento["t_command_ms"] > rechazo["t_command_ms"]
+    assert cierre["t_command_ms"] > vencimiento["t_command_ms"]
 
 
 def test_reloj_por_defecto_es_monotonico_no_el_de_pared(tmp_path):
