@@ -57,12 +57,12 @@ def test_cuadros_anotados_a_mano(tmp_path):
     assert (libre["estado_via"], libre["justificacion"]) == ("libre", "sin objetos anotados")
     assert "STOP" in libre["acciones_permitidas"]
 
-    # persona a la izquierda en riesgo; la silla del centro esta lejos y no bloquea
+    # persona a la izquierda en riesgo; el perro del centro esta lejos y no bloquea
     assert (izq["estado_via"], izq["zonas_en_riesgo"]) == ("izq", "izquierda")
     assert izq["acciones_permitidas"].split("|") == ["FORWARD", "STEER_RIGHT", "STOP"]
-    assert "chair" in izq["justificacion"] and "lejos" in izq["justificacion"]
+    assert "dog" in izq["justificacion"] and "lejos" in izq["justificacion"]
 
-    # silla al centro en riesgo; el semaforo no es clase de obstaculo
+    # perro al centro en riesgo; el semaforo no es clase de obstaculo
     assert (centro["estado_via"], centro["acciones_permitidas"]) == ("centro", "STOP")
     assert "traffic light" in centro["justificacion"] and "ignorada" in centro["justificacion"]
 

@@ -7,7 +7,7 @@
   ],
   "categories": [
     {"id": 1, "name": "person"},
-    {"id": 2, "name": "chair"},
+    {"id": 2, "name": "dog"},
     {"id": 3, "name": "traffic light"}
   ],
   "annotations": [
