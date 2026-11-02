@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-ejemplo-001",
+  "synthetic": false,
+  "error": null,
+  "received": true,
+  "frame_id": "seq01_f0007",
+  "event": null,
+  "detections_ref": "seq01_f0007",
+  "state_before": "ADVANCING",
+  "state_after": "STOPPED",
+  "action": "STOP",
+  "reason": "obstaculo_centro_riesgo",
+  "speed": 0.0,
+  "steering": 0.0,
+  "t_decision_ms": 715.2,
+  "t_command_ms": 715.6,
+  "valid_until_ms": null
+}
