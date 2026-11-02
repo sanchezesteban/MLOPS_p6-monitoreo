@@ -9,13 +9,13 @@ completo, los esquemas y los ejemplos viven en [`config/contrato_v1.md`](config/
 | Integrante | Grupo | PM | Responsabilidad |
 |---|---|---|---|
 | Edith (@edithflor) | A | Sebastián | A1: detector preentrenado, runtime CPU y límites conocidos |
-| Bryan (@BryanRomoG) | A | Sebastián | A2: capturas, métricas y benchmark |
-| Emilio (@Danieltlacuache) | A | Sebastián | A3: anotación COCO, manifiesto y congelado de datos |
+| Emilio (@Danieltlacuache) | A | Sebastián | A2: secuencias y anotaciones |
+| Bryan (@BryanRomoG) | A | Sebastián | A3: métricas y benchmark + captura con el auto |
 | Ikram (@ikramzaldivar) | B | Esteban | B1: política temporal y expectativas C1–C7 |
 | Juan Pablo (@jpdelmuro) | B | Esteban | B2: adaptador virtual, watchdog y emergencia |
 | Uriel (@urielpinag) | B | Esteban | B3: contrato lado B, runner de casos, recorrido y entrega |
-| Sebastián (@sebastian0023) | — | PM A | Revisión y aprobación del grupo A |
-| Esteban (@sanchezesteban) | — | PM B | Revisión y aprobación del grupo B |
+| Sebastián (@sebastian0023) | A | PM A | Revisión y aprobación del grupo A |
+| Esteban (@sanchezesteban) | B | PM B | Revisión y aprobación del grupo B |
 
 ## Estructura
 
