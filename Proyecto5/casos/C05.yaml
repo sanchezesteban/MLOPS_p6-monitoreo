@@ -1,0 +1,10 @@
+# Entrada del caso para el runner (P5-13). La expectativa vive aparte, en `expectativa:`,
+# y nunca se entrega al detector ni a la politica.
+id: C05
+nombre: Varios obstaculos sin zona libre
+tipo: real
+estado_inicial: INICIO
+entrada:
+  secuencia: seq05  # secuencia de evaluacion de P5-05 (#57); id por confirmar con Bryan y Emilio
+  manifiesto: datos/manifiesto.csv
+expectativa: expectativas/C05.yaml

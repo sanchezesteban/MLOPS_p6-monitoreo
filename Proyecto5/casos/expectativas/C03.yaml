@@ -1,0 +1,15 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+id: C03
+secuencia: seq03
+acciones_por_cuadro: cuadros.csv
+estados_requeridos: [izq]
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 500  # TENTATIVO: se ajusta con el ritmo de captura (#57) y el watchdog (#64)
+requisitos:
+  - tipo: movimiento_minimo
+    min_cuadros: 1
+    justificacion: El centro esta libre; avanzar o corregir a la derecha es seguro.
+justificacion: >-
+  Obstaculo solo en la zona izquierda en riesgo. Se permite FORWARD, STEER_RIGHT o STOP;
+  STEER_LEFT dirige el auto hacia la zona ocupada.

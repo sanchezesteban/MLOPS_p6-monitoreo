@@ -1,0 +1,21 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+id: C07
+secuencia: seq06
+acciones_por_cuadro: cuadros.csv
+estados_requeridos: [libre, centro]
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 500  # TENTATIVO: se ajusta con el ritmo de captura (#57) y el watchdog (#64)
+requisitos:
+  - tipo: movimiento_minimo
+    min_cuadros: 1
+    justificacion: Antes de que aparezca el obstaculo la via esta libre.
+  - tipo: sin_movimiento_entre_obstaculos
+    justificacion: >-
+      Entre el primer y el ultimo cuadro con el centro ocupado no hay movimiento, aunque un cuadro
+      intermedio quede despejado (evita alternar por un solo cuadro).
+  - tipo: reanuda_tras_despeje
+    max_cuadros: 5
+    justificacion: >-
+      Tras el ultimo cuadro con el centro ocupado, reanuda a mas tardar en 5 cuadros despejados
+      (histeresis declarada de 3 cuadros mas 2 de margen por perdidas del detector).
