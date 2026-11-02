@@ -23,11 +23,6 @@ from p5.contrato import ContratoError, validar_comando
 Reloj = Callable[[], float]
 
 
-def reloj_de_pared() -> float:
-    """Milisegundos desde epoch. Default de produccion; las pruebas inyectan otro."""
-    return time.time() * 1000
-
-
 class ControladorMotores(ABC):
     """Interfaz unica entre la politica y quien ejecuta el comando (virtual o real)."""
 
@@ -58,17 +53,26 @@ class AdaptadorVirtual(ControladorMotores):
         self,
         log_path: str | Path,
         run_id: str,
-        reloj: Reloj = reloj_de_pared,
+        reloj: Reloj | None = None,
     ) -> None:
         self._log_path = Path(log_path)
         self._log_path.parent.mkdir(parents=True, exist_ok=True)
         self._archivo = self._log_path.open("a", encoding="utf-8")
         self._run_id = run_id
-        self._reloj = reloj
+        self._reloj = reloj if reloj is not None else self._reloj_de_ejecucion()
         self._ultimo_estado = "inicio"
         self._cerrado = False
 
+    @staticmethod
+    def _reloj_de_ejecucion() -> Reloj:
+        """Default: milisegundos monotonicos desde que se crea el adaptador -- un solo
+        origen por corrida, como pide el contrato (nunca el reloj de pared)."""
+        inicio = time.monotonic()
+        return lambda: (time.monotonic() - inicio) * 1000
+
     def enviar(self, comando: dict[str, Any]) -> None:
+        if self._cerrado:
+            return
         try:
             valido = validar_comando(comando)
             if valido.run_id != self._run_id:
@@ -77,26 +81,46 @@ class AdaptadorVirtual(ControladorMotores):
                     [f"run_id {valido.run_id!r} no coincide con la corrida {self._run_id!r}"],
                 )
         except ContratoError as exc:
-            self._escribir(self._comando_stop("comando_rechazado", error=str(exc)[:500]))
+            frame_id = comando.get("frame_id") if isinstance(comando, dict) else None
+            frame_id = frame_id if isinstance(frame_id, str) else None
+            self._escribir(
+                self._comando_stop(
+                    "comando_rechazado",
+                    error=str(exc)[:500],
+                    frame_id=frame_id,
+                    event="comando_rechazado",
+                )
+            )
             return
         self._ultimo_estado = valido.state_after
         self._escribir({**asdict(valido), "received": True})
 
     def stop(self, razon: str) -> None:
+        if self._cerrado:
+            return
         self._escribir(self._comando_stop(razon))
 
     def cerrar(self) -> None:
-        if not self._cerrado:
-            self._archivo.close()
-            self._cerrado = True
+        if self._cerrado:
+            return
+        if self._ultimo_estado != "STOPPED":
+            self.stop("shutdown")
+        self._archivo.close()
+        self._cerrado = True
 
-    def _comando_stop(self, razon: str, error: str | None = None) -> dict[str, Any]:
+    def _comando_stop(
+        self,
+        razon: str,
+        error: str | None = None,
+        frame_id: str | None = None,
+        event: str = "adaptador_stop",
+    ) -> dict[str, Any]:
         ahora = self._reloj()
         comando = {
             "schema_version": "1.0",
             "run_id": self._run_id,
-            "frame_id": None,
-            "event": "adaptador_stop",
+            "frame_id": frame_id,
+            "event": event,
             "detections_ref": None,
             "state_before": self._ultimo_estado,
             "state_after": "STOPPED",
@@ -124,7 +148,7 @@ def construir_controlador(
     *,
     log_path: str | Path,
     run_id: str,
-    reloj: Reloj = reloj_de_pared,
+    reloj: Reloj | None = None,
 ) -> ControladorMotores:
     """Fabrica: "virtual" (default) construye el adaptador de arriba, sin tocar
     hardware. "real" queda reservado para cuando exista un controlador fisico

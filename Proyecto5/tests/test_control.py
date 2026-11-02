@@ -31,7 +31,6 @@ def test_comando_valido_se_registra_con_received_true(tmp_path):
     adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
 
     adaptador.enviar(ejemplo("comando_forward"))
-    adaptador.cerrar()
 
     (linea,) = leer_lineas(log_path)
     assert linea["received"] is True
@@ -40,6 +39,7 @@ def test_comando_valido_se_registra_con_received_true(tmp_path):
     assert linea["steering"] == 0.0
     assert linea["valid_until_ms"] == 1013.0
     validar_comando(linea)  # sigue siendo un comando valido del contrato
+    adaptador.cerrar()
 
 
 def test_comando_stop_tambien_se_registra(tmp_path):
@@ -90,6 +90,9 @@ def test_comando_invalido_no_se_ejecuta_y_termina_en_stop(tmp_path, caso):
     assert linea["speed"] == 0.0 and linea["steering"] == 0.0
     assert linea["received"] is True
     assert linea["error"] is not None
+    assert linea["event"] == "comando_rechazado"
+    assert linea["frame_id"] == "seq01_f0008"  # se conserva para poder rastrear el comando (4.1)
+    assert linea["detections_ref"] is None
     validar_comando(linea)  # el STOP de rechazo tambien es valido
 
 
@@ -125,6 +128,71 @@ def test_cerrar_es_idempotente(tmp_path):
     adaptador = AdaptadorVirtual(tmp_path / "comandos.jsonl", run_id="run-test")
     adaptador.cerrar()
     adaptador.cerrar()  # no debe lanzar
+
+
+def test_cerrar_registra_stop_shutdown_si_no_estaba_detenido(tmp_path):
+    log_path = tmp_path / "comandos.jsonl"
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+
+    adaptador.enviar(ejemplo("comando_forward"))  # queda en ADVANCING, no detenido
+    adaptador.cerrar()
+
+    _, cierre = leer_lineas(log_path)
+    assert cierre["action"] == "STOP"
+    assert cierre["reason"] == "shutdown"
+    assert cierre["event"] == "adaptador_stop"
+    validar_comando(cierre)
+
+
+def test_cerrar_no_duplica_stop_si_ya_estaba_detenido(tmp_path):
+    log_path = tmp_path / "comandos.jsonl"
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+
+    adaptador.enviar(ejemplo("comando_stop"))  # ya queda en STOPPED
+    adaptador.cerrar()
+
+    lineas = leer_lineas(log_path)
+    assert len(lineas) == 1  # el STOP del propio comando basta, cerrar() no agrega otro
+
+
+def test_enviar_y_stop_despues_de_cerrar_se_ignoran_sin_lanzar(tmp_path):
+    log_path = tmp_path / "comandos.jsonl"
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    adaptador.cerrar()  # nada que detener todavia: igual escribe el shutdown
+
+    adaptador.enviar(ejemplo("comando_forward"))  # no debe lanzar
+    adaptador.stop("tarde")  # no debe lanzar
+
+    lineas = leer_lineas(log_path)
+    assert len(lineas) == 1  # solo el shutdown de cerrar(), nada se escribio despues
+
+
+def test_tiempos_del_reloj_inyectado_quedan_en_orden_cronologico(tmp_path):
+    log_path = tmp_path / "comandos.jsonl"
+    contador = iter([10.0, 20.0])
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=lambda: next(contador))
+
+    invalido = copy.deepcopy(ejemplo("comando_forward"))
+    invalido["speed"] = 5.0
+    adaptador.enviar(invalido)  # rechazado: consume el primer tiempo (10.0)
+    adaptador.stop("vencimiento")  # consume el segundo (20.0)
+    adaptador.cerrar()  # ya esta STOPPED: no debe volver a leer el reloj (se agotaria el iter)
+
+    rechazo, vencimiento = leer_lineas(log_path)
+    assert rechazo["t_command_ms"] == 10.0
+    assert vencimiento["t_command_ms"] == 20.0
+    assert vencimiento["t_command_ms"] > rechazo["t_command_ms"]
+
+
+def test_reloj_por_defecto_es_monotonico_no_el_de_pared(tmp_path):
+    log_path = tmp_path / "comandos.jsonl"
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+
+    adaptador.stop("prueba")
+
+    (linea,) = leer_lineas(log_path)
+    # recien creado: milisegundos desde la construccion, nunca epoca (~1.7e12)
+    assert linea["t_command_ms"] < 1000
 
 
 def test_construir_controlador_virtual_devuelve_adaptador_virtual(tmp_path):
