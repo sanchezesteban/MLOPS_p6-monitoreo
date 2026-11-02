@@ -1,3 +1,4 @@
 # Dependencias de Proyecto 5 con versiones fijadas.
+PyYAML==6.0.3
 jsonschema==4.23.0
 pytest==8.3.3
