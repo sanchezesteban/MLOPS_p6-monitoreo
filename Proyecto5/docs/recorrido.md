@@ -1,4 +1,4 @@
-# Recorrido integral con detector simulado (P5-14)
+# Recorrido integral con detector real y simulado (P5-14)
 
 El recorrido demuestra la cadena completa:
 
@@ -6,33 +6,53 @@ El recorrido demuestra la cadena completa:
 manifiesto -> detector -> PerceptionEvent -> Watchdog/Politica -> AdaptadorVirtual -> bitacora
 ```
 
-El detector queda detrás de la interfaz `p5.detector.Detector`; el default es
-`DetectorSimulado`, que lee un guion de detecciones y **no abre las anotaciones COCO**.
-Cuando el detector real de P5-04 (#56) esté listo, solo tiene que implementar la misma
-interfaz y `p5.recorrer` no cambia.
+El detector queda detrás de la interfaz `p5.detector.Detector`:
 
-## Uso
+- `DetectorONNX` (P5-04, #81) es el detector real YOLOX-Nano sobre las capturas de #79.
+- `DetectorSimulado` lee un guion de detecciones y **no abre las anotaciones COCO**; sirve
+  para probar el runner sin pesos.
+
+`p5.recorrer` elige uno u otro con `--detector`; la cadena de política, adaptador y
+watchdog es la misma.
+
+## Uso con el detector real
+
+Primero se descargan los pesos públicos y se verifica su SHA-256:
 
 ```bash
 cd Proyecto5
+PYTHONPATH=src python scripts/descargar_modelo.py --destino modelo/
+```
+
+Después, sobre las capturas reales de #79:
+
+```bash
+PYTHONPATH=src python -m p5.recorrer \
+    --datos datos/evaluacion \
+    --manifiesto datos/evaluacion/capturas.csv \
+    --config config/politica.yaml \
+    --watchdog-config config/watchdog.yaml \
+    --detector real \
+    --detector-config config/detector.yaml \
+    --ritmo-ms 100 \
+    --salida resultados/recorrido-real
+```
+
+`--ritmo-ms 100` es **provisional** hasta que el PM confirme el ritmo de reproducción:
+reproduce un cuadro cada 100 ms en vez de usar los `t_capture_ms` originales, que tienen
+pausas largas entre capturas y reinician en cada secuencia. Sin `--ritmo-ms`, el runner
+conserva los tiempos originales y separa las secuencias que reinician su reloj.
+
+La carpeta `--salida` debe ser nueva; el runner no sobrescribe una corrida anterior.
+
+## Uso con el detector simulado
+
+```bash
 PYTHONPATH=src python -m p5.recorrer \
     --datos datos/simulacion \
     --config config/politica.yaml \
     --salida resultados/recorrido
 ```
-
-Para una corrida reproducible en evidencia:
-
-```bash
-PYTHONPATH=src python -m p5.recorrer \
-    --datos datos/simulacion \
-    --config config/politica.yaml \
-    --salida resultados/recorrido \
-    --run-id run-sim-001 \
-    --commit "$(git rev-parse --short HEAD)"
-```
-
-La carpeta `--salida` debe ser nueva; el runner no sobrescribe una corrida anterior.
 
 ## Datos de simulación
 
@@ -56,8 +76,21 @@ Las secuencias representan:
 | `seq06` | Obstáculo persistente y desaparición con histéresis (C7) |
 | `seq00_fallo` | Cuadros vacíos, error del detector y cuadro vencido al final |
 
-El detector real deberá producir las detecciones desde las imágenes; el manifiesto y la
-interfaz no cambian.
+## Secuencias reales S1–S6 (#79)
+
+El manifiesto de #79 usa `sequence_id` S1–S6 y `frame_id` con UUID. El runner normaliza
+los identificadores a `S1_f0001`, `S1_f0002`, …, `S6_f0012`, que es lo que exige
+`validar_secuencia` (prefijo de la secuencia y sin repetidos). También conserva el orden
+del CSV y hace monotónica la línea de tiempo global.
+
+| Secuencia | Escenario | Cuadros |
+|---|---|---:|
+| S1 | Camino despejado (C1) | 18 |
+| S2 | Obstáculo central (C2) | 17 |
+| S3 | Obstáculo a la izquierda (C3) | 13 |
+| S4 | Obstáculo a la derecha (C4) | 12 |
+| S5 | Varios obstáculos sin zona libre (C5) | 12 |
+| S6 | Despejado → obstáculo → despejado (C7) | 12 |
 
 ## Interfaz del detector
 
@@ -96,13 +129,15 @@ evento `status: error` con `error_msg`, que termina en STOP seguro. La prueba
 
 ## Evidencia
 
-[`docs/evidencia/recorrido/`](evidencia/recorrido/README.md) guarda la corrida de
-`datos/simulacion/` con `run-sim-001`, el `run.json`, las bitácoras y una traza de cinco
-cuadros.
+- [`docs/evidencia/recorrido-real/`](evidencia/recorrido-real/README.md): corrida sobre
+  las 84 capturas reales de #79 con `DetectorONNX` (#81) y ritmo provisional de 100 ms.
+- [`docs/evidencia/recorrido/`](evidencia/recorrido/README.md): corrida sintética
+  determinista con `DetectorSimulado`, útil para pruebas sin pesos.
 
-## Pendientes para el detector real
+## Pendientes
 
-1. Implementar `p5.detector.Detector` con el runtime CPU de P5-04 (#56).
-2. Declarar el SHA-256 del modelo y el nombre del runtime en `run.json`.
-3. Repetir el recorrido sobre las seis secuencias reales de P5-05/P5-06.
-4. Documentar los límites del detector y la inyección de fallo real (C9).
+1. Confirmar con el PM el ritmo de reproducción definitivo; hoy la evidencia usa 100 ms.
+2. Documentar los límites del detector real en las secuencias S2 y S6, donde el detector
+   no siempre ve `person`/`dog`/`cat` ≥ 0.50 (limitación reportada en #81).
+3. La inyección de fallo real (C9) ya está cubierta por `status=error` y por la excepción
+   capturada en `p5.recorrer`; falta repetirla sobre una imagen truncada real.

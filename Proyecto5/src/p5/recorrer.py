@@ -27,7 +27,7 @@ import platform
 import subprocess
 import sys
 from collections.abc import Callable
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -40,6 +40,8 @@ from p5.contrato import (
 )
 from p5.control import AdaptadorVirtual
 from p5.detector import Detector, DetectorSimulado, Frame
+from p5.detector_onnx import DetectorONNX
+from p5.detector_onnx import cargar_config as cargar_config_detector
 from p5.politica import Politica, cargar_config
 from p5.watchdog import RelojControlado, Watchdog
 from p5.watchdog import cargar_config as cargar_config_watchdog
@@ -102,16 +104,19 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
         "sequence_id",
         "frame_id",
         "t_capture_ms",
-        "image_path",
         "image_width",
         "image_height",
     }
     frames: list[Frame] = []
+    contadores: dict[str, int] = {}
     with ruta.open(encoding="utf-8", newline="") as archivo:
         lector = csv.DictReader(archivo)
-        faltan = columnas - set(lector.fieldnames or [])
+        campos = set(lector.fieldnames or [])
+        faltan = columnas - campos
         if faltan:
             raise RecorridoInvalidoError(f"{ruta}: faltan columnas {sorted(faltan)}")
+        if "image_path" not in campos and "path" not in campos:
+            raise RecorridoInvalidoError(f"{ruta}: falta image_path o path")
         for numero, fila in enumerate(lector, 2):
             status = (fila.get("status") or "ok").strip()
             if status not in {"ok", "stale", "error"}:
@@ -125,17 +130,33 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
                 alto = int(fila["image_height"])
             except (KeyError, TypeError, ValueError) as exc:
                 raise RecorridoInvalidoError(f"{ruta}:{numero}: numero invalido ({exc})") from exc
-            imagen = datos / fila["image_path"]
+            ruta_imagen = fila.get("image_path") or fila.get("path")
+            if not ruta_imagen:
+                raise RecorridoInvalidoError(f"{ruta}:{numero}: falta image_path/path")
+            imagen = datos / ruta_imagen
             if status == "error":
                 sha = HASH_CERO
             else:
                 if not imagen.is_file():
                     raise InsumoFaltanteError(f"{ruta}:{numero}: falta la imagen {imagen}")
                 sha = sha256_archivo(imagen)
+                declarado = (fila.get("sha256") or "").strip()
+                if declarado and declarado != sha:
+                    raise RecorridoInvalidoError(
+                        f"{ruta}:{numero}: sha256 {sha} distinto del declarado {declarado}"
+                    )
+            sequence_id = fila["sequence_id"]
+            crudo = fila["frame_id"].strip()
+            prefijo = f"{sequence_id}_f"
+            if crudo.startswith(prefijo) and crudo[len(prefijo) :].isdigit():
+                frame_id = crudo
+            else:
+                contadores[sequence_id] = contadores.get(sequence_id, 0) + 1
+                frame_id = f"{prefijo}{contadores[sequence_id]:04d}"
             frames.append(
                 Frame(
-                    sequence_id=fila["sequence_id"],
-                    frame_id=fila["frame_id"],
+                    sequence_id=sequence_id,
+                    frame_id=frame_id,
                     t_capture_ms=t_capture,
                     image_path=str(imagen.as_posix()),
                     image_width=ancho,
@@ -148,6 +169,31 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
     if not frames:
         raise RecorridoInvalidoError(f"{ruta}: no tiene cuadros")
     return frames
+
+
+def normalizar_tiempos(frames: list[Frame], ritmo_ms: float | None) -> list[Frame]:
+    """Hace monotona la linea de tiempo global.
+
+    Sin `ritmo_ms` conserva `t_capture_ms` y separa las secuencias que reinician su reloj.
+    Con `ritmo_ms` reproduce a un intervalo fijo por cuadro (ritmo provisional hasta que
+    el PM confirme el ritmo real); nunca duerme.
+    """
+    if ritmo_ms is not None:
+        if ritmo_ms <= 0:
+            raise RecorridoInvalidoError("--ritmo-ms debe ser positivo")
+        return [replace(frame, t_capture_ms=i * ritmo_ms) for i, frame in enumerate(frames)]
+
+    normalizados: list[Frame] = []
+    previo: float | None = None
+    offset = 0.0
+    for frame in frames:
+        t = frame.t_capture_ms + offset
+        if previo is not None and t <= previo:
+            offset += previo + 100.0 - t
+            t = previo + 100.0
+        normalizados.append(replace(frame, t_capture_ms=t))
+        previo = t
+    return normalizados
 
 
 def _evento(
@@ -303,6 +349,11 @@ def main(
 ) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--datos", type=Path, required=True, help="carpeta del manifiesto")
+    parser.add_argument(
+        "--manifiesto",
+        type=Path,
+        help="CSV de cuadros (por defecto <datos>/manifiesto.csv)",
+    )
     parser.add_argument("--config", type=Path, required=True, help="politica.yaml de P5-10")
     parser.add_argument("--salida", type=Path, required=True, help="carpeta nueva de salida")
     parser.add_argument(
@@ -314,21 +365,33 @@ def main(
     parser.add_argument("--run-id", help="run_id fijo (por defecto, uno por fecha)")
     parser.add_argument("--commit", help="commit para run.json (por defecto, git HEAD)")
     parser.add_argument(
+        "--ritmo-ms",
+        type=float,
+        help="reproduce a N ms por cuadro; sin esto usa t_capture_ms del manifiesto",
+    )
+    parser.add_argument(
         "--detector",
         choices=("simulado", "real"),
         default="simulado",
         help="detector simulado (default) o real de P5-04",
     )
+    parser.add_argument(
+        "--detector-config",
+        type=Path,
+        default=Path("config/detector.yaml"),
+        help="config/detector.yaml del detector real",
+    )
+    parser.add_argument("--modelo", type=Path, help="ruta alternativa del .onnx")
     args = parser.parse_args(argv)
 
     try:
-        manifiesto = args.datos / "manifiesto.csv"
-        frames = leer_manifiesto(manifiesto, args.datos)
+        manifiesto = args.manifiesto or args.datos / "manifiesto.csv"
+        frames = normalizar_tiempos(leer_manifiesto(manifiesto, args.datos), args.ritmo_ms)
         if fabrica_detector is not None:
             detector = fabrica_detector(args.datos)
         elif args.detector == "real":
-            raise NotImplementedError(
-                "el detector real de P5-04 (#56) todavia no esta conectado; usa --detector simulado"
+            detector = DetectorONNX.desde_config(
+                cargar_config_detector(args.detector_config, args.modelo)
             )
         else:
             detector = DetectorSimulado.desde_yaml(args.datos / "detecciones.yaml")
@@ -347,7 +410,6 @@ def main(
     except (
         InsumoFaltanteError,
         RecorridoInvalidoError,
-        NotImplementedError,
         OSError,
         ValueError,
     ) as exc:

@@ -4,18 +4,24 @@ from __future__ import annotations
 
 import csv
 import json
+from itertools import pairwise
 from pathlib import Path
 
+import pytest
 import yaml
 
 from p5.contrato import validar_run_header
 from p5.detector import DetectorSimulado, Frame
-from p5.recorrer import main, sha256_archivo
+from p5.recorrer import leer_manifiesto, main, normalizar_tiempos, sha256_archivo
 
 RAIZ = Path(__file__).resolve().parents[1]
 DATOS = RAIZ / "datos" / "simulacion"
+DATOS_EVAL = RAIZ / "datos" / "evaluacion"
+CAPTURAS = DATOS_EVAL / "capturas.csv"
 CONFIG = RAIZ / "config" / "politica.yaml"
 WATCHDOG = RAIZ / "config" / "watchdog.yaml"
+DETECTOR_CONFIG = RAIZ / "config" / "detector.yaml"
+MODELO = RAIZ / "modelo" / "yolox_nano.onnx"
 HASH = "0" * 64
 
 
@@ -227,7 +233,7 @@ def test_salida_existente_no_se_sobrescribe(tmp_path):
     assert codigo == 1
 
 
-def test_detector_real_no_conectado_es_error_claro(tmp_path):
+def test_detector_real_sin_pesos_es_error_claro(tmp_path):
     datos = _datos(tmp_path, [_fila("seqX_f0001", 0)])
     codigo = main(
         [
@@ -241,6 +247,8 @@ def test_detector_real_no_conectado_es_error_claro(tmp_path):
             str(tmp_path / "salida"),
             "--detector",
             "real",
+            "--modelo",
+            str(tmp_path / "no-existe.onnx"),
             "--run-id",
             "run-real",
             "--commit",
@@ -248,6 +256,73 @@ def test_detector_real_no_conectado_es_error_claro(tmp_path):
         ],
     )
     assert codigo == 1
+
+
+def test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos():
+    frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
+    normalizados = normalizar_tiempos(frames, None)
+
+    assert len(frames) == 84
+    assert {f.sequence_id for f in frames} == {"S1", "S2", "S3", "S4", "S5", "S6"}
+    assert frames[0].frame_id == "S1_f0001"
+    assert frames[18].frame_id == "S2_f0001"
+    assert all(f.frame_id.startswith(f"{f.sequence_id}_f") for f in frames)
+    assert all(a.t_capture_ms < b.t_capture_ms for a, b in pairwise(normalizados))
+
+
+def test_ritmo_fijo_reproduce_cada_cien_ms():
+    frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
+    normalizados = normalizar_tiempos(frames, 100.0)
+    assert normalizados[0].t_capture_ms == 0
+    assert normalizados[-1].t_capture_ms == (len(frames) - 1) * 100.0
+
+
+@pytest.mark.skipif(not MODELO.is_file(), reason="faltan los pesos descargados del detector")
+def test_recorrido_real_una_imagen_de_s1(tmp_path):
+    with CAPTURAS.open(encoding="utf-8", newline="") as f:
+        lector = csv.DictReader(f)
+        campos = lector.fieldnames
+        fila = next(lector)
+    manifiesto = tmp_path / "una.csv"
+    with manifiesto.open("w", encoding="utf-8", newline="") as f:
+        escritor = csv.DictWriter(f, fieldnames=campos, lineterminator="\n")
+        escritor.writeheader()
+        escritor.writerow(fila)
+
+    salida = tmp_path / "salida"
+    codigo = main(
+        [
+            "--datos",
+            str(DATOS_EVAL),
+            "--manifiesto",
+            str(manifiesto),
+            "--config",
+            str(CONFIG),
+            "--watchdog-config",
+            str(WATCHDOG),
+            "--detector",
+            "real",
+            "--detector-config",
+            str(DETECTOR_CONFIG),
+            "--ritmo-ms",
+            "100",
+            "--salida",
+            str(salida),
+            "--run-id",
+            "run-real-una",
+            "--commit",
+            "test",
+        ],
+    )
+    eventos = _lineas(salida / "detecciones.jsonl")
+    run = json.loads((salida / "run.json").read_text(encoding="utf-8"))
+
+    assert codigo == 0
+    assert len(eventos) == 1
+    assert eventos[0]["frame_id"] == "S1_f0001"
+    assert eventos[0]["status"] == "ok"
+    assert (eventos[0]["image_width"], eventos[0]["image_height"]) == (400, 296)
+    assert run["model_sha256"] == "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d"
 
 
 def test_manifiesto_y_guion_del_repo_son_consistentes():
