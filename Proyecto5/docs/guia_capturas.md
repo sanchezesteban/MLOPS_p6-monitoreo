@@ -1,6 +1,6 @@
 # Capturas ESP32-CAM y validación — issue #57
 
-Instalar dependencias de captura en el entorno del proyecto y ejecutar desde la raíz. Para las pruebas/estilo se necesitan pytest y Ruff; la referencia de main requiere Python 3.12 y sus dependencias. No se incluyeron archivos de otros issues para actualizar la rama automáticamente.
+Instalar dependencias de captura en el entorno del proyecto y ejecutar desde la raíz. Para las pruebas/estilo se necesitan pytest y Ruff; CI requiere Python 3.12 y sus dependencias. La base de main ya fue integrada en la rama; no se modifican sus módulos para validar capturas.
 
 ```powershell
 & .\Proyecto5\.venv\Scripts\python.exe -m pip install -r Proyecto5/requirements-capturas.txt
@@ -23,16 +23,16 @@ La rotación (0, 90 horario, 180, 270 antihorario) se aplica antes de calcular z
 
 ## Escenarios y revisión visual
 
-Solo person/dog/cat. El PM autorizó los estímulos de teléfono según el operador; declararlos 2D y conservar su procedencia. Una caja del sujeto ocupa cada tercio que toca. Riesgo: borde inferior y2 >= H/2; a 400×296 el límite es 148. El teléfono y los reflejos no son cajas de person/dog/cat.
+Solo person/dog/cat, definidas en [politica.yaml](../config/politica.yaml), campo clases_obstaculo. No se encontró descriptor formal de P5-03 en este checkout. El PM confirmó los estímulos 2D de teléfono en la revisión del PR; conservar su procedencia, sin afirmar detección automática. Una caja del sujeto ocupa cada tercio que toca. Riesgo: borde inferior y2 >= H/2; a 400×296 el límite es 148. El teléfono y los reflejos no son cajas de person/dog/cat.
 
-- S1: vía libre; conservar negativos visibles, no primerísimos planos de pared ni tomas indeterminadas.
+- S1: vía libre. La selección vigente incluye dos fotografías de pared (59719 y 66562 ms) aceptadas expresamente por el PM como C1; esta decisión no autoriza incorporar otras tomas indeterminadas. [Autorización y trazabilidad](normalizacion_temporal_S1.md).
 - S2: sujeto central, con ejemplos en mitad inferior; los extras fuera de riesgo están arriba de 148.
 - S3: caja completa a izquierda de W/3, con margen; derecha y centro libres.
 - S4: caja completa a derecha de 2W/3, con margen; izquierda y centro libres.
 - S5: varios sujetos simultáneos cubren los tercios, incluido centro en riesgo. Las cajas/anotaciones y detección real quedan a P5-06/P5-03.
 - S6: episodio real D–D–D–D–B–B–B–B–D–D–D–D; no reordenar por nombre ni mezclar episodios para simular transición.
 
-CSV: sequence_id, frame_id, t_capture_ms, path, sha256, sequence_start_unix_ns, session_id, scene_label, outside_risk, image_width, image_height. Orden temporal por t_capture_ms, no por nombre. Tiempos corresponden a recepción local, no exposición del sensor. Mantener IDs/tiempos/sesiones/hashes; no reenumerar.
+CSV: sequence_id, frame_id, t_capture_ms, path, sha256, sequence_start_unix_ns, session_id, scene_label, outside_risk, image_width, image_height. **capturas.csv es la fuente de verdad para t_capture_ms, no el nombre del JPEG.** Tres S1 conservan números históricos distintos de los tiempos normalizados; no renombrar ni modificar tiempos para igualarlos. Tiempos corresponden a recepción local, no exposición del sensor. Mantener IDs/tiempos/sesiones/hashes; no reenumerar.
 
 ## Validación
 
@@ -42,3 +42,5 @@ CSV: sequence_id, frame_id, t_capture_ms, path, sha256, sequence_start_unix_ns, 
 ```
 
 El validador exige 6×10, >=60 distintos, >=20 B y >=20 D, sin pendientes, fuera de riesgo y ajuste de 1–2 secuencias separado por sesiones/hashes. Comprueba archivos, SHA-256, dimensiones, IDs, CSV y tiempos; no certifica clases ni detecciones. No debilitar reglas. [Ficha](ficha_auto.md), [procedencia](procedencia_capturas.json) e [informe para Emilio](entrega_emilio_issue57.md).
+
+Selección vigente autorizada en PR #79: **78 JPEG de evaluación** (S1=12, S2=17, S3=13, S4=12, S5=12, S6=12), **20 despejados**, 58 obstáculos y 5 fuera de riesgo; ajuste conserva 7 S1 despejadas. No hacen falta nuevas capturas para esta corrección. Cualquier retirada o reclasificación posterior de un negativo exige revisar nuevamente el mínimo de 20. El validador no certifica por sí solo independencia de escenas: en este caso se aplica la revisión y autorización visual del PM.

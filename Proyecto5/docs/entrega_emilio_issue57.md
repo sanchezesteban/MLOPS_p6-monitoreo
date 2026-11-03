@@ -1,32 +1,52 @@
-# Datos propuestos para Emilio — P5-05 / issue #57
+# Entrega para Emilio — P5-05 / issue #57 / PR #79
 
-Título previsto del PR: **P5-05: Capturas reales ESP32-CAM, secuencias y ficha del vehículo**. Referencia prevista: Closes #57, solo al completar criterios y aprobar revisión. No se creó PR ni se confirmó entrega/recepción.
+PR existente: [#79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79). Referencia propuesta para la descripción: **Parte de #57**, para no cerrar automáticamente el issue mientras quedan confirmaciones. Este documento y el mensaje preparan la entrega; no se afirma recepción por Emilio ni publicación de esta actualización.
+
+## Selección vigente autorizada
 
 | Secuencia | JPEG de evaluación | Despejados | Obstáculos | Fuera de riesgo |
 |---|---:|---:|---:|---:|
-| S1 | 18 | 18 | 0 | 0 |
+| S1 | 12 | 12 | 0 | 0 |
 | S2 | 17 | 0 | 17 | 4 |
 | S3 | 13 | 0 | 13 | 1 |
 | S4 | 12 | 0 | 12 | 0 |
 | S5 | 12 | 0 | 12 | 0 |
 | S6 | 12 | 8 | 4 | 0 |
-| Total | 84 | 26 | 58 | 5 |
+| Total | 78 | 20 | 58 | 5 |
 
-Evaluación: [JPEG](../datos/evaluacion/) y [CSV](../datos/evaluacion/capturas.csv). Ajuste: [7 JPEG S1 negativos](../datos/ajuste/S1/) y [CSV](../datos/ajuste/capturas.csv), sesiones/hashes distintos de evaluación. Sin reutilizar cuadros. Los seis positivos antiguos de ajuste S2 eran cajas y se retiraron; el contrato permite una sola secuencia de ajuste. Confirmar independencia real del episodio: el entorno doméstico se parece y solo disponer de otra session_id no certifica independencia estadística.
+Evaluación: [JPEG](../datos/evaluacion/) y [CSV](../datos/evaluacion/capturas.csv). Ajuste: [7 JPEG S1 despejados](../datos/ajuste/S1/) y [CSV](../datos/ajuste/capturas.csv). **Quedamos exactamente en el mínimo de 20 despejados**: no retirar ni reclasificar otro negativo sin verificar de nuevo los requisitos. No se modifica S2–S6 ni ajuste.
 
-El ajuste contiene **siete negativos S1 y ninguna imagen positiva**. Cumple el número permitido de secuencias, pero no permite comprobar ni ajustar el comportamiento ante obstáculos positivos; no se reutilizan imágenes de evaluación para compensarlo.
+Según [autorización expresa de Sebastián](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6610598090), se retiraron seis S1 con escena compartida con ajuste y dos con posible persona (t=3855616 y 3870350). Se recuperaron las originales de t=59719 y 66562 ms, aceptadas como C1 pese a mostrar principalmente pared. La solución sustituye la necesidad de recapturar para este PR; una recaptura futura en otra habitación es mejora opcional. No se inventaron imágenes ni se duplicaron cuadros.
 
-Se conservaron 18 S1 originales y se reemplazaron completamente los 53 S2–S6 históricos por 66 recapturas. Hay 5 objetos fuera de riesgo. Un registro S2 pasó pendiente→obstaculo por perro inequívoco en pantalla; outside_risk siguió 1. Fuentes originales y material descartado respaldados externamente, excluidos del PR. [Trazabilidad](procedencia_capturas.json).
+Las ocho copias excluidas están preservadas fuera del repositorio; los originales, ZIP y respaldos previos siguen intactos. Los registros completos anteriores/nuevos, hashes, sesiones, motivos y autorización están en [procedencia](procedencia_capturas.json) y [normalización S1](normalizacion_temporal_S1.md). La selección anterior se conserva allí como historia, no como conteo vigente.
 
-Inspección visual humana de todos los cuadros seleccionados: nuevos sujetos person/dog/cat representados en teléfono, procedimiento autorizado por el PM según el operador. Las guías de revisión se dibujaron en copias externas, no en los JPEG. No se certificaron detecciones, confianzas ni cajas anotadas. S3/S4 se revisaron respecto al sujeto, no el marco del teléfono; S5 muestra varios sujetos simultáneos, con ocupación visual de los tres tercios. Emilio debe confirmar cajas y escenarios con anotaciones; el detector real corresponde a P5-03.
+## Independencia de ajuste y alcance visual
 
-S6 conserva D–D–D–D–B–B–B–B–D–D–D–D por tiempo real en una sesión. S1 conserva cuatro sesiones y pausas de su normalización previa; S2/S3 también incluyen reanudaciones con origen conservado. No se fingió continuidad ni se modificaron timestamps, sesiones, hashes o nombres. [Detalle temporal](normalizacion_temporal_S1.md).
+Se conservaron sin cambios las siete imágenes de ajuste y su CSV. La escena coincidente (palo, mueble café y puerta) se eliminó de evaluación mediante las seis exclusiones identificadas visualmente por el PM; también se retiraron las dos posibles personas, sin reetiquetarlas automáticamente como fuera de riesgo. Evaluación y ajuste no comparten JPEG, hashes, frame_id ni session_id. Esta solución está autorizada por revisión visual del PM; no se presenta como prueba automática de independencia estadística total.
 
-## Ejemplos fuera de riesgo conservados
+Ajuste usa dos sesiones originales: 7f1d45e0e669436985dc74f5443476ea (1 cuadro) y fd4c17f067da4280b15ee5657160f8d5 (6), dentro de una S1. **Solo contiene siete negativos y ningún positivo**: no permite caracterizar el ajuste de respuestas ante obstáculos positivos. No se usa evaluación para compensarlo ni se inventa una cuota adicional que #57 no exige.
 
-La etiqueta principal permanece obstaculo; outside_risk=1 es un campo independiente. La revisión es visual del sujeto en pantalla, sin inferencia ni modificación automática de etiquetas.
+S6 conserva D–D–D–D–B–B–B–B–D–D–D–D, en la misma sesión y con los mismos tiempos. No se repartieron cuadros de S6 entre conjuntos. S1 vigente conserva dos sesiones (9 y 3 cuadros) y la pausa real registrada; no se fingió continuidad. S2/S3 conservan sus reanudaciones y relojes anteriores.
 
-| Fotografía (orden por t_capture_ms) | frame_id | outside_risk |
+Las imágenes se revisaron visualmente; no son resultados de inferencia. La metodología de estímulos 2D person/dog/cat en teléfono fue [confirmada por Sebastián](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6609398193). No son animales/personas físicamente presentes en las recapturas. Emilio debe revisar/anotar cajas y escenarios, incluidos S5 y los casos fuera de riesgo, sin convertir etiquetas humanas en detecciones ni confianzas del modelo.
+
+## Clases acordadas y descriptor pendiente
+
+La configuración existente [politica.yaml](../config/politica.yaml), campo clases_obstaculo, define exactamente **person, dog y cat** como clases de obstáculo, con nombres COCO y comentario de acuerdo de los PM. [Política documentada](politica.md). Se verificó esa configuración sin modificarla. **No se encontró el descriptor formal de P5-03 en este checkout** (modelo solo contiene .gitkeep); no se afirma haber cotejado un archivo inexistente ni la salida del detector real. Ese descriptor y la inferencia corresponden a P5-03.
+
+## Metadatos y fuente de verdad
+
+Los dos CSV mantienen once campos: sequence_id, frame_id, t_capture_ms, path, sha256, sequence_start_unix_ns, session_id, scene_label, outside_risk, image_width e image_height. path es relativo a la carpeta de su conjunto. **capturas.csv es la fuente de verdad para t_capture_ms, no los números incluidos en el nombre del JPEG.** Ordenar por sequence_id y t_capture_ms; no deducir orden por filename.
+
+Tres S1 vigentes mantienen nombres históricos con el tiempo fuente, distinto del normalizado. Ejemplo: S1_0000032187_8e76f0bf9ada44dca0ac9ef5a47dfb82.jpg corresponde a t_capture_ms=3813428. No se renombraron JPEG ni se alteraron tiempos para igualarlos. La fórmula, residuos y registros fuente permanecen auditables. Las dos recuperadas conservan íntegros IDs, origen, tiempos originales, sesiones, etiquetas y hashes.
+
+Verificar SHA-256 sobre bytes originales; no recodificar imágenes. Las guías del visor nunca forman parte de los JPEG. Para eventos que exijan frame_id prefijado, P5-06/P5-07 deben usar una correspondencia trazable para los UUID históricos, sin cambiar el CSV fuente. Preservar huecos de captura durante reproducción.
+
+## Cinco ejemplos fuera de riesgo conservados
+
+outside_risk es independiente de la etiqueta principal. Estos cinco mantienen obstaculo y outside_risk=1; se revisa la caja del sujeto en pantalla, no el teléfono ni reflejos.
+
+| Fotografía | frame_id | outside_risk |
 |---|---|---:|
 | [S2-14](../datos/evaluacion/S2/S2_0003452297_S2_7be3ff1ce01c41f3b29038093c363da1.jpg) | S2_7be3ff1ce01c41f3b29038093c363da1 | 1 |
 | [S2-15](../datos/evaluacion/S2/S2_0003498734_S2_feded6baa90b4d3e95cc01ca623bc200.jpg) | S2_feded6baa90b4d3e95cc01ca623bc200 | 1 |
@@ -34,75 +54,36 @@ La etiqueta principal permanece obstaculo; outside_risk=1 es un campo independie
 | [S2-17](../datos/evaluacion/S2/S2_0003541250_S2_36602891e66d4e878a5ac5eb275276ea.jpg) | S2_36602891e66d4e878a5ac5eb275276ea | 1 |
 | [S3-13](../datos/evaluacion/S3/S3_0002969243_S3_ab81a14f8ab7413b8a0b77a3914a2391.jpg) | S3_ab81a14f8ab7413b8a0b77a3914a2391 | 1 |
 
-## Metadatos e instrucciones para Emilio
+## Vehículo, condiciones y validación
 
-Los dos CSV tienen el esquema: sequence_id, frame_id, t_capture_ms, path, sha256, sequence_start_unix_ns, session_id, scene_label, outside_risk, image_width e image_height. Cada path es relativo a la carpeta de su conjunto, no a la raíz del repositorio. Ordenar cada secuencia por t_capture_ms; no deducir orden del nombre JPEG. Validar SHA-256 sobre bytes originales, sin recodificar, renombrar ni reasignar sesiones. Las guías del visor no forman parte de las imágenes.
+[Ficha del vehículo](ficha_auto.md): TSCINBUNY ZYC0024, ESP32-CAM, 400 × 296 y rotación 180°. Motores apagados y vehículo inmóvil en todas las capturas S1–S6, declaración confirmada personalmente por el operador; no sensores. El manual señala L298N y reductora 48:1, pendientes de corroboración de la unidad física. Velocidad inicial manual 0.545 m/s, giro aproximado 90°/0.35 s por lado; la web ofrece un único nivel sin selector, no un rango físico completo. No se solicitan videos ni nuevos giros. Los registros de ejemplo 1.80/1.83/1.84 s y 0.55 no son mediciones nuevas ni consignas reales.
 
-Desde la raíz ejecutar `python Proyecto5/scripts/validar_capturas.py --issue57` con el entorno del proyecto. La validación repetida el 2026-11-03 aprobó 84+7 JPEG, sin huérfanos, duplicados, errores de hashes ni IDs repetidos. Las salidas nuevas de esta preparación se adjuntan al ZIP de revisión; no se cambian reglas del validador. La inferencia real y las cajas/clases anotadas corresponden a P5-03/P5-06: no convertir etiquetas humanas en predicciones ni porcentajes de confianza. Revisar los cinco casos outside_risk anotando al sujeto representado, no al teléfono ni al reflejo.
+El JSON original de [FPS](medicion_fps_issue57.json) conserva 48.9, 49.4 y 48.6 JPEG distintos recibidos/s en tres ventanas de 10 s, media 48.97; no FPS nominales del sensor. No se repitió contra la cámara durante esta corrección.
 
-La [ficha](ficha_auto.md) documenta L298N por manual, pendiente de corroboración física; 0.545 m/s y giros aproximados 90°/0.35 s por lado son mediciones manuales iniciales. La web tiene un solo nivel de actuación y carece de selector de velocidad; no se inventa un rango. El registro de FPS sí respalda 48.97 JPEG distintos recibidos/s. Los tiempos 1.80/1.83/1.84 s y el texto 0.55 eran ejemplos de software. No se pide grabar ni repetir giros para aumentar precisión.
+El [validador](../scripts/validar_capturas.py) con --issue57 **aprobó** la selección de **78 evaluación + 7 ajuste**, 20 D/58 B/5 fuera de riesgo. La revisión de integridad confirmó correspondencia exacta entre JPEG y CSV, hashes correctos, IDs únicos y conservación de los campos de los registros originales. Ruff aprobó y pytest obtuvo **258 pruebas y 53 subpruebas aprobadas** en el entorno del proyecto con Python 3.10.8; Python 3.12 no está instalado localmente y no se afirma haber ejecutado esa versión. Las pruebas no accedieron al vehículo ni abrieron ventanas reales. Las salidas y el diff se entregan para revisión. No se cambiaron reglas para forzar aprobación. El validador comprueba sesiones/hashes distintos, pero la independencia de escena se apoya en la revisión y autorización visual del PM.
 
-## Condiciones: evidencia, declaraciones y preguntas pendientes
+## Cambios de integración fuera del alcance original de capturas
 
-| Condición | Clasificación | Evidencia o pregunta concreta |
-|---|---|---|
-| Archivos, CSV, resolución, hashes, IDs y tiempos | Verificada mediante archivos | 91 JPEG con registro y SHA-256; se preservan timestamps y sesiones. No acredita exposición del sensor |
-| Sesiones/hashes distintos entre evaluación y ajuste | Verificada mediante registros | IDs de sesión disjuntos y ningún JPEG compartido; no se fabricó independencia |
-| Episodios independientes y sin dividir cuadros contiguos | Pendiente de confirmar | ¿Las siete S1 de ajuste se capturaron en episodios diferentes, sin repartir cuadros contiguos con evaluación? |
-| Motores apagados durante las capturas | Cumplido por declaración confirmada del operador (2026-11-03) | El operador confirmó personalmente motores apagados, vehículo inmóvil y cámara funcionando en todas las capturas definitivas S1–S6, incluidas recapturas y fuera de riesgo. No se atribuye comprobación a sensores ni al programa |
-| S1 histórica con cuatro sesiones y pausas | Verificada mediante trazabilidad | [Normalización previa](normalizacion_temporal_S1.md); no se normalizó de nuevo ni se simuló continuidad |
-| Procedimiento de estímulos 2D autorizado por Sebastián/PM | Declarada por el operador | El usuario confirmó autorización del procedimiento de pantalla para person/dog/cat; no se afirma una confirmación remota adicional |
-| Procedencia y publicación pública de los estímulos | Pendiente de confirmar | ¿De dónde proceden las imágenes y qué permiso/licencia permite publicarlas en estas capturas? La autorización del método no documenta derechos de distribución |
-| Prestaciones del mando y medidas manuales | Declaradas por el operador | Interfaz sin selector, motores funcionales y giros sobre su eje; medidas aproximadas sin repetibilidad inventada |
+- [.github/workflows/ci.yml](../../.github/workflows/ci.yml): solo el job smoke de Proyecto2 se fijó a ubuntu-24.04, porque Playwright 1.56.1 del lockfile no admitía Ubuntu 26.04 al que pasó ubuntu-latest. Conserva pruebas, pasos y funcionalidades; no oculta fallos.
+- [.gitignore global](../../.gitignore): la regla *.[zZ][iI][pP], equivalente a excluir ZIP sin distinguir mayúsculas, evita preparar paquetes temporales. No borra archivos ni reemplaza exclusiones de Proyecto5. Se debe mencionar este cambio y el anterior en la descripción del PR, como pidió el PM; no se revirtieron automáticamente.
 
-## Independencia del ajuste: comprobación temporal
+## Estado y pendientes reales
 
-Se revisaron los siete registros S1 de ajuste, ordenados por t_capture_ms. No hay session_id, frame_id, rutas ni SHA-256 compartidos con evaluación; los 91 JPEG tienen su registro y hash correcto. La independencia de sesión queda comprobada en los metadatos. El ajuste contiene siete negativos y cero positivos.
+| Criterio | Estado/evidencia |
+|---|---|
+| Seis secuencias, >=60 distintos y >=10 por secuencia | Selección 12/17/13/12/12/12, 78 JPEG |
+| >=20 D y >=20 B, fuera de riesgo | Exactamente 20 D, 58 B, 5 casos existentes; no perder otro D |
+| Clases | person/dog/cat verificadas en politica.yaml; descriptor P5-03 aún no encontrado |
+| CSV, hashes, IDs y tiempos | --issue57 aprobado; campos originales conservados y auditables |
+| Ajuste separado | Siete S1 intactas, exclusión de escena compartida autorizada por PM; cero positivos |
+| Motores apagados | Cumplido por declaración confirmada del operador |
+| Ficha física | Medidas aproximadas y limitaciones conservadas; L298N documental, no inspección del chip |
+| Entrega a Emilio | Preparada; falta confirmación de recepción en #58 |
+| Publicación de estímulos | Falta documentar procedencia/permiso de imágenes de terceros, incluido rostro señalado por PM; autorización del método no demuestra licencia |
+| Revisión final | El PM revisará este nuevo diff; la aprobación anterior sobre otros conteos no sustituye comprobar la selección corregida |
 
-| session_id de ajuste | Cuadros | t_capture_ms conservados |
-|---|---:|---|
-| 7f1d45e0e669436985dc74f5443476ea | 1 | 0 |
-| fd4c17f067da4280b15ee5657160f8d5 | 6 | 120107, 186669, 247028, 249091, 250107, 251935 |
+No se solicita recaptura de ajuste para este PR: la solución está expresamente autorizada. Se mantiene como mejora futura. No cerrar #57 hasta las confirmaciones pendientes; usar Parte de #57 en la descripción propuesta. No se afirma haber publicado comentarios, enviado material ni hecho push de esta corrección.
 
-Ambas sesiones usan el origen de secuencia registrado 1793497775705148900 ns. Para comparar con evaluación se calculó, sin editar CSV, `A_ns = sequence_start_unix_ns + t_capture_ms * 1000000`. El menor desfase entre conjuntos es **186744308000 ns = 186.744308 s**, entre el último cuadro de la sesión de evaluación e2b4a168ded24ec38bc6db62dd7dfead (frame_id 39364f4da4954767895eab0aa90268e9) y el primero de ajuste (2ecfe78a3f1e434fbf72a4d967029fb9). La evaluación S1 siguiente aparece después de terminar el intervalo registrado del ajuste. No se aprecia alternancia ni reparto de cuadros contiguos en los registros disponibles.
+## Mensaje breve para Emilio, no publicado
 
-Son tiempos de captura registrados; la reconstrucción histórica de S1 conserva residuos menores de 1 ms en la auditoría. No certifican sincronización física entre ejecuciones, continuidad del stream ni independencia total de escena. La separación temporal y los IDs no sustituyen la confirmación de que ajuste fue otro episodio/escena sin repartir cuadros contiguos; ese punto sigue pendiente del operador. No se exige recapturar ni se cambian imágenes para aparentar independencia.
-
-## Tabla de criterios de #57
-
-Estados se refieren a la evidencia disponible. El [issue #57](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/57) no exige video de giros, un número de repeticiones, positivos mínimos de ajuste ni precisión instrumental concreta; esas recomendaciones no se convierten en nuevos requisitos.
-
-| Requisito | Evidencia | Estado | Acción necesaria |
-|---|---|---|---|
-| Seis secuencias de evaluación | S1=18, S2=17, S3=13, S4=12, S5=12, S6=12; revisión visual | Cumplido visualmente | Revisión de escenarios/anotaciones por PM/P5-06; no se afirma detección |
-| >=60 distintos y >=10 por secuencia | 84 JPEG distintos | Cumplido | Conservar conjunto válido |
-| >=20 obstáculos y >=20 despejados | 58 B y 26 D, sin pendientes | Cumplido | Ninguna recaptura requerida por cantidad |
-| Objetos fuera de riesgo | 5 marcas inspeccionadas visualmente | Cumplido visualmente | Mantener evidencia; confirmar cajas al anotar |
-| Clases acordadas P5-03 | person/dog/cat en pantalla, autorización declarada; política de main | Cumplido visualmente | No inferir desempeño del detector |
-| JPEG y CSV, rutas y hashes | 91 archivos entre ambos conjuntos, dos CSV | Cumplido | Verificar al transferir sin alterar bytes |
-| Identificadores y tiempos relativos | IDs únicos; trazabilidad de S1 y sesiones preservadas | Cumplido en archivos | Acordar enlace de UUID históricos a eventos prefijados; aceptar composición de sesiones |
-| 1–2 secuencias de ajuste | Una S1 con 7 negativos, ningún positivo | Cumplido por cantidad | Comunicar limitación; no exigir positivos que #57 no pide |
-| Ajuste en otro episodio sin cuadros contiguos compartidos | Sesiones/hashes disjuntos; escena doméstica similar | No verificable solo con archivos | Confirmación del operador |
-| Modelo, cámara, resolución y FPS | Ficha y JSON original de recepción | Cumplido | Conservar alcance de cada dato |
-| Controlador de motores | L298N por manual del modelo | Cumplido documentalmente | Corroboración física pendiente; no afirmar inspección |
-| Rango real de velocidad/dirección | Único nivel del mando y medidas manuales aproximadas; sin selector | Pendiente | PM/profesor define aceptación de la limitación o evidencia adicional; no inventar mínimos/máximos |
-| Motores apagados/desconectados | Confirmación personal del operador para todas las capturas S1–S6; vehículo inmóvil | Cumplido por declaración confirmada | Conservar la declaración; no requiere repetir fotografías ni se presenta como medición de sensores |
-| Sin credenciales | Exclusiones y revisión del contenido seleccionado | Cumplido en selección inspeccionada | Conservar .env, claves y respaldos fuera del PR |
-| Entrega a Emilio | Documento y mensaje preparados | Pendiente | Compartir material y confirmar recepción |
-| Permiso de publicación de estímulos | No consta procedencia/licencia | No verificable | Aportar fuente y permiso; condición de publicación, sin alterar datos para simularlo |
-| Git/CI y revisión del PR | Corrección HighGUI presente; workflow con requisitos base y captura | Pendiente de CI real | Revisar cambio mínimo, integrar base con autorización y ejecutar en Python 3.12 |
-
-## Pendientes que impiden afirmar cierre completo
-
-- Corroborar físicamente L298N documentado y características de batería. PM/profesor debe resolver el alcance del rango físico con una web sin selector; conservar las mediciones manuales aproximadas. No se piden videos ni repeticiones de giro solo para mejorar precisión.
-- PM: aceptar composición de sesiones/pausas y confirmar cobertura de escenarios mediante anotaciones. Operador: confirmar independencia del episodio de ajuste. Motores apagados en todas las capturas S1–S6 ya confirmado personalmente; condición cumplida.
-- P5-06/P5-07: correspondencia de UUID históricos a frame_id prefijados de eventos y reproducción de huecos. No se modifica el CSV fuente para anticiparlo.
-- Actualizar la base de forma autorizada y repetir CI en Python 3.12/lock de main. Tras `git fetch origin` del 2026-11-03, la rama está 24 commits detrás y 0 delante de origin/main (`7b6a88b1754d906d6376d089c2d8b9bf8f32c292`), sin merge/rebase. Se implementó el delta de CI para instalar requirements.txt y requirements-capturas.txt y considerar ambos en caché, sin modificar lint/pytest. El workflow se reconstruyó desde la versión exacta de main porque faltaba en el checkout: al actualizar la base hay que reconciliar Proyecto5/.gitignore y .github/workflows/p5-ci.yml, conservando los cambios del equipo.
-- Confirmar independencia del episodio de ajuste y procedencia/permiso de publicación de las imágenes, según la tabla anterior. La confirmación de motores apagados ya está incorporada. No se inventan otras confirmaciones.
-- Compartir esta entrega y confirmar recepción de Emilio. Este archivo prepara la entrega; no la envía.
-
-[Ficha y límites de medición](ficha_auto.md); [captura/validación](guia_capturas.md). La aprobación del validador cuantitativo no sustituye estos pendientes físicos y de revisión.
-
-## Mensaje breve preparado, no publicado
-
-> Emilio: tengo preparados los datos de P5-05/#57 para tu revisión: 84 JPEG de evaluación (58 obstáculos, 26 despejados y 5 fuera de riesgo), 7 S1 negativos de ajuste y sus CSV con IDs, tiempos y SHA-256. El validador aprueba y el operador confirmó motores apagados en S1–S6. Son capturas ESP32-CAM de estímulos 2D autorizados; la revisión fue visual, sin inferencia automática confirmada. Ajuste no contiene positivos. Adjunto revision_definitiva_PR57.zip con ficha, trazabilidad, límites y pendientes; los archivos aún no se han subido mediante PR. Revisa las cajas/escenarios y confirmemos recepción antes de congelar las anotaciones de #58.
+> Emilio: la selección corregida de #57/PR #79 tiene 78 JPEG de evaluación (20 despejados, 58 obstáculos, 5 fuera de riesgo) y 7 S1 negativas de ajuste intactas. El PM autorizó retirar seis S1 de escena compartida y dos con posible persona, y recuperar dos originales de pared como C1. Los CSV son la fuente de verdad temporal; algunos nombres siguen siendo históricos. Revisión visual, sin inferencia automática confirmada. Están preparadas rutas, hashes y procedencia para #58; falta confirmar recepción y congelar las anotaciones sobre esta selección.
