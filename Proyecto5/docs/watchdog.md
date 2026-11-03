@@ -27,19 +27,25 @@ aquí, en `watchdog.yaml`, sin tocar `src/p5/watchdog.py`, en cuanto se conozca 
 
 - **`procesar_evento(evento)`**: por cada `PerceptionEvent` que llega de A. Si el cuadro ya
   nació vencido por nuestro reloj (`esta_vencido`), aunque A lo reporte `status=ok`, nunca se
-  le pasa a la política: se registra un `STOP` (`event="watchdog"`, `reason="cuadro_vencido"`)
+  le pasa a la política tal cual: se decide como un cuadro `status="stale"` (conserva su
+  `frame_id`, para saber cuál se rechazó, y sale con `event="stale_frame"`, `reason="cuadro_vencido"`)
   y no se reanuda movimiento con un cuadro viejo.
 - **`tick(ahora=None)`**: revisión periódica sin esperar un cuadro nuevo. Si el comando en
   curso ya pasó su `valid_until_ms`, o no ha llegado un cuadro fresco en `max_edad_ms`, emite
-  `STOP` por su cuenta (`razon="comando_vencido"` o `"sin_cuadros_recientes"`).
+  `STOP` por su cuenta (`event="watchdog"`, `razon="comando_vencido"` o `"sin_cuadros_recientes"`).
 - **`emergencia(razon)`**: `STOP` inmediato con prioridad sobre todo (`event="emergency"`).
-  Queda **enclavada**: mientras no se libere, `procesar_evento` ignora cualquier cuadro, así
-  llegue despejado, para no reanudar solo porque la política acumuló cuadros libres.
-- **`rearme()`**: pide liberar la emergencia, pero no la libera por sí sola — solo cuando
-  después llega un cuadro realmente fresco (`status=ok` y no vencido) se libera el enclave y
-  ese cuadro (y los siguientes) vuelven a pasar por la política con normalidad. Como el estado
-  de la política queda en `FALLA`, reanudar sigue pidiendo `cuadros_liberar` cuadros libres
-  seguidos (histéresis de `docs/politica.md`), no solo el primero tras el rearme.
+  Queda **enclavada**: mientras no se libere, `procesar_evento` no le pasa el cuadro a la
+  política (no reanuda solo porque se acumularon cuadros libres), pero tampoco lo omite en
+  silencio — cada cuadro que llega mientras está enclavada queda igual en la bitácora
+  (`event="emergency"`, `reason="emergencia_enclavada"`, con su `frame_id`).
+- **`rearme()`**: pide liberar la emergencia y ese pedido en sí queda registrado
+  (`event="rearm"`), pero no libera nada todavía — solo cuando después llega un cuadro
+  realmente fresco (`status=ok` y no vencido) se libera el enclave y ese cuadro (y los
+  siguientes) vuelven a pasar por la política con normalidad. Como el estado de la política
+  queda en `FALLA`, reanudar sigue pidiendo `cuadros_liberar` cuadros libres seguidos
+  (histéresis de `docs/politica.md`), no solo el primero tras el rearme.
 - **`cerrar()` / `instalar_señales()`**: cierre normal, `SIGINT` y `SIGTERM` delegan en
   `ControladorMotores.cerrar()`, que siempre registra el `STOP` de cierre (`event="shutdown"`,
-  criterio C10 de P5-11) aunque ya estuviera detenido.
+  criterio C10 de P5-11) aunque ya estuviera detenido. El manejador de señal, después de
+  cerrar, termina el programa (`SystemExit(128 + signum)`, convención Unix) — no se queda
+  corriendo ignorando en silencio lo que llegue después.

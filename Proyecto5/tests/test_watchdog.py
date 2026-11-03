@@ -112,8 +112,9 @@ def test_cuadro_viejo_se_rechaza_y_no_reanuda_movimiento(wd, adaptador, reloj):
 
     (linea,) = leer_lineas(adaptador._log_path)
     assert linea["action"] == "STOP"
-    assert linea["event"] == "watchdog"
+    assert linea["event"] == "stale_frame"
     assert linea["reason"] == "cuadro_vencido"
+    assert linea["frame_id"] == viejo.frame_id  # se conserva para saber que cuadro se rechazo
     validar_comando(linea)
 
 
@@ -189,29 +190,41 @@ def test_emergencia_detiene_de_inmediato_con_prioridad(wd, adaptador, reloj):
     assert ultima["reason"] == "boton_fisico"
 
 
-def test_emergencia_enclavada_ignora_cuadros_despejados_sin_rearme(wd, adaptador, reloj):
+def test_emergencia_enclavada_no_omite_cuadros_en_silencio(wd, adaptador, reloj):
+    """Cada cuadro que llega mientras esta enclavada queda en la bitacora (sin omisiones
+    silenciosas), aunque llegue despejado y no se le pase a la politica."""
     liberar(wd, reloj, 3)
     wd.emergencia()
     antes = len(leer_lineas(adaptador._log_path))
 
     for i in range(10):
         reloj.avanzar(100.0)
-        wd.procesar_evento(evento(reloj(), i=100 + i))  # cuadros despejados, frescos
+        cuadro = evento(reloj(), i=100 + i)  # cuadros despejados, frescos
+        wd.procesar_evento(cuadro)
 
-    assert len(leer_lineas(adaptador._log_path)) == antes  # nada nuevo: sigue enclavada
+    lineas = leer_lineas(adaptador._log_path)[antes:]
+    assert len(lineas) == 10
+    assert all(linea["action"] == "STOP" for linea in lineas)
+    assert all(linea["event"] == "emergency" for linea in lineas)
+    assert all(linea["reason"] == "emergencia_enclavada" for linea in lineas)
+    assert lineas[-1]["frame_id"] == cuadro.frame_id
 
 
-def test_rearme_sin_cuadro_fresco_no_libera(wd, adaptador, reloj):
+def test_rearme_queda_registrado_pero_no_libera_sin_cuadro_fresco(wd, adaptador, reloj):
     liberar(wd, reloj, 3)
     wd.emergencia()
     reloj.avanzar(1000.0)
-    antes = len(leer_lineas(adaptador._log_path))
     wd.rearme()
+
+    rearme_log = leer_lineas(adaptador._log_path)[-1]
+    assert rearme_log["action"] == "STOP" and rearme_log["event"] == "rearm"
 
     viejo = evento(t_capture_ms=reloj() - 400.0, i=200)  # vencido: no cuenta como "fresco"
     wd.procesar_evento(viejo)
 
-    assert len(leer_lineas(adaptador._log_path)) == antes  # sigue enclavada
+    ultima = leer_lineas(adaptador._log_path)[-1]
+    assert ultima["event"] == "emergency"  # sigue enclavada, solo registro el cuadro ignorado
+    assert ultima["frame_id"] == viejo.frame_id
 
 
 def test_rearme_con_cuadro_fresco_libera_y_exige_histeresis_de_nuevo(wd, adaptador, reloj):
@@ -250,13 +263,28 @@ def test_cerrar_delega_en_el_adaptador_y_registra_shutdown(wd, adaptador, reloj)
     assert ultima["action"] == "STOP" and ultima["event"] == "shutdown"
 
 
-def test_sigint_cierra_y_registra_stop(wd, adaptador):
+def test_sigint_cierra_registra_stop_y_termina_el_programa(wd, adaptador):
     anterior = signal.getsignal(signal.SIGINT)
     try:
-        wd._manejar_señal(signal.SIGINT, None)
+        with pytest.raises(SystemExit) as exc:
+            wd._manejar_señal(signal.SIGINT, None)
     finally:
         signal.signal(signal.SIGINT, anterior)
 
+    assert exc.value.code == 128 + signal.SIGINT  # convencion unix: no se queda corriendo
+    ultima = leer_lineas(adaptador._log_path)[-1]
+    assert ultima["action"] == "STOP" and ultima["event"] == "shutdown"
+
+
+def test_sigterm_cierra_registra_stop_y_termina_el_programa(wd, adaptador):
+    anterior = signal.getsignal(signal.SIGTERM)
+    try:
+        with pytest.raises(SystemExit) as exc:
+            wd._manejar_señal(signal.SIGTERM, None)
+    finally:
+        signal.signal(signal.SIGTERM, anterior)
+
+    assert exc.value.code == 128 + signal.SIGTERM
     ultima = leer_lineas(adaptador._log_path)[-1]
     assert ultima["action"] == "STOP" and ultima["event"] == "shutdown"
 

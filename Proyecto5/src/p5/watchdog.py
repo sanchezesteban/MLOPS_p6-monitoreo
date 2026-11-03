@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import math
 import signal
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -139,13 +139,25 @@ class Watchdog:
         )
         if self._emergencia:
             if not (self._armado and fresco):
-                return  # enclavada: ni se le pasa el cuadro a la politica
+                # enclavada: no se le pasa el cuadro a la politica, pero tampoco se
+                # pierde sin rastro -- queda en la bitacora (sin omisiones silenciosas).
+                self._registrar_stop(
+                    "emergencia_enclavada",
+                    "emergency",
+                    frame_id=evento.frame_id,
+                    synthetic=evento.synthetic,
+                )
+                return
             self._emergencia = False
             self._armado = False
         if evento.status == "ok" and not fresco:
             # A dijo que iba bien, pero por el tiempo que tardo en llegar ya no sirve:
-            # STOP sin esperar un cuadro nuevo, nunca reanuda con un cuadro viejo.
-            self._enviar_decision(self._politica.detener("watchdog", "cuadro_vencido"), ahora)
+            # STOP sin esperar un cuadro nuevo, nunca reanuda con un cuadro viejo. Se
+            # decide como un cuadro "stale" (conserva frame_id, event="stale_frame").
+            vencido = replace(
+                evento, status="stale", error_msg="cuadro_vencido_por_reloj", detections=()
+            )
+            self._enviar_decision(self._politica.decidir(vencido), ahora)
             return
         if fresco:
             self._ultimo_t_capture_ms = evento.t_capture_ms
@@ -174,9 +186,12 @@ class Watchdog:
 
     def rearme(self) -> None:
         """Pide liberar la emergencia; solo surte efecto cuando `procesar_evento` reciba
-        despues un cuadro fresco (status=ok y no vencido)."""
-        if self._emergencia:
-            self._armado = True
+        despues un cuadro fresco (status=ok y no vencido). El rearme en si queda
+        registrado (`event="rearm"`), aunque todavia no libere nada."""
+        if not self._emergencia:
+            return
+        self._armado = True
+        self._registrar_stop("rearme_solicitado", "rearm")
 
     def cerrar(self) -> None:
         """Cierre normal: delega en el adaptador, que siempre registra el STOP de cierre."""
@@ -189,11 +204,45 @@ class Watchdog:
 
     def _manejar_señal(self, signum: int, frame: Any) -> None:
         self.cerrar()
+        raise SystemExit(128 + signum)
 
     def _enviar_decision(self, decision: Any, ahora: float) -> None:
         comando = self._construir_comando(decision, ahora)
         self._controlador.enviar(comando)
         self._valid_until_ms = comando["valid_until_ms"]
+
+    def _registrar_stop(
+        self,
+        razon: str,
+        event: str,
+        frame_id: str | None = None,
+        synthetic: bool = False,
+    ) -> None:
+        """STOP directo que no pasa por la politica (no decide nada nuevo, solo deja
+        constancia): el enclave de emergencia y el rearme en si."""
+        ahora = self._reloj()
+        estado = self._politica.estado
+        comando = {
+            "schema_version": "1.0",
+            "run_id": self._run_id,
+            "frame_id": frame_id,
+            "event": event,
+            "detections_ref": None,
+            "state_before": estado,
+            "state_after": estado,
+            "action": "STOP",
+            "reason": razon,
+            "speed": 0.0,
+            "steering": 0.0,
+            "t_decision_ms": ahora,
+            "t_command_ms": ahora,
+            "valid_until_ms": None,
+            "received": False,
+            "error": None,
+            "synthetic": synthetic,
+        }
+        self._controlador.enviar(comando)
+        self._valid_until_ms = None
 
     def _construir_comando(self, decision: Any, ahora: float) -> dict[str, Any]:
         movimiento = decision.action != "STOP"
