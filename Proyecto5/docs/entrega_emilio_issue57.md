@@ -30,9 +30,9 @@ S6 conserva D–D–D–D–B–B–B–B–D–D–D–D, en la misma sesión y
 
 Las imágenes se revisaron visualmente; no son resultados de inferencia. La metodología de estímulos 2D person/dog/cat en teléfono fue [confirmada por Sebastián](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6609398193). No son animales/personas físicamente presentes en las recapturas. Emilio debe revisar/anotar cajas y escenarios, incluidos S5 y los casos fuera de riesgo, sin convertir etiquetas humanas en detecciones ni confianzas del modelo.
 
-## Clases acordadas y descriptor pendiente
+## Clases acordadas y descriptor disponible en PR #80
 
-La configuración existente [politica.yaml](../config/politica.yaml), campo clases_obstaculo, define exactamente **person, dog y cat** como clases de obstáculo, con nombres COCO y comentario de acuerdo de los PM. [Política documentada](politica.md). Se verificó esa configuración sin modificarla. **No se encontró el descriptor formal de P5-03 en este checkout** (modelo solo contiene .gitkeep); no se afirma haber cotejado un archivo inexistente ni la salida del detector real. Ese descriptor y la inferencia corresponden a P5-03.
+La configuración existente [politica.yaml](../config/politica.yaml), campo clases_obstaculo, define exactamente **person, dog y cat** como clases de obstáculo, con nombres COCO y comentario de acuerdo de los PM. [Política documentada](politica.md). Se verificó esa configuración sin modificarla. El descriptor de P5-03 está disponible en el [PR #80](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/80), en [Proyecto5/modelo/descriptor.yaml](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/blob/9aec7d86d172c51327bc4cd3f9633b3d4b9aca49/Proyecto5/modelo/descriptor.yaml), con las clases COCO **person=0, cat=15 y dog=16**, coincidentes con la política. **Todavía no está integrado en main**. Comprobar el descriptor no acredita la salida del detector real sobre estas fotografías.
 
 ## Metadatos y fuente de verdad
 
@@ -73,7 +73,7 @@ El [validador](../scripts/validar_capturas.py) con --issue57 **aprobó** la sele
 |---|---|
 | Seis secuencias, >=60 distintos y >=10 por secuencia | Selección 12/17/13/12/12/12, 78 JPEG |
 | >=20 D y >=20 B, fuera de riesgo | Exactamente 20 D, 58 B, 5 casos existentes; no perder otro D |
-| Clases | person/dog/cat verificadas en politica.yaml; descriptor P5-03 aún no encontrado |
+| Clases | person/dog/cat verificadas en politica.yaml; descriptor P5-03 disponible en PR #80 (person=0, cat=15, dog=16), aún no integrado en main |
 | CSV, hashes, IDs y tiempos | --issue57 aprobado; campos originales conservados y auditables |
 | Ajuste separado | Siete S1 intactas, exclusión de escena compartida autorizada por PM; cero positivos |
 | Motores apagados | Cumplido por declaración confirmada del operador |
