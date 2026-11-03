@@ -1,0 +1,17 @@
+# Pesos: se distribuyen por enlace con SHA-256, no en Git
+*.onnx
+
+# Salidas generadas
+resultados/*
+!resultados/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Sistema
+.DS_Store
