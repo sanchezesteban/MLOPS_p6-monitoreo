@@ -9,7 +9,7 @@ sin ver antes la salida del detector. No se ajustó nada con estos resultados.
 ```bash
 cd Proyecto5
 python scripts/descargar_modelo.py --destino modelo/
-python -m p5.detectar --imagenes <carpeta con img1..img4> --config config/detector.yaml \
+PYTHONPATH=src python -m p5.detectar --imagenes <carpeta con img1..img4> --config config/detector.yaml \
     --salida <carpeta nueva> --run-id det-evidencia-p5-04
 ```
 

@@ -1,6 +1,7 @@
 """Inferencia del detector real sobre imagenes elegidas (P5-04, #56).
 
-    python -m p5.detectar --imagenes <dir|archivos...> --config config/detector.yaml --salida <dir>
+    PYTHONPATH=src python -m p5.detectar --imagenes <dir|archivos...>
+        --config config/detector.yaml --salida <dir>
 
 Escribe en `--salida` (carpeta nueva o vacia):
 - `run.json`: cabecera de ejecucion del contrato v1 (commit, hashes, runtime, hardware).

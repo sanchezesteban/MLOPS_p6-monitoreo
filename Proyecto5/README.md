@@ -69,11 +69,15 @@ Sale con código 1 y no deja archivo si el SHA-256 o el tamaño no coinciden.
 ## Inferencia por imagen
 
 Detector real en CPU sobre imágenes o carpetas elegidas (recorre subcarpetas). Escribe
-`run.json` y `detecciones.jsonl` (un evento del contrato v1 por imagen) en una carpeta nueva:
+`run.json` y `detecciones.jsonl` (un evento del contrato v1 por imagen) en una carpeta nueva.
+Se corre desde `Proyecto5/` con `src` en `PYTHONPATH` (el paquete `p5` no se instala; sin
+esto sale `No module named 'p5'`):
 
 ```bash
-python -m p5.detectar --imagenes <carpeta|archivos...> --config config/detector.yaml --salida <carpeta nueva>
+PYTHONPATH=src python -m p5.detectar --imagenes <carpeta|archivos...> --config config/detector.yaml --salida <carpeta nueva>
 ```
+
+En PowerShell: `$env:PYTHONPATH = "src"` y después el mismo `python -m p5.detectar …`.
 
 Una imagen sin objetos sale con `status=ok` y `detections=[]`; una ilegible, con
 `status=error`. Preprocesamiento, umbral (0.30) y NMS (0.45) en
