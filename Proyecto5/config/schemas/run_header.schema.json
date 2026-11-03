@@ -19,7 +19,12 @@
     "runtime": {"type": "string", "minLength": 1},
     "hardware": {"type": "string", "minLength": 1},
     "virtual_mode": {"type": "boolean"},
-    "t_start_utc": {"type": "string", "minLength": 1}
+    "t_start_utc": {"type": "string", "minLength": 1},
+    "replay_dt_ms": {
+      "description": "Intervalo de reproduccion por cuadro dentro de cada secuencia; ausente si no se reproduce",
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
   },
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}

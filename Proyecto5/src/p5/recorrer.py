@@ -7,11 +7,12 @@ Uso:
         --config config/politica.yaml \
         --salida resultados/recorrido
 
-El detector se inyecta detras de `p5.detector.Detector`. Por ahora el default es
-`DetectorSimulado` (guion de detecciones, sin abrir anotaciones); el detector real de
-P5-04 (#56) solo tiene que implementar la misma interfaz. El reloj avanza con
-`t_capture_ms`, sin sleeps, y la politica/adaptador/watchdog son los mismos que usa la
-aplicacion.
+El detector se inyecta detras de `p5.detector.Detector`: `DetectorONNX` para las capturas
+reales y `DetectorSimulado` para pruebas deterministas. El reproductor toma el orden y los
+tiempos del manifiesto, pero arma el reloj de la ejecucion: cada secuencia avanza
+`--replay-dt-ms` por cuadro (100 ms por defecto) y entre secuencias deja un hueco mayor que
+el watchdog. El `t_capture_ms` original se conserva en el manifiesto y como
+`t_capture_origen_ms` en cada evento. No hay sleeps: el reloj se avanza a mano.
 
 Salidas: `run.json`, `detecciones.jsonl` (un `PerceptionEvent` por cuadro),
 `decisiones.jsonl` y `comandos.jsonl`, todos vinculados por `frame_id`.
@@ -43,7 +44,7 @@ from p5.detector import Detector, DetectorSimulado, Frame
 from p5.detector_onnx import DetectorONNX
 from p5.detector_onnx import cargar_config as cargar_config_detector
 from p5.politica import Politica, cargar_config
-from p5.watchdog import RelojControlado, Watchdog
+from p5.watchdog import ConfigWatchdog, RelojControlado, Watchdog
 from p5.watchdog import cargar_config as cargar_config_watchdog
 
 HASH_CERO = "0" * 64
@@ -164,6 +165,7 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
                     image_sha256=sha,
                     status=status,
                     error_msg=error_msg,
+                    t_capture_origen_ms=t_capture,
                 )
             )
     if not frames:
@@ -171,28 +173,40 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
     return frames
 
 
-def normalizar_tiempos(frames: list[Frame], ritmo_ms: float | None) -> list[Frame]:
-    """Hace monotona la linea de tiempo global.
+def hueco_entre_secuencias(cfg: ConfigWatchdog, replay_dt_ms: float) -> float:
+    """Hueco entre secuencias que supera los plazos del watchdog."""
+    return max(cfg.max_edad_ms, cfg.vencimiento_ms) + replay_dt_ms
 
-    Sin `ritmo_ms` conserva `t_capture_ms` y separa las secuencias que reinician su reloj.
-    Con `ritmo_ms` reproduce a un intervalo fijo por cuadro (ritmo provisional hasta que
-    el PM confirme el ritmo real); nunca duerme.
+
+def normalizar_tiempos(frames: list[Frame], replay_dt_ms: float, hueco_ms: float) -> list[Frame]:
+    """Arma el reloj de la ejecucion a partir del orden del manifiesto.
+
+    El primer cuadro arranca en 0; dentro de una secuencia cada cuadro avanza
+    `replay_dt_ms`; al cambiar de secuencia se suma `hueco_ms`, que debe superar los plazos
+    del watchdog para que el corte se note. El `t_capture_ms` original se conserva en
+    `t_capture_origen_ms`. Nunca duerme.
     """
-    if ritmo_ms is not None:
-        if ritmo_ms <= 0:
-            raise RecorridoInvalidoError("--ritmo-ms debe ser positivo")
-        return [replace(frame, t_capture_ms=i * ritmo_ms) for i, frame in enumerate(frames)]
+    if replay_dt_ms <= 0:
+        raise RecorridoInvalidoError("--replay-dt-ms debe ser positivo")
+    if hueco_ms <= 0:
+        raise RecorridoInvalidoError("el hueco entre secuencias debe ser positivo")
 
     normalizados: list[Frame] = []
     previo: float | None = None
-    offset = 0.0
+    previa_secuencia: str | None = None
     for frame in frames:
-        t = frame.t_capture_ms + offset
-        if previo is not None and t <= previo:
-            offset += previo + 100.0 - t
-            t = previo + 100.0
-        normalizados.append(replace(frame, t_capture_ms=t))
+        origen = (
+            frame.t_capture_ms if frame.t_capture_origen_ms is None else frame.t_capture_origen_ms
+        )
+        if previo is None:
+            t = 0.0
+        elif frame.sequence_id == previa_secuencia:
+            t = previo + replay_dt_ms
+        else:
+            t = previo + hueco_ms
+        normalizados.append(replace(frame, t_capture_ms=t, t_capture_origen_ms=origen))
         previo = t
+        previa_secuencia = frame.sequence_id
     return normalizados
 
 
@@ -215,6 +229,7 @@ def _evento(
         "sequence_id": frame.sequence_id,
         "frame_id": frame.frame_id,
         "t_capture_ms": frame.t_capture_ms,
+        "t_capture_origen_ms": frame.t_capture_origen_ms,
         "image_path": None if estado == "error" else frame.image_path,
         "image_sha256": None if estado == "error" else frame.image_sha256,
         "image_width": None if estado == "error" else frame.image_width,
@@ -241,12 +256,13 @@ def correr_recorrido(
     frames: list[Frame],
     detector: Detector,
     config_path: Path,
-    watchdog_config: Path,
+    cfg_watchdog: ConfigWatchdog,
     salida: Path,
     *,
     run_id: str,
     commit: str,
     data_manifest_sha256: str,
+    replay_dt_ms: float,
 ) -> dict[str, Any]:
     if salida.exists():
         raise RecorridoInvalidoError(f"{salida}: la salida debe ser una carpeta nueva")
@@ -257,7 +273,7 @@ def correr_recorrido(
     reloj = RelojControlado()
     control = AdaptadorVirtual(salida / "comandos.jsonl", run_id, reloj=reloj)
     politica = PoliticaGrabada(Politica(cargar_config(config_path)))
-    watchdog = Watchdog(politica, control, reloj, cargar_config_watchdog(watchdog_config), run_id)
+    watchdog = Watchdog(politica, control, reloj, cfg_watchdog, run_id)
 
     eventos: list[PerceptionEvent] = []
     with (salida / "detecciones.jsonl").open("w", encoding="utf-8") as detecciones_jsonl:
@@ -329,6 +345,7 @@ def correr_recorrido(
         "hardware": platform.platform(),
         "virtual_mode": True,
         "t_start_utc": inicio.isoformat(timespec="seconds"),
+        "replay_dt_ms": int(replay_dt_ms) if float(replay_dt_ms).is_integer() else replay_dt_ms,
     }
     validar_run_header(header)
     (salida / "run.json").write_text(
@@ -365,9 +382,10 @@ def main(
     parser.add_argument("--run-id", help="run_id fijo (por defecto, uno por fecha)")
     parser.add_argument("--commit", help="commit para run.json (por defecto, git HEAD)")
     parser.add_argument(
-        "--ritmo-ms",
+        "--replay-dt-ms",
         type=float,
-        help="reproduce a N ms por cuadro; sin esto usa t_capture_ms del manifiesto",
+        default=100.0,
+        help="ms entre cuadros dentro de una secuencia (default 100)",
     )
     parser.add_argument(
         "--detector",
@@ -385,8 +403,12 @@ def main(
     args = parser.parse_args(argv)
 
     try:
+        cfg_watchdog = cargar_config_watchdog(args.watchdog_config)
+        hueco = hueco_entre_secuencias(cfg_watchdog, args.replay_dt_ms)
         manifiesto = args.manifiesto or args.datos / "manifiesto.csv"
-        frames = normalizar_tiempos(leer_manifiesto(manifiesto, args.datos), args.ritmo_ms)
+        frames = normalizar_tiempos(
+            leer_manifiesto(manifiesto, args.datos), args.replay_dt_ms, hueco
+        )
         if fabrica_detector is not None:
             detector = fabrica_detector(args.datos)
         elif args.detector == "real":
@@ -401,11 +423,12 @@ def main(
             frames,
             detector,
             args.config,
-            args.watchdog_config,
+            cfg_watchdog,
             args.salida,
             run_id=run_id,
             commit=commit,
             data_manifest_sha256=sha256_archivo(manifiesto),
+            replay_dt_ms=args.replay_dt_ms,
         )
     except (
         InsumoFaltanteError,

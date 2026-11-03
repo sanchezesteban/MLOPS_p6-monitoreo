@@ -12,7 +12,15 @@ import yaml
 
 from p5.contrato import validar_run_header
 from p5.detector import DetectorSimulado, Frame
-from p5.recorrer import leer_manifiesto, main, normalizar_tiempos, sha256_archivo
+from p5.recorrer import (
+    RecorridoInvalidoError,
+    hueco_entre_secuencias,
+    leer_manifiesto,
+    main,
+    normalizar_tiempos,
+    sha256_archivo,
+)
+from p5.watchdog import cargar_config as cargar_config_watchdog
 
 RAIZ = Path(__file__).resolve().parents[1]
 DATOS = RAIZ / "datos" / "simulacion"
@@ -113,14 +121,22 @@ def test_recorrido_simulado_del_repo(tmp_path):
     run = json.loads((salida / "run.json").read_text(encoding="utf-8"))
 
     assert len(eventos) == 54
-    assert len(decisiones) == 54
-    assert len(comandos) == 55  # 54 cuadros + STOP de cierre
+    assert len(decisiones) == 54 + 6  # una por cuadro + seis cortes de secuencia
+    assert len(comandos) == 55 + 6  # 54 cuadros + STOP de cierre + 6 cortes de secuencia
     assert [e["status"] for e in eventos[-2:]] == ["error", "stale"]
     assert all(e["run_id"] == "run-sim-test" for e in eventos)
-    assert [e["frame_id"] for e in eventos] == [e["frame_id"] for e in comandos[:-1]]
+    assert {e["frame_id"] for e in eventos} <= {c["frame_id"] for c in comandos}
     assert comandos[-1]["event"] == "shutdown"
+    assert eventos[1]["t_capture_ms"] - eventos[0]["t_capture_ms"] == 100
+    assert eventos[8]["t_capture_ms"] - eventos[7]["t_capture_ms"] == 400
+    cortes = [c for c in comandos if c["event"] == "watchdog"]
+    assert len(cortes) == 6
+    assert all(c["frame_id"] is None and c["action"] == "STOP" for c in cortes)
     assert run["data_manifest_sha256"] == sha256_archivo(DATOS / "manifiesto.csv")
     assert run["config_sha256"] == sha256_archivo(CONFIG)
+    assert run["replay_dt_ms"] == 100
+    assert eventos[0]["t_capture_origen_ms"] == 0
+    assert eventos[8]["t_capture_origen_ms"] == 800  # primer cuadro de seq02
     validar_run_header(run)
 
 
@@ -260,7 +276,8 @@ def test_detector_real_sin_pesos_es_error_claro(tmp_path):
 
 def test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos():
     frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
-    normalizados = normalizar_tiempos(frames, None)
+    cfg = cargar_config_watchdog(WATCHDOG)
+    normalizados = normalizar_tiempos(frames, 100.0, hueco_entre_secuencias(cfg, 100.0))
 
     assert len(frames) == 84
     assert {f.sequence_id for f in frames} == {"S1", "S2", "S3", "S4", "S5", "S6"}
@@ -268,13 +285,37 @@ def test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos():
     assert frames[18].frame_id == "S2_f0001"
     assert all(f.frame_id.startswith(f"{f.sequence_id}_f") for f in frames)
     assert all(a.t_capture_ms < b.t_capture_ms for a, b in pairwise(normalizados))
+    assert all(f.t_capture_origen_ms == f.t_capture_ms for f in frames)
 
 
-def test_ritmo_fijo_reproduce_cada_cien_ms():
+def test_replay_usa_cien_ms_dentro_de_secuencia_y_hueco_mayor_al_watchdog():
     frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
-    normalizados = normalizar_tiempos(frames, 100.0)
+    cfg = cargar_config_watchdog(WATCHDOG)
+    normalizados = normalizar_tiempos(frames, 100.0, hueco_entre_secuencias(cfg, 100.0))
+
     assert normalizados[0].t_capture_ms == 0
-    assert normalizados[-1].t_capture_ms == (len(frames) - 1) * 100.0
+    for previo, actual in pairwise(normalizados):
+        delta = actual.t_capture_ms - previo.t_capture_ms
+        if actual.sequence_id == previo.sequence_id:
+            assert delta == 100.0
+        else:
+            assert delta > cfg.max_edad_ms
+            assert delta > cfg.vencimiento_ms
+
+    primeros = [normalizados[0]] + [
+        actual
+        for previo, actual in pairwise(normalizados)
+        if actual.sequence_id != previo.sequence_id
+    ]
+    assert len(primeros) == 6  # una por secuencia S1-S6
+    assert primeros[0].t_capture_ms == 0
+    assert [f.t_capture_origen_ms for f in normalizados] == [f.t_capture_ms for f in frames]
+
+
+def test_replay_dt_invalido_se_rechaza():
+    frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
+    with pytest.raises(RecorridoInvalidoError):
+        normalizar_tiempos(frames, 0.0, 400.0)
 
 
 @pytest.mark.skipif(not MODELO.is_file(), reason="faltan los pesos descargados del detector")
@@ -304,7 +345,7 @@ def test_recorrido_real_una_imagen_de_s1(tmp_path):
             "real",
             "--detector-config",
             str(DETECTOR_CONFIG),
-            "--ritmo-ms",
+            "--replay-dt-ms",
             "100",
             "--salida",
             str(salida),
@@ -322,6 +363,8 @@ def test_recorrido_real_una_imagen_de_s1(tmp_path):
     assert eventos[0]["frame_id"] == "S1_f0001"
     assert eventos[0]["status"] == "ok"
     assert (eventos[0]["image_width"], eventos[0]["image_height"]) == (400, 296)
+    assert eventos[0]["t_capture_origen_ms"] == 0
+    assert run["replay_dt_ms"] == 100
     assert run["model_sha256"] == "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d"
 
 

@@ -61,6 +61,7 @@ class PerceptionEvent:
     error_msg: str | None
     synthetic: bool
     detections: tuple[Detection, ...]
+    t_capture_origen_ms: float | None = None
 
 
 @dataclass(frozen=True)
@@ -96,6 +97,7 @@ class RunHeader:
     hardware: str
     virtual_mode: bool
     t_start_utc: str
+    replay_dt_ms: float | None = None
 
 
 @cache

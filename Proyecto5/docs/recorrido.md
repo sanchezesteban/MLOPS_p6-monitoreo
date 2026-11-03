@@ -34,14 +34,20 @@ PYTHONPATH=src python -m p5.recorrer \
     --watchdog-config config/watchdog.yaml \
     --detector real \
     --detector-config config/detector.yaml \
-    --ritmo-ms 100 \
+    --replay-dt-ms 100 \
     --salida resultados/recorrido-real
 ```
 
-`--ritmo-ms 100` es **provisional** hasta que el PM confirme el ritmo de reproducción:
-reproduce un cuadro cada 100 ms en vez de usar los `t_capture_ms` originales, que tienen
-pausas largas entre capturas y reinician en cada secuencia. Sin `--ritmo-ms`, el runner
-conserva los tiempos originales y separa las secuencias que reinician su reloj.
+`--replay-dt-ms` vale **100 ms por defecto**. Dentro de cada secuencia los cuadros se
+reproducen en orden a ese intervalo; al cambiar de secuencia se deja un hueco de
+`max(max_edad_ms, vencimiento_ms) + replay_dt_ms` (con `config/watchdog.yaml`, 400 ms),
+mayor que los plazos del watchdog para que el corte se note y quede un STOP entre
+secuencias. El resultado es válido **a ese ritmo de reproducción (10 cuadros/s)**, no a los
+`t_capture_ms` originales, que tienen pausas largas y reinician en cada secuencia.
+
+El `t_capture_ms` real no se pierde: sigue en `datos/evaluacion/capturas.csv` y cada evento
+lo copia como `t_capture_origen_ms`. El reloj de la ejecución (`t_capture_ms` del evento)
+es el de la reproducción. `run.json` declara `replay_dt_ms: 100`.
 
 La carpeta `--salida` debe ser nueva; el runner no sobrescribe una corrida anterior.
 
@@ -53,6 +59,9 @@ PYTHONPATH=src python -m p5.recorrer \
     --config config/politica.yaml \
     --salida resultados/recorrido
 ```
+
+El detector simulado usa el mismo reproductor: 100 ms por cuadro dentro de cada secuencia
+y el hueco entre secuencias descrito arriba.
 
 ## Datos de simulación
 
@@ -81,7 +90,8 @@ Las secuencias representan:
 El manifiesto de #79 usa `sequence_id` S1–S6 y `frame_id` con UUID. El runner normaliza
 los identificadores a `S1_f0001`, `S1_f0002`, …, `S6_f0012`, que es lo que exige
 `validar_secuencia` (prefijo de la secuencia y sin repetidos). También conserva el orden
-del CSV y hace monotónica la línea de tiempo global.
+del CSV y reproduce cada secuencia a 100 ms por cuadro con el hueco entre secuencias
+descrito arriba.
 
 | Secuencia | Escenario | Cuadros |
 |---|---|---:|
@@ -111,14 +121,15 @@ arma el `PerceptionEvent` con el run_id, los hashes y las dimensiones del manifi
 
 | Archivo | Contenido |
 |---|---|
-| `run.json` | `RunHeader` del contrato: run_id, commit, hashes de modelo/config/manifiesto, runtime, hardware y modo virtual |
-| `detecciones.jsonl` | Un `PerceptionEvent` por cuadro, en el orden del manifiesto |
+| `run.json` | `RunHeader` del contrato: run_id, commit, hashes de modelo/config/manifiesto, runtime, hardware, modo virtual y `replay_dt_ms` |
+| `detecciones.jsonl` | Un `PerceptionEvent` por cuadro, en el orden del manifiesto; `t_capture_ms` es el reloj de reproducción y `t_capture_origen_ms` la procedencia real |
 | `decisiones.jsonl` | Una `Decision` de la política por evento/tick |
 | `comandos.jsonl` | Comandos observados en el adaptador, vinculados por `frame_id` |
 
-El reloj es `RelojControlado` y avanza con `t_capture_ms`; no hay `sleep`. El watchdog de
-P5-12 revisa vencimientos entre cuadros y deja STOP cuando corresponde. Al final,
-`AdaptadorVirtual.cerrar()` registra el STOP de cierre.
+El reloj es `RelojControlado` y avanza con el calendario de reproducción; no hay `sleep`.
+El watchdog de P5-12 revisa vencimientos entre cuadros y deja STOP cuando corresponde,
+incluido el hueco entre secuencias. Al final, `AdaptadorVirtual.cerrar()` registra el STOP
+de cierre.
 
 ## Inyección de fallo del detector (C9)
 
@@ -130,14 +141,15 @@ evento `status: error` con `error_msg`, que termina en STOP seguro. La prueba
 ## Evidencia
 
 - [`docs/evidencia/recorrido-real/`](evidencia/recorrido-real/README.md): corrida sobre
-  las 84 capturas reales de #79 con `DetectorONNX` (#81) y ritmo provisional de 100 ms.
+  las 84 capturas reales de #79 con `DetectorONNX` (#81) y `--replay-dt-ms 100`.
 - [`docs/evidencia/recorrido/`](evidencia/recorrido/README.md): corrida sintética
   determinista con `DetectorSimulado`, útil para pruebas sin pesos.
 
 ## Pendientes
 
-1. Confirmar con el PM el ritmo de reproducción definitivo; hoy la evidencia usa 100 ms.
+1. Que #79 y #81 estén en `main`; después se rebasa este PR y se repite la evidencia si
+   cambia el detector o el manifiesto.
 2. Documentar los límites del detector real en las secuencias S2 y S6, donde el detector
    no siempre ve `person`/`dog`/`cat` ≥ 0.50 (limitación reportada en #81).
-3. La inyección de fallo real (C9) ya está cubierta por `status=error` y por la excepción
-   capturada en `p5.recorrer`; falta repetirla sobre una imagen truncada real.
+3. La inyección de fallo real (C9) está cubierta en `recorrido-real/fallo_detector/` con
+   un JPEG truncado; falta enlazarla desde el cierre de #66.
