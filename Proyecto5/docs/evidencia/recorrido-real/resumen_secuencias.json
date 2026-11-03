@@ -1,6 +1,6 @@
 {
   "run_id": "run-real-001",
-  "ritmo_ms": 100,
+  "replay_dt_ms": 100,
   "secuencias": {
     "S1": {
       "cuadros": 18,
@@ -26,7 +26,8 @@
     "S3": {
       "cuadros": 13,
       "acciones": {
-        "STEER_RIGHT": 4,
+        "STOP": 2,
+        "STEER_RIGHT": 2,
         "FORWARD": 9
       },
       "clases": {
@@ -39,8 +40,9 @@
     "S4": {
       "cuadros": 12,
       "acciones": {
-        "FORWARD": 8,
-        "STEER_LEFT": 4
+        "STOP": 2,
+        "STEER_LEFT": 3,
+        "FORWARD": 7
       },
       "clases": {
         "tv": 5,
