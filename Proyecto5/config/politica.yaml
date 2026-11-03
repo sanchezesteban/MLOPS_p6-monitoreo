@@ -1,0 +1,32 @@
+# Configuracion de la politica temporal (grupo B, P5-10). La lee `p5.politica.cargar_config`,
+# que rechaza claves desconocidas y valores fuera de rango antes de emitir cualquier movimiento.
+# Justificacion de cada valor en `docs/politica.md`.
+version: 1
+
+# Clases que la politica trata como obstaculo, por `class_name` del detector (nombres COCO).
+# Acordadas por los PM; el detector de P5-03 (#55) debe entregarlas con estos nombres COCO.
+# Otra clase se ignora.
+clases_obstaculo:
+  - person
+  - dog
+  - cat
+
+confianza:
+  umbral: 0.50           # confianza >= umbral: obstaculo cierto
+  minimo_incierto: 0.30  # [minimo_incierto, umbral): obstaculo incierto; debajo se ignora
+
+# Fracciones del cuadro original. Por defecto, las del contrato v1 (tercios y mitad baja).
+zonas:
+  limite_izquierda: 0.3333333333333333  # izquierda [0, limite_izquierda·W)
+  limite_derecha: 0.6666666666666666    # derecha (limite_derecha·W, W]
+  riesgo_y: 0.5                         # en riesgo si y2 >= riesgo_y·H (proxy de cercania, no metros)
+
+histeresis:
+  cuadros_liberar: 3  # cuadros validos consecutivos con centro libre para reanudar tras una parada
+
+# Fracciones de la velocidad maxima y del giro maximo del contrato ([0, 1] y [-1, 1]).
+# TENTATIVAS: se ajustan con el adaptador y la ficha del auto (P5-11, #63; P5-05, #57).
+comandos:
+  velocidad_crucero: 0.4
+  velocidad_precaucion: 0.2
+  giro_correccion: 0.5
