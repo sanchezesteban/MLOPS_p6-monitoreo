@@ -104,6 +104,72 @@ def test_clase_incorrecta_fp_en_predicha_fn_en_real():
 
 
 @pytest.mark.parametrize(
+    "ids_gt",
+    [
+        pytest.param({"person": 0, "cat": 15, "dog": 16}, id="indices-modelo"),
+        pytest.param({"person": 1, "cat": 17, "dog": 18}, id="export-coco"),
+    ],
+)
+@pytest.mark.parametrize(("nombre", "id_detector"), [("person", 0), ("cat", 15), ("dog", 16)])
+def test_clase_correcta_es_tp_con_ambas_numeraciones_coco(ids_gt, nombre, id_detector):
+    verdad = gt([(1, nombre, [0, 0, 10, 10])])
+    # Cambiar orden e IDs del GT no cambia la clase; no derivar la prediccion del GT.
+    verdad["categories"] = [{"id": ids_gt[n], "name": n} for n in ("dog", "person", "cat")]
+    verdad["annotations"][0]["category_id"] = ids_gt[nombre]
+    pred = {
+        "class_name": nombre,
+        "class_id": id_detector,
+        "confidence": 0.9,
+        "bbox": [0, 0, 10, 10],
+    }
+
+    r = evaluar(verdad, jsonl(evento([pred])))
+
+    assert r["input_integrity_ok"]
+    assert (r["micro"]["tp"], r["micro"]["fp"], r["micro"]["fn"]) == (1, 0, 0)
+    clase = r["per_class"][nombre]
+    assert (clase["tp"], clase["fp"], clase["fn"], clase["support"]) == (1, 0, 0, 1)
+    assert clase["precision"] == clase["recall"] == clase["f1"] == 1
+
+
+@pytest.mark.parametrize(
+    "ids_gt", [{"person": 0, "cat": 15, "dog": 16}, {"person": 1, "cat": 17, "dog": 18}]
+)
+def test_tres_clases_juntas_no_se_cruzan_por_los_ids_del_export(ids_gt):
+    verdad = gt(
+        [(1, "person", [0, 0, 10, 10]), (1, "cat", [20, 0, 10, 10]), (1, "dog", [40, 0, 10, 10])]
+    )
+    verdad["categories"] = [{"id": ids_gt[n], "name": n} for n in ("dog", "cat", "person")]
+    for anotacion, nombre in zip(verdad["annotations"], ("person", "cat", "dog"), strict=True):
+        anotacion["category_id"] = ids_gt[nombre]
+    pred = [
+        {"class_name": "person", "class_id": 0, "confidence": 0.9, "bbox": [0, 0, 10, 10]},
+        {"class_name": "cat", "class_id": 15, "confidence": 0.8, "bbox": [20, 0, 30, 10]},
+        {"class_name": "dog", "class_id": 16, "confidence": 0.7, "bbox": [40, 0, 50, 10]},
+    ]
+
+    r = evaluar(verdad, jsonl(evento(pred)))
+
+    assert r["input_integrity_ok"]
+    assert (r["micro"]["tp"], r["micro"]["fp"], r["micro"]["fn"]) == (3, 0, 0)
+    assert r["micro"]["precision"] == r["micro"]["recall"] == r["micro"]["f1"] == 1
+    assert all(c["tp"] == c["support"] == 1 for c in r["per_class"].values())
+
+
+@pytest.mark.parametrize(("nombre", "id_export"), [("person", 1), ("cat", 17), ("dog", 18)])
+def test_ids_del_export_no_se_aceptan_como_indices_del_detector(nombre, id_export):
+    verdad = gt([(1, nombre, [0, 0, 10, 10])])
+    pred = {"class_name": nombre, "class_id": id_export, "confidence": 0.9, "bbox": [0, 0, 10, 10]}
+
+    r = evaluar(verdad, jsonl(evento([pred])))
+
+    assert not r["input_integrity_ok"]
+    assert r["frames"]["invalid"] == 1
+    assert r["micro"]["tp"] == 0 and r["micro"]["fn"] == 1
+    assert "descriptor" in r["invalid_records"][0]["errors"][0]
+
+
+@pytest.mark.parametrize(
     ("a", "b", "valor"),
     [
         ([0, 0, 10, 10], [0, 0, 10, 10], 1),

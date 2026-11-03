@@ -16,15 +16,22 @@ Desde Proyecto5, con `.venv/Scripts/python.exe -B`:
 
 | Comando | Resultado real |
 |---|---|
-| `-m pytest -p no:cacheprovider tests/test_metricas.py` | 85 passed in 0.82s |
-| `-m pytest -p no:cacheprovider` | 249 passed in 1.29s |
+| `-m pytest -p no:cacheprovider tests/test_metricas.py` | 96 passed in 0.87s |
+| `-m pytest -p no:cacheprovider` | 260 passed in 1.41s |
 | `-m ruff check --no-cache .` | All checks passed! |
 | `-m ruff format --check --no-cache .` | 20 files already formatted |
 
-La base sin cambios tenía 164 pruebas aprobadas; se añadieron 85 casos de métricas.
+La base sin cambios tenía 164 pruebas aprobadas; se añadieron 96 casos de métricas.
 Las pruebas no cargan pesos, conectan con el vehículo ni requieren internet.
 Incluyen un subprocess real de `python -m p5.metricas`, dos ejecuciones con
 salidas byte a byte idénticas y protección contra sobrescritura.
+
+La aclaración de clases añadió once regresiones: cada clase con GT 0/15/16 y
+1/17/18 (seis casos), las tres simultáneas con cada esquema (dos casos, TP=3,
+FP=0, FN=0) y rechazo de las tres combinaciones nombre/índice de detector
+incoherentes. Son casos SINTÉTICOS en memoria; no se crean anotaciones reales.
+La identidad GT se obtiene de categories[].name, independientemente del orden
+del arreglo y sin comparar category_id con class_id.
 
 ## Corrida CLI SINTÉTICA
 
@@ -78,6 +85,8 @@ para evaluar los 78 cuadros definitivos de #57. Los cuatro ejemplos reales de
 Faltan COCO/manifiesto/HASHES.sha256/commit de Emilio, JSONL completo y referencias
 de modelo/config de Edith, ejecución real y recálculo por Sebastián. Los siete
 cuadros de ajuste y los descartes quedan fuera de la evaluación.
+Emilio confirmó que accede a las 78 fotografías y está comenzando las anotaciones,
+según la comunicación del operador; esto aún no constituye el congelado definitivo.
 
 Los datos locales previos de #57 que aparecen no versionados tras cambiar de rama
 se conservan fuera del staging. Solo se seleccionan las rutas de métricas y esta

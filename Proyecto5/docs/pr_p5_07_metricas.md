@@ -40,9 +40,15 @@ positivos, cinco fuera de riesgo), y de Edith el JSONL real y referencia de
 modelo/config. El soporte mide objetos anotados, no imágenes positivas.
 No usar siete cuadros de ajuste ni la selección antigua de 84.
 
+Emilio confirmó acceso a las 78 fotografías y está comenzando las anotaciones.
+La comparación de clases usa nombres canónicos: los category_id del export
+(por ejemplo 1/17/18) se traducen con categories; las predicciones conservan
+los índices del descriptor 0/15/16. Ambos esquemas tienen pruebas de regresión.
+
 La corrida real producirá `resultados/metricas.json` y el PM deberá recalcular
 las cifras antes de cerrar #59. Mantener «Parte de #59» mientras falte esa
-evidencia; cambiar a «Closes #59» únicamente al completar y aprobar los criterios.
+evidencia; agregar una referencia de cierre automático únicamente al completar
+y aprobar todos los criterios.
 
 Este trabajo parte de origin/main, no de p5-05-capturas. No incluye fotografías,
 CSV ni commits propios de #57. No conecta con vehículo, motores o servicios externos.

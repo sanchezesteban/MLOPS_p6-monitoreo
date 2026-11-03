@@ -50,6 +50,10 @@ prueba por sí solo que sean los 78 correctos: cotejar manifiesto, hashes y comm
   no por número del export. Se evalúan todas las cajas person/cat/dog, incluidas
   laterales y fuera de riesgo; otras clases se contabilizan fuera del alcance.
   crowd/ignore se rechazan: no se implementan COCO AP ni sus regiones ignoradas.
+- Las numeraciones GT `0=person, 15=cat, 16=dog` y `1=person, 17=cat, 18=dog`
+  producen los mismos emparejamientos al traducir por `categories[].name`.
+  Los IDs GT nunca se comparan con los índices del detector. Las pruebas cubren
+  ambas numeraciones por clase y con las tres clases simultáneas.
 - JSONL: un evento v1 por imagen validado con `validar_evento`; índices COCO
   person=0, cat=15, dog=16. Se verifica clase/índice para estas clases y se cuentan
   aparte las demás detecciones válidas. No se añade filtro de confianza ni NMS.
@@ -143,7 +147,7 @@ Estado consultado el 2026-11-03:
 | [#53](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/53) | Cerrado; v1 integrado | Nada para pruebas de software |
 | [#56](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/56) | Abierto; [PR #81](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/81) abierto sin fusionar | JSONL de los 78 cuadros y configuración/modelo usados |
 | [PR #80](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/80) | Descriptor disponible, abierto sin fusionar | Integración del detector, sin copiar su código aquí |
-| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Abierto; COCO/manifiesto congelados no encontrados en main ni en entradas disponibles | COCO definitivo, manifiesto, HASHES.sha256, commit y correspondencia |
+| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Emilio confirmó acceso a las 78 fotografías y está comenzando las anotaciones, según comunicación del operador; aún no se recibieron insumos congelados | COCO definitivo, manifiesto, HASHES.sha256, commit y correspondencia |
 | [#57 / PR #79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79) | Entrega separada, 78 evaluación y 7 ajuste | Anotar exactamente la selección autorizada |
 
 La evidencia de cuatro imágenes de #81 no sustituye la evaluación completa.

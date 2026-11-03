@@ -18,6 +18,7 @@ from typing import Any
 
 from p5.contrato import SCHEMA_VERSION, SCHEMAS_DIR, ContratoError, validar_evento
 
+# Indices del descriptor del detector de Edith (PR #80), no category_id del GT.
 CLASES = {"person": 0, "cat": 15, "dog": 16}
 VERSION = "p5-07/1.0"
 
@@ -113,6 +114,7 @@ def _coco(data: Any) -> list[dict]:
         _exigir(type(data["info"]["synthetic"]) is bool, "info.synthetic debe ser booleano")
     for campo in ("images", "annotations", "categories"):
         _exigir(isinstance(data.get(campo), list), f"COCO requiere lista {campo}")
+    # El export COCO define su propia numeracion; la identidad comun es el nombre.
     categorias: dict = {}
     nombres: set = set()
     for cat in data["categories"]:
@@ -233,7 +235,8 @@ def _predicciones(texto: str) -> list[dict]:
             for det in ev.detections:
                 if det.class_name in CLASES or det.class_id in CLASES.values():
                     _exigir(
-                        CLASES.get(det.class_name) == det.class_id, "class_name/class_id no COCO"
+                        CLASES.get(det.class_name) == det.class_id,
+                        "class_name/class_id no coincide con descriptor: person=0, cat=15, dog=16",
                     )
         except (EntradaError, ContratoError) as exc:
             registro["errors"].append(str(exc))
