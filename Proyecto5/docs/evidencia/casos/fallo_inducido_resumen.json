@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generado_utc": "2026-11-02T23:00:34+00:00",
-  "config_sha256": "4569e5b4899ae4a01f9cb54e8c7f0df5eb855190b7a6dbb96e52de159917914e",
+  "generado_utc": "2026-11-03T13:51:54+00:00",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
   "casos": [
     {
       "id": "C08",
@@ -9,8 +9,8 @@
       "tipo": "sintetico",
       "estado": "fail",
       "expectativa": "casos_fallo/expectativas/C08.yaml",
-      "expectativa_sha256": "ceab1a32e6a3aab5efa1011435c79734e509d8880881d7e9b3978926049db759",
-      "pasos": 6,
+      "expectativa_sha256": "a7866e8fa7b8b8fa94a71d1c9b1ce28be0414fca4911531aa979f8fdc3319b05",
+      "pasos": 5,
       "fallos": [
         "c08_f0004: accion STOP no permitida (esperaba ['FORWARD'])"
       ],

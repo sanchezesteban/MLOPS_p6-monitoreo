@@ -668,36 +668,53 @@ def correr_caso(
     )
 
 
-class _RelojSimulado:
-    """Reloj compartido por el ejecutor y el adaptador; solo avanza cuando el runner lo pide."""
+class _PoliticaGrabada:
+    """Envuelve la politica para conservar cada `Decision` en `decisiones.jsonl`."""
 
-    def __init__(self) -> None:
-        self._ms = 0.0
+    def __init__(self, politica: Any, registro: list[dict[str, Any]]) -> None:
+        self._politica = politica
+        self._registro = registro
 
-    def avanzar(self, t_ms: float) -> None:
-        self._ms = float(t_ms)
+    @property
+    def estado(self) -> str:
+        return self._politica.estado
 
-    def ahora_ms(self) -> float:
-        return self._ms
+    def decidir(self, evento: PerceptionEvent) -> Any:
+        decision = self._politica.decidir(evento)
+        self._registro.append(asdict(decision))
+        return decision
+
+    def detener(self, event: str, razon: str) -> Any:
+        decision = self._politica.detener(event, razon)
+        self._registro.append(asdict(decision))
+        return decision
 
 
-def _vencimiento_ms(config_path: Path | None) -> float:
-    if config_path is None or not config_path.is_file():
-        return 300.0
+def _contar_lineas(log_path: Path) -> int:
+    if not log_path.is_file():
+        return 0
+    return len([linea for linea in log_path.read_text(encoding="utf-8").splitlines() if linea])
+
+
+def _comando_nuevo(log_path: Path, antes: int) -> dict[str, Any] | None:
+    if not log_path.is_file():
+        return None
+    lineas = [linea for linea in log_path.read_text(encoding="utf-8").splitlines() if linea]
+    if len(lineas) <= antes:
+        return None
     try:
-        datos = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-    except (OSError, yaml.YAMLError) as exc:
-        raise CasoInvalidoError(f"{config_path}: no se pudo leer ({exc})") from exc
-    valor = datos.get("vencimiento_ms") if isinstance(datos, dict) else None
-    return float(valor) if isinstance(valor, int | float) and valor > 0 else 300.0
+        datos = json.loads(lineas[-1])
+    except json.JSONDecodeError:
+        return None
+    return datos if isinstance(datos, dict) else None
 
 
 class EjecutorPolitica:
-    """Ejecutor real: politica de P5-10 + adaptador virtual de P5-11.
+    """Ejecutor real: politica de P5-10, adaptador de P5-11 y watchdog de P5-12.
 
-    El watchdog/emergencia/rearme definitivos llegan con P5-12 (#64). Mientras tanto,
-    `emergencia` se enclava en este ejecutor y `watchdog`/`cierre` usan `Politica.detener`,
-    que ya forma parte de la politica aprobada en #73. No se duplica la politica.
+    El watchdog arma el `Command`, aplica vencimientos, enclava la emergencia y
+    registra el cierre. El runner solo avanza el reloj y traduce cada accion a un
+    `Paso` con el comando que quedo en la bitacora del adaptador.
     """
 
     def __init__(
@@ -711,108 +728,113 @@ class EjecutorPolitica:
         try:
             from p5.control import AdaptadorVirtual
             from p5.politica import Politica, cargar_config
+            from p5.watchdog import RelojControlado, Watchdog
+            from p5.watchdog import cargar_config as cargar_config_watchdog
         except ImportError as exc:
             raise RuntimeError(
-                "faltan p5.politica y/o p5.control; mergea #73 y #74 antes de usar el ejecutor real"
+                "faltan p5.politica, p5.control y/o p5.watchdog; mergea #73, #74 y #76 "
+                "antes de usar el ejecutor real"
             ) from exc
 
-        self._politica = Politica(cargar_config(config_path))
-        self._reloj = _RelojSimulado()
-        self._controlador = AdaptadorVirtual(log_path, run_id, reloj=self._reloj.ahora_ms)
+        self._politica_base = Politica(cargar_config(config_path))
+        self._decisiones: list[dict[str, Any]] = []
+        self._politica = _PoliticaGrabada(self._politica_base, self._decisiones)
+        self._reloj = RelojControlado()
+        self._controlador = AdaptadorVirtual(log_path, run_id, reloj=self._reloj)
         self._log_path = log_path
         self._run_id = run_id
-        self._vencimiento = _vencimiento_ms(control_config)
-        self._emergencia = False
+        self._watchdog = Watchdog(
+            self._politica,
+            self._controlador,
+            self._reloj,
+            cargar_config_watchdog(control_config or Path("config/watchdog.yaml")),
+            run_id,
+        )
         self._cerrado = False
 
     def avanzar(self, t_ms: float) -> None:
-        self._reloj.avanzar(t_ms)
+        delta = float(t_ms) - self._reloj()
+        if delta < 0:
+            raise CasoInvalidoError(
+                f"el reloj no puede retroceder: {t_ms} ms despues de {self._reloj()} ms"
+            )
+        self._reloj.avanzar(delta)
 
-    def _comando(self, decision: Any, t_ms: float, paso_id: str, tipo: str) -> Paso:
-        mueve = decision.action != "STOP"
-        datos = {
-            "schema_version": "1.0",
-            "run_id": self._run_id,
-            "frame_id": decision.frame_id,
-            "event": decision.event,
-            "detections_ref": decision.detections_ref,
-            "state_before": decision.state_before,
-            "state_after": decision.state_after,
-            "action": decision.action,
-            "reason": decision.reason,
-            "speed": decision.speed,
-            "steering": decision.steering,
-            "t_decision_ms": t_ms,
-            "t_command_ms": t_ms,
-            "valid_until_ms": t_ms + self._vencimiento if mueve else None,
-            "received": True,
-            "error": None,
-            "synthetic": decision.synthetic,
-        }
-        self._controlador.enviar(datos)
-        # Se usa el comando que quedo en la bitacora: si el adaptador lo rechazo,
-        # observamos el STOP seguro, no el comando original.
-        observado = _ultimo_comando(self._log_path) or datos
+    def _capturar(self, accion: Any, paso_id: str, tipo: str, t_ms: float) -> Paso:
+        antes_comandos = _contar_lineas(self._log_path)
+        antes_decisiones = len(self._decisiones)
+        accion()
+        comando = _comando_nuevo(self._log_path, antes_comandos)
+        decision = (
+            self._decisiones[antes_decisiones] if len(self._decisiones) > antes_decisiones else None
+        )
         return Paso(
             id=paso_id,
             tipo=tipo,
             t_ms=t_ms,
-            comando=observado,
-            decision=asdict(decision),
+            comando=comando,
+            decision=decision,
         )
 
     def cuadro(self, evento: PerceptionEvent) -> Paso:
-        if self._emergencia:
-            decision = self._politica.detener("emergencia_activa", "emergencia_activa")
-        else:
-            decision = self._politica.decidir(evento)
-        return self._comando(decision, evento.t_capture_ms, evento.frame_id, "cuadro")
+        return self._capturar(
+            lambda: self._watchdog.procesar_evento(evento),
+            evento.frame_id,
+            "cuadro",
+            evento.t_capture_ms,
+        )
 
     def control(self, evento: dict[str, Any]) -> Paso:
         tipo = str(evento.get("tipo"))
         paso_id = str(evento.get("id", tipo))
         t_ms = float(evento.get("t_ms", 0))
         if tipo == "watchdog":
-            decision = self._politica.detener("watchdog", str(evento.get("razon", "watchdog")))
-            return self._comando(decision, t_ms, paso_id, "watchdog")
+            return self._capturar(lambda: self._watchdog.tick(), paso_id, "watchdog", t_ms)
         if tipo == "emergencia":
-            self._emergencia = True
-            decision = self._politica.detener("emergencia", str(evento.get("razon", "emergencia")))
-            return self._comando(decision, t_ms, paso_id, "emergencia")
+            razon = str(evento.get("razon", "emergencia"))
+            return self._capturar(
+                lambda: self._watchdog.emergencia(razon), paso_id, "emergencia", t_ms
+            )
         if tipo == "rearme":
-            if evento.get("valido") is True:
-                self._emergencia = False
-            return Paso(id=paso_id, tipo="rearme", t_ms=t_ms)
+            if evento.get("valido") is not True:
+                return Paso(id=paso_id, tipo="rearme", t_ms=t_ms)
+            return self._capturar(self._watchdog.rearme, paso_id, "rearme", t_ms)
         if tipo == "cierre":
-            self._controlador.cerrar()
+            paso = self._capturar(self._watchdog.cerrar, paso_id, "cierre", t_ms)
             self._cerrado = True
-            comando = _ultimo_comando(self._log_path)
-            return Paso(id=paso_id, tipo="cierre", t_ms=t_ms, comando=comando)
+            return paso
         raise CasoInvalidoError(f"evento de control desconocido: {tipo!r}")
 
     def fallo(self, t_ms: float, razon: str, paso_id: str) -> Paso:
-        decision = self._politica.detener("error_percepcion", razon)
-        paso = self._comando(decision, t_ms, paso_id, "cuadro_invalido")
+        # El contrato no permite pasar un evento invalido: se representa como un
+        # error de percepcion valido, conservando el frame_id para la trazabilidad.
+        evento = PerceptionEvent(
+            schema_version="1.0",
+            run_id=self._run_id,
+            sequence_id=paso_id.split("_")[0],
+            frame_id=paso_id,
+            t_capture_ms=t_ms,
+            image_path=None,
+            image_sha256=None,
+            image_width=None,
+            image_height=None,
+            model_sha256=HASH_CERO,
+            config_sha256=HASH_CERO,
+            status="error",
+            error_msg=razon,
+            synthetic=True,
+            detections=(),
+        )
+        paso = self._capturar(
+            lambda: self._watchdog.procesar_evento(evento), paso_id, "cuadro_invalido", t_ms
+        )
         paso.error = razon
         return paso
 
     def cerrar(self) -> None:
         if not self._cerrado:
-            self._controlador.cerrar()
+            self._watchdog.cerrar()
             self._cerrado = True
-
-
-def _ultimo_comando(log_path: Path) -> dict[str, Any] | None:
-    if not log_path.is_file():
-        return None
-    lineas = [linea for linea in log_path.read_text(encoding="utf-8").splitlines() if linea]
-    if not lineas:
-        return None
-    try:
-        datos = json.loads(lineas[-1])
-    except json.JSONDecodeError:
-        return None
-    return datos if isinstance(datos, dict) else None
 
 
 def fabrica_real(

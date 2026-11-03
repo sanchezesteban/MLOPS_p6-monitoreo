@@ -23,5 +23,4 @@ entrada:
       status: stale
       error_msg: "cuadro vencido: 450 ms > max_frame_age_ms 300"
       detections: []
-    - {tipo: watchdog, id: watchdog_2, t_ms: 1000, razon: sin_cuadros}
 expectativa: expectativas/C08.yaml

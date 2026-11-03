@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generado_utc": "2026-11-02T22:59:56+00:00",
-  "config_sha256": "4569e5b4899ae4a01f9cb54e8c7f0df5eb855190b7a6dbb96e52de159917914e",
+  "generado_utc": "2026-11-03T13:51:51+00:00",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
   "casos": [
     {
       "id": "C08",
@@ -9,8 +9,8 @@
       "tipo": "sintetico",
       "estado": "pass",
       "expectativa": "casos/expectativas/C08.yaml",
-      "expectativa_sha256": "7c958cb6d4225d1e30f0a143f9c2b197e36fd5e20c537b20c43e6959a4f35caf",
-      "pasos": 6,
+      "expectativa_sha256": "e08fa504ffaa52c8e7cf098a15ae06cc1bb84e6153d57e3569d847a0c58c0bad",
+      "pasos": 5,
       "fallos": [],
       "error": null,
       "comandos": "C08/comandos.jsonl"
@@ -33,7 +33,7 @@
       "tipo": "sintetico",
       "estado": "pass",
       "expectativa": "casos/expectativas/C10.yaml",
-      "expectativa_sha256": "c0a4b45d3771b9a64380b29aa5aa3c0701b01375edbfe5d785f57cd162a2d5ab",
+      "expectativa_sha256": "727847427cf8ec398078c56cb676f75a2e30a95d7e32c3412b5a0d76dc5ffecc",
       "pasos": 11,
       "fallos": [],
       "error": null,

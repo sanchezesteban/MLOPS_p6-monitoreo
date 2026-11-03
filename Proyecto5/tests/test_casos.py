@@ -49,8 +49,6 @@ class EjecutorGuionizado:
     def control(self, evento: dict) -> Paso:
         tipo = evento["tipo"]
         paso_id = evento["id"]
-        if tipo == "rearme":
-            return Paso(paso_id, "rearme", self.t_ms)
         if tipo == "cierre":
             return Paso(
                 paso_id,

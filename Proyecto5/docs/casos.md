@@ -4,10 +4,9 @@ Ejecuta los diez casos con un solo comando y sale con código 1 si una expectati
 cumple. El runner usa **la misma política y el mismo adaptador** que la aplicación; las
 expectativas se leen aparte y nunca se pasan a la política ni al detector.
 
-> **Estado:** C08–C10 ya están definidos y el runner funciona con casos sintéticos. La
-> integración con el watchdog/emergencia de P5-12 (#64) y el replay de C01–C07 reales
-> (P5-15/P5-06) quedan pendientes de sus issues. No se presenta evidencia de esos casos
-> hasta que corran contra el código real.
+> **Estado:** C08–C10 están definidos y corren contra la política de #73, el adaptador de
+> #74 y el watchdog de #76, ya mergeados en `main`. El replay de C01–C07 reales sigue
+> pendiente de P5-15/P5-06 y de los eventos del detector (#56).
 
 ## Uso
 
@@ -175,14 +174,11 @@ se prueba cuando #73, #74 y #64 estén mergeados.
 ## Evidencia de la primera corrida
 
 [`docs/evidencia/casos/`](evidencia/casos/README.md) guarda la corrida de C08–C10 contra
-la política de #73 y el adaptador de #74 combinados en un worktree temporal, más la salida
-del fallo inducido sobre una copia de la expectativa de C08. Es evidencia de avance: la
-corrida definitiva se repite en `main` cuando esos PRs y #64 estén mergeados.
+la política, el adaptador y el watchdog ya mergeados en `main`, más la salida del fallo
+inducido sobre una copia de la expectativa de C08.
 
 ## Pendientes para cerrar P5-13
 
-1. Integrar el watchdog, el vencimiento, la emergencia y el rearme reales de P5-12 (#64).
-2. Reemplazar los valores provisionales de tiempos por `config/control.yaml` de #64.
-3. Recibir `datos/eventos/seq01.jsonl` … `seq06.jsonl` y `cuadros.csv` congelado de
+1. Recibir `datos/eventos/seq01.jsonl` … `seq06.jsonl` y `cuadros.csv` congelado de
    P5-06/P5-15.
-4. Correr C01–C10 completos y guardar la evidencia en `docs/evidencia/casos/`.
+2. Correr C01–C10 completos y guardar la evidencia en `docs/evidencia/casos/`.

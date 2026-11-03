@@ -7,6 +7,7 @@ pasos:
   - {id: emergencia_1, acciones_permitidas: [STOP], motivo: emergencia}
   - {id: c10_f0004, acciones_permitidas: [STOP], motivo: emergencia_enclavada}
   - {id: c10_f0005, acciones_permitidas: [STOP], motivo: emergencia_enclavada}
+  - {id: rearme_1, acciones_permitidas: [STOP], motivo: rearme}
   - {id: c10_f0006, acciones_permitidas: [STOP], motivo: histeresis_tras_rearme}
   - {id: c10_f0007, acciones_permitidas: [STOP], motivo: histeresis_tras_rearme}
   - {id: c10_f0008, acciones_permitidas: [FORWARD, STOP], motivo: reanudacion_tras_rearme}

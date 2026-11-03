@@ -1,8 +1,8 @@
 # Evidencia del runner de casos (P5-13)
 
-Corrida del **2 nov 2026** con `p5.casos` contra la política de P5-10 (PR #73) y el
-adaptador virtual de P5-11 (PR #74), combinados en un worktree temporal mientras esos
-PRs se mergean. Los casos C08–C10 son sintéticos; no usan detector ni datos reales.
+Corrida del **3 nov 2026** con `p5.casos` contra la política de P5-10 (#73), el
+adaptador virtual de P5-11 (#74) y el watchdog de P5-12 (#76), ya mergeados en `main`.
+Los casos C08–C10 son sintéticos; no usan detector ni datos reales.
 
 ```bash
 cd Proyecto5
@@ -33,7 +33,6 @@ Archivos:
 
 ## Pendiente
 
-- Repetir la corrida en `main` cuando #73, #74 y #64 estén mergeados.
-- Integrar el watchdog/emergencia reales de #64 en C08 y C10.
+- Repetir la corrida cuando se mergee la integración final de #65.
 - Agregar C01–C07 reales cuando existan `datos/eventos/seqXX.jsonl` y el
   `cuadros.csv` congelado de P5-06/P5-15.
