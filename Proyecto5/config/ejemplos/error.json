@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-ejemplo-001",
+  "sequence_id": "seq01",
+  "frame_id": "seq01_f0009",
+  "t_capture_ms": 900,
+  "image_path": "cuadros/seq01/f0009.jpg",
+  "image_sha256": null,
+  "image_width": null,
+  "image_height": null,
+  "model_sha256": "a7d41259ca50e264255390c00e6bc74c7997cf3d3498671142dd2a226a18824c",
+  "config_sha256": "b06564034b497a22717e0b906e39fbe21c113b53cf45b156c7e94afd28f5549e",
+  "status": "error",
+  "error_msg": "imagen ilegible: no se pudo decodificar el JPEG",
+  "synthetic": false,
+  "detections": []
+}

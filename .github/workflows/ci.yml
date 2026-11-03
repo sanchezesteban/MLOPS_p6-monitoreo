@@ -99,7 +99,8 @@ jobs:
 
   smoke:
     name: Arranque desde cero + navegador
-    runs-on: ubuntu-latest
+    # Playwright fijado en el lockfile admite 24.04; ubuntu-latest pasó a 26.04.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: Proyecto2

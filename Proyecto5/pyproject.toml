@@ -1,0 +1,15 @@
+# Configuracion de pruebas y estilo del codigo de Proyecto 5 (`src/p5`).
+# Dependencias fijadas en `requirements.txt`.
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "scripts"]
+addopts = "-q"

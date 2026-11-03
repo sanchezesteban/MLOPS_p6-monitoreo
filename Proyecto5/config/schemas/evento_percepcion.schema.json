@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p5/evento_percepcion/1.0",
+  "title": "Evento de percepcion v1 (grupo A -> grupo B)",
+  "description": "Un mensaje por cuadro. Reglas entre campos en config/contrato_v1.md y p5.contrato.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "sequence_id", "frame_id", "t_capture_ms",
+    "image_path", "image_sha256", "image_width", "image_height",
+    "model_sha256", "config_sha256", "status", "error_msg", "synthetic", "detections"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "sequence_id": {"type": "string", "minLength": 1},
+    "frame_id": {"type": "string", "minLength": 1},
+    "t_capture_ms": {"type": "number", "minimum": 0},
+    "image_path": {"type": ["string", "null"], "minLength": 1},
+    "image_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "image_width": {"type": ["integer", "null"], "minimum": 1},
+    "image_height": {"type": ["integer", "null"], "minimum": 1},
+    "model_sha256": {"$ref": "#/$defs/sha256"},
+    "config_sha256": {"$ref": "#/$defs/sha256"},
+    "status": {"enum": ["ok", "stale", "error"]},
+    "error_msg": {"type": ["string", "null"]},
+    "synthetic": {"type": "boolean"},
+    "detections": {"type": "array", "items": {"$ref": "#/$defs/detection"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class_name", "class_id", "confidence", "bbox"],
+      "properties": {
+        "class_name": {"type": "string", "minLength": 1},
+        "class_id": {"type": "integer", "minimum": 0},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "bbox": {
+          "description": "xyxy en pixeles del cuadro original",
+          "type": "array",
+          "items": {"type": "number", "minimum": 0},
+          "minItems": 4,
+          "maxItems": 4
+        }
+      }
+    }
+  }
+}

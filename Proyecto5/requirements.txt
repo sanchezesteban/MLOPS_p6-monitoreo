@@ -1,0 +1,27 @@
+# Dependencias de Proyecto 5 con versiones fijadas (CPU).
+# Árbol completo resuelto con `pip freeze` en Python 3.12 el 31 oct de 2026.
+onnxruntime==1.30.0
+numpy==2.5.3
+pillow==12.3.0
+PyYAML==6.0.3
+jsonschema==4.23.0
+pytest==8.3.3
+
+# Indirectas de jsonschema
+attrs==26.1.0
+jsonschema-specifications==2025.9.1
+referencing==0.37.0
+rpds-py==2026.9.1
+typing_extensions==4.16.0
+
+# Indirectas de onnxruntime
+flatbuffers==25.12.19
+protobuf==7.36.2
+
+# Indirectas de pytest (packaging también la usa onnxruntime)
+iniconfig==2.3.1
+packaging==26.3
+pluggy==1.7.0
+
+# Desarrollo y CI
+ruff==0.16.8

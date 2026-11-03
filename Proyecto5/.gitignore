@@ -1,4 +1,3 @@
-# Reglas vigentes de main, conservadas.
 # Pesos: se distribuyen por enlace con SHA-256, no en Git
 *.onnx
 
@@ -18,10 +17,6 @@ venv/
 .DS_Store
 
 # Reglas adicionales de P5-05.
-.venv/
-__pycache__/
-.ruff_cache/
-.pytest_cache/
 datos/**/.captura.lock
 
 # Conservar fuentes, pruebas y respaldos locales fuera de la entrega.

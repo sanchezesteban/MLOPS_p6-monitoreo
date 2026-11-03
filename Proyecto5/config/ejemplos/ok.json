@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-ejemplo-001",
+  "sequence_id": "seq01",
+  "frame_id": "seq01_f0007",
+  "t_capture_ms": 700,
+  "image_path": "cuadros/seq01/f0007.jpg",
+  "image_sha256": "4b597c6b5d5a9f926c06fbe077926b90921e1678e4446ad3a4722093b100f611",
+  "image_width": 640,
+  "image_height": 480,
+  "model_sha256": "a7d41259ca50e264255390c00e6bc74c7997cf3d3498671142dd2a226a18824c",
+  "config_sha256": "b06564034b497a22717e0b906e39fbe21c113b53cf45b156c7e94afd28f5549e",
+  "status": "ok",
+  "error_msg": null,
+  "synthetic": false,
+  "detections": [
+    {
+      "class_name": "person",
+      "class_id": 0,
+      "confidence": 0.91,
+      "bbox": [
+        250.0,
+        120.0,
+        390.0,
+        470.0
+      ]
+    },
+    {
+      "class_name": "chair",
+      "class_id": 56,
+      "confidence": 0.62,
+      "bbox": [
+        20.0,
+        260.0,
+        140.0,
+        300.0
+      ]
+    }
+  ]
+}
