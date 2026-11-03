@@ -23,7 +23,7 @@ La política es un módulo puro. Decide **solo** con el evento de percepción y 
 
 | Parámetro | Valor | Justificación |
 |---|---:|---|
-| `clases_obstaculo` | person, dog, cat | Clases acordadas por los PM con el detector elegido (P5-03), con los nombres COCO que entrega el detector. Otro objeto no se trata como obstáculo (límite conocido) |
+| `clases_obstaculo` | person, dog, cat | Clases acordadas por los PM; el detector de P5-03 (#55) debe entregarlas con estos nombres COCO. Otro objeto no se trata como obstáculo (límite conocido) |
 | `confianza.umbral` | 0.50 | Desde aquí la detección es un obstáculo cierto y puede detener al auto |
 | `confianza.minimo_incierto` | 0.30 | Entre 0.30 y 0.50 la detección es incierta: reduce la velocidad, pero no detiene ni libera. Debajo de 0.30 se ignora |
 | `zonas.limite_izquierda` / `limite_derecha` | 1/3 y 2/3 del ancho | Los mismos tercios del contrato v1 |
