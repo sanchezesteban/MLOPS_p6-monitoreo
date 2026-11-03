@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 from p5.contrato import validar_comando
-from p5.control import AdaptadorVirtual, construir_controlador
+from p5.control import AdaptadorVirtual, construir_controlador, reloj_monotonico
 
 EJEMPLOS = Path(__file__).resolve().parents[1] / "config" / "ejemplos"
 
@@ -82,7 +82,7 @@ COMANDOS_INVALIDOS = {
 @pytest.mark.parametrize("caso", sorted(COMANDOS_INVALIDOS))
 def test_comando_invalido_no_se_ejecuta_y_termina_en_stop(tmp_path, caso):
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=_reloj_fijo(900.0))
     base = copy.deepcopy(ejemplo("comando_forward"))
     COMANDOS_INVALIDOS[caso](base)
 
@@ -131,7 +131,8 @@ def test_stop_despues_de_un_comando_arrastra_el_ultimo_estado(tmp_path):
 
 
 def test_cerrar_es_idempotente(tmp_path):
-    adaptador = AdaptadorVirtual(tmp_path / "comandos.jsonl", run_id="run-test")
+    log_path = tmp_path / "comandos.jsonl"
+    adaptador = AdaptadorVirtual(log_path, run_id="run-test", reloj=_reloj_fijo(0.0))
     adaptador.cerrar()
     adaptador.cerrar()  # no debe lanzar
 
@@ -155,7 +156,7 @@ def test_cerrar_siempre_registra_stop_shutdown(tmp_path, ejemplo_previo):
 
 def test_enviar_y_stop_despues_de_cerrar_se_ignoran_sin_lanzar(tmp_path):
     log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001", reloj=_reloj_fijo(0.0))
     adaptador.cerrar()  # nada que detener todavia: igual escribe el shutdown
 
     adaptador.enviar(ejemplo("comando_forward"))  # no debe lanzar
@@ -184,20 +185,17 @@ def test_tiempos_del_reloj_inyectado_quedan_en_orden_cronologico(tmp_path):
     assert cierre["t_command_ms"] > vencimiento["t_command_ms"]
 
 
-def test_reloj_por_defecto_es_monotonico_no_el_de_pared(tmp_path):
-    log_path = tmp_path / "comandos.jsonl"
-    adaptador = AdaptadorVirtual(log_path, run_id="run-ejemplo-001")
+def test_reloj_monotonico_es_monotonico_no_el_de_pared():
+    reloj = reloj_monotonico()
 
-    adaptador.stop("prueba", event="watchdog")
-
-    (linea,) = leer_lineas(log_path)
-    # recien creado: milisegundos desde la construccion, nunca epoca (~1.7e12)
-    assert linea["t_command_ms"] < 1000
+    # recien creado: milisegundos desde la llamada, nunca epoca (~1.7e12)
+    assert reloj() < 1000
+    assert reloj() >= 0
 
 
 def test_construir_controlador_virtual_devuelve_adaptador_virtual(tmp_path):
     controlador = construir_controlador(
-        "virtual", log_path=tmp_path / "comandos.jsonl", run_id="run-test"
+        "virtual", log_path=tmp_path / "comandos.jsonl", run_id="run-test", reloj=_reloj_fijo(0.0)
     )
     assert isinstance(controlador, AdaptadorVirtual)
     controlador.cerrar()
@@ -205,9 +203,16 @@ def test_construir_controlador_virtual_devuelve_adaptador_virtual(tmp_path):
 
 def test_construir_controlador_real_no_esta_implementado_y_no_importa_nada(tmp_path):
     with pytest.raises(NotImplementedError):
-        construir_controlador("real", log_path=tmp_path / "comandos.jsonl", run_id="run-test")
+        construir_controlador(
+            "real", log_path=tmp_path / "comandos.jsonl", run_id="run-test", reloj=_reloj_fijo(0.0)
+        )
 
 
 def test_construir_controlador_modo_desconocido_lanza_value_error(tmp_path):
     with pytest.raises(ValueError, match="modo desconocido"):
-        construir_controlador("fantasia", log_path=tmp_path / "comandos.jsonl", run_id="run-test")
+        construir_controlador(
+            "fantasia",
+            log_path=tmp_path / "comandos.jsonl",
+            run_id="run-test",
+            reloj=_reloj_fijo(0.0),
+        )

@@ -148,6 +148,20 @@ def test_tick_detecta_perdida_de_cuadros_sin_cuadro_nuevo(wd, adaptador, reloj):
     assert ultima["reason"] == "sin_cuadros_recientes"
 
 
+def test_tick_no_repite_el_stop_mientras_sigue_sin_cuadros(wd, adaptador, reloj):
+    reloj.avanzar(100.0)
+    wd.procesar_evento(evento(reloj(), i=0))
+    reloj.avanzar(301.0)
+    wd.tick()  # primer STOP: entra a FALLA
+    antes = len(leer_lineas(adaptador._log_path))
+
+    reloj.avanzar(1000.0)  # sigue sin cuadros nuevos, mucho mas vencido todavia
+    wd.tick()
+    wd.tick()
+
+    assert len(leer_lineas(adaptador._log_path)) == antes  # no repite: ya estaba en FALLA
+
+
 def test_tick_detecta_vencimiento_del_comando_en_curso(wd, adaptador, reloj):
     liberar(wd, reloj, 3)
 

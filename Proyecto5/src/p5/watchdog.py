@@ -165,8 +165,12 @@ class Watchdog:
 
     def tick(self, ahora: float | None = None) -> None:
         """Revision periodica, sin cuadro nuevo: vencimiento del comando en curso o
-        perdida de percepcion. Quien ejecuta la aplicacion la llama cada `plazo_reaccion_ms`."""
-        if self._emergencia:
+        perdida de percepcion. Quien ejecuta la aplicacion la llama cada `plazo_reaccion_ms`.
+
+        Ya en `FALLA` no vuelve a emitir: evita repetir el mismo STOP en cada tick mientras
+        la perdida de percepcion sigue sin resolverse (un `PerceptionEvent` nuevo via
+        `procesar_evento` es lo unico que puede sacarla de ahi)."""
+        if self._emergencia or self._politica.estado == "FALLA":
             return
         ahora = self._reloj() if ahora is None else ahora
         vencio_comando = self._valid_until_ms is not None and ahora >= self._valid_until_ms
