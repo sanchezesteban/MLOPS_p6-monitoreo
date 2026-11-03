@@ -41,6 +41,23 @@ def test_ejemplo_de_run_header_es_valido():
     assert validar_run_header(ejemplo("run_header")).virtual_mode is True
 
 
+def test_campos_de_procedencia_y_replay_son_opcionales():
+    evento = validar_evento(ejemplo("ok"))
+    header = validar_run_header(ejemplo("run_header"))
+
+    assert evento.t_capture_origen_ms == 700
+    assert header.replay_dt_ms == 100
+
+    sin_replay = {k: v for k, v in ejemplo("run_header").items() if k != "replay_dt_ms"}
+    assert validar_run_header(sin_replay).replay_dt_ms is None
+
+
+def test_replay_dt_no_positivo_se_rechaza():
+    data = {**ejemplo("run_header"), "replay_dt_ms": 0}
+    with pytest.raises(ContratoError):
+        validar_run_header(data)
+
+
 def test_vacio_es_cuadro_valido_sin_objetos_y_error_no_es_via_libre():
     vacio, error = validar_evento(ejemplo("vacio")), validar_evento(ejemplo("error"))
     assert vacio.status == "ok" and vacio.detections == ()
