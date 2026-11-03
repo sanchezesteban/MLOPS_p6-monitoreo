@@ -16,16 +16,21 @@ from __future__ import annotations
 import argparse
 import hashlib
 import re
+import ssl
 import sys
 import urllib.request
 from pathlib import Path
 from typing import Any
 
+import certifi
 import yaml
 
 DESCRIPTOR = Path(__file__).resolve().parents[1] / "modelo" / "descriptor.yaml"
 BLOQUE = 1 << 20
 USER_AGENT = "p5-descargar-modelo/1.0"
+# Raices de certifi (version fijada): en Windows el almacen del sistema carga raices bajo
+# demanda y Python fallaba ~1 de cada 2 veces contra los assets de GitHub.
+TLS = ssl.create_default_context(cafile=certifi.where())
 
 
 class HashNoCoincideError(Exception):
@@ -59,7 +64,10 @@ def descargar(url: str, destino: Path, sha256: str, tamano: int) -> None:
     total = 0
     peticion = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:
-        with urllib.request.urlopen(peticion, timeout=60) as resp, tmp.open("wb") as f:
+        with (
+            urllib.request.urlopen(peticion, timeout=60, context=TLS) as resp,
+            tmp.open("wb") as f,
+        ):
             while bloque := resp.read(BLOQUE):
                 h.update(bloque)
                 total += len(bloque)
