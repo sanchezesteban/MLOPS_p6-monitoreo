@@ -54,6 +54,15 @@ ruff check .
 Las pruebas del contrato no necesitan pesos ni datos: validan los ejemplos de
 `config/ejemplos/` y rechazan los mensajes fuera de contrato.
 
+## Métricas de detección (P5-07)
+
+`PYTHONPATH=src python -m p5.metricas --gt <coco> --pred <jsonl> --iou 0.5 --salida <dir>`
+calcula TP/FP/FN, Precision/Recall/F1 y soporte por clase y micro sobre todos los
+cuadros, incluidos negativos, errores y omisiones. [Guía y comandos de Windows](docs/metricas.md),
+[casos sintéticos calculados a mano](tests/fixtures/metricas/README.md).
+La corrida real queda pendiente de COCO/manifiesto congelados (#58) y predicciones
+del detector (#56); los ejemplos no son evidencia de su desempeño.
+
 ## Estado
 
 Esqueleto inicial de la entrega (P5-02). El README final, con los comandos del detector,
