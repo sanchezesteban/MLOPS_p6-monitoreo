@@ -1,0 +1,79 @@
+{
+  "run_id": "run-real-001",
+  "ritmo_ms": 100,
+  "secuencias": {
+    "S1": {
+      "cuadros": 18,
+      "acciones": {
+        "STOP": 2,
+        "FORWARD": 16
+      },
+      "clases": {}
+    },
+    "S2": {
+      "cuadros": 17,
+      "acciones": {
+        "STOP": 8,
+        "FORWARD": 9
+      },
+      "clases": {
+        "person": 3,
+        "tv": 8,
+        "dog": 1,
+        "traffic light": 3
+      }
+    },
+    "S3": {
+      "cuadros": 13,
+      "acciones": {
+        "STEER_RIGHT": 4,
+        "FORWARD": 9
+      },
+      "clases": {
+        "person": 4,
+        "tv": 4,
+        "traffic light": 3,
+        "dog": 1
+      }
+    },
+    "S4": {
+      "cuadros": 12,
+      "acciones": {
+        "FORWARD": 8,
+        "STEER_LEFT": 4
+      },
+      "clases": {
+        "tv": 5,
+        "person": 3,
+        "dog": 3,
+        "microwave": 1,
+        "traffic light": 1
+      }
+    },
+    "S5": {
+      "cuadros": 12,
+      "acciones": {
+        "STOP": 12
+      },
+      "clases": {
+        "cat": 9,
+        "tv": 4,
+        "vase": 1,
+        "person": 13,
+        "dog": 10,
+        "teddy bear": 1
+      }
+    },
+    "S6": {
+      "cuadros": 12,
+      "acciones": {
+        "STOP": 2,
+        "FORWARD": 10
+      },
+      "clases": {
+        "tv": 2,
+        "person": 2
+      }
+    }
+  }
+}
