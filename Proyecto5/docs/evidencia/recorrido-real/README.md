@@ -59,6 +59,7 @@ Recorrido run-real-001: 84 cuadros, 84 decisiones, 85 comandos
   secuencia. Para esta evidencia se usó `--ritmo-ms 100` (provisional) hasta que el PM
   confirme el ritmo de reproducción.
 - **C9:** el runner convierte excepciones del detector y cuadros `status=error` en STOP
-  seguro; falta repetir la inyección sobre un JPEG truncado real.
+  seguro. La corrida de `fallo_detector/` usa un JPEG real truncado: el detector levanta
+  `DetectorError`, el evento sale con `status=error` y el adaptador registra STOP.
 - **Hito I1:** esta corrida ya usa una imagen real y el detector real; queda documentar la
   traza de cinco cuadros y los límites anteriores en el PR de #66.
