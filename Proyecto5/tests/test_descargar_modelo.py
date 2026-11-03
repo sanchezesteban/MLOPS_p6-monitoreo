@@ -5,10 +5,12 @@ from __future__ import annotations
 import hashlib
 from pathlib import Path
 
+import certifi
 import pytest
 import yaml
 
-from descargar_modelo import DESCRIPTOR, leer_descriptor, main
+import descargar_modelo
+from descargar_modelo import DESCRIPTOR, contexto_tls, leer_descriptor, main
 
 POLITICA = Path(__file__).resolve().parents[1] / "config" / "politica.yaml"
 CONTENIDO = b"pesos-falsos-de-prueba" * 100
@@ -95,3 +97,31 @@ def test_clases_obstaculo_coinciden_con_la_politica_y_con_su_indice_coco():
     assert set(obstaculos) == set(politica["clases_obstaculo"])
     for nombre, indice in obstaculos.items():
         assert d["clases"][indice] == nombre
+
+
+@pytest.mark.parametrize(
+    ("entorno", "esperado"),
+    [
+        ({}, "certifi"),
+        ({"REQUESTS_CA_BUNDLE": "ca_requests.pem"}, "ca_requests.pem"),
+        ({"SSL_CERT_FILE": "ca_ssl.pem", "REQUESTS_CA_BUNDLE": "ca_requests.pem"}, "ca_ssl.pem"),
+    ],
+)
+def test_raices_tls_respetan_el_proxy(monkeypatch, entorno, esperado):
+    for var in ("SSL_CERT_FILE", "REQUESTS_CA_BUNDLE"):
+        monkeypatch.delenv(var, raising=False)
+    for var, valor in entorno.items():
+        monkeypatch.setenv(var, valor)
+    usados = []
+    monkeypatch.setattr(
+        descargar_modelo.ssl, "create_default_context", lambda cafile: usados.append(cafile)
+    )
+    contexto_tls()
+    assert usados == [certifi.where() if esperado == "certifi" else esperado]
+
+
+def test_ca_del_entorno_inexistente_sale_con_2(tmp_path, origen, monkeypatch, capsys):
+    monkeypatch.setenv("SSL_CERT_FILE", str(tmp_path / "no-existe.pem"))
+    desc = _descriptor(tmp_path, origen, hashlib.sha256(CONTENIDO).hexdigest(), len(CONTENIDO))
+    assert main(["--destino", str(tmp_path / "d"), "--descriptor", str(desc)]) == 2
+    assert not (tmp_path / "d" / "modelo.onnx").exists()
