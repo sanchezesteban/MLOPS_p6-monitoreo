@@ -5,7 +5,8 @@
 Lee URL, bytes y SHA-256 del descriptor; descarga a un archivo temporal en `--destino`,
 calcula el hash sobre los bytes recibidos y solo entonces lo renombra al nombre final.
 Si el archivo ya existe con el hash correcto no vuelve a descargarlo; si existe con otro
-hash, lo reemplaza. No usa credenciales, S3 ni enlaces temporales.
+hash, lo reemplaza. No usa credenciales, S3 ni enlaces temporales. Detras de un proxy
+que intercepta TLS, apunta SSL_CERT_FILE (o REQUESTS_CA_BUNDLE) al PEM de su CA.
 
 Codigos de salida: 0 pesos verificados; 1 el SHA-256 o el tamano no coinciden (no deja
 archivo); 2 descriptor invalido o error de red/disco.
@@ -15,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import re
 import ssl
 import sys
@@ -28,9 +30,19 @@ import yaml
 DESCRIPTOR = Path(__file__).resolve().parents[1] / "modelo" / "descriptor.yaml"
 BLOQUE = 1 << 20
 USER_AGENT = "p5-descargar-modelo/1.0"
-# Raices de certifi (version fijada): en Windows el almacen del sistema carga raices bajo
-# demanda y Python fallaba ~1 de cada 2 veces contra los assets de GitHub.
-TLS = ssl.create_default_context(cafile=certifi.where())
+
+
+def contexto_tls() -> ssl.SSLContext:
+    """Raices TLS: SSL_CERT_FILE o REQUESTS_CA_BUNDLE si existen (proxy corporativo con su
+    propia CA); si no, las de certifi (version fijada), porque en Windows el almacen del
+    sistema carga raices bajo demanda y Python fallaba ~1 de cada 2 veces contra GitHub."""
+    cafile = (
+        os.environ.get("SSL_CERT_FILE") or os.environ.get("REQUESTS_CA_BUNDLE") or certifi.where()
+    )
+    try:
+        return ssl.create_default_context(cafile=cafile)
+    except OSError as e:  # PEM inexistente o ilegible: se dice cual
+        raise OSError(f"no se pudieron cargar las raices TLS de {cafile}: {e}") from e
 
 
 class HashNoCoincideError(Exception):
@@ -65,7 +77,7 @@ def descargar(url: str, destino: Path, sha256: str, tamano: int) -> None:
     peticion = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:
         with (
-            urllib.request.urlopen(peticion, timeout=60, context=TLS) as resp,
+            urllib.request.urlopen(peticion, timeout=60, context=contexto_tls()) as resp,
             tmp.open("wb") as f,
         ):
             while bloque := resp.read(BLOQUE):
