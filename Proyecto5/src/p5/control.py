@@ -31,8 +31,9 @@ class ControladorMotores(ABC):
         """Procesa un `Command` (dict con la forma de `p5.contrato.Command`)."""
 
     @abstractmethod
-    def stop(self, razon: str) -> None:
-        """Parada inmediata fuera del flujo normal de comandos (watchdog, emergencia, cierre)."""
+    def stop(self, razon: str, *, event: str) -> None:
+        """Parada inmediata fuera del flujo normal de comandos. `event` es el disparador
+        del contrato (`"watchdog"`, `"emergency"` o `"shutdown"`), nunca un valor libre."""
 
     @abstractmethod
     def cerrar(self) -> None:
@@ -100,26 +101,27 @@ class AdaptadorVirtual(ControladorMotores):
         self._ultimo_estado = valido.state_after
         self._escribir({**asdict(valido), "received": True})
 
-    def stop(self, razon: str) -> None:
+    def stop(self, razon: str, *, event: str) -> None:
         if self._cerrado:
             return
-        self._escribir(self._comando_stop(razon))
+        self._escribir(self._comando_stop(razon, event=event))
 
     def cerrar(self) -> None:
         if self._cerrado:
             return
         # Siempre deja un STOP de cierre en la bitacora (C10), incluso si el ultimo
         # comando ya era STOP -- es la unica forma de ver que el cierre en si ocurrio.
-        self.stop("shutdown")
+        self.stop("shutdown", event="shutdown")
         self._archivo.close()
         self._cerrado = True
 
     def _comando_stop(
         self,
         razon: str,
+        *,
+        event: str,
         error: str | None = None,
         frame_id: str | None = None,
-        event: str = "adaptador_stop",
         ahora: float | None = None,
     ) -> dict[str, Any]:
         ahora = self._reloj() if ahora is None else ahora
