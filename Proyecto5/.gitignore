@@ -1,0 +1,58 @@
+# Reglas vigentes de main, conservadas.
+# Pesos: se distribuyen por enlace con SHA-256, no en Git
+*.onnx
+
+# Salidas generadas
+resultados/*
+!resultados/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Sistema
+.DS_Store
+
+# Reglas adicionales de P5-05.
+.venv/
+__pycache__/
+.ruff_cache/
+.pytest_cache/
+datos/**/.captura.lock
+
+# Conservar fuentes, pruebas y respaldos locales fuera de la entrega.
+/datos/prueba*/
+/datos/**/respaldos/
+/datos.zip
+/datos/excluidas_issue57/
+/datos/complemento_S1/
+*.bak
+
+# Informes históricos y salidas locales; la evidencia vigente va en entrega_emilio_issue57.md.
+/docs/revision_capturas_issue57.md
+/docs/revision_final_capturas_issue57.md
+/docs/revision_complemento_S1_issue57.md
+/docs/revision_propuesta_temporal_S1.md
+/docs/normalizacion_temporal_S1_resultados.md
+/docs/incorporacion_complemento_S1_auditoria.json
+/docs/validacion_*.json
+!/docs/validacion_entrega_issue57.json
+/docs/simulacion_*.json
+/docs/pruebas_*.txt
+/docs/propuesta_temporal_S1.csv
+/docs/diff_preparacion_entrega_issue57.patch
+/docs/diff_pr_issue57.patch
+
+/datos/recaptura_issue57_*/
+
+# No incorporar configuraciones locales con secretos.
+.env
+.env.*
+!.env.example
+
+# Fuentes de recaptura conservadas; solo la selección revisada entra al PR.
+/datos/recaptura_clases/

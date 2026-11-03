@@ -1,0 +1,5 @@
+# Evidencia de captura: conservar exactamente los bytes, incluidos CRLF del CSV.
+# Reconocer CRLF al revisar espacios, sin convertir ni reescribir el CSV.
+datos/**/capturas.csv -text -eol whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+datos/**/*.jpg -text -eol
+datos/**/*.jpeg -text -eol
