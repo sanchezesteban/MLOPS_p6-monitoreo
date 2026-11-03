@@ -23,6 +23,15 @@ from p5.contrato import ContratoError, validar_comando
 Reloj = Callable[[], float]
 
 
+def reloj_monotonico() -> Reloj:
+    """Milisegundos monotonicos desde que se llama -- un solo origen por corrida, como pide
+    el contrato (nunca el reloj de pared). Para que la politica y el adaptador compartan
+    exactamente el mismo reloj, quien construye la corrida llama esto una sola vez y pasa
+    esa misma instancia a ambos (o usa `RelojControlado` en pruebas)."""
+    inicio = time.monotonic()
+    return lambda: (time.monotonic() - inicio) * 1000
+
+
 class ControladorMotores(ABC):
     """Interfaz unica entre la politica y quien ejecuta el comando (virtual o real)."""
 
@@ -31,8 +40,9 @@ class ControladorMotores(ABC):
         """Procesa un `Command` (dict con la forma de `p5.contrato.Command`)."""
 
     @abstractmethod
-    def stop(self, razon: str) -> None:
-        """Parada inmediata fuera del flujo normal de comandos (watchdog, emergencia, cierre)."""
+    def stop(self, razon: str, *, event: str) -> None:
+        """Parada inmediata fuera del flujo normal de comandos. `event` es el disparador
+        del contrato (`"watchdog"`, `"emergency"` o `"shutdown"`), nunca un valor libre."""
 
     @abstractmethod
     def cerrar(self) -> None:
@@ -47,28 +57,26 @@ class AdaptadorVirtual(ControladorMotores):
     rechaza y en su lugar se registra un `STOP` seguro con el detalle en
     `error` (la saturacion segura documentada que pide el ticket: ante duda,
     parar es siempre valido dentro del contrato).
+
+    `reloj` es obligatorio (sin reloj de pared por defecto): quien construye la
+    corrida (p. ej. `Watchdog`, P5-12) debe pasar la MISMA instancia que usa para
+    el resto de la corrida, nunca una propia -- `p5.control.reloj_monotonico()`
+    para la aplicacion real, `p5.watchdog.RelojControlado` en pruebas.
     """
 
     def __init__(
         self,
         log_path: str | Path,
         run_id: str,
-        reloj: Reloj | None = None,
+        reloj: Reloj,
     ) -> None:
         self._log_path = Path(log_path)
         self._log_path.parent.mkdir(parents=True, exist_ok=True)
         self._archivo = self._log_path.open("a", encoding="utf-8")
         self._run_id = run_id
-        self._reloj = reloj if reloj is not None else self._reloj_de_ejecucion()
+        self._reloj = reloj
         self._ultimo_estado = "inicio"
         self._cerrado = False
-
-    @staticmethod
-    def _reloj_de_ejecucion() -> Reloj:
-        """Default: milisegundos monotonicos desde que se crea el adaptador -- un solo
-        origen por corrida, como pide el contrato (nunca el reloj de pared)."""
-        inicio = time.monotonic()
-        return lambda: (time.monotonic() - inicio) * 1000
 
     def enviar(self, comando: dict[str, Any]) -> None:
         if self._cerrado:
@@ -100,26 +108,27 @@ class AdaptadorVirtual(ControladorMotores):
         self._ultimo_estado = valido.state_after
         self._escribir({**asdict(valido), "received": True})
 
-    def stop(self, razon: str) -> None:
+    def stop(self, razon: str, *, event: str) -> None:
         if self._cerrado:
             return
-        self._escribir(self._comando_stop(razon))
+        self._escribir(self._comando_stop(razon, event=event))
 
     def cerrar(self) -> None:
         if self._cerrado:
             return
         # Siempre deja un STOP de cierre en la bitacora (C10), incluso si el ultimo
         # comando ya era STOP -- es la unica forma de ver que el cierre en si ocurrio.
-        self.stop("shutdown")
+        self.stop("shutdown", event="shutdown")
         self._archivo.close()
         self._cerrado = True
 
     def _comando_stop(
         self,
         razon: str,
+        *,
+        event: str,
         error: str | None = None,
         frame_id: str | None = None,
-        event: str = "adaptador_stop",
         ahora: float | None = None,
     ) -> dict[str, Any]:
         ahora = self._reloj() if ahora is None else ahora
@@ -155,12 +164,13 @@ def construir_controlador(
     *,
     log_path: str | Path,
     run_id: str,
-    reloj: Reloj | None = None,
+    reloj: Reloj,
 ) -> ControladorMotores:
     """Fabrica: "virtual" (default) construye el adaptador de arriba, sin tocar
     hardware. "real" queda reservado para cuando exista un controlador fisico
     -- no esta implementado, asi que ni un import tardio puede arrastrar
-    GPIO/serial al arrancar en modo virtual."""
+    GPIO/serial al arrancar en modo virtual. `reloj` es obligatorio: ver
+    `AdaptadorVirtual`."""
     if modo == "virtual":
         return AdaptadorVirtual(log_path, run_id, reloj)
     if modo == "real":

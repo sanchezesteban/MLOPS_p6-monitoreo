@@ -1,0 +1,16 @@
+# Plazos del watchdog (grupo B, P5-12). Los lee `p5.watchdog.cargar_config`, que rechaza
+# claves desconocidas y valores fuera de rango antes de construir el `Watchdog`.
+# Justificacion de cada valor en `docs/watchdog.md`.
+version: 1
+
+plazos:
+  # Ritmo de captura asumido por ahora: ~10 cuadros/s (~100 ms entre cuadros), el mismo
+  # orden de magnitud que usan los ejemplos del contrato v1. Ajustar aqui si P5-02/P5-07
+  # fijan otro ritmo real de la camara.
+  plazo_reaccion_ms: 100    # el watchdog revisa al menos una vez por cada periodo de cuadro
+  max_edad_ms: 300          # tolera perder hasta 2 cuadros seguidos antes de considerar la
+                             # percepcion vencida (mismo orden que el ejemplo de esta_vencido)
+  vencimiento_ms: 250       # un comando de movimiento sigue valido ~2.5 cuadros sin uno nuevo,
+                             # para no frenar por un solo cuadro tardio, pero sin llegar a
+                             # max_edad_ms (si el watchdog aun no detecto perdida de cuadros,
+                             # el comando en curso ya habra vencido primero)
