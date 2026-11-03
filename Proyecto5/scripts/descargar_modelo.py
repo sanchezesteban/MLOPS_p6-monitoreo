@@ -39,7 +39,10 @@ def contexto_tls() -> ssl.SSLContext:
     cafile = (
         os.environ.get("SSL_CERT_FILE") or os.environ.get("REQUESTS_CA_BUNDLE") or certifi.where()
     )
-    return ssl.create_default_context(cafile=cafile)
+    try:
+        return ssl.create_default_context(cafile=cafile)
+    except OSError as e:  # PEM inexistente o ilegible: se dice cual
+        raise OSError(f"no se pudieron cargar las raices TLS de {cafile}: {e}") from e
 
 
 class HashNoCoincideError(Exception):

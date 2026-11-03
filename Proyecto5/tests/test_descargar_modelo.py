@@ -125,3 +125,4 @@ def test_ca_del_entorno_inexistente_sale_con_2(tmp_path, origen, monkeypatch, ca
     desc = _descriptor(tmp_path, origen, hashlib.sha256(CONTENIDO).hexdigest(), len(CONTENIDO))
     assert main(["--destino", str(tmp_path / "d"), "--descriptor", str(desc)]) == 2
     assert not (tmp_path / "d" / "modelo.onnx").exists()
+    assert "no-existe.pem" in capsys.readouterr().err
