@@ -113,6 +113,14 @@ def sha256_archivo(ruta: Path) -> str:
     return hashlib.sha256(ruta.read_bytes()).hexdigest()
 
 
+def _ruta_visible(ruta: Path) -> Path:
+    """Ruta relativa al directorio de trabajo para mensajes y evidencia, si es posible."""
+    try:
+        return ruta.resolve().relative_to(Path.cwd().resolve())
+    except ValueError:
+        return ruta
+
+
 def _texto_requerido(datos: dict[str, Any], clave: str, origen: Path) -> str:
     valor = datos.get(clave)
     if not isinstance(valor, str) or not valor.strip():
@@ -168,7 +176,7 @@ def cargar_expectativa(caso: Caso) -> Expectativa:
         raise CasoInvalidoError(
             f"{caso.expectativa_path}: falta cuadros, pasos o acciones_por_cuadro"
         )
-    return Expectativa(id=caso.id, datos=datos, ruta=caso.expectativa_path)
+    return Expectativa(id=caso.id, datos=datos, ruta=_ruta_visible(caso.expectativa_path))
 
 
 def descubrir_casos(carpeta: Path) -> list[Path]:
@@ -652,10 +660,7 @@ def correr_caso(
     finally:
         ejecutor.cerrar()
     fallos = evaluar_expectativa(expectativa, pasos, es_real=caso.tipo == "real")
-    try:
-        ruta_expectativa = str(caso.expectativa_path.relative_to(Path.cwd()))
-    except ValueError:
-        ruta_expectativa = str(caso.expectativa_path)
+    ruta_expectativa = str(_ruta_visible(caso.expectativa_path))
     return ResultadoCaso(
         id=caso.id,
         nombre=caso.nombre,
