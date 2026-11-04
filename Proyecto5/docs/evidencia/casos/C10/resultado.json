@@ -1,0 +1,12 @@
+{
+  "id": "C10",
+  "nombre": "Emergencia, rearme y cierre",
+  "tipo": "sintetico",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C10.yaml",
+  "expectativa_sha256": "727847427cf8ec398078c56cb676f75a2e30a95d7e32c3412b5a0d76dc5ffecc",
+  "pasos": 11,
+  "fallos": [],
+  "error": null,
+  "comandos": "C10/comandos.jsonl"
+}

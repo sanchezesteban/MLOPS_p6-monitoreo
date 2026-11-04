@@ -4,12 +4,13 @@ Ejecuta los diez casos con un solo comando y sale con código 1 si una expectati
 cumple. El runner usa **la misma política y el mismo adaptador** que la aplicación; las
 expectativas se leen aparte y nunca se pasan a la política ni al detector.
 
-> **Estado:** C08–C10 corren contra la política de #73, el adaptador de #74 y el watchdog
-> de #76, ya mergeados en `main`. Los eventos reales `datos/eventos/S1.jsonl` … `S6.jsonl`
-> ya existen (P5-14, modo `cortes_sesion`), así que C01 y C05 pueden correr en cuanto se
-> mergee P5-15 (#75). C02, C03, C04 y C07 siguen esperando sus `cuadros_S2.csv` …
-> `cuadros_S6.csv` de P5-15/P5-06. C07 no se cumple con el detector congelado: en S6 no
-> aparecen `person`/`dog`/`cat` en los cuadros con obstáculo (`docs/detector.md` §5).
+> **Estado:** C01–C10 corren contra la política de #73, el adaptador de #74, el watchdog
+> de #76 y los eventos reales de P5-14 (`datos/eventos/S1.jsonl` … `S6.jsonl`, modo
+> `cortes_sesion`). La corrida del 4 nov 2026 da **7/10**: C01, C04, C05, C06 y C08–C10
+> pasan; C02, C03 y C07 fallan por recall del detector congelado (S2 pierde la persona en
+> tres cuadros; S3 tiene dos cuadros de borde centro; S6 no detecta el obstáculo). Está
+> documentado en [`evidencia/casos/`](evidencia/casos/README.md) y en `docs/detector.md`
+> §5. No se ajustan las expectativas para ocultar esos fallos.
 
 ## Uso
 
@@ -79,9 +80,9 @@ PYTHONPATH=src python -m p5.expectativas \
 ```
 
 En `main` los eventos reales son `datos/eventos/S1.jsonl` … `S6.jsonl` (P5-14, modo
-`cortes_sesion`). La versión de P5-15 (#75) escribe un `cuadros_<secuencia>.csv` por
-secuencia y el runner compara todas sus filas; usa los mismos `frame_id` canónicos
-(`S2_f0007`…, con los huecos de S3/S4) que los eventos.
+`cortes_sesion`). P5-15 escribe un `cuadros_<secuencia>.csv` por secuencia y el runner
+compara todas sus filas; usa los mismos `frame_id` canónicos (`S2_f0007`…, con los huecos
+de S3/S4) que los eventos.
 
 ### `tipo: sintetico`
 
@@ -187,10 +188,10 @@ inducido sobre una copia de la expectativa de C08.
 
 ## Pendientes para cerrar P5-13
 
-1. Mergear P5-15 (#75) para que C01–C07 existan en `main`; los eventos
-   `datos/eventos/S1.jsonl` … `S6.jsonl` ya están.
-2. Recibir `cuadros_S2.csv` … `cuadros_S6.csv` congelados de P5-15/P5-06. C02, C03, C04 y
-   C07 no pueden evaluarse hasta entonces.
-3. Correr C01–C10 completos y guardar la evidencia en `docs/evidencia/casos/`. C07 no se
-   cumple con el detector actual; C02 es parcial. Se documentan como límite, no se ajustan
-   las expectativas.
+1. Mergear la fase 2 de P5-06 (#87) para que `datos/anotaciones.json` y
+   `datos/manifiesto.csv` cubran las 78 imágenes; el runner ya usa los `cuadros_S*.csv`
+   congelados de P5-15.
+2. Repetir la corrida cuando #87 esté en `main` y actualizar la evidencia. C02, C03 y C07
+   se documentan como límite del detector, no se ajustan las expectativas.
+3. Si el PM decide mejorar el detector o cambiar el estímulo, repetir C01–C10 y actualizar
+   `docs/evidencia/casos/`.

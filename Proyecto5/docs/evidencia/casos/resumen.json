@@ -1,8 +1,110 @@
 {
   "schema_version": "1.0",
-  "generado_utc": "2026-11-04T09:05:55+00:00",
+  "generado_utc": "2026-11-04T20:23:24+00:00",
   "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
   "casos": [
+    {
+      "id": "C01",
+      "nombre": "Via libre",
+      "tipo": "real",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C01.yaml",
+      "expectativa_sha256": "d45ba4168bc01774f3284358d21c3164a8f170a3e8ec589737d5afeb3fb6f18c",
+      "pasos": 12,
+      "fallos": [],
+      "error": null,
+      "comandos": "C01/comandos.jsonl"
+    },
+    {
+      "id": "C02",
+      "nombre": "Obstaculo central",
+      "tipo": "real",
+      "estado": "fail",
+      "expectativa": "casos/expectativas/C02.yaml",
+      "expectativa_sha256": "44998bff4fb3220c40296dcf01c2b1b1d4c4ec8f1a2dd8e8a9f232e04c105d90",
+      "pasos": 17,
+      "fallos": [
+        "S2_f0011: accion FORWARD no permitida (esperaba ['STOP'])",
+        "S2_f0012: accion FORWARD no permitida (esperaba ['STOP'])",
+        "S2_f0013: accion FORWARD no permitida (esperaba ['STOP'])",
+        "casos/expectativas/C02.yaml: S2_f0011 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+        "casos/expectativas/C02.yaml: S2_f0012 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+        "casos/expectativas/C02.yaml: S2_f0013 quedo bloqueado y no hubo STOP en 0 cuadro(s)"
+      ],
+      "error": null,
+      "comandos": "C02/comandos.jsonl"
+    },
+    {
+      "id": "C03",
+      "nombre": "Obstaculo solo a la izquierda",
+      "tipo": "real",
+      "estado": "fail",
+      "expectativa": "casos/expectativas/C03.yaml",
+      "expectativa_sha256": "8d78e6f8de4c61d77c3dcf1e2a098bfbd8257e6c2b855e12d483161ca0c0e3bd",
+      "pasos": 13,
+      "fallos": [
+        "S3_f0003: accion FORWARD no permitida (esperaba ['STOP'])",
+        "S3_f0010: accion FORWARD no permitida (esperaba ['STOP'])",
+        "casos/expectativas/C03.yaml: S3_f0003 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+        "casos/expectativas/C03.yaml: S3_f0010 quedo bloqueado y no hubo STOP en 0 cuadro(s)"
+      ],
+      "error": null,
+      "comandos": "C03/comandos.jsonl"
+    },
+    {
+      "id": "C04",
+      "nombre": "Obstaculo solo a la derecha",
+      "tipo": "real",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C04.yaml",
+      "expectativa_sha256": "fa67083d7391cef5cd26de3c82b6fa08627b2d1032cef1ae9d554ff9fadc7b89",
+      "pasos": 12,
+      "fallos": [],
+      "error": null,
+      "comandos": "C04/comandos.jsonl"
+    },
+    {
+      "id": "C05",
+      "nombre": "Varios obstaculos sin zona libre",
+      "tipo": "real",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C05.yaml",
+      "expectativa_sha256": "67d88893848b1549360612d741922431cafb61f1e27dffa5f0047a8751815a0c",
+      "pasos": 12,
+      "fallos": [],
+      "error": null,
+      "comandos": "C05/comandos.jsonl"
+    },
+    {
+      "id": "C06",
+      "nombre": "Deteccion bajo umbral y luego sobre umbral",
+      "tipo": "sintetico",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C06.yaml",
+      "expectativa_sha256": "66b0a5467bbe785ebee0f3d67b924588f1d9a27471baa1fc011648c7a93336c7",
+      "pasos": 8,
+      "fallos": [],
+      "error": null,
+      "comandos": "C06/comandos.jsonl"
+    },
+    {
+      "id": "C07",
+      "nombre": "Libre, obstaculo persistente y desaparicion",
+      "tipo": "real",
+      "estado": "fail",
+      "expectativa": "casos/expectativas/C07.yaml",
+      "expectativa_sha256": "2d5c751fb1ae14752b2534d81e2dcaf4628a8ee128c10fbe26ef4f026421ebf6",
+      "pasos": 12,
+      "fallos": [
+        "S6_f0006: accion FORWARD no permitida (esperaba ['STOP'])",
+        "S6_f0008: accion FORWARD no permitida (esperaba ['STOP'])",
+        "casos/expectativas/C07.yaml: S6_f0006 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+        "casos/expectativas/C07.yaml: S6_f0008 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+        "casos/expectativas/C07.yaml: hubo movimiento entre S6_f0006 y S6_f0008"
+      ],
+      "error": null,
+      "comandos": "C07/comandos.jsonl"
+    },
     {
       "id": "C08",
       "nombre": "Corte de cuadros y cuadro vencido",
@@ -41,11 +143,11 @@
     }
   ],
   "resumen": {
-    "total": 3,
-    "pass": 3,
-    "fail": 0,
+    "total": 10,
+    "pass": 7,
+    "fail": 3,
     "error": 0
   },
-  "resultado": "pass",
-  "codigo_salida": 0
+  "resultado": "fail",
+  "codigo_salida": 1
 }

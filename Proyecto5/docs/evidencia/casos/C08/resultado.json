@@ -1,0 +1,12 @@
+{
+  "id": "C08",
+  "nombre": "Corte de cuadros y cuadro vencido",
+  "tipo": "sintetico",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C08.yaml",
+  "expectativa_sha256": "e08fa504ffaa52c8e7cf098a15ae06cc1bb84e6153d57e3569d847a0c58c0bad",
+  "pasos": 5,
+  "fallos": [],
+  "error": null,
+  "comandos": "C08/comandos.jsonl"
+}
