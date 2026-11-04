@@ -81,6 +81,10 @@ Bloquear es inmediato (un solo cuadro con obstáculo cierto) y liberar pide `cua
 - Si un obstáculo físico de esas clases no sale como `person`, `dog` o `cat` en el detector (por ejemplo, un peluche que el detector clasifica como `teddy bear`), tampoco se trata como obstáculo. Los obstáculos de las secuencias deben comprobarse antes con el detector.
 - La cercanía es un proxy por la posición de la caja en el cuadro, no una distancia calibrada. Un comando registrado en el adaptador virtual no prueba que el auto frene físicamente.
 
+## Cambios
+
+- Cambio del 4 nov: regla `obstaculo_incierto_lateral` por revisión de código (hallazgo de Juan Pablo); no cambia umbrales ni configuración; previo a la corrida final.
+
 ## Pendiente de acordar
 
 - Velocidades y giro definitivos, según el adaptador y la ficha del auto (P5-11, #63; P5-05, #57).
