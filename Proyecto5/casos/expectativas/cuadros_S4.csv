@@ -1,0 +1,13 @@
+sequence_id,frame_id,frame_id_origen,t_capture_ms,estado_via,zonas_en_riesgo,acciones_permitidas,estado_manifiesto,coincide,justificacion
+S4,S4_f0001,S4_f0001,0,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"cat [299.5,183.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0003,S4_f0003,17406,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"cat [296,185.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0004,S4_f0004,19860,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"cat [271,168.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0005,S4_f0005,20047,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"cat [271,169.2,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0006,S4_f0006,191438,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"person [291,159.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0007,S4_f0007,203063,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"person [269,152.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0009,S4_f0009,226610,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"person [285,156.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0010,S4_f0010,235594,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"person [284.5,159.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0011,S4_f0011,451313,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"dog [268,154.7,381,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0012,S4_f0012,458891,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"dog [276,154.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0013,S4_f0013,469797,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"dog [270.5,149.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S4,S4_f0014,S4_f0014,491594,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"dog [268.5,156.7,400,296] toca derecha en riesgo (y2=296 >= 148)"
