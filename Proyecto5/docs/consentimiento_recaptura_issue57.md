@@ -1,18 +1,23 @@
 # Constancia de consentimiento — P5-05b / issue #57
 
-El operador confirma ser la persona retratada y tener el documento escrito firmado
-bajo custodia privada. No se adjunta documento, nombres completos, firmas,
-identificaciones, direcciones, contactos ni otra información personal.
+El operador confirma expresamente que es la persona fotografiada, que es mayor
+de edad y que firmó el consentimiento que autoriza publicar sus fotografías en
+el repositorio GitHub del proyecto. El firmado permanece resguardado de forma
+privada fuera del repositorio; no se adjunta ni se publica información personal.
 
 | Comprobación | Estado real |
 |---|---|
-| Fecha real de firma (AAAA-MM-DD) | Pendiente: el mensaje contiene [COLOCAR FECHA REAL], que no es una fecha |
-| Autorización expresa para publicar estas fotografías en el repositorio GitHub del proyecto y uso previsto | Pendiente: el mensaje contiene [CONFIRMADA / PENDIENTE], sin seleccionar una opción |
-| Documento firmado | Existencia confirmada por operador; permanece privado fuera de Git |
+| Persona retratada y mayoría de edad | Confirmadas expresamente por el operador |
+| Consentimiento firmado para publicar estas fotografías en GitHub | Confirmado expresamente por el operador |
+| Fecha real de firma | Pendiente de comunicar; no se recibió una fecha concreta |
+| Documento firmado | Bajo custodia privada fuera del repositorio; no incluido en Git |
 
-**No hacer push de las imágenes ni abrir el PR mientras falte la confirmación de publicación.**
-Registrar la fecha real antes de publicar; no usar fecha de captura/auditoría como firma.
-No se pide subir el documento ni identificar personalmente al retratado.
+Solo falta registrar la fecha real de firma. No usar fecha de captura, auditoría,
+commit o confirmación como sustituto. La publicación continúa bloqueada hasta
+completar ese dato exigido por el protocolo de entrega.
 
-Conjunto integrado solo localmente: 78 JPEG, CSV SHA-256
+No incluir nombres completos, firmas, identificaciones, direcciones, contactos
+ni el documento original. No se solicita subirlo para completar la constancia.
+
+Conjunto integrado: 78 JPEG de evaluación y siete de ajuste. CSV evaluación SHA-256:
 f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181.

@@ -36,9 +36,10 @@ ni se alteraron las reglas del validador. Python 3.12 no ejecutado localmente.
 
 ## Dependencias y publicación
 
-**Borrador local: no publicar mientras falten fecha real y alcance GitHub del
-consentimiento firmado.** El documento firmado es privado y no se incluye en Git.
-El operador se identifica como persona retratada sin publicar datos personales.
+**Borrador local: falta registrar la fecha real de firma antes de publicar.**
+La autorización expresa de publicación GitHub está confirmada por el operador,
+quien declara ser la persona fotografiada y mayor de edad. El firmado permanece
+privado fuera de Git; no se publica información personal.
 
 P5-06/P5-14 deben coordinar IDs y reconocimiento de cortes; se aporta tabla de 78
 correspondencias y sidecar de tres cortes S2, sin modificar sus módulos.

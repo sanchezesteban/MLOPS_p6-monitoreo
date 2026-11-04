@@ -9,7 +9,7 @@ aprobación ya resueltos no describen el estado actual. Publicación pendiente d
 **Autorizaciones vigentes comunicadas por el operador:** S2 interrumpida/normalizada
 y gatos reales aceptados; peluche dog=16 aceptado. Los seis adicionales están
 al final. Los pendientes actuales son encuadres S3/S4, justificación histórica,
-cortes/IDs y fecha/alcance GitHub del consentimiento. Ver [selección actual](seleccion_78_p5_05b.md).
+cortes/IDs y fecha real de firma del consentimiento. Ver [selección actual](seleccion_78_p5_05b.md).
 Las observaciones/rechazos anteriores de esta auditoría se conservan como historial.
 
 **Actualización temporal posterior:** el candidato privado normalizado aprueba

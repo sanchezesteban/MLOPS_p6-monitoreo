@@ -1,6 +1,6 @@
 # S2: candidato temporal normalizado — P5-05b / issue #57
 
-**Integrado localmente y aprobado por el PM; publicación bloqueada por consentimiento sin completar.** La conversión del reloj
+**Integrado localmente y aprobado por el PM; publicación GitHub autorizada; falta registrar fecha real de firma.** La conversión del reloj
 registrado es reproducible y el candidato aprueba `--issue57`. Sebastián aceptó
 expresamente S2 interrumpida con normalización documentada como S1, con los seis
 adicionales al final o corte reconocido. Se verificaron las últimas seis posiciones.
@@ -163,7 +163,7 @@ conserva las cuatro exclusiones manuales sin inventar sus motivos individuales.
 El [reproductor consultado](propuesta_reproductor_cortes_p5_05b.md) todavía comprime
 la pausa a 100 ms y no lee sesiones. Se entregan cortes y correspondencias para
 que sus responsables coordinen la solución; no se modificó su código ni el #59.
-Faltan fecha real y alcance GitHub del consentimiento antes de publicar, COCO/manifiesto
+Faltan fecha real de firma del consentimiento antes de publicar, COCO/manifiesto
 y confirmación de recepción de Emilio. No se necesitan otras once capturas por este bloqueo temporal.
 
 Validación final sobre el conjunto integrado: [resumen](estado_final_p5_05b.json).

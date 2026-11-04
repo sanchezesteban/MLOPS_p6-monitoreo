@@ -97,5 +97,5 @@ esa limitación sin inventar causas ni atribuirlas al detector. Los dos CSV fuen
 No se ejecutó inferencia para seleccionar, descartar o validar etiquetas.
 
 Pendientes externos: [compatibilidad del reproductor/IDs](propuesta_reproductor_cortes_p5_05b.md),
-fecha real y alcance GitHub del [consentimiento](consentimiento_recaptura_issue57.md),
+fecha real de firma del [consentimiento](consentimiento_recaptura_issue57.md),
 COCO/manifiesto, congelado del detector y recepción de Emilio. No se abrió PR.

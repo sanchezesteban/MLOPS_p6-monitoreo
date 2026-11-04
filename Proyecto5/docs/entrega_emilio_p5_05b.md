@@ -2,7 +2,7 @@
 
 **Dataset definitivo de fotografías integrado localmente y aprobado por el PM.**
 No se hizo envío ni se confirma recepción. Publicación bloqueada hasta completar
-fecha real de firma y alcance GitHub del [consentimiento](consentimiento_recaptura_issue57.md).
+fecha real de firma del [consentimiento](consentimiento_recaptura_issue57.md).
 Usar **Parte de #57**, no cierre automático: siguen dependencias y recepción.
 
 | Secuencia | JPEG | Despejado | Obstáculo (etiqueta CSV) | outside_risk |
@@ -62,7 +62,7 @@ P5-06 consultado renumera por posición y P5-14 conserva los IDs prefijados;
 
 ## Orden de integración
 
-1. Completar los dos campos de consentimiento antes de publicar las fotos.
+1. Registrar la fecha real de firma antes de publicar; el alcance GitHub ya está confirmado.
 2. Coordinar IDs y cortes sin renumerar la captura fuente ni modificar algoritmos ajenos.
 3. Emilio anota a ciegas y congela COCO/manifiesto y sus hashes sobre esta selección.
 4. Registrar configuración efectiva congelada del detector: pesos, descriptor,

@@ -1,5 +1,5 @@
 {
-  "estado": "seleccion_78_integrada_localmente_aprobada_PM_validada_publicacion_bloqueada_consentimiento",
+  "estado": "seleccion_78_integrada_validada_autorizacion_publicacion_confirmada_pendiente_fecha_firma",
   "issue": 57,
   "rama": "p5-05b-recaptura",
   "commit_base_origin_main": "b6317b5dc3cc90f27bf19a8b948db9d83cb4ad32",
@@ -29,7 +29,7 @@
     }
   },
   "pendientes": [
-    "Consentimiento: fecha real y confirmacion expresa de alcance GitHub; los marcadores recibidos no son datos reales",
+    "Consentimiento: solo falta fecha real de firma; autorizacion GitHub confirmada",
     "P5-06/P5-14: correspondencia de IDs y cortes de sesion, sin cambios no coordinados",
     "Emilio: COCO/manifiesto a ciegas, congelado y confirmacion de recepcion; luego configuracion congelada e inferencia",
     "Motivo individual de cuatro exclusiones manuales historicas no comunicado; conservar limitacion sin inventar motivos",
@@ -45,7 +45,7 @@
     ],
     "mensajes_enviados": false,
     "bloqueada": true,
-    "motivo": "Faltan fecha real y confirmacion de alcance GitHub del consentimiento; no push ni PR"
+    "motivo": "Solo falta fecha real de firma; autorizacion GitHub confirmada. No publicar hasta registrar fecha real."
   },
   "objetivo_recaptura_no_integrado": {
     "nuevos_por_secuencia": {
@@ -394,9 +394,11 @@
     "operador_declara_ser_persona_retratada": true,
     "documento_firmado_confirmado": true,
     "fecha_firma_real": null,
-    "alcance_GitHub_confirmado": false,
+    "alcance_GitHub_confirmado": true,
     "marcadores_no_son_confirmacion": true,
-    "documento_privado_no_incluido": true
+    "documento_privado_no_incluido": true,
+    "mayoria_de_edad_confirmada": true,
+    "fuente_confirmacion": "Declaracion expresa del operador: persona retratada, mayor de edad y consentimiento firmado con autorizacion GitHub; no comunico fecha concreta"
   },
   "integracion_local": {
     "anteriores_sustituidas": 54,

@@ -81,7 +81,7 @@ de riesgo. Ninguna foto ni CSV fuente, evaluación activa o ajuste fue modificad
 - Pendiente: encuadres S3/S4 y [justificación de selección](seleccion_78_p5_05b.md),
   sin inventar motivos de las cuatro eliminaciones previas.
 - Coordinar cortes/IDs con el responsable del [reproductor](propuesta_reproductor_cortes_p5_05b.md).
-- Completar fecha real y alcance del consentimiento firmado en la
+- Completar fecha real de firma del consentimiento firmado en la
   [constancia](consentimiento_recaptura_issue57.md). El firmado permanece privado.
 - Congelar únicamente después de esas decisiones y la revisión de escenarios;
   validar otra vez y confirmar entrega a Emilio. #59 usará ese mismo congelado.

@@ -1,5 +1,5 @@
 {
-  "estado": "integrado_localmente_aprobado_PM_publicacion_bloqueada_consentimiento",
+  "estado": "integrado_localmente_validado_autorizacion_publicacion_confirmada_pendiente_fecha_firma",
   "rama": "p5-05b-recaptura",
   "fecha_validacion": "2026-11-04",
   "CSV_evaluacion_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
@@ -149,12 +149,13 @@
   "consentimiento": {
     "firmado_confirmado": true,
     "fecha_firma": null,
-    "publicacion_GitHub_confirmada": false,
-    "documento_incluido": false
+    "publicacion_GitHub_confirmada": true,
+    "documento_incluido": false,
+    "mayoria_de_edad_confirmada": true
   },
   "dependencias": [
     "P5-06/P5-14: coordinar IDs y reconocimiento de cortes",
-    "Completar fecha y alcance GitHub de consentimiento",
+    "Registrar fecha real de firma del consentimiento; alcance GitHub ya confirmado",
     "Emilio: anotacion ciega, COCO/manifiesto, congelado y recepcion",
     "Limitaciones fisicas existentes conservadas en ficha_auto.md"
   ],
