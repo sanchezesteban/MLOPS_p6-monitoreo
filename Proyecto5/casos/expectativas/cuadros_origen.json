@@ -1,0 +1,49 @@
+{
+  "coco_sha256": "2afc9ec45ee5cc25006dfe6b596e4174c44d65eeff9b7f26a12a91523b7da767",
+  "manifiesto_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "secuencias": {
+    "S1": {
+      "cuadros": 12,
+      "por_estado": {
+        "libre": 12
+      }
+    },
+    "S2": {
+      "cuadros": 17,
+      "por_estado": {
+        "libre": 6,
+        "centro": 11
+      }
+    },
+    "S3": {
+      "cuadros": 13,
+      "por_estado": {
+        "izq": 9,
+        "centro": 4
+      }
+    },
+    "S4": {
+      "cuadros": 12,
+      "por_estado": {
+        "der": 12
+      }
+    },
+    "S5": {
+      "cuadros": 12,
+      "por_estado": {
+        "bloqueado": 12
+      }
+    },
+    "S6": {
+      "cuadros": 12,
+      "por_estado": {
+        "libre": 8,
+        "izq": 1,
+        "der": 1,
+        "centro": 2
+      }
+    }
+  },
+  "errores": []
+}

@@ -1,0 +1,19 @@
+{
+  "info": {"description": "3 cuadros anotados a mano para probar p5.expectativas (640x480)"},
+  "images": [
+    {"id": 1, "file_name": "S1/S1_0000000000_aaaa0001.jpg", "width": 640, "height": 480},
+    {"id": 2, "file_name": "S1/S1_0000000100_aaaa0002.jpg", "width": 640, "height": 480},
+    {"id": 3, "file_name": "S5/S5_0000000000_bbbb0001.jpg", "width": 640, "height": 480}
+  ],
+  "categories": [
+    {"id": 1, "name": "person"},
+    {"id": 2, "name": "dog"},
+    {"id": 3, "name": "traffic light"}
+  ],
+  "annotations": [
+    {"id": 1, "image_id": 2, "category_id": 1, "bbox": [20, 250, 160, 210], "area": 33600, "iscrowd": 0},
+    {"id": 2, "image_id": 2, "category_id": 2, "bbox": [280, 50, 80, 150], "area": 12000, "iscrowd": 0},
+    {"id": 3, "image_id": 3, "category_id": 2, "bbox": [250, 120, 140, 350], "area": 49000, "iscrowd": 0},
+    {"id": 4, "image_id": 3, "category_id": 3, "bbox": [500, 300, 60, 100], "area": 6000, "iscrowd": 0}
+  ]
+}

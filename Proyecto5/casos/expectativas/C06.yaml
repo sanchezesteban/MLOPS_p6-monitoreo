@@ -1,0 +1,38 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+# Politica declarada de confianza (config/politica.yaml): >= 0.50 obstaculo cierto, [0.30, 0.50)
+# incierto (avance lento a velocidad_precaucion 0.2), < 0.30 se ignora.
+id: C06
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 100  # un cuadro del replay fijo de P5-14; igual a config/watchdog.yaml
+cuadros:
+  - frame_id: c06_f0001
+    acciones_permitidas: [FORWARD, STOP]
+    justificacion: Sin detecciones; puede seguir detenido por el arranque.
+  - frame_id: c06_f0002
+    acciones_permitidas: [FORWARD, STOP]
+    justificacion: Sin detecciones; puede seguir detenido por el arranque.
+  - frame_id: c06_f0003
+    acciones_permitidas: [FORWARD, STOP]
+    justificacion: Sin detecciones; puede seguir detenido por el arranque.
+  - frame_id: c06_f0004
+    acciones_permitidas: [FORWARD]
+    justificacion: Confianza 0.20 bajo el minimo; un objeto tan debil no se vuelve obstaculo.
+  - frame_id: c06_f0005
+    acciones_permitidas: [FORWARD]
+    velocidad_max: 0.2
+    justificacion: Confianza 0.40 incierta en el centro en riesgo; avance lento, no parada.
+  - frame_id: c06_f0006
+    acciones_permitidas: [FORWARD]
+    velocidad_max: 0.2
+    justificacion: Confianza 0.45 sigue incierta; avance lento.
+  - frame_id: c06_f0007
+    acciones_permitidas: [STOP]
+    justificacion: Confianza 0.60 cruza el umbral con la caja en el centro en riesgo; STOP.
+  - frame_id: c06_f0008
+    acciones_permitidas: [STOP]
+    justificacion: Tras el bloqueo, una deteccion incierta no cuenta como centro libre.
+requisitos:
+  - tipo: movimiento_minimo
+    min_cuadros: 1
+    justificacion: Bajo el umbral la politica no se detiene.

@@ -11,11 +11,14 @@ El detector se inyecta detras de `p5.detector.Detector`: `DetectorONNX` para las
 reales y `DetectorSimulado` para pruebas deterministas. El reproductor toma el orden y los
 tiempos del manifiesto, pero arma el reloj de la ejecucion: cada secuencia avanza
 `--replay-dt-ms` por cuadro (100 ms por defecto) y entre secuencias deja un hueco mayor que
-el watchdog. El `t_capture_ms` original se conserva en el manifiesto y como
+el watchdog. Con `--reproducir-cortes`, al cambiar `session_id` dentro de una secuencia
+avanza el reloj por el delta real de `t_capture_ms` (las pausas de S1, S2 y S3) en lugar de
+comprimirlo a 100 ms. El `t_capture_ms` original se conserva en el manifiesto y como
 `t_capture_origen_ms` en cada evento. No hay sleeps: el reloj se avanza a mano.
 
-Salidas: `run.json`, `detecciones.jsonl` (un `PerceptionEvent` por cuadro),
-`decisiones.jsonl` y `comandos.jsonl`, todos vinculados por `frame_id`.
+Salidas: `run.json`, `cortes.json` (modo de reproduccion y cortes de sesion aplicados o
+comprimidos), `detecciones.jsonl` (un `PerceptionEvent` por cuadro), `decisiones.jsonl` y
+`comandos.jsonl`, todos vinculados por `frame_id`.
 """
 
 from __future__ import annotations
@@ -30,6 +33,7 @@ import sys
 from collections.abc import Callable
 from dataclasses import asdict, replace
 from datetime import UTC, datetime
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
@@ -147,6 +151,7 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
                         f"{ruta}:{numero}: sha256 {sha} distinto del declarado {declarado}"
                     )
             sequence_id = fila["sequence_id"]
+            session_id = (fila.get("session_id") or "").strip() or None
             crudo = fila["frame_id"].strip()
             prefijo = f"{sequence_id}_f"
             if crudo.startswith(prefijo) and crudo[len(prefijo) :].isdigit():
@@ -166,6 +171,7 @@ def leer_manifiesto(ruta: Path, datos: Path) -> list[Frame]:
                     status=status,
                     error_msg=error_msg,
                     t_capture_origen_ms=t_capture,
+                    session_id=session_id,
                 )
             )
     if not frames:
@@ -178,13 +184,21 @@ def hueco_entre_secuencias(cfg: ConfigWatchdog, replay_dt_ms: float) -> float:
     return max(cfg.max_edad_ms, cfg.vencimiento_ms) + replay_dt_ms
 
 
-def normalizar_tiempos(frames: list[Frame], replay_dt_ms: float, hueco_ms: float) -> list[Frame]:
+def normalizar_tiempos(
+    frames: list[Frame],
+    replay_dt_ms: float,
+    hueco_ms: float,
+    *,
+    reproducir_cortes: bool = False,
+) -> list[Frame]:
     """Arma el reloj de la ejecucion a partir del orden del manifiesto.
 
     El primer cuadro arranca en 0; dentro de una secuencia cada cuadro avanza
     `replay_dt_ms`; al cambiar de secuencia se suma `hueco_ms`, que debe superar los plazos
-    del watchdog para que el corte se note. El `t_capture_ms` original se conserva en
-    `t_capture_origen_ms`. Nunca duerme.
+    del watchdog para que el corte se note. Con `reproducir_cortes`, si cambia el
+    `session_id` dentro de una secuencia se suma el delta real de `t_capture_ms` en lugar de
+    `replay_dt_ms`, para no fingir continuidad donde la captura se interrumpio. El
+    `t_capture_ms` original se conserva en `t_capture_origen_ms`. Nunca duerme.
     """
     if replay_dt_ms <= 0:
         raise RecorridoInvalidoError("--replay-dt-ms debe ser positivo")
@@ -193,6 +207,8 @@ def normalizar_tiempos(frames: list[Frame], replay_dt_ms: float, hueco_ms: float
 
     normalizados: list[Frame] = []
     previo: float | None = None
+    previo_origen: float | None = None
+    previo_frame: Frame | None = None
     previa_secuencia: str | None = None
     for frame in frames:
         origen = (
@@ -201,13 +217,96 @@ def normalizar_tiempos(frames: list[Frame], replay_dt_ms: float, hueco_ms: float
         if previo is None:
             t = 0.0
         elif frame.sequence_id == previa_secuencia:
-            t = previo + replay_dt_ms
+            corte = (
+                reproducir_cortes
+                and previo_frame is not None
+                and previo_frame.session_id is not None
+                and frame.session_id is not None
+                and previo_frame.session_id != frame.session_id
+            )
+            if corte:
+                if previo_origen is None:
+                    raise RecorridoInvalidoError(
+                        f"{frame.frame_id}: falta el tiempo de origen del cuadro previo"
+                    )
+                delta = origen - previo_origen
+                if delta <= 0:
+                    raise RecorridoInvalidoError(
+                        f"{frame.frame_id}: corte de sesion con delta no positivo "
+                        f"({delta} ms desde {previo_frame.frame_id})"
+                    )
+                t = previo + delta
+            elif reproducir_cortes and (
+                previo_frame is None or previo_frame.session_id is None or frame.session_id is None
+            ):
+                raise RecorridoInvalidoError(
+                    f"{frame.frame_id}: --reproducir-cortes necesita session_id "
+                    "en todos los cuadros del manifiesto"
+                )
+            else:
+                t = previo + replay_dt_ms
         else:
             t = previo + hueco_ms
         normalizados.append(replace(frame, t_capture_ms=t, t_capture_origen_ms=origen))
         previo = t
+        previo_origen = origen
+        previo_frame = frame
         previa_secuencia = frame.sequence_id
     return normalizados
+
+
+def cortes_de_sesion(
+    frames: list[Frame],
+    *,
+    aplicado: bool,
+    replay_dt_ms: float,
+    hueco_ms: float,
+) -> dict[str, Any]:
+    """Resume los cambios de `session_id` de una corrida para `cortes.json`.
+
+    No modifica el contrato v1: es un sidecar de auditoria. En modo `cadencia_virtual`
+    tambien lista los cortes, pero con `aplicado=false` y el delta de replay comprimido.
+    """
+    cortes: list[dict[str, Any]] = []
+    for previo, actual in pairwise(frames):
+        if previo.sequence_id != actual.sequence_id:
+            continue
+        if previo.session_id == actual.session_id:
+            continue
+        origen_previo = (
+            previo.t_capture_ms
+            if previo.t_capture_origen_ms is None
+            else previo.t_capture_origen_ms
+        )
+        origen_actual = (
+            actual.t_capture_ms
+            if actual.t_capture_origen_ms is None
+            else actual.t_capture_origen_ms
+        )
+        cortes.append(
+            {
+                "sequence_id": actual.sequence_id,
+                "frame_previo": previo.frame_id,
+                "frame_siguiente": actual.frame_id,
+                "session_previa": previo.session_id,
+                "session_siguiente": actual.session_id,
+                "t_previo_origen_ms": origen_previo,
+                "t_siguiente_origen_ms": origen_actual,
+                "delta_origen_ms": origen_actual - origen_previo,
+                "t_previo_replay_ms": previo.t_capture_ms,
+                "t_siguiente_replay_ms": actual.t_capture_ms,
+                "delta_replay_ms": actual.t_capture_ms - previo.t_capture_ms,
+                "aplicado": aplicado,
+            }
+        )
+    return {
+        "schema_version": "1.0",
+        "modo": "cortes_sesion" if aplicado else "cadencia_virtual",
+        "replay_dt_ms": replay_dt_ms,
+        "hueco_entre_secuencias_ms": hueco_ms,
+        "total": len(cortes),
+        "cortes": cortes,
+    }
 
 
 def _evento(
@@ -263,6 +362,7 @@ def correr_recorrido(
     commit: str,
     data_manifest_sha256: str,
     replay_dt_ms: float,
+    reproducir_cortes: bool = False,
 ) -> dict[str, Any]:
     if salida.exists():
         raise RecorridoInvalidoError(f"{salida}: la salida debe ser una carpeta nueva")
@@ -351,11 +451,21 @@ def correr_recorrido(
     (salida / "run.json").write_text(
         json.dumps(header, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    cortes = cortes_de_sesion(
+        frames,
+        aplicado=reproducir_cortes,
+        replay_dt_ms=replay_dt_ms,
+        hueco_ms=hueco_entre_secuencias(cfg_watchdog, replay_dt_ms),
+    )
+    (salida / "cortes.json").write_text(
+        json.dumps(cortes, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     return {
         "run_id": run_id,
         "eventos": len(eventos),
         "decisiones": len(politica.decisiones),
         "comandos": len((salida / "comandos.jsonl").read_text(encoding="utf-8").splitlines()),
+        "cortes": cortes["total"],
     }
 
 
@@ -388,6 +498,14 @@ def main(
         help="ms entre cuadros dentro de una secuencia (default 100)",
     )
     parser.add_argument(
+        "--reproducir-cortes",
+        action="store_true",
+        help=(
+            "al cambiar session_id, avanza el reloj por el delta real de t_capture_ms "
+            "en lugar de comprimirlo a --replay-dt-ms"
+        ),
+    )
+    parser.add_argument(
         "--detector",
         choices=("simulado", "real"),
         default="simulado",
@@ -407,7 +525,10 @@ def main(
         hueco = hueco_entre_secuencias(cfg_watchdog, args.replay_dt_ms)
         manifiesto = args.manifiesto or args.datos / "manifiesto.csv"
         frames = normalizar_tiempos(
-            leer_manifiesto(manifiesto, args.datos), args.replay_dt_ms, hueco
+            leer_manifiesto(manifiesto, args.datos),
+            args.replay_dt_ms,
+            hueco,
+            reproducir_cortes=args.reproducir_cortes,
         )
         if fabrica_detector is not None:
             detector = fabrica_detector(args.datos)
@@ -429,6 +550,7 @@ def main(
             commit=commit,
             data_manifest_sha256=sha256_archivo(manifiesto),
             replay_dt_ms=args.replay_dt_ms,
+            reproducir_cortes=args.reproducir_cortes,
         )
     except (
         InsumoFaltanteError,
@@ -443,6 +565,8 @@ def main(
         f"Recorrido {resumen['run_id']}: {resumen['eventos']} cuadros, "
         f"{resumen['decisiones']} decisiones, {resumen['comandos']} comandos"
     )
+    modo = "cortes_sesion" if args.reproducir_cortes else "cadencia_virtual"
+    print(f"Cortes de sesion: {resumen['cortes']} ({modo})")
     print(f"Salida: {args.salida}")
     return 0
 

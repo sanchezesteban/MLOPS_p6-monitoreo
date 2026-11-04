@@ -10,7 +10,14 @@ from pathlib import Path
 import pytest
 import yaml
 
-from p5.casos import CasoInvalidoError, InsumoFaltanteError, Paso, cargar_caso, main
+from p5.casos import (
+    CasoInvalidoError,
+    InsumoFaltanteError,
+    Paso,
+    cargar_caso,
+    cargar_expectativa,
+    main,
+)
 from p5.contrato import validar_evento
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -239,19 +246,27 @@ def test_casos_sinteticos_con_politica_y_adaptador_reales(tmp_path):
     """Se salta mientras #73/#74 no estén mergeados; luego corre en el CI de P5."""
     pytest.importorskip("p5.politica")
     pytest.importorskip("p5.control")
+    # Solo los casos sinteticos: los reales (C01-C05, C07) necesitan datos/eventos/<seq>.jsonl.
+    casos = tmp_path / "casos"
+    (casos / "expectativas").mkdir(parents=True)
+    for ruta in sorted(CASOS.glob("C*.yaml")):
+        datos = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+        if datos["tipo"] == "sintetico":
+            shutil.copy(ruta, casos / ruta.name)
+            shutil.copy(CASOS / datos["expectativa"], casos / datos["expectativa"])
     codigo = main(
         [
             "--casos",
-            str(CASOS),
+            str(casos),
             "--config",
             str(CONFIG),
             "--salida",
-            str(tmp_path),
+            str(tmp_path / "salida"),
         ],
     )
-    resumen = json.loads((tmp_path / "resumen.json").read_text(encoding="utf-8"))
+    resumen = json.loads((tmp_path / "salida" / "resumen.json").read_text(encoding="utf-8"))
     assert codigo == 0
-    assert resumen["resumen"]["pass"] == 3
+    assert resumen["resumen"]["pass"] == 4  # C06 (P5-15) y C08-C10
 
 
 def test_caso_sintetico_estilo_c06_compara_cuadros_y_velocidad(tmp_path):
@@ -447,6 +462,14 @@ def test_cargar_caso_exige_expectativa_existente(tmp_path):
     )
     with pytest.raises(CasoInvalidoError, match="no existe la expectativa"):
         cargar_caso(ruta)
+
+
+def test_expectativa_usa_ruta_relativa_para_la_evidencia():
+    caso = cargar_caso(CASOS / "C01.yaml")
+    expectativa = cargar_expectativa(caso)
+
+    assert not expectativa.ruta.is_absolute()
+    assert expectativa.ruta == Path("casos/expectativas/C01.yaml")
 
 
 def test_evento_sintetico_invalido_por_contrato_se_registra(tmp_path):

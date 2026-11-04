@@ -1,0 +1,10 @@
+# Entrada del caso para el runner (P5-13). La expectativa vive aparte, en `expectativa:`,
+# y nunca se entrega al detector ni a la politica.
+id: C03
+nombre: Obstaculo solo a la izquierda
+tipo: real
+estado_inicial: INICIO
+entrada:
+  secuencia: S3  # sequence_id de evaluacion de P5-05 (#79)
+  manifiesto: datos/evaluacion/capturas.csv
+expectativa: expectativas/C03.yaml

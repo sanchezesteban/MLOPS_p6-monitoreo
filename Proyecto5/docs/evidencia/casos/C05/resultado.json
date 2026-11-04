@@ -1,0 +1,12 @@
+{
+  "id": "C05",
+  "nombre": "Varios obstaculos sin zona libre",
+  "tipo": "real",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C05.yaml",
+  "expectativa_sha256": "67d88893848b1549360612d741922431cafb61f1e27dffa5f0047a8751815a0c",
+  "pasos": 12,
+  "fallos": [],
+  "error": null,
+  "comandos": "C05/comandos.jsonl"
+}

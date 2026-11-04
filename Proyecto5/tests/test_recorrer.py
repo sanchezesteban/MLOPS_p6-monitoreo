@@ -14,6 +14,7 @@ from p5.contrato import validar_run_header
 from p5.detector import DetectorSimulado, Frame
 from p5.recorrer import (
     RecorridoInvalidoError,
+    cortes_de_sesion,
     hueco_entre_secuencias,
     leer_manifiesto,
     main,
@@ -30,6 +31,7 @@ CONFIG = RAIZ / "config" / "politica.yaml"
 WATCHDOG = RAIZ / "config" / "watchdog.yaml"
 DETECTOR_CONFIG = RAIZ / "config" / "detector.yaml"
 MODELO = RAIZ / "modelo" / "yolox_nano.onnx"
+TABLA_COMPATIBILIDAD = RAIZ / "docs" / "compatibilidad_ids_consumidores_p5_05b.csv"
 HASH = "0" * 64
 
 
@@ -69,6 +71,65 @@ def _fila(frame_id: str, t_ms: float, status: str = "ok", error: str = "") -> di
         "status": status,
         "error_msg": error,
     }
+
+
+def _datos_con_sesiones(tmp_path: Path) -> Path:
+    """Manifiesto minimo con dos sesiones y una pausa de 900 ms entre ellas."""
+    datos = tmp_path / "datos"
+    datos.mkdir()
+    (datos / "cuadro.png").write_bytes(b"png de prueba")
+    (datos / "detecciones.yaml").write_text("frames: {}\n", encoding="utf-8")
+    campos = [
+        "sequence_id",
+        "frame_id",
+        "t_capture_ms",
+        "image_path",
+        "image_width",
+        "image_height",
+        "status",
+        "error_msg",
+        "session_id",
+    ]
+    filas = [
+        {
+            "sequence_id": "S1",
+            "frame_id": "S1_f0001",
+            "t_capture_ms": 0,
+            "image_path": "cuadro.png",
+            "image_width": 640,
+            "image_height": 480,
+            "status": "ok",
+            "error_msg": "",
+            "session_id": "sesion-a",
+        },
+        {
+            "sequence_id": "S1",
+            "frame_id": "S1_f0002",
+            "t_capture_ms": 900,
+            "image_path": "cuadro.png",
+            "image_width": 640,
+            "image_height": 480,
+            "status": "ok",
+            "error_msg": "",
+            "session_id": "sesion-b",
+        },
+        {
+            "sequence_id": "S1",
+            "frame_id": "S1_f0003",
+            "t_capture_ms": 1000,
+            "image_path": "cuadro.png",
+            "image_width": 640,
+            "image_height": 480,
+            "status": "ok",
+            "error_msg": "",
+            "session_id": "sesion-b",
+        },
+    ]
+    with (datos / "manifiesto.csv").open("w", encoding="utf-8", newline="") as f:
+        escritor = csv.DictWriter(f, fieldnames=campos, lineterminator="\n")
+        escritor.writeheader()
+        escritor.writerows(filas)
+    return datos
 
 
 class DetectorRoto:
@@ -274,21 +335,152 @@ def test_detector_real_sin_pesos_es_error_claro(tmp_path):
     assert codigo == 1
 
 
-def test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos():
+def test_manifiesto_real_genera_frame_id_con_prefijo_y_tiempos_monotonos():
     frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
     cfg = cargar_config_watchdog(WATCHDOG)
     normalizados = normalizar_tiempos(frames, 100.0, hueco_entre_secuencias(cfg, 100.0))
 
     assert len(frames) == 78
     assert {f.sequence_id for f in frames} == {"S1", "S2", "S3", "S4", "S5", "S6"}
+
+    with CAPTURAS.open(encoding="utf-8", newline="") as archivo:
+        primeros_csv: dict[str, str] = {}
+        for fila in csv.DictReader(archivo):
+            primeros_csv.setdefault(fila["sequence_id"], fila["frame_id"])
+
     first = {}
     for frame in frames:
         first.setdefault(frame.sequence_id, frame)
-    assert first["S1"].frame_id == "S1_f0001"
-    assert first["S2"].frame_id == "S2_f0001"
-    assert all(f.frame_id.startswith(f"{f.sequence_id}_f") for f in frames)
+        prefijo = f"{frame.sequence_id}_f"
+        assert frame.frame_id.startswith(prefijo)
+        assert frame.frame_id[len(prefijo) :].isdigit()
+
+    assert len({f.frame_id for f in frames}) == len(frames)
+    assert first["S1"].frame_id == "S1_f0001"  # UUID historico -> posicional
+    # #84 conserva los IDs prefijados de S2; el dataset empieza en S2_f0007.
+    assert first["S2"].frame_id == primeros_csv["S2"]
     assert all(a.t_capture_ms < b.t_capture_ms for a, b in pairwise(normalizados))
     assert all(f.t_capture_origen_ms == f.t_capture_ms for f in frames)
+
+
+def test_ids_del_manifiesto_coinciden_con_la_tabla_de_compatibilidad():
+    frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
+    with TABLA_COMPATIBILIDAD.open(encoding="utf-8", newline="") as archivo:
+        tabla = list(csv.DictReader(archivo))
+
+    assert [(f.sequence_id, f.frame_id) for f in frames] == [
+        (fila["sequence_id"], fila["frame_id_reproductor_P514_cache"]) for fila in tabla
+    ]
+
+
+def test_cortes_de_sesion_reproducen_los_cinco_deltas():
+    frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
+    cfg = cargar_config_watchdog(WATCHDOG)
+    hueco = hueco_entre_secuencias(cfg, 100.0)
+    normalizados = normalizar_tiempos(frames, 100.0, hueco, reproducir_cortes=True)
+    cortes = cortes_de_sesion(normalizados, aplicado=True, replay_dt_ms=100.0, hueco_ms=hueco)
+
+    esperado = [
+        ("S1", "S1_f0009", "S1_f0010", 3623351.0),
+        ("S2", "S2_f0008", "S2_f0009", 241906.0),
+        ("S2", "S2_f0016", "S2_f0017", 1992758.0),
+        ("S2", "S2_f0017", "S2_f0018", 1817039.0),
+        ("S3", "S3_f0007", "S3_f0008", 674441.0),
+    ]
+    assert [
+        (c["sequence_id"], c["frame_previo"], c["frame_siguiente"], c["delta_origen_ms"])
+        for c in cortes["cortes"]
+    ] == esperado
+    assert all(c["delta_replay_ms"] == c["delta_origen_ms"] for c in cortes["cortes"])
+    assert all(c["aplicado"] is True for c in cortes["cortes"])
+    assert cortes["modo"] == "cortes_sesion"
+
+
+def test_sin_reproducir_cortes_se_comprimen_a_cien_ms():
+    frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
+    cfg = cargar_config_watchdog(WATCHDOG)
+    hueco = hueco_entre_secuencias(cfg, 100.0)
+    normalizados = normalizar_tiempos(frames, 100.0, hueco)
+    cortes = cortes_de_sesion(normalizados, aplicado=False, replay_dt_ms=100.0, hueco_ms=hueco)
+
+    assert cortes["modo"] == "cadencia_virtual"
+    assert cortes["total"] == 5
+    assert all(c["delta_replay_ms"] == 100.0 for c in cortes["cortes"])
+    assert all(c["aplicado"] is False for c in cortes["cortes"])
+
+
+def test_reproducir_cortes_exige_session_id():
+    frames = [
+        Frame("S1", "S1_f0001", 0, "x.png", 640, 480, HASH),
+        Frame("S1", "S1_f0002", 100, "x.png", 640, 480, HASH),
+    ]
+    with pytest.raises(RecorridoInvalidoError, match="session_id"):
+        normalizar_tiempos(frames, 100.0, 400.0, reproducir_cortes=True)
+
+
+def test_recorrido_escribe_cortes_json_y_watchdog_corta(tmp_path):
+    datos = _datos_con_sesiones(tmp_path)
+    salida = tmp_path / "salida"
+    codigo = main(
+        [
+            "--datos",
+            str(datos),
+            "--config",
+            str(CONFIG),
+            "--watchdog-config",
+            str(WATCHDOG),
+            "--salida",
+            str(salida),
+            "--reproducir-cortes",
+            "--run-id",
+            "run-cortes",
+            "--commit",
+            "test",
+        ],
+    )
+
+    assert codigo == 0
+    cortes = json.loads((salida / "cortes.json").read_text(encoding="utf-8"))
+    assert cortes["modo"] == "cortes_sesion"
+    assert cortes["total"] == 1
+    corte = cortes["cortes"][0]
+    assert corte["frame_previo"] == "S1_f0001"
+    assert corte["frame_siguiente"] == "S1_f0002"
+    assert corte["delta_origen_ms"] == 900.0
+    assert corte["delta_replay_ms"] == 900.0
+    assert corte["aplicado"] is True
+
+    comandos = _lineas(salida / "comandos.jsonl")
+    assert any(c.get("reason") == "sin_cuadros_recientes" for c in comandos)
+
+
+def test_recorrido_sin_cortes_marca_cadencia_virtual(tmp_path):
+    datos = _datos_con_sesiones(tmp_path)
+    salida = tmp_path / "salida"
+    codigo = main(
+        [
+            "--datos",
+            str(datos),
+            "--config",
+            str(CONFIG),
+            "--watchdog-config",
+            str(WATCHDOG),
+            "--salida",
+            str(salida),
+            "--run-id",
+            "run-virtual",
+            "--commit",
+            "test",
+        ],
+    )
+
+    assert codigo == 0
+    cortes = json.loads((salida / "cortes.json").read_text(encoding="utf-8"))
+    assert cortes["modo"] == "cadencia_virtual"
+    assert cortes["total"] == 1
+    corte = cortes["cortes"][0]
+    assert corte["delta_replay_ms"] == 100.0
+    assert corte["aplicado"] is False
 
 
 def test_replay_usa_cien_ms_dentro_de_secuencia_y_hueco_mayor_al_watchdog():

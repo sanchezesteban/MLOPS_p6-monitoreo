@@ -1,0 +1,12 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+id: C05
+secuencia: S5
+acciones_por_cuadro: cuadros_S5.csv
+estados_requeridos: [bloqueado]
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 100  # un cuadro del replay fijo de P5-14; igual a config/watchdog.yaml
+requisitos: []
+justificacion: >-
+  Cajas anotadas en las tres zonas en riesgo: no hay zona libre y la unica accion segura es STOP.
+  Cuenta todas las cajas, no solo la de mayor confianza.

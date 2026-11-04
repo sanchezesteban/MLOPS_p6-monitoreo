@@ -1,0 +1,18 @@
+{
+  "id": "C07",
+  "nombre": "Libre, obstaculo persistente y desaparicion",
+  "tipo": "real",
+  "estado": "fail",
+  "expectativa": "casos/expectativas/C07.yaml",
+  "expectativa_sha256": "2d5c751fb1ae14752b2534d81e2dcaf4628a8ee128c10fbe26ef4f026421ebf6",
+  "pasos": 12,
+  "fallos": [
+    "S6_f0006: accion FORWARD no permitida (esperaba ['STOP'])",
+    "S6_f0008: accion FORWARD no permitida (esperaba ['STOP'])",
+    "casos/expectativas/C07.yaml: S6_f0006 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+    "casos/expectativas/C07.yaml: S6_f0008 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+    "casos/expectativas/C07.yaml: hubo movimiento entre S6_f0006 y S6_f0008"
+  ],
+  "error": null,
+  "comandos": "C07/comandos.jsonl"
+}

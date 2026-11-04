@@ -1,0 +1,12 @@
+{
+  "id": "C09",
+  "nombre": "Error del detector, imagen ilegible y salida no finita",
+  "tipo": "sintetico",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C09.yaml",
+  "expectativa_sha256": "61ac8ffd91c7f0082b1a32d0f2a5143842109085d80d1dfa9da87a5c4a084f4c",
+  "pasos": 6,
+  "fallos": [],
+  "error": null,
+  "comandos": "C09/comandos.jsonl"
+}

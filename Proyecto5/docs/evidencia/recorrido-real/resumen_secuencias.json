@@ -1,55 +1,61 @@
 {
-  "run_id": "run-real-001",
+  "run_id": "run-eventos-001",
   "replay_dt_ms": 100,
+  "modo": "cortes_sesion",
   "secuencias": {
     "S1": {
       "cuadros": 12,
       "acciones": {
-        "STOP": 2,
-        "FORWARD": 10
+        "STOP": 4,
+        "FORWARD": 8
       },
       "clases": {}
     },
     "S2": {
       "cuadros": 17,
       "acciones": {
-        "STOP": 8,
-        "FORWARD": 9
+        "STOP": 10,
+        "FORWARD": 7
       },
       "clases": {
-        "person": 3,
-        "tv": 8,
-        "dog": 1,
-        "traffic light": 3
+        "person": 4,
+        "kite": 2,
+        "toilet": 1,
+        "fire hydrant": 3,
+        "refrigerator": 2,
+        "teddy bear": 3,
+        "dog": 2
       }
     },
     "S3": {
       "cuadros": 13,
       "acciones": {
-        "STOP": 2,
-        "STEER_RIGHT": 2,
-        "FORWARD": 9
+        "STOP": 7,
+        "FORWARD": 5,
+        "STEER_RIGHT": 1
       },
       "clases": {
+        "refrigerator": 3,
+        "sink": 1,
+        "fire hydrant": 1,
         "person": 4,
-        "tv": 4,
-        "traffic light": 3,
-        "dog": 1
+        "kite": 1
       }
     },
     "S4": {
       "cuadros": 12,
       "acciones": {
         "STOP": 2,
-        "STEER_LEFT": 3,
-        "FORWARD": 7
+        "FORWARD": 6,
+        "STEER_LEFT": 4
       },
       "clases": {
-        "tv": 5,
-        "person": 3,
-        "dog": 3,
-        "microwave": 1,
-        "traffic light": 1
+        "oven": 1,
+        "person": 4,
+        "umbrella": 2,
+        "teddy bear": 1,
+        "sink": 1,
+        "refrigerator": 1
       }
     },
     "S5": {
@@ -73,8 +79,11 @@
         "FORWARD": 10
       },
       "clases": {
-        "tv": 2,
-        "person": 2
+        "oven": 3,
+        "traffic light": 1,
+        "toilet": 1,
+        "teddy bear": 2,
+        "refrigerator": 1
       }
     }
   }
