@@ -14,12 +14,14 @@ import pytest
 import yaml
 from PIL import Image
 
+import p5.benchmark as benchmark
 from p5.benchmark import (
     ETAPAS,
     RAIZ,
     BenchmarkError,
     CadenaDetector,
     estadisticas,
+    identificar_cpu,
     leer_filas,
     main,
     medir,
@@ -324,19 +326,32 @@ def insumos_falsos(tmp_path):
     return ruta, imagen, modelo
 
 
-def test_conexion_futura_cpu_hilos_y_etapas_solo_con_sesion_falsa(tmp_path, monkeypatch):
+@pytest.mark.parametrize("hilos", [None, 1, 2])
+def test_conexion_futura_cpu_hilos_y_etapas_solo_con_sesion_falsa(tmp_path, monkeypatch, hilos):
     import onnxruntime
 
     cfg, imagen, _ = insumos_falsos(tmp_path)
     usadas = {}
 
     class SesionFalsa:
-        def __init__(self, ruta, *, sess_options, providers):
+        def __init__(self, ruta, **opciones):
+            if hilos is None:
+                assert set(opciones) == {"providers"}  # Exactamente como DetectorONNX.
+                self.opciones = SimpleNamespace(intra_op_num_threads=0, inter_op_num_threads=0)
+            else:
+                assert set(opciones) == {"providers", "sess_options"}
+                self.opciones = opciones["sess_options"]
             usadas.update(
-                hilos=sess_options.intra_op_num_threads,
-                inter=sess_options.inter_op_num_threads,
-                providers=providers,
+                hilos=self.opciones.intra_op_num_threads,
+                inter=self.opciones.inter_op_num_threads,
+                providers=opciones["providers"],
             )
+
+        def get_session_options(self):
+            return self.opciones
+
+        def get_providers(self):
+            return ["CPUExecutionProvider"]
 
         def get_inputs(self):
             return [SimpleNamespace(name="images", shape=[1, 3, 416, 416])]
@@ -350,22 +365,158 @@ def test_conexion_futura_cpu_hilos_y_etapas_solo_con_sesion_falsa(tmp_path, monk
         modo="real",
         detector=cfg,
         imagen=imagen,
-        hilos=2,
+        hilos=hilos,
         politica=RAIZ / "config/politica.yaml",
         watchdog=RAIZ / "config/watchdog.yaml",
     )
-    cadena.abrir(tmp_path / "sesion_falsa")
-    try:
-        cadena.decidir(cadena.posprocesar(cadena.inferir(cadena.preprocesar(1))))
-    finally:
-        cadena.cerrar()
+    salida = tmp_path / "sesion_falsa"
+    informe = medir(cadena, salida, calentamientos=1, ejecuciones=1)
     assert usadas == {
-        "hilos": 2,
-        "inter": 2,
+        "hilos": 0 if hilos is None else hilos,
+        "inter": 0 if hilos is None else hilos,
         "providers": ["CPUExecutionProvider"],
         "tensor": (1, 3, 416, 416),
     }
     assert cadena.metadatos["pesos"]["sha256"] == referencia(tmp_path / "simulacion.onnx")["sha256"]
+    contexto = json.loads((salida / "contexto.json").read_text(encoding="utf-8"))
+    resumen = json.loads((salida / "resumen.json").read_text(encoding="utf-8"))
+    for datos in (contexto, resumen):
+        registro = datos["condiciones"]["hilos"]
+        assert registro["modo"] == ("predeterminado" if hilos is None else "explicito")
+        assert registro["solicitados"] == hilos
+        assert registro["misma_configuracion_que_detector"] == (hilos is None)
+    assert any("HILOS EXPLICITOS" in aviso for aviso in informe["advertencias"]) == (
+        hilos is not None
+    )
+    assert recalcular(salida) == informe
+
+
+@pytest.mark.parametrize("hilos", [0, -1, True, 1.5])
+def test_hilos_invalidos_no_abren_sesion(hilos):
+    with pytest.raises(BenchmarkError, match="hilos"):
+        CadenaDetector(
+            modo="simulado",
+            hilos=hilos,
+            detector=RAIZ / "config/detector.yaml",
+            politica=RAIZ / "config/politica.yaml",
+            watchdog=RAIZ / "config/watchdog.yaml",
+        )
+
+
+@pytest.mark.parametrize("opciones,esperado", [([], None), (["--hilos", "3"], 3)])
+def test_cli_hilos_predeterminados_o_explicitos(tmp_path, monkeypatch, opciones, esperado):
+    argumentos = {}
+
+    def fabrica(**kwargs):
+        argumentos.update(kwargs)
+        return CadenaFalsa()
+
+    monkeypatch.setattr(benchmark, "CadenaDetector", fabrica)
+    assert (
+        main(
+            [
+                "--salida",
+                str(tmp_path / "cli"),
+                "--calentamientos",
+                "1",
+                "--ejecuciones",
+                "1",
+                *opciones,
+            ]
+        )
+        == 0
+    )
+    assert argumentos["hilos"] == esperado
+
+
+@pytest.mark.parametrize("marca", ["Apple M3 Pro", "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz"])
+def test_cpu_macos_sysctl_modelo_real(monkeypatch, marca):
+    monkeypatch.setattr(benchmark.platform, "system", lambda: "Darwin")
+    comandos = []
+
+    def salida(comando):
+        comandos.append(comando)
+        return marca
+
+    monkeypatch.setattr(benchmark, "_salida_comando", salida)
+    info = identificar_cpu()
+    assert info["cpu"] == marca and info["cpu_modelo_confirmado"]
+    assert comandos == [["sysctl", "-n", "machdep.cpu.brand_string"]]
+
+
+@pytest.mark.parametrize("marca", ["arm", ""])
+def test_cpu_apple_silicon_fallback_hardware(monkeypatch, marca):
+    monkeypatch.setattr(benchmark.platform, "system", lambda: "Darwin")
+
+    def salida(comando):
+        if comando[0] == "sysctl":
+            return marca
+        assert comando == ["system_profiler", "SPHardwareDataType", "-json"]
+        return json.dumps({"SPHardwareDataType": [{"chip_type": "Apple M2 Max"}]})
+
+    monkeypatch.setattr(benchmark, "_salida_comando", salida)
+    info = identificar_cpu()
+    assert info["cpu"] == "Apple M2 Max"
+    assert info["cpu_fuente"].startswith("system_profiler")
+
+
+@pytest.mark.parametrize("arquitectura", ["arm", "arm64", "x86_64", "AMD64", ""])
+def test_cpu_no_confunde_arquitectura_con_modelo(monkeypatch, arquitectura):
+    monkeypatch.setattr(benchmark.platform, "system", lambda: "Darwin")
+    monkeypatch.setattr(benchmark.platform, "processor", lambda: arquitectura)
+    # sysctl tambien puede devolver una cadena de arquitectura sin ser un error.
+    monkeypatch.setattr(benchmark, "_salida_comando", lambda _: arquitectura)
+    info = identificar_cpu()
+    assert info["cpu"] is None and not info["cpu_modelo_confirmado"]
+    assert info["cpu_advertencia"]
+
+
+@pytest.mark.parametrize("clave", ["model name", "Hardware"])
+def test_cpu_linux_proc_cpuinfo(monkeypatch, tmp_path, clave):
+    cpuinfo = tmp_path / "cpuinfo"
+    cpuinfo.write_text(f"processor : 0\n{clave} : AMD Ryzen 7 7840U\n", encoding="utf-8")
+    monkeypatch.setattr(benchmark.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(benchmark, "Path", lambda _: cpuinfo)
+    info = identificar_cpu()
+    assert info["cpu"] == "AMD Ryzen 7 7840U" and info["cpu_modelo_confirmado"]
+
+
+def test_cpu_windows_registro_y_contexto(monkeypatch, tmp_path):
+    from contextlib import nullcontext
+
+    monkeypatch.setattr(benchmark.platform, "system", lambda: "Windows")
+    monkeypatch.setitem(
+        sys.modules,
+        "winreg",
+        SimpleNamespace(
+            HKEY_LOCAL_MACHINE=1,
+            OpenKey=lambda *_: nullcontext("clave"),
+            QueryValueEx=lambda *_: ("  Intel(R) Core(TM) i9-14900K  ", 1),
+        ),
+    )
+    cadena = CadenaDetector(
+        modo="simulado",
+        detector=RAIZ / "config/detector.yaml",
+        politica=RAIZ / "config/politica.yaml",
+        watchdog=RAIZ / "config/watchdog.yaml",
+    )
+    medir(cadena, tmp_path / "cpu", calentamientos=1, ejecuciones=1)
+    contexto = json.loads((tmp_path / "cpu/contexto.json").read_text(encoding="utf-8"))
+    assert contexto["condiciones"]["cpu"] == "Intel(R) Core(TM) i9-14900K"
+    assert contexto["condiciones"]["cpu_modelo_confirmado"]
+
+
+@pytest.mark.parametrize(
+    "error",
+    [OSError(), subprocess.CalledProcessError(1, "sysctl"), subprocess.TimeoutExpired("sysctl", 5)],
+)
+def test_consulta_cpu_fallida_o_lenta_no_aborta(monkeypatch, error):
+    def falla(*args, **kwargs):
+        assert kwargs["timeout"] == 5
+        raise error
+
+    monkeypatch.setattr(benchmark.subprocess, "check_output", falla)
+    assert benchmark._salida_comando(["sysctl", "-n", "machdep.cpu.brand_string"]) == ""
 
 
 def test_pesos_alterados_se_rechazan_antes_de_crear_sesion(tmp_path, monkeypatch):

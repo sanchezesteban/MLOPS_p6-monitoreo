@@ -1,0 +1,82 @@
+{
+  "antes": {
+    "alimentacion_AC": 1,
+    "bateria_porcentaje": 30,
+    "carga_previa_baja": true,
+    "conectado_corriente": true,
+    "cpu_total_porcentaje": 4.609475032010247,
+    "criterio_operativo": "CPU total <=20%; ningun proceso observado >=75% de un nucleo",
+    "fecha_utc": "2026-11-04T23:25:45.932025+00:00",
+    "limite": "Muestra previa; no certifica ausencia de interferencias durante la corrida.",
+    "listo_para_medir": true,
+    "metodo_alimentacion": "Windows GetSystemPowerStatus; ACLineStatus=1 requerido",
+    "metodo_carga": "GetSystemTimes y delta CPU de Get-Process; muestra previa de 2 s",
+    "muestra_segundos": 2.2856268000005002,
+    "procesos_mayor_carga": [
+      {
+        "cpu_porcentaje_un_nucleo": 17.774117804355072,
+        "proceso": "Code"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 15.039638142146599,
+        "proceso": "Code"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 3.4180995777605907,
+        "proceso": "opera"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 2.0508597466563545,
+        "proceso": "opera"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 0.6836199155521181,
+        "proceso": "AcPowerNotification"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 0.6836199155521181,
+        "proceso": "ArmouryCrate.UserSessionHelper"
+      }
+    ]
+  },
+  "despues": {
+    "alimentacion_AC": 1,
+    "bateria_porcentaje": 30,
+    "carga_previa_baja": true,
+    "conectado_corriente": true,
+    "cpu_total_porcentaje": 7.680126682501975,
+    "criterio_operativo": "CPU total <=20%; ningun proceso observado >=75% de un nucleo",
+    "fecha_utc": "2026-11-04T23:25:52.126512+00:00",
+    "limite": "Muestra previa; no certifica ausencia de interferencias durante la corrida.",
+    "listo_para_medir": true,
+    "metodo_alimentacion": "Windows GetSystemPowerStatus; ACLineStatus=1 requerido",
+    "metodo_carga": "GetSystemTimes y delta CPU de Get-Process; muestra previa de 2 s",
+    "muestra_segundos": 2.2868610999994416,
+    "procesos_mayor_carga": [
+      {
+        "cpu_porcentaje_un_nucleo": 19.13102636623216,
+        "proceso": "Code"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 17.764524482929865,
+        "proceso": "Code"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 5.466007533209189,
+        "proceso": "Code"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 2.7330037666045945,
+        "proceso": "Code"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 1.3665018833022973,
+        "proceso": "opera"
+      },
+      {
+        "cpu_porcentaje_un_nucleo": 0.0,
+        "proceso": "AacAmbientLighting"
+      }
+    ]
+  }
+}

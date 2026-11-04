@@ -1,0 +1,42 @@
+{
+  "estadisticas_stdlib": {
+    "inferencia_ms": {
+      "max_ms": 14.623000000028696,
+      "n": 100,
+      "p50_ms": 8.828450000237353,
+      "p95_ms": 10.444850000612858
+    },
+    "politica_adaptador_ms": {
+      "max_ms": 4.826800000046205,
+      "n": 100,
+      "p50_ms": 0.9184499999719264,
+      "p95_ms": 1.375170000028447
+    },
+    "posprocesamiento_ms": {
+      "max_ms": 5.2235000002838206,
+      "n": 100,
+      "p50_ms": 3.443900000092981,
+      "p95_ms": 4.662869999810937
+    },
+    "preprocesamiento_ms": {
+      "max_ms": 3.1696999994892394,
+      "n": 100,
+      "p50_ms": 2.5651999999354302,
+      "p95_ms": 3.0150800002047617
+    },
+    "total_local_ms": {
+      "max_ms": 22.058499999729975,
+      "n": 100,
+      "p50_ms": 15.868200000113575,
+      "p95_ms": 19.19558499971572
+    }
+  },
+  "fallos_csv": 0,
+  "fuentes_protegidas_intactas": 311,
+  "recalculo_adicional": "stdlib, CSV fase=medicion estado=ok; indice=(n-1)*q",
+  "resumen_recalculado_identico_byte_a_byte": true,
+  "script_recalculo_codigo_salida": 0,
+  "script_recalculo_stdout": "Recalculo identico; sin modelo ni inferencia.\n",
+  "tolerancia_absoluta_float_ms": 1e-12,
+  "total_intentos_csv": 110
+}

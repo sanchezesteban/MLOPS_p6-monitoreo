@@ -142,4 +142,11 @@ cuando estén mergeados #59/#60; hasta entonces, el índice E1–E7 queda así:
 | E4 | Detector, pesos y límites | [`docs/detector.md`](docs/detector.md) |
 | E5 | Política, adaptador, watchdog, recorrido y casos | [`docs/politica.md`](docs/politica.md), [`docs/watchdog.md`](docs/watchdog.md), [`docs/recorrido.md`](docs/recorrido.md), [`docs/casos.md`](docs/casos.md) |
 | E6 | Métricas TP/FP/FN y P/R/F1 | pendiente de #59 (`src/p5/metricas.py` en su rama) |
-| E7 | Benchmark por etapas y recursos | pendiente de #60 (`src/p5/benchmark.py` en su rama) |
+| E7 | Benchmark por etapas y recursos | [implementación y protocolo](docs/benchmark.md); [validación](docs/evidencia/p5-08-validacion.md); [medición real 10/100](mediciones/real_cpu_predeterminado_20261104T232545932025Z/) |
+
+E7 se midió en CPU Intel Core i7-13650HX, con ONNX Runtime 1.30.0 y sus hilos
+predeterminados, usando S2_f0008 y los pesos/configuración congelados. Hubo 10
+calentamientos excluidos, 100 mediciones válidas y cero fallos. Total local:
+p50=15,868200 ms, p95=19,195585 ms y máximo=22,058500 ms; p95 y máximo caben en
+100 y 250 ms. Recálculo idéntico; [alcance y auditoría](docs/evidencia/p5-08-validacion.md).
+No incluye red, cámara ni frenado físico; no es una evaluación de calidad de los 78 cuadros.

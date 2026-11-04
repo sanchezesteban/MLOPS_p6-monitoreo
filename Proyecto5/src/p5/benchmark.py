@@ -65,6 +65,84 @@ def estadisticas(valores: list[float]) -> dict:
     return {"n": len(valores), "p50_ms": float(p50), "p95_ms": float(p95), "max_ms": max(valores)}
 
 
+def _salida_comando(comando: list[str]) -> str:
+    try:
+        return subprocess.check_output(
+            comando,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stderr=subprocess.DEVNULL,
+            timeout=5,
+        ).strip()
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return ""
+
+
+def _modelo_especifico(nombre: str) -> bool:
+    genericos = {"arm", "arm64", "arm64e", "aarch64", "x86", "x86_64", "amd64", "i386", "i686"}
+    normalizado = nombre.strip().lower()
+    return (
+        bool(normalizado)
+        and normalizado not in genericos
+        and not normalizado.startswith(("armv", "intel64 family", "amd64 family"))
+    )
+
+
+def identificar_cpu() -> dict:
+    """Modelo del procesador; nunca confunde una arquitectura con un modelo medido."""
+    sistema = platform.system()
+    nombre = fuente = ""
+    if sistema == "Darwin":
+        nombre = _salida_comando(["sysctl", "-n", "machdep.cpu.brand_string"])
+        fuente = "sysctl machdep.cpu.brand_string"
+        if not _modelo_especifico(nombre):
+            try:
+                hardware = json.loads(
+                    _salida_comando(["system_profiler", "SPHardwareDataType", "-json"])
+                )
+                datos = hardware["SPHardwareDataType"][0]
+                nombre = datos.get("chip_type") or datos.get("cpu_type") or ""
+                fuente = "system_profiler SPHardwareDataType (chip_type/cpu_type)"
+            except (ValueError, KeyError, IndexError, TypeError):
+                nombre = ""
+    elif sistema == "Windows":
+        try:
+            import winreg
+
+            with winreg.OpenKey(
+                winreg.HKEY_LOCAL_MACHINE, r"HARDWARE\DESCRIPTION\System\CentralProcessor\0"
+            ) as clave:
+                nombre = winreg.QueryValueEx(clave, "ProcessorNameString")[0].strip()
+            fuente = "registro Windows ProcessorNameString"
+        except (ImportError, OSError):
+            pass
+    elif sistema == "Linux":
+        try:
+            for linea in Path("/proc/cpuinfo").read_text(encoding="utf-8").splitlines():
+                clave, separador, valor = linea.partition(":")
+                if (
+                    separador
+                    and clave.strip() in ("model name", "Hardware")
+                    and _modelo_especifico(valor)
+                ):
+                    nombre, fuente = valor.strip(), f"/proc/cpuinfo: {clave.strip()}"
+                    break
+        except OSError:
+            pass
+    if not _modelo_especifico(nombre):
+        nombre, fuente = platform.processor().strip(), "platform.processor"
+    confirmado = _modelo_especifico(nombre)
+    return {
+        "cpu": nombre if confirmado else None,
+        "cpu_fuente": fuente if confirmado else None,
+        "cpu_modelo_confirmado": confirmado,
+        "cpu_advertencia": None
+        if confirmado
+        else "Modelo no disponible; arquitectura no es modelo.",
+    }
+
+
 def condiciones() -> dict:
     try:
         commit = subprocess.check_output(
@@ -72,19 +150,8 @@ def condiciones() -> dict:
         ).strip()
     except (OSError, subprocess.CalledProcessError):
         commit = None
-    cpu = platform.processor() or None
-    cpuinfo = Path("/proc/cpuinfo")
-    if cpuinfo.is_file():
-        cpu = next(
-            (
-                linea.split(":", 1)[1].strip()
-                for linea in cpuinfo.read_text().splitlines()
-                if linea.startswith("model name")
-            ),
-            cpu,
-        )
     return {
-        "cpu": cpu,
+        **identificar_cpu(),
         "cpu_logicos": os.cpu_count(),
         "arquitectura": platform.machine(),
         "sistema_operativo": platform.platform(),
@@ -132,10 +199,12 @@ class CadenaDetector:
         politica: Path,
         watchdog: Path,
         imagen: Path | None = None,
-        hilos: int = 1,
+        hilos: int | None = None,
     ) -> None:
         exigir(modo in ("simulado", "real"), "modo desconocido")
-        exigir(type(hilos) is int and hilos > 0, "hilos debe ser entero positivo")
+        exigir(
+            hilos is None or (type(hilos) is int and hilos > 0), "hilos debe ser entero positivo"
+        )
         exigir(modo != "real" or imagen is not None, "modo real requiere --imagen explicita")
         exigir(modo != "simulado" or imagen is None, "modo simulado no lee fotografias")
         self.config = cargar_detector(detector)
@@ -150,6 +219,7 @@ class CadenaDetector:
         self.control = None
         self.watchdog = None
         self.run_id = "benchmark-local"
+        opciones_sesion = None
         if self.synthetic:
             self.rgb = np.random.default_rng(42).integers(0, 256, (296, 400, 3), dtype=np.uint8)
             entrada = {
@@ -169,12 +239,16 @@ class CadenaDetector:
             )
             import onnxruntime as ort
 
-            opciones = ort.SessionOptions()
-            opciones.intra_op_num_threads = hilos
-            opciones.inter_op_num_threads = hilos
+            opciones = {}
+            if hilos is not None:
+                personalizadas = ort.SessionOptions()
+                personalizadas.intra_op_num_threads = hilos
+                personalizadas.inter_op_num_threads = hilos
+                opciones["sess_options"] = personalizadas
             self.sesion = ort.InferenceSession(
-                str(self.config.modelo), sess_options=opciones, providers=["CPUExecutionProvider"]
+                str(self.config.modelo), providers=["CPUExecutionProvider"], **opciones
             )
+            opciones_sesion = self.sesion.get_session_options()
             exigir(
                 list(self.sesion.get_inputs()[0].shape)
                 == [1, 3, self.config.tamano_entrada, self.config.tamano_entrada],
@@ -196,10 +270,25 @@ class CadenaDetector:
             if self.synthetic
             else "onnxruntime CPUExecutionProvider",
             "hilos": {
-                "intra_op": None if self.synthetic else hilos,
-                "inter_op": None if self.synthetic else hilos,
-                "nota": "ONNX no ejecutado" if self.synthetic else "configurados explicitamente",
+                "modo": "no_aplica"
+                if self.synthetic
+                else "predeterminado"
+                if hilos is None
+                else "explicito",
+                "solicitados": hilos,
+                "intra_op": None if self.synthetic else opciones_sesion.intra_op_num_threads,
+                "inter_op": None if self.synthetic else opciones_sesion.inter_op_num_threads,
+                "misma_configuracion_que_detector": None if self.synthetic else hilos is None,
+                "nota": "ONNX no ejecutado"
+                if self.synthetic
+                else (
+                    "Sin SessionOptions, igual que DetectorONNX; "
+                    "0 significa automatico, no un hilo."
+                    if hilos is None
+                    else "Experimento con hilos explicitos; no comparacion directa."
+                ),
             },
+            "providers_sesion": None if self.synthetic else self.sesion.get_providers(),
             "configuraciones": {
                 "detector": referencia(detector),
                 "politica": referencia(politica),
@@ -339,6 +428,15 @@ def resumir(filas: list[dict], contexto: dict) -> dict:
         + (
             ["SINTETICO: estos tiempos no son mediciones del detector ONNX."]
             if contexto["condiciones"]["synthetic"]
+            else []
+        )
+        + (
+            [
+                "HILOS EXPLICITOS: sesion distinta de DetectorONNX; "
+                "no comparacion directa con recorrido."
+            ]
+            if contexto["condiciones"].get("hilos", {}).get("misma_configuracion_que_detector")
+            is False
             else []
         )
         + ([] if completa else ["INCOMPLETO: no se alcanzaron las ejecuciones requeridas."]),
@@ -498,7 +596,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--detector-config", type=Path, default=RAIZ / "config/detector.yaml")
     parser.add_argument("--politica-config", type=Path, default=RAIZ / "config/politica.yaml")
     parser.add_argument("--watchdog-config", type=Path, default=RAIZ / "config/watchdog.yaml")
-    parser.add_argument("--hilos", type=int, default=1)
+    parser.add_argument(
+        "--hilos",
+        type=int,
+        help="Hilos intra/inter explicitos; sin opcion usa los valores de DetectorONNX",
+    )
     parser.add_argument("--calentamientos", type=int, default=10)
     parser.add_argument("--ejecuciones", type=int, default=100)
     parser.add_argument("--max-intentos", type=int, default=1000)
