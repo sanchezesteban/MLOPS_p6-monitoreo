@@ -33,6 +33,7 @@ class Frame:
     status: str = "ok"
     error_msg: str | None = None
     t_capture_origen_ms: float | None = None
+    session_id: str | None = None
 
 
 class Detector(Protocol):
