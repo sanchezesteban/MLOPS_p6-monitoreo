@@ -1,0 +1,20 @@
+{
+  "coco_sha256": "e0ac20b9409b65151cdf6ed7df8c6b50dd2ac8c61c3033b0f79c0d19a80bb4e7",
+  "manifiesto_sha256": "e4d124463349fdd050435b256f1b2b605e776f871379e964d89781f560cf5853",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "secuencias": {
+    "S1": {
+      "cuadros": 12,
+      "por_estado": {
+        "libre": 12
+      }
+    },
+    "S5": {
+      "cuadros": 12,
+      "por_estado": {
+        "bloqueado": 12
+      }
+    }
+  },
+  "errores": []
+}
