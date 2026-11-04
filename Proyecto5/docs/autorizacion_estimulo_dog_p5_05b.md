@@ -4,7 +4,7 @@
 normalización/interrupción, gatos y peluche dog=16 están comunicadas por el operador.
 La selección de 78 se integró localmente y validó de nuevo; ver [entrega vigente](entrega_emilio_p5_05b.md).
 El contenido anterior se conserva como historial/protocolo; sus pendientes de
-aprobación ya resueltos no describen el estado actual. Publicación pendiente de consentimiento.
+aprobación ya resueltos no describen el estado actual. Consentimiento completo: firma 2026-11-03 y alcance GitHub confirmados.
 
 El operador comunicó expresamente la autorización de Sebastián para usar el
 perro de peluche como estímulo y anotarlo como **dog, class_id=16**. Esta decisión
@@ -75,16 +75,16 @@ Los seis adicionales usan alias derivados S2_f0018–S2_f0023 con
 El candidato de 78 aprueba --issue57: 20 despejados, 58 obstáculos y seis fuera
 de riesgo. Ninguna foto ni CSV fuente, evaluación activa o ajuste fue modificado.
 
-## Decisiones restantes
+## Estado actualizado de decisiones
 
 - PM: S2 interrumpida/normalizada y gatos reales ya aceptados; seis adicionales al final.
-- Pendiente: encuadres S3/S4 y [justificación de selección](seleccion_78_p5_05b.md),
+- PM: encuadres S3/S4 y selección aprobados; ver [justificación](seleccion_78_p5_05b.md),
   sin inventar motivos de las cuatro eliminaciones previas.
 - Coordinar cortes/IDs con el responsable del [reproductor](propuesta_reproductor_cortes_p5_05b.md).
-- Completar fecha real de firma del consentimiento firmado en la
-  [constancia](consentimiento_recaptura_issue57.md). El firmado permanece privado.
-- Congelar únicamente después de esas decisiones y la revisión de escenarios;
-  validar otra vez y confirmar entrega a Emilio. #59 usará ese mismo congelado.
+- [Consentimiento completo](consentimiento_recaptura_issue57.md), firmado el
+  2026-11-03 y publicación GitHub confirmada. El firmado permanece privado.
+- Confirmar entrega a Emilio y congelar COCO/manifiesto e IDs coordinados.
+  #59 usará ese mismo conjunto congelado, sin alterar su algoritmo.
 
 No hacen falta otras once capturas para resolver la aritmética del CSV si el PM
 acepta esta cronología interrumpida. Si exige una sola sesión, la normalización

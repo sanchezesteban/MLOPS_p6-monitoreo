@@ -4,7 +4,7 @@
 normalización/interrupción, gatos y peluche dog=16 están comunicadas por el operador.
 La selección de 78 se integró localmente y validó de nuevo; ver [entrega vigente](entrega_emilio_p5_05b.md).
 El contenido anterior se conserva como historial/protocolo; sus pendientes de
-aprobación ya resueltos no describen el estado actual. Publicación pendiente de consentimiento.
+aprobación ya resueltos no describen el estado actual. Consentimiento completo: firma 2026-11-03 y alcance GitHub confirmados.
 
 **Actualización temporal posterior:** el candidato privado normalizado aprueba
 --issue57 con 78/20D/58B y seis fuera de riesgo; [evidencia y pendientes PM](normalizacion_temporal_S2_p5_05b.md).

@@ -18,5 +18,5 @@ No se aportaron enlaces/citas verificables de esa respuesta y no se inventan.
 [normalización e IDs](normalizacion_temporal_S2_p5_05b.md).
 La aprobación del PM no sustituye el consentimiento de publicación.
 El operador confirma ser la persona retratada y tener documento firmado privado;
-solo la fecha real de firma sigue pendiente; publicación GitHub ya confirmada: ver [constancia](consentimiento_recaptura_issue57.md).
+fecha real de firma 2026-11-03 y publicación GitHub confirmadas: ver [constancia](consentimiento_recaptura_issue57.md).
 La selección se integró localmente y se validó. No se ejecutó el detector.

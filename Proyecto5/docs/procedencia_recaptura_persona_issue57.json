@@ -1,5 +1,5 @@
 {
-  "estado": "seleccion_78_integrada_validada_autorizacion_publicacion_confirmada_pendiente_fecha_firma",
+  "estado": "seleccion_78_integrada_validada_consentimiento_completo_autorizada_para_publicacion",
   "issue": 57,
   "rama": "p5-05b-recaptura",
   "commit_base_origin_main": "b6317b5dc3cc90f27bf19a8b948db9d83cb4ad32",
@@ -29,7 +29,6 @@
     }
   },
   "pendientes": [
-    "Consentimiento: solo falta fecha real de firma; autorizacion GitHub confirmada",
     "P5-06/P5-14: correspondencia de IDs y cortes de sesion, sin cambios no coordinados",
     "Emilio: COCO/manifiesto a ciegas, congelado y confirmacion de recepcion; luego configuracion congelada e inferencia",
     "Motivo individual de cuatro exclusiones manuales historicas no comunicado; conservar limitacion sin inventar motivos",
@@ -44,8 +43,9 @@
       "Proyecto5/docs/actualizacion_issue57_recaptura.md"
     ],
     "mensajes_enviados": false,
-    "bloqueada": true,
-    "motivo": "Solo falta fecha real de firma; autorizacion GitHub confirmada. No publicar hasta registrar fecha real."
+    "bloqueada": false,
+    "motivo": null,
+    "estado": "Publicacion autorizada; consultar estado remoto del PR en GitHub"
   },
   "objetivo_recaptura_no_integrado": {
     "nuevos_por_secuencia": {
@@ -170,7 +170,8 @@
     "consentimiento_escrito_firmado_reportado_por_operador": true,
     "fecha_consentimiento_real": null,
     "alcance_publicacion_verificado": false,
-    "bloqueo_S6_por_no_ser_persona_resuelto": true
+    "bloqueo_S6_por_no_ser_persona_resuelto": true,
+    "naturaleza": "Resultado historico anterior a la confirmacion final; consentimiento vigente en campo consentimiento de la raiz"
   },
   "auditoria_fuera_riesgo_extra": {
     "referencia": "Proyecto5/docs/auditoria_fuera_riesgo_p5_05b.md",
@@ -322,7 +323,7 @@
     "interrupcion_normalizada_aceptada_PM": true,
     "seis_adicionales_al_final_verificado": true,
     "candidato_completo_aprobado_PM": true,
-    "pendientes_aprobacion": "No faltan aprobaciones de seleccion/encuadres; falta consentimiento de publicacion y dependencias de integracion"
+    "pendientes_aprobacion": "Seleccion/encuadres aprobados y consentimiento de publicacion completo, firmado el 2026-11-03; quedan dependencias de integracion"
   },
   "autorizaciones_PM_actualizacion": {
     "fuente": "Respuesta de Sebastian comunicada expresamente por el operador en esta sesion",
@@ -393,12 +394,11 @@
   "consentimiento": {
     "operador_declara_ser_persona_retratada": true,
     "documento_firmado_confirmado": true,
-    "fecha_firma_real": null,
+    "fecha_firma_real": "2026-11-03",
     "alcance_GitHub_confirmado": true,
-    "marcadores_no_son_confirmacion": true,
     "documento_privado_no_incluido": true,
     "mayoria_de_edad_confirmada": true,
-    "fuente_confirmacion": "Declaracion expresa del operador: persona retratada, mayor de edad y consentimiento firmado con autorizacion GitHub; no comunico fecha concreta"
+    "fuente_confirmacion": "Declaracion expresa del operador: persona retratada, mayor de edad, consentimiento firmado el 2026-11-03 con autorizacion de publicacion GitHub; documento original privado"
   },
   "integracion_local": {
     "anteriores_sustituidas": 54,

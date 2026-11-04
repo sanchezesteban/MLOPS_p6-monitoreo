@@ -1,8 +1,8 @@
 # Entrega para Emilio — selección P5-05b / issue #57
 
 **Dataset definitivo de fotografías integrado localmente y aprobado por el PM.**
-No se hizo envío ni se confirma recepción. Publicación bloqueada hasta completar
-fecha real de firma del [consentimiento](consentimiento_recaptura_issue57.md).
+No se confirma recepción de Emilio. [Consentimiento completo](consentimiento_recaptura_issue57.md):
+firma real 2026-11-03 y autorización expresa para publicar en GitHub.
 Usar **Parte de #57**, no cierre automático: siguen dependencias y recepción.
 
 | Secuencia | JPEG | Despejado | Obstáculo (etiqueta CSV) | outside_risk |
@@ -62,7 +62,7 @@ P5-06 consultado renumera por posición y P5-14 conserva los IDs prefijados;
 
 ## Orden de integración
 
-1. Registrar la fecha real de firma antes de publicar; el alcance GitHub ya está confirmado.
+1. Consentimiento de publicación completo, firmado el 2026-11-03; conservar el documento privado.
 2. Coordinar IDs y cortes sin renumerar la captura fuente ni modificar algoritmos ajenos.
 3. Emilio anota a ciegas y congela COCO/manifiesto y sus hashes sobre esta selección.
 4. Registrar configuración efectiva congelada del detector: pesos, descriptor,

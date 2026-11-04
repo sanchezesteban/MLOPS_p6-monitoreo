@@ -3,7 +3,7 @@
 **P5-05b integrado localmente:** 78 JPEG de evaluación y siete de ajuste,
 400×296 y orientación de captura 180°. Selección, encuadres S3/S4, seis sustituciones
 S2, normalización/interrupción, gatos y peluche dog=16 aprobados según comunicación
-del operador. Publicación pendiente de fecha real de firma del consentimiento.
+del operador. Consentimiento de publicación completo: firma 2026-11-03, alcance GitHub confirmado.
 Ver [autorizaciones](autorizaciones_finales_p5_05b.md) y [entrega actual](entrega_emilio_p5_05b.md).
 
 Estado: datos integrados y validados; **pendiente de aceptación del alcance del rango físico y confirmaciones del operador**. La identificación del controlador es documental, sin inspección del chip; no se afirma cierre completo.

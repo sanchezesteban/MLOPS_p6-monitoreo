@@ -36,7 +36,7 @@ ni se alteraron las reglas del validador. Python 3.12 no ejecutado localmente.
 
 ## Dependencias y publicación
 
-**Borrador local: falta registrar la fecha real de firma antes de publicar.**
+**Consentimiento completo: firmado el 2026-11-03 y publicación GitHub autorizada.**
 La autorización expresa de publicación GitHub está confirmada por el operador,
 quien declara ser la persona fotografiada y mayor de edad. El firmado permanece
 privado fuera de Git; no se publica información personal.

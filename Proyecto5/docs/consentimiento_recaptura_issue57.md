@@ -9,12 +9,13 @@ privada fuera del repositorio; no se adjunta ni se publica información personal
 |---|---|
 | Persona retratada y mayoría de edad | Confirmadas expresamente por el operador |
 | Consentimiento firmado para publicar estas fotografías en GitHub | Confirmado expresamente por el operador |
-| Fecha real de firma | Pendiente de comunicar; no se recibió una fecha concreta |
+| Fecha real de firma | 2026-11-03, comunicada expresamente por el operador |
 | Documento firmado | Bajo custodia privada fuera del repositorio; no incluido en Git |
 
-Solo falta registrar la fecha real de firma. No usar fecha de captura, auditoría,
-commit o confirmación como sustituto. La publicación continúa bloqueada hasta
-completar ese dato exigido por el protocolo de entrega.
+**Autorización de publicación completa:** consentimiento firmado el **2026-11-03**,
+con permiso expreso para publicar estas fotografías en el repositorio GitHub del
+proyecto. Fecha y alcance confirmados por el operador; no inferidos de las capturas.
+No quedan marcadores ni comprobaciones de consentimiento pendientes.
 
 No incluir nombres completos, firmas, identificaciones, direcciones, contactos
 ni el documento original. No se solicita subirlo para completar la constancia.

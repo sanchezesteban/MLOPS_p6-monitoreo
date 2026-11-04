@@ -1,5 +1,5 @@
 {
-  "estado": "integrado_localmente_validado_autorizacion_publicacion_confirmada_pendiente_fecha_firma",
+  "estado": "integrado_validado_consentimiento_completo_listo_para_publicar",
   "rama": "p5-05b-recaptura",
   "fecha_validacion": "2026-11-04",
   "CSV_evaluacion_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
@@ -113,7 +113,7 @@
       "exit_code": 0
     },
     "ruff_format_check": {
-      "archivos": 44,
+      "archivos": 47,
       "exit_code": 0
     },
     "python312_ejecutado": false
@@ -148,17 +148,15 @@
   "autorizaciones_PM": "Proyecto5/docs/autorizaciones_finales_p5_05b.md",
   "consentimiento": {
     "firmado_confirmado": true,
-    "fecha_firma": null,
+    "fecha_firma": "2026-11-03",
     "publicacion_GitHub_confirmada": true,
     "documento_incluido": false,
     "mayoria_de_edad_confirmada": true
   },
   "dependencias": [
     "P5-06/P5-14: coordinar IDs y reconocimiento de cortes",
-    "Registrar fecha real de firma del consentimiento; alcance GitHub ya confirmado",
     "Emilio: anotacion ciega, COCO/manifiesto, congelado y recepcion",
     "Limitaciones fisicas existentes conservadas en ficha_auto.md"
   ],
-  "PR_abierto": false,
-  "push_realizado": false
+  "contexto_publicacion": "Validacion previa al push; consultar estado remoto del PR en GitHub"
 }

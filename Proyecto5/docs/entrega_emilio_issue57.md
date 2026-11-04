@@ -4,7 +4,7 @@
 La [entrega P5-05b](entrega_emilio_p5_05b.md) describe las recapturas ya integradas
 localmente: 78/20 despejados/58 obstáculos/seis fuera de riesgo y siete de ajuste.
 Las aprobaciones finales están [registradas](autorizaciones_finales_p5_05b.md).
-No se hizo push: falta completar fecha real de firma del consentimiento. Usar Parte de #57,
+El consentimiento está completo, firmado el 2026-11-03 y con publicación GitHub autorizada. Usar Parte de #57,
 no cierre automático, mientras falten dependencias o recepción de Emilio.
 El contenido siguiente conserva la historia de #79, sin alterar sus evidencias.
 

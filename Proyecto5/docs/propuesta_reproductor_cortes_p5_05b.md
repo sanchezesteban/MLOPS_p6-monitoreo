@@ -74,8 +74,9 @@ y no exige modificar el algoritmo de métricas del #59.
 
 ## Interfaz disponible y propuesta mínima para coordinar
 
-La selección ya está integrada localmente, aprobada por el PM y validada; no se
-publica hasta completar el consentimiento. Se entregan sin cambiar el CSV fuente:
+La selección está integrada, aprobada por el PM y validada. El consentimiento
+está completo, firmado el 2026-11-03, con publicación GitHub autorizada. Se
+entregan sin cambiar el CSV fuente:
 
 - [Tres cortes S2](cortes_sesion_S2_p5_05b.csv), con las dos sesiones, IDs y tiempos
   de cada transición y pausa reconstruida.

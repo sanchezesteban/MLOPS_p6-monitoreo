@@ -4,12 +4,14 @@
 normalización/interrupción, gatos y peluche dog=16 están comunicadas por el operador.
 La selección de 78 se integró localmente y validó de nuevo; ver [entrega vigente](entrega_emilio_p5_05b.md).
 El contenido anterior se conserva como historial/protocolo; sus pendientes de
-aprobación ya resueltos no describen el estado actual. Publicación pendiente de consentimiento.
+aprobación ya resueltos no describen el estado actual. Consentimiento completo: firma 2026-11-03 y alcance GitHub confirmados.
 
 **Autorizaciones vigentes comunicadas por el operador:** S2 interrumpida/normalizada
 y gatos reales aceptados; peluche dog=16 aceptado. Los seis adicionales están
-al final. Los pendientes actuales son encuadres S3/S4, justificación histórica,
-cortes/IDs y fecha real de firma del consentimiento. Ver [selección actual](seleccion_78_p5_05b.md).
+al final. Los encuadres y sustituciones ya están aprobados; el consentimiento
+está completo, firmado el 2026-11-03. Quedan coordinación de cortes/IDs, entrega
+a Emilio y la limitación sobre motivos históricos individuales no documentados.
+Ver [selección actual](seleccion_78_p5_05b.md).
 Las observaciones/rechazos anteriores de esta auditoría se conservan como historial.
 
 **Actualización temporal posterior:** el candidato privado normalizado aprueba
@@ -92,9 +94,9 @@ S6 mantiene D×4–B×4–D×4 y sus cuatro B son ahora estímulos dog autorizad
 documentados como peluche. No se exige otra autorización por ese motivo.
 Los gatos reales ya fueron aceptados; quedan recortes/márgenes S3/S4 y justificación de selección.
 
-El operador confirma que tiene consentimiento escrito firmado. Falta su fecha
-real y confirmación explícita de publicación/tratamiento; [nota](consentimiento_recaptura_issue57.md).
-No se incorpora el firmado ni información personal. No inferir una fecha.
+En esta fase inicial faltaban fecha y alcance de publicación. Ambos quedaron
+confirmados después: [consentimiento completo](consentimiento_recaptura_issue57.md),
+firmado el 2026-11-03. El documento permanece privado y sin datos personales en Git.
 
 El informe, imágenes de revisión y manifiestos privados se localizan mediante
 `Proyecto5/resultados/auditoria_fuera_riesgo/ubicacion.json`, ignorado por Git.

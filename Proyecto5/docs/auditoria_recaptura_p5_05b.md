@@ -4,12 +4,14 @@
 normalización/interrupción, gatos y peluche dog=16 están comunicadas por el operador.
 La selección de 78 se integró localmente y validó de nuevo; ver [entrega vigente](entrega_emilio_p5_05b.md).
 El contenido anterior se conserva como historial/protocolo; sus pendientes de
-aprobación ya resueltos no describen el estado actual. Publicación pendiente de consentimiento.
+aprobación ya resueltos no describen el estado actual. Consentimiento completo: firma 2026-11-03 y alcance GitHub confirmados.
 
 **Autorizaciones vigentes comunicadas por el operador:** S2 interrumpida/normalizada
 y gatos reales aceptados; peluche dog=16 aceptado. Los seis adicionales están
-al final. Los pendientes actuales son encuadres S3/S4, justificación histórica,
-cortes/IDs y fecha real de firma del consentimiento. Ver [selección actual](seleccion_78_p5_05b.md).
+al final. Los encuadres y sustituciones ya están aprobados; el consentimiento
+está completo, firmado el 2026-11-03. Quedan coordinación de cortes/IDs, entrega
+a Emilio y la limitación sobre motivos históricos individuales no documentados.
+Ver [selección actual](seleccion_78_p5_05b.md).
 Las observaciones/rechazos anteriores de esta auditoría se conservan como historial.
 
 **Actualización temporal posterior:** el candidato privado normalizado aprueba
@@ -78,9 +80,9 @@ No describirlo como captura única de exactamente 54 cuadros sin exclusiones.
   de riesgo y autorizados, y su unión normalizada ya fue aceptada por el PM; el candidato se conserva.
 - Bandas horizontales y escenas oscuras visibles; JPEG decodificables, origen
   del defecto no determinado. No se corrigieron píxeles.
-- El operador confirmó después que tiene consentimiento firmado. La fecha real y
-  el alcance explícito de publicación siguen pendientes; ver [constancia](consentimiento_recaptura_issue57.md).
-  Publicación bloqueada; el documento firmado permanece privado.
+- En esta revisión inicial faltaban fecha y alcance del consentimiento. Después
+  el operador confirmó firma el 2026-11-03 y publicación GitHub; ver
+  [constancia completa](consentimiento_recaptura_issue57.md). El firmado permanece privado.
 
 ## Candidato privado y validaciones
 

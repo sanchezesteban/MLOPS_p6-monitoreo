@@ -1,7 +1,7 @@
 # Mensajes preparados — P5-05b / issue #57
 
-No se enviaron mensajes ni se abrió PR. Publicación bloqueada hasta registrar
-fecha real de firma del consentimiento; el alcance GitHub ya está confirmado.
+Mensajes preparados para compartir tras publicar el PR. Consentimiento completo:
+firma real 2026-11-03 y alcance GitHub confirmado; documento firmado privado.
 
 ## Para Sebastián
 
@@ -12,7 +12,7 @@ seis sustituciones, S2 normalizada/interrumpida, gatos y peluche dog=16.
 Los seis adicionales están al final y los originales/históricos permanecen intactos.
 --issue57, 287 pruebas y 53 subpruebas, Ruff e integridad de 85 hashes aprobaron.
 No ejecuté el detector ni seleccioné por sus resultados. Las cuatro eliminaciones
-manuales conservan motivo individual desconocido, sin inventarlo. Falta la fecha real de firma y coordinar cortes/IDs con P5-06/P5-14. Preparé el commit
+manuales conservan motivo individual desconocido, sin inventarlo. El consentimiento está completo (firma 2026-11-03); falta coordinar cortes/IDs con P5-06/P5-14. Preparé el commit
 local y la descripción con Parte de #57; no se cerrará el issue ni se hará merge.
 
 ## Para Emilio
@@ -26,7 +26,7 @@ Anota directamente los JPEG sin ver detecciones, confianzas ni resultados previo
 Antes de congelar COCO/manifiesto coordinemos IDs con P5-14 usando ruta/SHA e
 ID de origen. Después de terminar la anotación se congelará la configuración
 del detector y se ejecutarán inferencia y #59 sobre los mismos datos. El paquete
-privado está preparado, sin predicciones; la publicación GitHub ya está autorizada; falta registrar la fecha real de firma.
+privado está preparado, sin predicciones; la publicación GitHub está autorizada con firma del 2026-11-03.
 Confirma recepción cuando efectivamente se entregue; no se presupone aquí.
 
 ## Para responsables de P5-06 y P5-14

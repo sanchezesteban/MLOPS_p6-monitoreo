@@ -14,8 +14,8 @@ mitad horizontal y flecha manual al sujeto. Hay un detalle ampliado S3_f0013.
 
 Se encuentran fuera de Git, localizados mediante
 `Proyecto5/resultados/revision_PM_p5_05b/ubicacion.json`, ignorado por Git.
-Son evidencias derivadas para revisión privada; no publicar imágenes hasta
-completar fecha real de firma del consentimiento. Los originales siguen intactos.
+Son evidencias derivadas para revisión privada. El consentimiento de publicación
+está completo, firmado el 2026-11-03; no se publica el documento firmado. Los originales siguen intactos.
 Las flechas no son cajas delimitadoras ni predicciones y no sustituyen COCO.
 
 | Grupo | Cuadros concretos | Motivo | Centro |
