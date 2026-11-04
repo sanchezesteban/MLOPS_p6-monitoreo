@@ -1,0 +1,7 @@
+frame_id     status  clases           decision     reason                    comando      reason
+------------------------------------------------------------------------------------------------------------------------
+seq01_f0001  ok      -                STOP         esperando_liberacion      STOP         esperando_liberacion
+seq01_f0002  ok      -                STOP         esperando_liberacion      STOP         esperando_liberacion
+seq01_f0003  ok      -                FORWARD      via_libre                 FORWARD      via_libre
+seq01_f0004  ok      -                FORWARD      via_libre                 FORWARD      via_libre
+seq01_f0005  ok      -                FORWARD      via_libre                 FORWARD      via_libre

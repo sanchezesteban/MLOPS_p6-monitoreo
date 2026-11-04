@@ -75,6 +75,7 @@ def _evento(
         "sequence_id": "cli",
         "frame_id": f"cli_{indice:05d}",
         "t_capture_ms": float(indice),
+        "t_capture_origen_ms": None,
         "image_path": rel,
         "image_sha256": None,
         "image_width": None,

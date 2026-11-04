@@ -8,5 +8,6 @@
   "runtime": "ejemplo: onnxruntime CPU",
   "hardware": "ejemplo: x86_64, Windows 11",
   "virtual_mode": true,
-  "t_start_utc": "2026-10-30T18:00:00Z"
+  "t_start_utc": "2026-10-30T18:00:00Z",
+  "replay_dt_ms": 100
 }
