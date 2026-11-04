@@ -168,11 +168,16 @@ def test_dimensiones_distintas_salen_con_error(tmp_path):
 
 
 def test_el_manifiesto_real_de_p5_05_se_lee():
-    cuadros = leer_manifiesto(RAIZ / "datos" / "evaluacion" / "capturas.csv")
+    ruta = RAIZ / "datos" / "evaluacion" / "capturas.csv"
+    cuadros = leer_manifiesto(ruta)
     assert {c.sequence_id for c in cuadros} == {"S1", "S2", "S3", "S4", "S5", "S6"}
     assert all(c.frame_id.startswith(f"{c.sequence_id}_f") for c in cuadros)
     assert len({c.frame_id for c in cuadros}) == len(cuadros)
-    assert sum(c.estado_manifiesto == "obstaculo_fuera_riesgo" for c in cuadros) == 5
+    # el conteo sale del propio CSV, para no romperse con una recaptura
+    with ruta.open(encoding="utf-8", newline="") as f:
+        fuera = sum(fila["outside_risk"] == "1" for fila in csv.DictReader(f))
+    assert fuera > 0
+    assert sum(c.estado_manifiesto == "obstaculo_fuera_riesgo" for c in cuadros) == fuera
 
 
 @pytest.mark.parametrize(
