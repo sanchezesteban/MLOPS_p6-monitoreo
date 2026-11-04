@@ -131,5 +131,15 @@ C03 y C07 fallan por recall del detector congelado, documentado en
 de S1, S2 y S3 con `--reproducir-cortes`; la evidencia está en
 [`docs/evidencia/recorrido-real/`](docs/evidencia/recorrido-real/README.md).
 
-La fase 2 de P5-06 (#87) ya está integrada. El README final, con el índice E1–E7, las
-métricas y el benchmark, se cierra en el issue #68 cuando estén mergeados #59/#60.
+La fase 2 de P5-06 (#87) ya está integrada. El README final se cierra en el issue #68
+cuando estén mergeados #59/#60; hasta entonces, el índice E1–E7 queda así:
+
+| Índice | Tema | Dónde |
+|---|---|---|
+| E1 | Entrega, arranque y comandos | este README; `docs/evidencia/` |
+| E2 | Contrato A→B y B→adaptador | [`config/contrato_v1.md`](config/contrato_v1.md) |
+| E3 | Datos, anotaciones y congelado | [`docs/datos.md`](docs/datos.md), [`docs/conteo_datos.md`](docs/conteo_datos.md) |
+| E4 | Detector, pesos y límites | [`docs/detector.md`](docs/detector.md) |
+| E5 | Política, adaptador, watchdog, recorrido y casos | [`docs/politica.md`](docs/politica.md), [`docs/watchdog.md`](docs/watchdog.md), [`docs/recorrido.md`](docs/recorrido.md), [`docs/casos.md`](docs/casos.md) |
+| E6 | Métricas TP/FP/FN y P/R/F1 | pendiente de #59 (`src/p5/metricas.py` en su rama) |
+| E7 | Benchmark por etapas y recursos | pendiente de #60 (`src/p5/benchmark.py` en su rama) |
