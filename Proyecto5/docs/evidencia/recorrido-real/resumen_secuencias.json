@@ -3,10 +3,10 @@
   "replay_dt_ms": 100,
   "secuencias": {
     "S1": {
-      "cuadros": 18,
+      "cuadros": 12,
       "acciones": {
         "STOP": 2,
-        "FORWARD": 16
+        "FORWARD": 10
       },
       "clases": {}
     },

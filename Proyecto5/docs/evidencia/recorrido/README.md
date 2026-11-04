@@ -1,6 +1,6 @@
 # Evidencia del recorrido integral (P5-14)
 
-Corrida del **3 nov 2026** con commit `8b67dac`, detector simulado y los módulos reales
+Corrida del **4 nov 2026** con commit `d69086e`, detector simulado y los módulos reales
 de política (#73), adaptador (#74) y watchdog (#76):
 
 ```bash
@@ -12,7 +12,7 @@ PYTHONPATH=src python -m p5.recorrer \
     --replay-dt-ms 100 \
     --salida resultados/recorrido \
     --run-id run-sim-001 \
-    --commit 8b67dac
+    --commit d69086e
 ```
 
 Resultado:

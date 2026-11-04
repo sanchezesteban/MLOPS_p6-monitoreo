@@ -95,7 +95,7 @@ descrito arriba.
 
 | Secuencia | Escenario | Cuadros |
 |---|---|---:|
-| S1 | Camino despejado (C1) | 18 |
+| S1 | Camino despejado (C1) | 12 |
 | S2 | Obstáculo central (C2) | 17 |
 | S3 | Obstáculo a la izquierda (C3) | 13 |
 | S4 | Obstáculo a la derecha (C4) | 12 |
@@ -141,7 +141,7 @@ evento `status: error` con `error_msg`, que termina en STOP seguro. La prueba
 ## Evidencia
 
 - [`docs/evidencia/recorrido-real/`](evidencia/recorrido-real/README.md): corrida sobre
-  las 84 capturas reales de #79 con `DetectorONNX` (#81) y `--replay-dt-ms 100`.
+  las 78 capturas reales vigentes en `main` con `DetectorONNX` (#81) y `--replay-dt-ms 100`.
 - [`docs/evidencia/recorrido/`](evidencia/recorrido/README.md): corrida sintética
   determinista con `DetectorSimulado`, útil para pruebas sin pesos.
 
