@@ -1,0 +1,4 @@
+C08  fail   Corte de cuadros y cuadro vencido
+       - c08_f0004: accion STOP no permitida (esperaba ['FORWARD'])
+
+Resultado: 0/1 casos pasan (codigo de salida 1)

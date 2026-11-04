@@ -1,0 +1,18 @@
+# Expectativa del caso C10 (P5-13). Solo la lee el runner; nunca es entrada del sistema.
+id: C10
+pasos:
+  - {id: c10_f0001, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c10_f0002, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c10_f0003, acciones_permitidas: [FORWARD, STOP]}
+  - {id: emergencia_1, acciones_permitidas: [STOP], motivo: emergencia}
+  - {id: c10_f0004, acciones_permitidas: [STOP], motivo: emergencia_enclavada}
+  - {id: c10_f0005, acciones_permitidas: [STOP], motivo: emergencia_enclavada}
+  - {id: rearme_1, acciones_permitidas: [STOP], motivo: rearme}
+  - {id: c10_f0006, acciones_permitidas: [STOP], motivo: histeresis_tras_rearme}
+  - {id: c10_f0007, acciones_permitidas: [STOP], motivo: histeresis_tras_rearme}
+  - {id: c10_f0008, acciones_permitidas: [FORWARD, STOP], motivo: reanudacion_tras_rearme}
+  - {id: cierre_1, acciones_permitidas: [STOP], motivo: cierre}
+requisitos:
+  - {tipo: movimiento_minimo, min_cuadros: 1}
+  - {tipo: rearme_requerido, emergencia: emergencia_1, rearme: rearme_1, max_cuadros: 3}
+  - {tipo: stop_al_cerrar}

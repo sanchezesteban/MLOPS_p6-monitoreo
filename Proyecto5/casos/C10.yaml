@@ -1,0 +1,26 @@
+# Entrada del caso para el runner (P5-13). La expectativa vive aparte, en `expectativa:`.
+# C10: emergencia durante el avance, cuadros despejados, rearme y cierre.
+id: C10
+nombre: Emergencia, rearme y cierre
+tipo: sintetico
+estado_inicial: INICIO
+entrada:
+  sequence_id: c10
+  run_id: run-c10
+  image_width: 640
+  image_height: 480
+  eventos:
+    - {tipo: cuadro, frame_id: c10_f0001, t_capture_ms: 0, detections: []}
+    - {tipo: cuadro, frame_id: c10_f0002, t_capture_ms: 100, detections: []}
+    - {tipo: cuadro, frame_id: c10_f0003, t_capture_ms: 200, detections: []}
+    - {tipo: emergencia, id: emergencia_1, t_ms: 300, razon: boton_de_emergencia}
+    # Aunque los cuadros esten despejados, la emergencia sigue enclavada.
+    - {tipo: cuadro, frame_id: c10_f0004, t_capture_ms: 400, detections: []}
+    - {tipo: cuadro, frame_id: c10_f0005, t_capture_ms: 500, detections: []}
+    - {tipo: rearme, id: rearme_1, t_ms: 600, valido: true}
+    # Tras el rearme la politica vuelve a pedir su histeresis de cuadros despejados.
+    - {tipo: cuadro, frame_id: c10_f0006, t_capture_ms: 700, detections: []}
+    - {tipo: cuadro, frame_id: c10_f0007, t_capture_ms: 800, detections: []}
+    - {tipo: cuadro, frame_id: c10_f0008, t_capture_ms: 900, detections: []}
+    - {tipo: cierre, id: cierre_1, t_ms: 1000}
+expectativa: expectativas/C10.yaml

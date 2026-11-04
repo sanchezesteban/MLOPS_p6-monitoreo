@@ -1,0 +1,14 @@
+# Expectativa del caso C09 (P5-13). Solo la lee el runner; nunca es entrada del sistema.
+id: C09
+pasos:
+  - {id: c09_f0001, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c09_f0002, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c09_f0003, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c09_f0004, acciones_permitidas: [STOP], motivo: error_detector}
+  - {id: c09_f0005, acciones_permitidas: [STOP], motivo: imagen_ilegible}
+  - {id: c09_f0006, acciones_permitidas: [STOP], permitir_error: true, motivo: salida_no_finita}
+requisitos:
+  - {tipo: movimiento_minimo, min_cuadros: 1}
+  - {tipo: stop_por_error, eventos: [c09_f0004, c09_f0005]}
+  - {tipo: sin_movimiento_despues_de, evento: c09_f0004}
+  - {tipo: evento_invalido_rechazado, frame_id: c09_f0006}
