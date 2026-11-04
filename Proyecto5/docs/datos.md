@@ -2,7 +2,7 @@
 
 Paquete etiquetado de E3: cuadros de cámara como JPEG, manifiesto temporal, cajas y clases reales, estado esperado de la vía por cuadro, partición ajuste/evaluación y congelado por SHA-256. Las cifras vigentes **no se escriben a mano aquí**: salen de [`conteo_datos.md`](conteo_datos.md) (generado) y las discrepancias de [`discrepancias_datos.md`](discrepancias_datos.md) (generado).
 
-> **Estado: fase 1.** Anotadas S1, S5 y ajuste. S2, S3, S4 y S6 se recapturan con una persona real (ver «Recaptura») y se anotan en la fase 2; hasta entonces el manifiesto y el COCO contienen solo S1 y S5, y las metas de E3 todavía no se cumplen.
+> **Estado: fase 2, completa.** Anotadas a mano las seis secuencias de evaluación (S1–S6, 78 cuadros) y ajuste (`AJ1`, 7 cuadros). S2, S3, S4 y S6 son la recaptura con sujetos físicos de P5-05b (PR #84); S1, S5 y ajuste conservan la anotación de la fase 1. El paquete queda congelado en `datos/HASHES.sha256`.
 
 En este documento, **verificado** = comprobado con archivos y comandos del repositorio; **declarado** = afirmado por una persona y no comprobable con archivos.
 
@@ -15,7 +15,7 @@ En este documento, **verificado** = comprobado con archivos y comandos del repos
 | `datos/anotaciones.json` | COCO de evaluación: verdad de referencia | solo evaluación (métricas, expectativas) |
 | `datos/anotaciones_ajuste.json` | COCO de ajuste, aparte para no repetir nombres de archivo | solo evaluación |
 | `datos/manifiesto.csv`, `datos/manifiesto_ajuste.csv` | Manifiesto de #58 con `estado_esperado_via` | solo evaluación |
-| `datos/HASHES.sha256` | Congelado (fase 2) | `scripts/verificar_hashes.py` |
+| `datos/HASHES.sha256` | Congelado de JPEG, CSV, COCO y manifiestos | `scripts/verificar_hashes.py` |
 | `docs/conteo_datos.md`, `docs/conteo_datos.json` | Conteos y metas (generados) | personas |
 | `docs/discrepancias_datos.md` | Reporte de discrepancias (generado) | personas |
 | `docs/revision/hoja_<secuencia>.jpg` | Hojas de contacto con cajas, tercios y línea de riesgo dibujadas sobre copias | personas; no son datos |
@@ -25,6 +25,13 @@ En este documento, **verificado** = comprobado con archivos y comandos del repos
 Los JPEG, sus tiempos, sesiones, etiquetas de escena y la selección vienen de P5-05 (#57, PR #79). Ver la [nota de entrega de Bryan](entrega_emilio_issue57.md), la [procedencia](procedencia_capturas.json) y la [normalización temporal de S1](normalizacion_temporal_S1.md). Este paquete no recodifica, renombra, mueve ni reordena esos archivos ni sus CSV.
 
 Verificado el 3 nov 2026 sobre `main` (`6980269`): `python scripts/validar_capturas.py --issue57` aprueba; el SHA-256 recalculado de los 85 JPEG coincide con los CSV; todas las imágenes miden 400×296, sin etiqueta EXIF de orientación; cada secuencia del CSV ya viene en orden de `t_capture_ms` estrictamente creciente. La orientación (no volteadas) se revisó visualmente en S1, S5 y ajuste.
+
+Fase 2, verificado el 4 nov 2026 en la rama `p5-06-fase-2` (desde `main` `b86e0d0`, con #84 y #86):
+
+- S1, S5 y ajuste: los 31 JPEG tienen el mismo SHA-256 y el mismo `frame_id` que el COCO de la fase 1.
+- Las 54 nuevas de S2, S3, S4 y S6 coinciden con `datos/HASHES_p5_05b.sha256` (87/87 entradas correctas en total). Miden 400×296, son RGB, no traen etiqueta EXIF de orientación y su `t_capture_ms` crece estrictamente en cada secuencia. La orientación (no volteadas) se revisó visualmente.
+- Las 84 fotos anteriores, ahora en `datos/archivo/`, **no** se usaron como entrada.
+- pHash (≤ 5 bits): ningún par entre ajuste y evaluación (distancia mínima 20). Los ocho negativos de S6 ya no son casi duplicados entre sí: el par más cercano es `S6_f0003`–`S6_f0004`, con 6 bits.
 
 ## Esquema
 
@@ -83,7 +90,7 @@ Columnas de #58, en este orden: `sequence_id, frame_id, t_capture_ms, ruta, anch
 
 ## Recaptura de S2, S3, S4 y S6
 
-En `docs/detector.md` ([PR #82](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/82), P5-09), Edith encontró que, con el detector real YOLOX-nano, en S2 y S6 el detector ve el teléfono como `tv` y deja de ver al sujeto en pantalla, lo que hace fallar C7. El 3 nov Sebastián (PM A) decidió recapturar S2, S3, S4 y S6 con una persona real; S1 y S5 no cambian. Las versiones anteriores de S2, S3, S4 y S6 (estímulos en teléfono) **no se anotaron**. La recaptura la sube Bryan (P5-05); al llegar se repite la validación de P5-05, el análisis de pHash y esta anotación.
+En `docs/detector.md` ([PR #82](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/82), P5-09), Edith encontró que, con el detector real YOLOX-nano, en S2 y S6 el detector ve el teléfono como `tv` y deja de ver al sujeto en pantalla, lo que hace fallar C7. El 3 nov Sebastián (PM A) decidió recapturar S2, S3, S4 y S6 con una persona real; S1 y S5 no cambian. Las versiones anteriores de S2, S3, S4 y S6 (estímulos en teléfono) **no se anotaron**. Bryan la subió en el PR #84 (P5-05b): sujetos físicos (una persona, gatos reales y el perro de peluche autorizado, que se anota como `dog`). Las versiones anteriores quedaron en `datos/archivo/` y no se usan. Se repitieron la validación, el pHash y esta anotación, a ciegas: sin predicciones, confianzas ni aciertos del detector.
 
 ### Cortes de sesión de S2
 
@@ -96,6 +103,43 @@ S2 tiene cuatro sesiones de captura y, por tanto, tres pausas reales entre cuadr
 | `S2_f0017` → `S2_f0018` | 1817039 | 1817039978600 |
 
 El manifiesto **no normaliza ni recorta** esas pausas: conserva el `t_capture_ms` real de `capturas.csv` y el `session_id` de cada cuadro, así que cada corte se reconoce por el cambio de `session_id` y el salto de tiempo. Las etiquetas por cuadro no dependen de la pausa. **Reproducir las pausas al recorrer S2 le toca a P5-14** (`p5.recorrer`); este paquete no modifica el recorrido ni otros módulos ajenos (ver la [propuesta al reproductor](propuesta_reproductor_cortes_p5_05b.md)).
+
+### Correcciones y discrepancias de la fase 2
+
+Las discrepancias de [`discrepancias_datos.md`](discrepancias_datos.md) se revisaron con zoom. Las cajas se ajustan al sujeto visible, nunca al estado esperado.
+
+**Cajas corregidas por ser más grandes que el sujeto visible.** En `S2_f0020` a `S2_f0023`, la caja del perro de peluche se pasaba hacia el piso por debajo de la pata visible.
+
+- Medición: brillo máximo por fila dentro de la caja. Las patas (blancas) mantienen un brillo de 107–136 hasta **y = 142**; desde y = 143 la fila ya es piso oscuro (49–76).
+- Emilio volvió a ajustar las cuatro cajas al sujeto visible:
+
+| Cuadro | y2 antes | y2 después |
+|---|---:|---:|
+| `S2_f0020` | 147.2 | 143.0 |
+| `S2_f0021` | 147.2 | 145.5 |
+| `S2_f0022` | 149.2 | 145.5 |
+| `S2_f0023` | 149.7 | 145.5 |
+
+- Al reajustar también se movieron x1, x2 e y1, hasta 8.5 px.
+- La corrección se hizo por el ajuste al sujeto, no por el estado. Consecuencia: `S2_f0022` y `S2_f0023` pasan de `centro` a `libre`, que coincide con su `outside_risk=1` de P5-05. Con las cajas anteriores, `p5.expectativas` (P5-15) salía con 1 en esos dos cuadros.
+
+**Revisadas con zoom y dejadas en el borde real del sujeto:**
+
+- `S3_f0002`: x2 = 134.0 (antes 142.0).
+- `S6_f0007`: x1 = 269.5 (antes 266.5).
+
+**Discrepancias que se quedan (las cajas son correctas):**
+
+| Cuadro | Estado | Intención | Motivo |
+|---|---|---|---|
+| `S3_f0002`, `S3_f0003`, `S3_f0010`, `S3_f0013` | `centro` (izquierda+centro) | `izq` | El borde derecho del sujeto pasa la línea del tercio (x = 133.3) por 0.2–1.7 px: x2 = 134.0, 133.5, 135.0 y 135.0. En `S3_f0010` se midió que la oreja del perro llega a x = 133. El criterio de `p5.contrato.zonas_ocupadas` es conservador: tocar la línea ocupa el centro. |
+| `S6_f0005` | `izq` | `centro` | El perro está pegado a la izquierda (x 1–117.5): la recaptura no lo puso al centro. |
+| `S6_f0007` | `der` | `centro` | El perro empieza en x = 269.5, a la derecha del tercio (266.7). |
+
+**Efecto en los casos de P5-15:**
+
+- C07 (S6) conserva los estados que pide, `libre` y `centro`: libre ×4, izq, centro, der, centro y libre ×4. `centro` sale de `S6_f0006` y `S6_f0008`.
+- C02 (`centro`), C03 (`izq`) y C04 (`der`) también tienen su estado requerido.
 
 ## Partición ajuste/evaluación
 
@@ -136,14 +180,14 @@ Verificado en código (3 nov 2026):
 
 ```bash
 cd Proyecto5
-python scripts/anotador/servidor.py --secuencias S1 S5 AJ1    # anotar (http://127.0.0.1:8765)
-python scripts/construir_manifiesto.py --secuencias S1 S5 AJ1  # manifiestos + discrepancias
+python scripts/anotador/servidor.py --secuencias S2 S3 S4 S6  # anotar (http://127.0.0.1:8765)
+python scripts/construir_manifiesto.py                        # manifiestos + discrepancias
 pip install -r requirements.txt -r requirements-datos.txt      # solo para el pHash
-python scripts/contar_datos.py --secuencias S1 S5 AJ1          # conteo_datos.md/.json
-python scripts/revisar_anotaciones.py --hojas docs/revision --secuencias S1 S5 AJ1
-python scripts/congelar_datos.py                               # datos/HASHES.sha256 (fase 2)
+python scripts/contar_datos.py                                 # conteo_datos.md/.json
+python scripts/revisar_anotaciones.py --hojas docs/revision
+python scripts/congelar_datos.py                               # datos/HASHES.sha256
 python scripts/verificar_hashes.py                             # Linux y Windows
 sha256sum -c datos/HASHES.sha256                               # alternativa en Linux
 ```
 
-En la fase 2, los mismos comandos sin `--secuencias`.
+La fase 1 usó `--secuencias S1 S5 AJ1` y la fase 2 anotó con `--secuencias S2 S3 S4 S6`. El manifiesto, el conteo, las hojas y el congelado se generan sin `--secuencias`.
