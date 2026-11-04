@@ -31,18 +31,21 @@ PYTHONPATH=src python -m p5.metricas --gt <coco> --pred <jsonl> --iou 0.5 --sali
 Usa una carpeta nueva o que aún no contenga `metricas.json`: jamás se sobrescribe
 un informe anterior. Las salidas quedan ignoradas por Git según las reglas existentes.
 
-El siguiente comando es únicamente para la corrida real futura: el COCO y
-el manifiesto deben completarse y congelarse; el JSONL es una ruta propuesta.
+El siguiente comando es únicamente para la corrida definitiva futura: confirmar
+el congelado del COCO/manifiesto y del detector; el JSONL es una ruta propuesta.
 
 ```powershell
 & .\.venv\Scripts\python.exe -m p5.metricas --gt .\datos\anotaciones.json --pred .\resultados\detector_congelado\detecciones.jsonl --manifiesto .\datos\manifiesto.csv --cuadros-esperados 78 --iou 0.5 --salida .\resultados
 ```
 
 La ruta integrada del COCO es [datos/anotaciones.json](../datos/anotaciones.json),
-con [datos/manifiesto.csv](../datos/manifiesto.csv). Actualmente ambos cubren
-24 imágenes (S1 y S5); faltan las 54 recapturas de S2/S3/S4/S6. **No ejecutar
-el comando anterior hasta completar y congelar los 78 cuadros**. El JSONL
-indicado es una salida futura, no un archivo definitivo recibido.
+con [datos/manifiesto.csv](../datos/manifiesto.csv). El
+[PR #87](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/87)
+integrado en main aporta los **78 cuadros de evaluación**, sus anotaciones y
+[HASHES.sha256](../datos/HASHES.sha256). **No ejecutar el comando anterior hasta
+integrar y verificar los cortes de sesión del PR #88 y confirmar la configuración
+congelada del detector**. El JSONL indicado es una salida futura, no una corrida
+definitiva recibida.
 
 El informe real irá en `resultados/metricas.json`, sin fabricarlo con ejemplos.
 `--cuadros-esperados 78` rechaza otra cantidad, incluidos los 84 antiguos. No
@@ -148,14 +151,12 @@ Desde Proyecto5:
 & .\.venv\Scripts\python.exe -B -m ruff format --check .
 ```
 
-Validación local con Python 3.12.16: 96 pruebas de métricas aprobadas; Ruff
-check y format aprobados (83 archivos). Desde Proyecto5, la suite completa
-resultó en 484 aprobadas, 10 omitidas y un fallo en
-`test_recorrer.py::test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos`:
-espera S2_f0001, pero el CSV vigente empieza en S2_f0007. Es la incompatibilidad
-de IDs pendiente con P5-14; no se alteraron ni la prueba ni los datos para aprobar.
-Nueve omisiones son por pesos ausentes (sin inferencia real); una, por congelado
-COCO pendiente. [Detalle y entorno](evidencia/p5-07-validacion.md).
+Validación local con Python 3.12.16 tras integrar main: 96 pruebas de métricas
+aprobadas; suite completa con 532 aprobadas y nueve omitidas por pesos ausentes;
+Ruff check y format aprobados (86 archivos). La prueba de IDs y la comprobación
+del congelado ya pasan con los cambios oficiales de main. No se modificaron
+pruebas ni datos de otros módulos para lograrlo.
+[Detalle y entorno](evidencia/p5-07-validacion.md).
 
 Estado actualizado el 2026-11-04:
 
@@ -164,27 +165,33 @@ Estado actualizado el 2026-11-04:
 | [#53](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/53) | Cerrado; v1 integrado | Nada para pruebas de software |
 | [#56](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/56) | Cerrado; runtime y CLI integrados | JSONL nuevo de los 78 cuadros vigentes, generado después de anotar, con modelo/configuración congelados |
 | [Descriptor](../modelo/descriptor.yaml) | Integrado; person=0, cat=15, dog=16 | Registrar hashes y configuración efectivos de la corrida futura |
-| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Cerrado; COCO/manifiesto integrados de fase 1, con 24 imágenes S1/S5 | Emilio debe completar las 54 recapturas y entregar COCO/manifiesto de 78, HASHES.sha256, commit y correspondencia de IDs |
-| [#57 / PR #84](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/84) | Recaptura integrada: 78 evaluación y 7 ajuste; seis fuera de riesgo | Anotar exactamente esta selección, sin reutilizar el JSONL histórico |
+| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Cerrado; PR #87 integrado con COCO/manifiesto de 78 y HASHES.sha256 | Conservar este congelado y confirmar su referencia para la corrida definitiva |
+| [#57 / PR #84](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/84) | Recaptura integrada: 78 evaluación y 7 ajuste; seis fuera de riesgo | Usar exactamente esta selección y generar predicciones nuevas para la corrida definitiva |
+| [PR #88](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/88) | Pendiente de integración; cortes de sesión de P5-14 | Integrar y comprobar recorrido, IDs y cortes antes de evaluar los 78 |
 
 La evidencia de cuatro imágenes de #81 no sustituye la evaluación completa.
 Los 78 cuadros son 20 negativos y 58 positivos, con seis ejemplos fuera de
 riesgo según las etiquetas de captura; el soporte de objetos se obtendrá del COCO,
 no de esas cifras. No usar ajuste, descartes, pruebas ni los 84 antiguos.
 
-Los issues cerrados no certifican que la nueva selección esté anotada y congelada.
-El JSONL histórico de 78 eventos solo comparte 24 hashes con el conjunto vigente;
-no permite evaluar las 54 recapturas. El congelado de captura
-[HASHES_p5_05b.sha256](../datos/HASHES_p5_05b.sha256) no sustituye el futuro
-`datos/HASHES.sha256` que incluirá COCO/manifiesto.
+El congelado integrado [HASHES.sha256](../datos/HASHES.sha256) contiene 91
+entradas, incluidos JPEG de evaluación/ajuste y sus COCO/manifiestos. Se verificó
+su integridad. El [congelado de captura](../datos/HASHES_p5_05b.sha256) se conserva
+como procedencia adicional. Las predicciones históricas integradas no sustituyen
+una corrida definitiva nueva con la configuración aprobada.
 
-P5-06/P5-14 deben acordar los IDs: con el código integrado hay 38 diferencias
-(S2=17, S3=10, S4=11) entre numeración por posición y conservación del ID de captura.
-Usar la [correspondencia preparada](compatibilidad_ids_consumidores_p5_05b.csv)
-y coordinar los [cortes de sesión](propuesta_reproductor_cortes_p5_05b.md).
-No relajar el rechazo de ID/ruta contradictorios ni modificar IDs fuente.
+El PR #87 resolvió la discrepancia de IDs observada antes de esta integración;
+el ensayo autorizado de S1/S5 comprobó 24 asociaciones de ID/ruta/hash sin
+contradicciones. Conservar la [correspondencia](compatibilidad_ids_consumidores_p5_05b.csv)
+y coordinar los [cortes de sesión](propuesta_reproductor_cortes_p5_05b.md) con
+P5-06/P5-14 al integrar #88. No modificar IDs fuente ni relajar validaciones.
 
-Listo ahora: algoritmo, validación, pruebas y corrida sintética auditable. Para
-cerrar #59 faltan la corrida real en [resultados/](../resultados/), sus entradas
-congeladas y recálculo/aprobación de cifras por el PM A. No se declara completo
-con resultados sintéticos.
+Se ejecutó únicamente el ensayo autorizado de **S1/S5: 24 inferencias nuevas**.
+Sus entradas, predicciones, informe y hashes permanecen fuera del repositorio y
+de resultados, rotulados **ENSAYO / NO EVIDENCIA FINAL**. No forman parte de la
+evidencia definitiva ni se usan para ajustar umbral, NMS o pesos.
+
+Listo ahora: algoritmo, validación, pruebas, corrida sintética y ensayo acotado.
+Para cerrar #59 faltan #88, confirmar la configuración congelada, ejecutar los
+78 cuadros en [resultados/](../resultados/) y el recálculo/aprobación de cifras
+por el PM A. No se declara completo con el ensayo ni con resultados sintéticos.

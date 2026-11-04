@@ -23,34 +23,38 @@ clase (person/cat/dog) y micro, con IoU configurable (0.50 predeterminado).
 ## Validación
 
 - Python 3.12.16: 96 pruebas del módulo aprobadas; Ruff check y format aprobados.
-- Suite P5 desde Proyecto5: 484 aprobadas, 10 omitidas y un fallo de IDs en
-  test_recorrer (espera S2_f0001; captura vigente S2_f0007). Requiere coordinación
-  P5-06/P5-14; no se modifican sus pruebas ni datos para forzar aprobación.
+- Suite P5 desde Proyecto5, tras integrar main: 532 aprobadas y nueve omitidas
+  por pesos ausentes. La discrepancia de IDs anterior quedó resuelta por los
+  cambios oficiales integrados; no se modificaron sus pruebas ni datos.
 - CLI sintética con seis cuadros: **TP=1, FP=3, FN=4; P=0.25, R=0.20, F1=2/9**.
 - Salidas sintéticas separadas e ignoradas por Git; no son resultados reales.
 - [Evidencia local](evidencia/p5-07-validacion.md) y [reproducción](metricas.md).
 - Entorno Python 3.12.16 separado con dependencias base/captura/datos; pip check
   aprobado. El entorno anterior Python 3.10 se conserva intacto. Nueve pruebas
-  de inferencia real se omiten por pesos ausentes y una por congelado pendiente.
+  de inferencia real se omiten por pesos ausentes; el congelado integrado pasa.
+- Ensayo autorizado de S1/S5: 24 inferencias nuevas y correspondencia de
+  IDs/rutas/SHA-256 verificada. Artefactos privados externos, **ENSAYO / NO
+  EVIDENCIA FINAL**; no se incorporan como evaluación definitiva de los 78.
 
 ## Pendiente de integración real
 
 #53 cerrado, contrato integrado. #56 y #58 cerrados; descriptor y runtime ya
-integrados. El descriptor confirma person=0, cat=15, dog=16. El cierre de esos
-issues no completa automáticamente las anotaciones de las recapturas del PR #84.
+integrados. El descriptor confirma person=0, cat=15, dog=16. El PR #87 integrado
+aporta las anotaciones de las recapturas del PR #84.
 
 El COCO integrado es [datos/anotaciones.json](../datos/anotaciones.json), con
-[manifiesto](../datos/manifiesto.csv): ambos contienen 24 imágenes S1/S5.
-Emilio debe completar las 54 recapturas S2/S3/S4/S6 y congelar los **78 cuadros
-vigentes** (20 despejados, 58 obstáculos y seis fuera de riesgo según captura),
-con COCO, manifiesto, HASHES.sha256 y commit. El soporte mide objetos anotados,
-no imágenes positivas. No usar los siete cuadros de ajuste ni los 84 históricos.
+[manifiesto](../datos/manifiesto.csv): ambos contienen los **78 cuadros vigentes**
+(20 despejados, 58 obstáculos y seis fuera de riesgo según captura). Se verificó
+el [HASHES.sha256](../datos/HASHES.sha256) integrado: 91 entradas sin diferencias.
+El soporte mide objetos anotados, no imágenes positivas. No usar los siete
+cuadros de ajuste ni los 84 históricos.
 
-Antes de inferencia, coordinar los 38 IDs distintos de P5-06/P5-14 y los cortes
-S2 mediante las [correspondencias existentes](compatibilidad_ids_consumidores_p5_05b.csv).
-No se modifican IDs de otros módulos. Edith deberá entregar un JSONL nuevo con
-modelo/configuración congelados después de terminar las anotaciones. El JSONL
-histórico solo comparte 24 hashes con la selección vigente; no es la corrida final.
+Antes de la corrida definitiva, integrar el PR #88 y comprobar los cortes S2
+con P5-06/P5-14 mediante las [correspondencias existentes](compatibilidad_ids_consumidores_p5_05b.csv).
+El PR #87 resolvió la discrepancia anterior de IDs; el ensayo S1/S5 verificó sus
+24 asociaciones. No se modifican IDs de otros módulos. Confirmar con el equipo
+la configuración congelada y generar un JSONL nuevo de los 78 cuadros después
+de esa integración. Las predicciones históricas y el ensayo no son la corrida final.
 
 La comparación de clases usa nombres canónicos: los category_id del export
 (por ejemplo 1/17/18) se traducen con categories; las predicciones conservan

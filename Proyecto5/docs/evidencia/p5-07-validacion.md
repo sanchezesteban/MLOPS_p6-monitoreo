@@ -1,5 +1,49 @@
 # Evidencia local P5-07 — actualización 2026-11-04
 
+## Estado tras integrar PR #87 y guardar el ensayo autorizado
+
+Merge de main `e2b544b4c4aa6c418d86baae34f564cf6211d454` en
+`p5-07-metricas`, commit `136b75409b03e23a17fb1193493168052cd9e251`.
+Los 53 archivos recibidos coinciden exactamente con los blobs de main. Las
+actualizaciones de COCO/manifiesto y de módulos de compañeros son aportaciones
+oficiales de ese merge, sin ediciones manuales de P5-07. Los 247 JPEG anteriores
+(incluidos los archivos históricos) conservan sus bytes; las configuraciones
+del detector, política y watchdog no cambiaron durante el ensayo ni al guardarlo.
+
+El COCO/manifiesto integrado cubre **78 imágenes**. Se verificaron las 91
+entradas de [HASHES.sha256](../../datos/HASHES.sha256), los 328 archivos fuente
+inventariados tras el merge y los 21 archivos del manifiesto del ensayo. Este
+último permanece intacto, fuera del repositorio y de resultados, identificado
+como **ENSAYO / NO EVIDENCIA FINAL**. No se publican sus predicciones ni sus
+resultados como evidencia definitiva. No se ejecutaron nuevas inferencias al
+completar el merge y actualizar estos documentos.
+
+Ensayo ya ejecutado con autorización: 24 cuadros exclusivamente de S1/S5,
+modelo SHA-256 `c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d`,
+CPUExecutionProvider y configuraciones de main sin cambios. Se comprobaron
+eventos, IDs, rutas y hashes sin contradicciones. No equivale a la evaluación
+definitiva de los 78 y no se utilizó para optimizar el detector.
+
+Validación con Python 3.12.16 y dependencias base/captura/datos en un entorno
+separado; el entorno anterior Python 3.10 se conserva intacto:
+
+| Verificación | Resultado tras integrar main |
+|---|---|
+| Pruebas de métricas | **96 aprobadas** |
+| Suite completa desde Proyecto5 | **532 aprobadas, nueve omitidas** |
+| Ruff check | **All checks passed!** |
+| Ruff format --check | **86 files already formatted** |
+| Dependencias | **pip check aprobado** |
+
+Las nueve omisiones corresponden a pruebas con pesos ausentes en el repositorio;
+el modelo del ensayo permanece privado y externo. La discrepancia de IDs y la
+ausencia del congelado descritas más abajo quedaron resueltas con los cambios
+oficiales de main. Falta integrar y verificar los cortes de sesión del PR #88,
+confirmar la configuración congelada y ejecutar/aprobar la corrida definitiva.
+Se mantiene «Parte de #59».
+
+## Registro previo al PR #87 (histórico; no describe el estado actual)
+
 Rama `p5-07-metricas`, HEAD `6eb42d1fc4898caff95366c6f20e343e43488b0a`.
 Solo se actualiza documentación de P5-07: no se cambia el algoritmo, los IDs,
 las pruebas de otros módulos, los JPEG, COCO, CSV ni los contratos.
