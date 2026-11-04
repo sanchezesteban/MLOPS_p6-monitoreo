@@ -54,10 +54,11 @@ Para cada detección del cuadro (se consideran **todas**, no solo la de mayor co
 | 5 | Obstáculo cierto solo a la izquierda, en riesgo, y derecha libre | STEER_RIGHT lento | CORRECCION | `obstaculo_izquierda` |
 | 5 | Obstáculo cierto solo a la derecha, en riesgo, y izquierda libre | STEER_LEFT lento | CORRECCION | `obstaculo_derecha` |
 | 5 | Obstáculos laterales en riesgo, o la zona de destino no está libre | FORWARD lento | PRECAUCION | `obstaculos_laterales_centro_libre` |
+| 5 | Solo obstáculos **inciertos** en un lateral, en riesgo (ninguno cierto en un lateral) | FORWARD lento, sin girar | PRECAUCION | `obstaculo_incierto_lateral` |
 | 6 | Obstáculo cierto en el centro, lejos (fuera de riesgo) | FORWARD lento | PRECAUCION | `obstaculo_centro_lejos` |
 | 7 | Nada relevante | FORWARD crucero | AVANCE | `via_libre` |
 
-Una zona de destino está libre si no hay ningún obstáculo en riesgo en ella, ni cierto ni incierto. La política nunca gira hacia la zona ocupada. Ante un obstáculo central no busca una ruta alternativa: se detiene, lo cual es válido según la rúbrica.
+Una zona de destino está libre si no hay ningún obstáculo en riesgo en ella, ni cierto ni incierto. La política nunca gira hacia la zona ocupada, y solo corrige (gira) por un obstáculo **cierto**: uno incierto, en el centro o en un lateral, solo baja la velocidad. Ante un obstáculo central no busca una ruta alternativa: se detiene, lo cual es válido según la rúbrica.
 
 `Politica.detener(event, razon)` sirve para los eventos sin cuadro (watchdog, error del detector, cierre). Emite STOP y pasa a FALLA, de modo que reanudar exige otra vez `cuadros_liberar` cuadros válidos.
 
@@ -68,7 +69,7 @@ Una zona de destino está libre si no hay ningún obstáculo en riesgo en ella, 
 | INICIO | Arranque, detenido | BLOQUEADO, FALLA; AVANCE, CORRECCION o PRECAUCION tras `cuadros_liberar` cuadros con el centro libre |
 | AVANCE | Vía libre, velocidad de crucero | cualquiera |
 | CORRECCION | Obstáculo lateral, gira hacia el lado libre | cualquiera |
-| PRECAUCION | Obstáculo incierto, lejano o laterales en ambos lados; avanza lento | cualquiera |
+| PRECAUCION | Obstáculo incierto (centro o lateral), lejano o laterales en ambos lados; avanza lento | cualquiera |
 | BLOQUEADO | Obstáculo cierto en el centro en riesgo | FALLA; movimiento tras `cuadros_liberar` cuadros con el centro libre |
 | FALLA | Cuadro con error o vencido, o evento sin cuadro (`detener`) | BLOQUEADO; movimiento tras `cuadros_liberar` cuadros con el centro libre |
 

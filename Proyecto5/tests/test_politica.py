@@ -291,6 +291,25 @@ def test_no_corrige_hacia_zona_destino_con_obstaculo_incierto(pol):
     assert (d.action, d.steering, d.reason) == ("FORWARD", 0.0, "obstaculos_laterales_centro_libre")
 
 
+@pytest.mark.parametrize("bbox", [IZQUIERDA, DERECHA], ids=["izquierda", "derecha"])
+def test_obstaculo_incierto_lateral_reduce_velocidad_sin_girar(pol, bbox):
+    liberar(pol)
+    d = pol.decidir(evento(_det(bbox, 0.4)))
+    assert (d.action, d.state_after, d.reason) == (
+        "FORWARD",
+        "PRECAUCION",
+        "obstaculo_incierto_lateral",
+    )
+    assert (d.speed, d.steering) == (pol.cfg.velocidad_precaucion, 0.0)
+    como_comando(d)
+
+
+def test_obstaculo_incierto_lateral_lejos_se_ignora(pol):
+    liberar(pol)
+    d = pol.decidir(evento(_det([20.0, 50.0, 150.0, 200.0], 0.4)))
+    assert (d.action, d.reason) == ("FORWARD", "via_libre")
+
+
 def test_obstaculo_lateral_lejos_no_corrige(pol):
     liberar(pol)
     d = pol.decidir(evento(_det([20.0, 50.0, 150.0, 200.0])))
