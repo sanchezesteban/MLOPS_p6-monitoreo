@@ -35,5 +35,9 @@ jobs:
       - name: Ruff (lint)
         run: ruff check .
 
+      # Pesos publicos del detector (P5-03); sin ellos se omiten las pruebas del modelo real.
+      - name: Descargar pesos del detector (verifica SHA-256)
+        run: python scripts/descargar_modelo.py --destino modelo/
+
       - name: pytest
-        run: pytest
+        run: pytest -rs

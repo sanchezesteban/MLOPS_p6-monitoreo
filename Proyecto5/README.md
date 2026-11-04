@@ -66,6 +66,23 @@ python scripts/descargar_modelo.py --destino modelo/
 
 Sale con código 1 y no deja archivo si el SHA-256 o el tamaño no coinciden.
 
+## Inferencia por imagen
+
+Detector real en CPU sobre imágenes o carpetas elegidas (recorre subcarpetas). Escribe
+`run.json` y `detecciones.jsonl` (un evento del contrato v1 por imagen) en una carpeta nueva.
+Se corre desde `Proyecto5/` con `src` en `PYTHONPATH` (el paquete `p5` no se instala; sin
+esto sale `No module named 'p5'`):
+
+```bash
+PYTHONPATH=src python -m p5.detectar --imagenes <carpeta|archivos...> --config config/detector.yaml --salida <carpeta nueva>
+```
+
+En PowerShell: `$env:PYTHONPATH = "src"` y después el mismo `python -m p5.detectar …`.
+
+Una imagen sin objetos sale con `status=ok` y `detections=[]`; una ilegible, con
+`status=error`. Preprocesamiento, umbral (0.30) y NMS (0.45) en
+[`config/detector.yaml`](config/detector.yaml) y en `src/p5/detector_onnx.py`.
+
 ## Estado
 
 Esqueleto inicial de la entrega (P5-02). El README final, con los comandos del detector,

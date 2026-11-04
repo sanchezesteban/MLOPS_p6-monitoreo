@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "run_id": "det-evidencia-p5-04",
+  "commit": "e9b964ba865fd7882f4e019c0599205026dd5653",
+  "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "config_sha256": "677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03",
+  "data_manifest_sha256": "d302bc2f747e265e5b37ad753cc4f1f4eb9d749caf268e097543d328accbb28c",
+  "runtime": "onnxruntime 1.30.0 CPUExecutionProvider",
+  "hardware": "AMD64 AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD Windows-11-10.0.26200-SP0",
+  "virtual_mode": true,
+  "t_start_utc": "2026-11-03T21:24:41.559905Z"
+}
