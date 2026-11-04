@@ -1,13 +1,12 @@
-# Entrega para Emilio — P5-05 / P5-05b / issue #57
+# Entrega histórica PR #79 — issue #57
 
-**Actualización P5-05b:** el PR #79 ya fue fusionado a main en b6317b5. La recaptura
-se prepara en p5-05b-recaptura desde origin/main para un PR nuevo; no modifica
-el historial de #79. El PM pidió sustituir S2/S3/S4/S6 por 54 cuadros
-con persona real. Los conteos de este documento describen la selección anterior
-conservada; no constituyen el nuevo congelado de #58/#59. No se reemplazaron fotos
-ni anotaciones. Ver [protocolo y aviso para Emilio](protocolo_recaptura_persona_issue57.md).
-
-PR anterior fusionado: [#79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79). Nuevo PR P5-05b todavía no abierto. Usar **Parte de #57** mientras falten requisitos o confirmación de entrega. Este documento y el mensaje preparan la entrega; no se afirma recepción por Emilio ni publicación de esta actualización.
+**Informe histórico; no usar sus cinco outside_risk como conteo vigente.**
+La [entrega P5-05b](entrega_emilio_p5_05b.md) describe las recapturas ya integradas
+localmente: 78/20 despejados/58 obstáculos/seis fuera de riesgo y siete de ajuste.
+Las aprobaciones finales están [registradas](autorizaciones_finales_p5_05b.md).
+No se hizo push: falta completar fecha/alcance de consentimiento. Usar Parte de #57,
+no cierre automático, mientras falten dependencias o recepción de Emilio.
+El contenido siguiente conserva la historia de #79, sin alterar sus evidencias.
 
 ## Selección anterior conservada: 78 cuadros de PR #79
 
@@ -21,7 +20,7 @@ PR anterior fusionado: [#79](https://github.com/sebastian0023/Proyecto-3-Clasifi
 | S6 | 12 | 8 | 4 | 0 |
 | Total | 78 | 20 | 58 | 5 |
 
-Evaluación: [JPEG](../datos/evaluacion/) y [CSV](../datos/evaluacion/capturas.csv). Ajuste: [7 JPEG S1 despejados](../datos/ajuste/S1/) y [CSV](../datos/ajuste/capturas.csv). **Quedamos exactamente en el mínimo de 20 despejados**: no retirar ni reclasificar otro negativo sin verificar de nuevo los requisitos. Durante esta preparación no se modifica ninguna fotografía ni CSV activo.
+Evaluación: [JPEG](../datos/archivo/seleccion_78_pre_recaptura/) y [CSV](../datos/archivo/seleccion_78_pre_recaptura/capturas.csv). Ajuste: [7 JPEG S1 despejados](../datos/ajuste/S1/) y [CSV](../datos/ajuste/capturas.csv). **Quedamos exactamente en el mínimo de 20 despejados**: no retirar ni reclasificar otro negativo sin verificar de nuevo los requisitos. En aquella preparación se conservó el conjunto entonces activo; el snapshot enlazado es el respaldo previo a P5-05b.
 
 Según [autorización expresa de Sebastián](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6610598090), se retiraron seis S1 con escena compartida con ajuste y dos con posible persona (t=3855616 y 3870350). Se recuperaron las originales de t=59719 y 66562 ms, aceptadas como C1 pese a mostrar principalmente pared. Esa solución resolvió la selección S1 del PR #79; no exime de las 54 recapturas reales ahora solicitadas para P5-05b. No se inventaron imágenes ni se duplicaron cuadros del conjunto activo.
 
@@ -55,11 +54,11 @@ outside_risk es independiente de la etiqueta principal. Estos cinco todavía man
 
 | Fotografía | frame_id | outside_risk |
 |---|---|---:|
-| [S2-14](../datos/evaluacion/S2/S2_0003452297_S2_7be3ff1ce01c41f3b29038093c363da1.jpg) | S2_7be3ff1ce01c41f3b29038093c363da1 | 1 |
-| [S2-15](../datos/evaluacion/S2/S2_0003498734_S2_feded6baa90b4d3e95cc01ca623bc200.jpg) | S2_feded6baa90b4d3e95cc01ca623bc200 | 1 |
-| [S2-16](../datos/evaluacion/S2/S2_0003510437_S2_a256771fc9fd49988bebafc788e7d57d.jpg) | S2_a256771fc9fd49988bebafc788e7d57d | 1 |
-| [S2-17](../datos/evaluacion/S2/S2_0003541250_S2_36602891e66d4e878a5ac5eb275276ea.jpg) | S2_36602891e66d4e878a5ac5eb275276ea | 1 |
-| [S3-13](../datos/evaluacion/S3/S3_0002969243_S3_ab81a14f8ab7413b8a0b77a3914a2391.jpg) | S3_ab81a14f8ab7413b8a0b77a3914a2391 | 1 |
+| [S2-14](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003452297_S2_7be3ff1ce01c41f3b29038093c363da1.jpg) | S2_7be3ff1ce01c41f3b29038093c363da1 | 1 |
+| [S2-15](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003498734_S2_feded6baa90b4d3e95cc01ca623bc200.jpg) | S2_feded6baa90b4d3e95cc01ca623bc200 | 1 |
+| [S2-16](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003510437_S2_a256771fc9fd49988bebafc788e7d57d.jpg) | S2_a256771fc9fd49988bebafc788e7d57d | 1 |
+| [S2-17](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003541250_S2_36602891e66d4e878a5ac5eb275276ea.jpg) | S2_36602891e66d4e878a5ac5eb275276ea | 1 |
+| [S3-13](../datos/archivo/seleccion_78_pre_recaptura/S3/S3_0002969243_S3_ab81a14f8ab7413b8a0b77a3914a2391.jpg) | S3_ab81a14f8ab7413b8a0b77a3914a2391 | 1 |
 
 ## Vehículo, condiciones y validación histórica del PR #79
 

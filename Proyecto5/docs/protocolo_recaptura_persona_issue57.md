@@ -1,6 +1,27 @@
 # Preparación de recaptura con persona real — P5-05b / issue #57
 
-Estado: **preparación; aún no se han tomado ni integrado fotografías nuevas**.
+**Estado final posterior:** las aprobaciones S3/S4, seis sustituciones S2,
+normalización/interrupción, gatos y peluche dog=16 están comunicadas por el operador.
+La selección de 78 se integró localmente y validó de nuevo; ver [entrega vigente](entrega_emilio_p5_05b.md).
+El contenido anterior se conserva como historial/protocolo; sus pendientes de
+aprobación ya resueltos no describen el estado actual. Publicación pendiente de consentimiento.
+
+**Actualización temporal posterior:** el candidato privado normalizado aprueba
+--issue57 con 78/20D/58B y seis fuera de riesgo; [evidencia y pendientes PM](normalizacion_temporal_S2_p5_05b.md).
+Los rechazos temporales indicados abajo describen la propuesta anterior sin normalizar.
+La evaluación activa y las fuentes no se modificaron.
+
+Estado: **54 JPEG recibidos y auditados; no integrados ni aprobados para publicación**.
+**Actualización del PM:** el perro de peluche está autorizado como estímulo
+dog=16, identificado como peluche y no animal real. Los seis adicionales son
+visualmente fuera de riesgo. El candidato privado tiene una escala S2 derivada
+autorizada para investigación, con origen/tiempos originales auditados; aprueba
+--issue57. El PM aceptó S2 interrumpida; falta revisar encuadres y justificación
+de selección, sin cambiar el candidato.
+Ver [autorización y estado actual](autorizacion_estimulo_dog_p5_05b.md).
+El CSV fuente conserva 58 filas tras cuatro eliminaciones manuales del operador.
+Hay personas, gatos y peluches; S6 usa peluche en su fase de obstáculo.
+Ver [auditoría previa a integración](auditoria_recaptura_p5_05b.md).
 Orden del PM comunicada por el operador: sustituir los estímulos de teléfono de
 S2/S3/S4/S6 por una persona real. El detector puede identificar la pantalla como
 tv; no se cambian sus clases, umbrales ni código. S1 y S5 se conservan por la
@@ -31,10 +52,10 @@ Los archivos históricos nunca son entradas de la nueva evaluación ni del ajust
 
 | Secuencia | Cuadros nuevos | Condición |
 |---|---:|---|
-| S2 | 17 | Persona real en el tercio central; casos de riesgo en mitad inferior |
-| S3 | 13 | Persona completa a la izquierda de W/3, con margen |
-| S4 | 12 | Persona completa a la derecha de 2W/3, con margen |
-| S6 | 12 | Cuadros 1–4 libres, 5–8 con persona, 9–12 libres |
+| S2 | 17 | Sujeto autorizado central; riesgo en mitad inferior y ejemplos aprobados fuera de riesgo |
+| S3 | 13 | Sujeto autorizado completo a la izquierda de W/3, con margen |
+| S4 | 12 | Sujeto autorizado completo a la derecha de 2W/3, con margen |
+| S6 | 12 | Cuadros 1–4 libres, 5–8 con estímulo autorizado, 9–12 libres |
 | Total | 54 | Una toma planificada, sin selección por desempeño del detector |
 
 - ESP32-CAM, **400 × 296 después de orientar**, rotación **180°**. Las guías
@@ -50,11 +71,15 @@ Los archivos históricos nunca son entradas de la nueva evaluación ni del ajust
 - Registrar incidencias de corte, error, sobrecaptura o incumplimiento físico;
   conservar el material y consultar al PM antes de excluir o repetir una secuencia.
 
-**Pendiente del PM:** las cinco marcas outside_risk actuales están en S2 (4) y S3
-(1); se perderían al sustituir esas secuencias. Propuesta, aún no autorizada:
-reservar cuatro S2 y una S3 con la persona fuera de riesgo dentro de las cuotas.
-Confirmar posiciones y escenarios antes de completar la toma; no copiar marcas
-antiguas ni añadir cuadros para forzar el mínimo. El validador exige ejemplos.
+Las cinco marcas outside_risk antiguas están en S2 (4) y S3 (1) y no se heredan.
+Ahora existen seis ejemplos adicionales con el peluche dog autorizado, revisados
+por encima de Y=148. La propuesta privada mantiene las cuotas sustituyendo seis
+S2 por correspondencia explícita. La investigación y copia normalizada fueron
+autorizadas posteriormente por el operador; [cálculo y auditoría](normalizacion_temporal_S2_p5_05b.md).
+El candidato aprueba --issue57, conserva originales/sesiones y documenta la pausa.
+El PM ya aceptó S2 interrumpida/normalizada y los seis adicionales al final.
+Antes de integrar, revisar encuadres y [justificación de selección](seleccion_78_p5_05b.md).
+No añadir cuadros para alterar las cuotas ni modificar reglas para aprobar.
 
 ## Captura en Windows
 

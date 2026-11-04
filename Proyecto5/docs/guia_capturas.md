@@ -4,6 +4,8 @@ Preparación vigente: [recaptura con persona real](protocolo_recaptura_persona_i
 en p5-05b-recaptura para un PR nuevo tras el merge de #79; S2/S3/S4/S6 y
 [consentimiento escrito](consentimiento_recaptura_issue57.md).
 La selección de 78 se conserva intacta hasta integrar las 54 nuevas verificadas.
+El PM autorizó el perro de peluche como estímulo dog=16, declarado como peluche;
+ver [convención y bloqueo temporal actual](autorizacion_estimulo_dog_p5_05b.md).
 Los nuevos IDs son S2_f0001, etc.; se continúa el máximo al reabrir sin cambiar
 IDs históricos. --resolucion 400x296 exige el tamaño orientado sin redimensionar.
 

@@ -1,9 +1,10 @@
 # Ficha del vehículo — P5-05 / issue #57
 
-**Recaptura P5-05b en preparación:** el PR #79 ya está integrado. Los datos y
-conteos de esta ficha describen la selección anterior conservada; todavía no
-certifican las 54 fotografías nuevas S2/S3/S4/S6. Mantener 400×296, rotación 180°
-y motores apagados; [protocolo](protocolo_recaptura_persona_issue57.md).
+**P5-05b integrado localmente:** 78 JPEG de evaluación y siete de ajuste,
+400×296 y orientación de captura 180°. Selección, encuadres S3/S4, seis sustituciones
+S2, normalización/interrupción, gatos y peluche dog=16 aprobados según comunicación
+del operador. Publicación pendiente de fecha real y alcance GitHub del consentimiento.
+Ver [autorizaciones](autorizaciones_finales_p5_05b.md) y [entrega actual](entrega_emilio_p5_05b.md).
 
 Estado: datos integrados y validados; **pendiente de aceptación del alcance del rango físico y confirmaciones del operador**. La identificación del controlador es documental, sin inspección del chip; no se afirma cierre completo.
 
@@ -36,9 +37,23 @@ El [manual ZYC0024.pdf alojado en Analog Technologies](https://www.analogtechnol
 
 ## Datos y procedencia
 
-Evaluación: **78 JPEG** (S1=12, S2=17, S3=13, S4=12, S5=12, S6=12), 20 despejados, 58 obstáculos y 5 marcas fuera de riesgo. Ajuste: **7 JPEG S1 despejados**, en sesiones distintas de evaluación. S2–S6 anteriores y ajuste S2 de cajas fueron retirados con respaldo externo. No son detecciones del modelo.
+Evaluación: **78 JPEG** (S1=12, S2=17, S3=13, S4=12, S5=12, S6=12),
+20 despejados, 58 obstáculos según CSV y **seis** fuera de riesgo. Ajuste:
+**siete JPEG S1 despejados**, intactos, sin positivos y separado de evaluación.
+No son resultados de inferencia. [CSV](../datos/evaluacion/capturas.csv),
+[selección y exclusiones](seleccion_78_p5_05b.md), [hashes](../datos/HASHES_p5_05b.sha256).
 
-S1 conserva 12 negativos originales de dos sesiones. Se retiraron seis imágenes con escena compartida con ajuste y dos por posible persona; se recuperaron las dos tomas de pared de 59719 y 66562 ms, aceptadas expresamente por [Sebastián como C1](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6610598090). Quedamos exactamente en el mínimo de 20 despejadas de evaluación. S2–S6 provienen de la recaptura de estímulos 2D de person/dog/cat en teléfono, confirmada directamente por el PM en la [revisión del PR #79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6609398193). No son personas/animales físicamente presentes. [Procedencia y corrección de una etiqueta](procedencia_capturas.json); [tiempos de S1](normalizacion_temporal_S1.md).
+S1 y S5 conservan sus 24 JPEG de la selección vigente anterior, por instrucción PM.
+S1 mantiene sus dos sesiones y la solución autorizada de pared como C1; su
+[normalización previa](normalizacion_temporal_S1.md) no se alteró. S5 conserva
+los estímulos históricos de teléfono por esa instrucción, sin presentarlos como
+recaptura física nueva. S2/S3/S4/S6 se sustituyeron por 54 fotografías de persona,
+gatos reales, peluche dog autorizado y fases despejadas. S6 mantiene D4–B4–D4.
+Los seis fuera de riesgo están al final de S2, con alias derivados e
+[interrupción documentada](normalizacion_temporal_S2_p5_05b.md).
+Los archivos de 84/78, JPEG y CSV fuente originales siguen preservados; la
+[procedencia anterior](procedencia_capturas.json) es histórica y la
+[procedencia P5-05b](procedencia_recaptura_persona_issue57.json) describe el conjunto actual.
 
 ## Procedimiento y pendientes físicos
 
@@ -48,4 +63,4 @@ El criterio literal de #57 pide rango real de velocidad/dirección; con el mando
 
 Quedan pendientes corroboración física del controlador, características de batería/montaje, alcance del rango. La separación de escenas se corrigió mediante la selección autorizada por el PM, sin cambiar las siete imágenes de ajuste; no se presenta como certificación automática de independencia estadística. La condición de motores apagados durante todas las capturas S1–S6 quedó cumplida por declaración confirmada del operador; no se solicitan recapturas por este motivo. No se habilita control automático real: protocolo instalado, STOP y parada independiente no verificados físicamente. El watchdog y adaptador virtual de main son pruebas de software, no certificación del vehículo. [Condiciones y criterios](entrega_emilio_issue57.md).
 
-El [CSV de evaluación](../datos/evaluacion/capturas.csv) es la fuente de verdad para t_capture_ms; tres S1 conservan nombres con tiempos históricos distintos de los normalizados. No se renombraron JPEG. Las clases person, dog y cat están definidas en [politica.yaml](../config/politica.yaml), campo clases_obstaculo; no se encontró descriptor formal de P5-03 en este checkout y no se afirma inferencia verificada.
+El [CSV de evaluación](../datos/evaluacion/capturas.csv) es la fuente de verdad para t_capture_ms; tres S1 conservan nombres con tiempos históricos distintos de los normalizados. No se renombraron los JPEG fuente; los seis alias derivados S2 tienen correspondencia explícita. Las clases person, dog y cat están definidas en [politica.yaml](../config/politica.yaml), campo clases_obstaculo; el descriptor P5-03 está referenciado en el PR #80 y no está en este HEAD histórico de partida. No se afirma que no exista en el proyecto ni que se haya ejecutado inferencia.
