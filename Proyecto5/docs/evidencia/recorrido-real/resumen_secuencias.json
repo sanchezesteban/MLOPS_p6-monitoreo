@@ -1,12 +1,13 @@
 {
-  "run_id": "run-real-001",
+  "run_id": "run-eventos-001",
   "replay_dt_ms": 100,
+  "modo": "cortes_sesion",
   "secuencias": {
     "S1": {
       "cuadros": 12,
       "acciones": {
-        "STOP": 2,
-        "FORWARD": 10
+        "STOP": 4,
+        "FORWARD": 8
       },
       "clases": {}
     },
@@ -29,8 +30,8 @@
     "S3": {
       "cuadros": 13,
       "acciones": {
-        "STOP": 5,
-        "FORWARD": 7,
+        "STOP": 7,
+        "FORWARD": 5,
         "STEER_RIGHT": 1
       },
       "clases": {
