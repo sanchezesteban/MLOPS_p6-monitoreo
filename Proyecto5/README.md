@@ -131,5 +131,5 @@ C03 y C07 fallan por recall del detector congelado, documentado en
 de S1, S2 y S3 con `--reproducir-cortes`; la evidencia está en
 [`docs/evidencia/recorrido-real/`](docs/evidencia/recorrido-real/README.md).
 
-El README final, con el índice E1–E7, las métricas y el benchmark, se cierra en el issue
-#68 cuando estén mergeados #59/#60 y la fase 2 de P5-06 (#87).
+La fase 2 de P5-06 (#87) ya está integrada. El README final, con el índice E1–E7, las
+métricas y el benchmark, se cierra en el issue #68 cuando estén mergeados #59/#60.

@@ -54,8 +54,8 @@ cadena de política, adaptador, watchdog, histéresis y replay de cortes funcion
 
 ## Pendiente
 
-- Repetir la corrida cuando se mergee la fase 2 de P5-06 (#87) para que `datos/anotaciones.json`
-  y `datos/manifiesto.csv` tengan las 78 imágenes; el runner ya usa los `cuadros_S*.csv`
-  congelados de P5-15.
+- La fase 2 de P5-06 (#87) ya está en `main`: `datos/anotaciones.json` y
+  `datos/manifiesto.csv` cubren las 78 imágenes. Esta corrida usa los `cuadros_S*.csv`
+  congelados de P5-15 y no cambia con esa anotación.
 - Si el PM decide mejorar el detector o cambiar el estímulo, repetir C01–C10 y actualizar
   esta evidencia. No se cambian las expectativas para ocultar C02/C03/C07.

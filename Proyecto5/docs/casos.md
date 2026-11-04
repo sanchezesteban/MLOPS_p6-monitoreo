@@ -188,10 +188,9 @@ inducido sobre una copia de la expectativa de C08.
 
 ## Pendientes para cerrar P5-13
 
-1. Mergear la fase 2 de P5-06 (#87) para que `datos/anotaciones.json` y
-   `datos/manifiesto.csv` cubran las 78 imágenes; el runner ya usa los `cuadros_S*.csv`
+1. La fase 2 de P5-06 (#87) ya está en `main`: `datos/anotaciones.json` y
+   `datos/manifiesto.csv` cubren las 78 imágenes. El runner usa los `cuadros_S*.csv`
    congelados de P5-15.
-2. Repetir la corrida cuando #87 esté en `main` y actualizar la evidencia. C02, C03 y C07
-   se documentan como límite del detector, no se ajustan las expectativas.
+2. C02, C03 y C07 se documentan como límite del detector; no se ajustan las expectativas.
 3. Si el PM decide mejorar el detector o cambiar el estímulo, repetir C01–C10 y actualizar
    `docs/evidencia/casos/`.
