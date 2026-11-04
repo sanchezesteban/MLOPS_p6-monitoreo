@@ -54,6 +54,18 @@ ruff check .
 Las pruebas del contrato no necesitan pesos ni datos: validan los ejemplos de
 `config/ejemplos/` y rechazan los mensajes fuera de contrato.
 
+## Pesos del detector
+
+YOLOX-Nano preentrenado en COCO (Apache-2.0), en ONNX para CPU. URL pública, versión,
+tamaño, SHA-256, licencia y clases en [`modelo/descriptor.yaml`](modelo/descriptor.yaml).
+Los pesos no van en Git; se descargan sin credenciales:
+
+```bash
+python scripts/descargar_modelo.py --destino modelo/
+```
+
+Sale con código 1 y no deja archivo si el SHA-256 o el tamaño no coinciden.
+
 ## Estado
 
 Esqueleto inicial de la entrega (P5-02). El README final, con los comandos del detector,

@@ -1,0 +1,64 @@
+# Evidencia P5-03 (#55): descarga en clon limpio, sin credenciales
+# Fecha: 2026-11-03T20:45:58Z · SO: Windows 11 (Git Bash) · Python 3.12.10
+
+$ git clone --depth 1 --branch p5-03-detector-descarga https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes.git
+exit=0
+commit: 6b0ce29dee6f23e32b038ea431f89801fbf52253
+
+$ pip install --target <deps> -r requirements.txt
+
+exit=0
+
+# Intento 1 en carpeta nueva; entorno vacío (env -i): sin AWS_*, GH_TOKEN ni credenciales
+$ python scripts/descargar_modelo.py --destino <nueva_1>
+descargando https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_nano.onnx
+archivo: <tmp>/p5d1\yolox_nano.onnx
+bytes:   3659407
+sha256:  c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d (coincide con descriptor.yaml)
+exit=0
+
+# Intento 2 en carpeta nueva; entorno vacío (env -i): sin AWS_*, GH_TOKEN ni credenciales
+$ python scripts/descargar_modelo.py --destino <nueva_2>
+descargando https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_nano.onnx
+archivo: <tmp>/p5d2\yolox_nano.onnx
+bytes:   3659407
+sha256:  c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d (coincide con descriptor.yaml)
+exit=0
+
+# Intento 3 en carpeta nueva; entorno vacío (env -i): sin AWS_*, GH_TOKEN ni credenciales
+$ python scripts/descargar_modelo.py --destino <nueva_3>
+descargando https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_nano.onnx
+archivo: <tmp>/p5d3\yolox_nano.onnx
+bytes:   3659407
+sha256:  c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d (coincide con descriptor.yaml)
+exit=0
+
+$ python scripts/descargar_modelo.py --destino modelo/
+descargando https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_nano.onnx
+archivo: modelo\yolox_nano.onnx
+bytes:   3659407
+sha256:  c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d (coincide con descriptor.yaml)
+exit=0
+
+$ sha256sum modelo/yolox_nano.onnx
+c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d modelo/yolox_nano.onnx
+$ wc -c modelo/yolox_nano.onnx
+3659407
+
+$ python scripts/descargar_modelo.py --destino modelo/   # ya presente
+ya presente: modelo\yolox_nano.onnx
+archivo: modelo\yolox_nano.onnx
+bytes:   3659407
+sha256:  c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d (coincide con descriptor.yaml)
+exit=0
+
+# Fallo inducido: copia del descriptor con el SHA-256 alterado (c789... -> 0000...)
+$ python scripts/descargar_modelo.py --destino <otro> --descriptor desc_mal.yaml
+ERROR: SHA-256 no coincide, no se guardo el archivo: esperado sha256=0000161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d bytes=3659407; obtenido sha256=c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d bytes=3659407
+descargando https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_nano.onnx
+exit=1
+$ ls -A <otro>
+(sin archivos)
+
+$ git status --short   # el clon queda limpio: los pesos están en .gitignore
+(limpio)
