@@ -1,8 +1,14 @@
-# Entrega para Emilio — P5-05 / issue #57 / PR #79
+# Entrega histórica PR #79 — issue #57
 
-PR existente: [#79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79). Referencia propuesta para la descripción: **Parte de #57**, para no cerrar automáticamente el issue mientras quedan confirmaciones. Este documento y el mensaje preparan la entrega; no se afirma recepción por Emilio ni publicación de esta actualización.
+**Informe histórico; no usar sus cinco outside_risk como conteo vigente.**
+La [entrega P5-05b](entrega_emilio_p5_05b.md) describe las recapturas ya integradas
+localmente: 78/20 despejados/58 obstáculos/seis fuera de riesgo y siete de ajuste.
+Las aprobaciones finales están [registradas](autorizaciones_finales_p5_05b.md).
+El consentimiento está completo, firmado el 2026-11-03 y con publicación GitHub autorizada. Usar Parte de #57,
+no cierre automático, mientras falten dependencias o recepción de Emilio.
+El contenido siguiente conserva la historia de #79, sin alterar sus evidencias.
 
-## Selección vigente autorizada
+## Selección anterior conservada: 78 cuadros de PR #79
 
 | Secuencia | JPEG de evaluación | Despejados | Obstáculos | Fuera de riesgo |
 |---|---:|---:|---:|---:|
@@ -14,9 +20,9 @@ PR existente: [#79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-
 | S6 | 12 | 8 | 4 | 0 |
 | Total | 78 | 20 | 58 | 5 |
 
-Evaluación: [JPEG](../datos/evaluacion/) y [CSV](../datos/evaluacion/capturas.csv). Ajuste: [7 JPEG S1 despejados](../datos/ajuste/S1/) y [CSV](../datos/ajuste/capturas.csv). **Quedamos exactamente en el mínimo de 20 despejados**: no retirar ni reclasificar otro negativo sin verificar de nuevo los requisitos. No se modifica S2–S6 ni ajuste.
+Evaluación: [JPEG](../datos/archivo/seleccion_78_pre_recaptura/) y [CSV](../datos/archivo/seleccion_78_pre_recaptura/capturas.csv). Ajuste: [7 JPEG S1 despejados](../datos/ajuste/S1/) y [CSV](../datos/ajuste/capturas.csv). **Quedamos exactamente en el mínimo de 20 despejados**: no retirar ni reclasificar otro negativo sin verificar de nuevo los requisitos. En aquella preparación se conservó el conjunto entonces activo; el snapshot enlazado es el respaldo previo a P5-05b.
 
-Según [autorización expresa de Sebastián](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6610598090), se retiraron seis S1 con escena compartida con ajuste y dos con posible persona (t=3855616 y 3870350). Se recuperaron las originales de t=59719 y 66562 ms, aceptadas como C1 pese a mostrar principalmente pared. La solución sustituye la necesidad de recapturar para este PR; una recaptura futura en otra habitación es mejora opcional. No se inventaron imágenes ni se duplicaron cuadros.
+Según [autorización expresa de Sebastián](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79#issuecomment-6610598090), se retiraron seis S1 con escena compartida con ajuste y dos con posible persona (t=3855616 y 3870350). Se recuperaron las originales de t=59719 y 66562 ms, aceptadas como C1 pese a mostrar principalmente pared. Esa solución resolvió la selección S1 del PR #79; no exime de las 54 recapturas reales ahora solicitadas para P5-05b. No se inventaron imágenes ni se duplicaron cuadros del conjunto activo.
 
 Las ocho copias excluidas están preservadas fuera del repositorio; los originales, ZIP y respaldos previos siguen intactos. Los registros completos anteriores/nuevos, hashes, sesiones, motivos y autorización están en [procedencia](procedencia_capturas.json) y [normalización S1](normalizacion_temporal_S1.md). La selección anterior se conserva allí como historia, no como conteo vigente.
 
@@ -42,19 +48,19 @@ Tres S1 vigentes mantienen nombres históricos con el tiempo fuente, distinto de
 
 Verificar SHA-256 sobre bytes originales; no recodificar imágenes. Las guías del visor nunca forman parte de los JPEG. Para eventos que exijan frame_id prefijado, P5-06/P5-07 deben usar una correspondencia trazable para los UUID históricos, sin cambiar el CSV fuente. Preservar huecos de captura durante reproducción.
 
-## Cinco ejemplos fuera de riesgo conservados
+## Cinco ejemplos fuera de riesgo del conjunto anterior
 
-outside_risk es independiente de la etiqueta principal. Estos cinco mantienen obstaculo y outside_risk=1; se revisa la caja del sujeto en pantalla, no el teléfono ni reflejos.
+outside_risk es independiente de la etiqueta principal. Estos cinco todavía mantienen obstaculo y outside_risk=1 en el conjunto anterior; se perderán al sustituir S2/S3. El PM debe decidir los casos reales nuevos: no heredar estas marcas. La revisión anterior usó la caja del sujeto en pantalla, no el teléfono ni reflejos.
 
 | Fotografía | frame_id | outside_risk |
 |---|---|---:|
-| [S2-14](../datos/evaluacion/S2/S2_0003452297_S2_7be3ff1ce01c41f3b29038093c363da1.jpg) | S2_7be3ff1ce01c41f3b29038093c363da1 | 1 |
-| [S2-15](../datos/evaluacion/S2/S2_0003498734_S2_feded6baa90b4d3e95cc01ca623bc200.jpg) | S2_feded6baa90b4d3e95cc01ca623bc200 | 1 |
-| [S2-16](../datos/evaluacion/S2/S2_0003510437_S2_a256771fc9fd49988bebafc788e7d57d.jpg) | S2_a256771fc9fd49988bebafc788e7d57d | 1 |
-| [S2-17](../datos/evaluacion/S2/S2_0003541250_S2_36602891e66d4e878a5ac5eb275276ea.jpg) | S2_36602891e66d4e878a5ac5eb275276ea | 1 |
-| [S3-13](../datos/evaluacion/S3/S3_0002969243_S3_ab81a14f8ab7413b8a0b77a3914a2391.jpg) | S3_ab81a14f8ab7413b8a0b77a3914a2391 | 1 |
+| [S2-14](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003452297_S2_7be3ff1ce01c41f3b29038093c363da1.jpg) | S2_7be3ff1ce01c41f3b29038093c363da1 | 1 |
+| [S2-15](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003498734_S2_feded6baa90b4d3e95cc01ca623bc200.jpg) | S2_feded6baa90b4d3e95cc01ca623bc200 | 1 |
+| [S2-16](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003510437_S2_a256771fc9fd49988bebafc788e7d57d.jpg) | S2_a256771fc9fd49988bebafc788e7d57d | 1 |
+| [S2-17](../datos/archivo/seleccion_78_pre_recaptura/S2/S2_0003541250_S2_36602891e66d4e878a5ac5eb275276ea.jpg) | S2_36602891e66d4e878a5ac5eb275276ea | 1 |
+| [S3-13](../datos/archivo/seleccion_78_pre_recaptura/S3/S3_0002969243_S3_ab81a14f8ab7413b8a0b77a3914a2391.jpg) | S3_ab81a14f8ab7413b8a0b77a3914a2391 | 1 |
 
-## Vehículo, condiciones y validación
+## Vehículo, condiciones y validación histórica del PR #79
 
 [Ficha del vehículo](ficha_auto.md): TSCINBUNY ZYC0024, ESP32-CAM, 400 × 296 y rotación 180°. Motores apagados y vehículo inmóvil en todas las capturas S1–S6, declaración confirmada personalmente por el operador; no sensores. El manual señala L298N y reductora 48:1, pendientes de corroboración de la unidad física. Velocidad inicial manual 0.545 m/s, giro aproximado 90°/0.35 s por lado; la web ofrece un único nivel sin selector, no un rango físico completo. No se solicitan videos ni nuevos giros. Los registros de ejemplo 1.80/1.83/1.84 s y 0.55 no son mediciones nuevas ni consignas reales.
 
@@ -62,12 +68,12 @@ El JSON original de [FPS](medicion_fps_issue57.json) conserva 48.9, 49.4 y 48.6 
 
 El [validador](../scripts/validar_capturas.py) con --issue57 **aprobó** la selección de **78 evaluación + 7 ajuste**, 20 D/58 B/5 fuera de riesgo. La revisión de integridad confirmó correspondencia exacta entre JPEG y CSV, hashes correctos, IDs únicos y conservación de los campos de los registros originales. Ruff aprobó y pytest obtuvo **258 pruebas y 53 subpruebas aprobadas** en el entorno del proyecto con Python 3.10.8; Python 3.12 no está instalado localmente y no se afirma haber ejecutado esa versión. Las pruebas no accedieron al vehículo ni abrieron ventanas reales. Las salidas y el diff se entregan para revisión. No se cambiaron reglas para forzar aprobación. El validador comprueba sesiones/hashes distintos, pero la independencia de escena se apoya en la revisión y autorización visual del PM.
 
-## Cambios de integración fuera del alcance original de capturas
+## Cambios ya fusionados con PR #79; no nuevos en P5-05b
 
 - [.github/workflows/ci.yml](../../.github/workflows/ci.yml): solo el job smoke de Proyecto2 se fijó a ubuntu-24.04, porque Playwright 1.56.1 del lockfile no admitía Ubuntu 26.04 al que pasó ubuntu-latest. Conserva pruebas, pasos y funcionalidades; no oculta fallos.
 - [.gitignore global](../../.gitignore): la regla *.[zZ][iI][pP], equivalente a excluir ZIP sin distinguir mayúsculas, evita preparar paquetes temporales. No borra archivos ni reemplaza exclusiones de Proyecto5. Se debe mencionar este cambio y el anterior en la descripción del PR, como pidió el PM; no se revirtieron automáticamente.
 
-## Estado y pendientes reales
+## Estado de la selección anterior y pendientes
 
 | Criterio | Estado/evidencia |
 |---|---|
@@ -82,8 +88,8 @@ El [validador](../scripts/validar_capturas.py) con --issue57 **aprobó** la sele
 | Publicación de estímulos | Falta documentar procedencia/permiso de imágenes de terceros, incluido rostro señalado por PM; autorización del método no demuestra licencia |
 | Revisión final | El PM revisará este nuevo diff; la aprobación anterior sobre otros conteos no sustituye comprobar la selección corregida |
 
-No se solicita recaptura de ajuste para este PR: la solución está expresamente autorizada. Se mantiene como mejora futura. No cerrar #57 hasta las confirmaciones pendientes; usar Parte de #57 en la descripción propuesta. No se afirma haber publicado comentarios, enviado material ni hecho push de esta corrección.
+La orden actual no solicita recapturar ajuste: sus siete cuadros se conservan. Sí exige las 54 fotografías reales de evaluación S2/S3/S4/S6. No cerrar #57 hasta integrar y validar la nueva selección y confirmar su entrega; usar Parte de #57 mientras tanto. No se publicaron comentarios, material ni esta preparación.
 
 ## Mensaje breve para Emilio, no publicado
 
-> Emilio: la selección corregida de #57/PR #79 tiene 78 JPEG de evaluación (20 despejados, 58 obstáculos, 5 fuera de riesgo) y 7 S1 negativas de ajuste intactas. El PM autorizó retirar seis S1 de escena compartida y dos con posible persona, y recuperar dos originales de pared como C1. Los CSV son la fuente de verdad temporal; algunos nombres siguen siendo históricos. Revisión visual, sin inferencia automática confirmada. Están preparadas rutas, hashes y procedencia para #58; falta confirmar recepción y congelar las anotaciones sobre esta selección.
+> Emilio: el PM pidió recapturar S2/S3/S4/S6 con persona real en P5-05b, un PR nuevo tras el merge de #79. La selección anterior de 78 todavía se conserva, pero no es el nuevo congelado para #58/#59. Compartiremos los 78 definitivos (54 nuevos más S1/S5 conservados), CSV, hashes y procedencia tras verificar capturas, consentimiento y fuera de riesgo. Conserva tus anotaciones anteriores sin sobrescribirlas automáticamente; el COCO/manifiesto definitivo y las predicciones de #59 deberán corresponder al nuevo conjunto.

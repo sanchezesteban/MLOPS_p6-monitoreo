@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import re
 import time
-import uuid
 from collections import Counter
 from pathlib import Path
 
@@ -164,6 +164,8 @@ class CaptureStore:
         self.starts: dict[str, int] = {}
         self.last: dict[str, int] = {}
         self.counts: Counter = Counter()
+        self.frame_ids: set[str] = set()
+        self.frame_numbers: Counter = Counter()
 
     def __enter__(self):
         try:
@@ -185,6 +187,10 @@ class CaptureStore:
                     self.starts[seq] = int(row["sequence_start_unix_ns"])
                     self.last[seq] = int(row["t_capture_ms"])
                     self.counts[seq] += 1
+                    self.frame_ids.add(row["frame_id"])
+                    numbered = re.fullmatch(rf"{re.escape(seq)}_f([0-9]{{4,}})", row["frame_id"])
+                    if numbered:
+                        self.frame_numbers[seq] = max(self.frame_numbers[seq], int(numbered[1]))
             elif any(self.root.rglob("*.jpg")) or any(self.root.rglob("*.jpeg")):
                 raise ValueError("Hay JPEG sin manifiesto; conservarlos y usar un dataset vacío")
             else:
@@ -209,7 +215,11 @@ class CaptureStore:
         stamp = (acquired_ns - origin) // 1_000_000
         if stamp < 0 or stamp <= self.last.get(seq, -1):
             return "Cuadro anterior/repetido o reloj atrasado: captura omitida"
-        frame_id = f"{seq}_{uuid.uuid4().hex}"
+        number = self.frame_numbers[seq] + 1
+        frame_id = f"{seq}_f{number:04d}"
+        while frame_id in self.frame_ids:
+            number += 1
+            frame_id = f"{seq}_f{number:04d}"
         relative = f"{seq}/{seq}_{stamp:010d}_{frame_id}.jpg"
         path = image_path(self.root, relative)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -241,6 +251,8 @@ class CaptureStore:
         self.starts[seq], self.last[seq] = origin, stamp
         self.hashes[sha] = relative
         self.counts[seq] += 1
+        self.frame_ids.add(frame_id)
+        self.frame_numbers[seq] = number
         return f"Guardado {relative} | {seq}: {self.counts[seq]}"
 
 

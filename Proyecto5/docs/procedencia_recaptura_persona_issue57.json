@@ -1,0 +1,415 @@
+{
+  "estado": "seleccion_78_integrada_validada_consentimiento_completo_autorizada_para_publicacion",
+  "issue": 57,
+  "rama": "p5-05b-recaptura",
+  "commit_base_origin_main": "b6317b5dc3cc90f27bf19a8b948db9d83cb4ad32",
+  "pr_anterior": {
+    "numero": 79,
+    "estado": "fusionado",
+    "commit_merge": "b6317b5dc3cc90f27bf19a8b948db9d83cb4ad32",
+    "head_integrado": "bd1ff9efadf38a07d1040be0d1f1b309f820e837"
+  },
+  "motivo_comunicado_por_pm": "El detector identificaba como tv el telefono que mostraba los estimulos; recapturar S2/S3/S4/S6 con persona real.",
+  "snapshots": {
+    "protocolo_v1": {
+      "ruta": "Proyecto5/datos/archivo/protocolo_v1",
+      "commit_fuente": "021550eafbe1cc7d32f9474ed47f9d1dec53724a",
+      "jpeg": 84,
+      "csv_sha256": "07fff3a7dcb727d4c4f12ced5799124708af03c415a24e69f6ca6e3a1842f511",
+      "procedencia_original_sha256": "f9d70a4be855d892a913bd9cc4089e3a16f50e35ef682e18f41b8bee96c8804d",
+      "sin_alteraciones": true
+    },
+    "seleccion_78_pre_recaptura": {
+      "ruta": "Proyecto5/datos/archivo/seleccion_78_pre_recaptura",
+      "commit_fuente": "bd1ff9efadf38a07d1040be0d1f1b309f820e837",
+      "jpeg": 78,
+      "csv_sha256": "e4d124463349fdd050435b256f1b2b605e776f871379e964d89781f560cf5853",
+      "procedencia_original_sha256": "77ee80c4da820531fbf92d559a8237ead74d4712b0ad75fea86bf58209a1c5bb",
+      "sin_alteraciones": true
+    }
+  },
+  "pendientes": [
+    "P5-06/P5-14: correspondencia de IDs y cortes de sesion, sin cambios no coordinados",
+    "Emilio: COCO/manifiesto a ciegas, congelado y confirmacion de recepcion; luego configuracion congelada e inferencia",
+    "Motivo individual de cuatro exclusiones manuales historicas no comunicado; conservar limitacion sin inventar motivos",
+    "Limitaciones fisicas ya documentadas en ficha_auto.md no se convierten en mediciones nuevas"
+  ],
+  "publicacion": {
+    "pr_nuevo": null,
+    "titulo_previsto": "P5-05b: Recaptura real S2, S3, S4 y S6",
+    "referencia_issue": "Parte de #57",
+    "borradores_locales": [
+      "Proyecto5/docs/pr_p5_05b_recaptura.md",
+      "Proyecto5/docs/actualizacion_issue57_recaptura.md"
+    ],
+    "mensajes_enviados": false,
+    "bloqueada": false,
+    "motivo": null,
+    "estado": "Publicacion autorizada; consultar estado remoto del PR en GitHub"
+  },
+  "objetivo_recaptura_no_integrado": {
+    "nuevos_por_secuencia": {
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S6": 12
+    },
+    "total_nuevos": 54,
+    "conservar_sin_cambios": {
+      "S1": 12,
+      "S5": 12
+    },
+    "S6_etiquetas_previstas": [
+      "despejado",
+      "despejado",
+      "despejado",
+      "despejado",
+      "obstaculo",
+      "obstaculo",
+      "obstaculo",
+      "obstaculo",
+      "despejado",
+      "despejado",
+      "despejado",
+      "despejado"
+    ],
+    "total_final_esperado": 78,
+    "despejados_esperados": 20,
+    "obstaculos_esperados": 58,
+    "formato_nuevo_frame_id": "<sequence_id>_f<contador de al menos cuatro digitos>",
+    "resolucion_exigida": [
+      400,
+      296
+    ],
+    "rotacion_horaria_grados": 180,
+    "motores": "apagados_o_desconectados",
+    "metadatos_de_nuevas_capturas": {
+      "estado": "disponibles_en_resguardo_privado_no_integrados",
+      "carpeta": "20261103_212659",
+      "jpeg_actuales": 54,
+      "filas_csv_originales": 58,
+      "registros_jpeg_ausentes": 4,
+      "csv_original_sha256": "5fab0bf5d06036fe329a4c16c7ab53dc10cca9d52fab44f9bcf5eb48b54ac652",
+      "csv_propuesto_no_aplicado_sha256": "7eaf91832cae7c6067cacf003e6bb59f82e8264f45e005ab1f2b5e716dbbf995"
+    },
+    "dataset_nuevo_congelado": false,
+    "estado": "Objetivo cumplido e integrado localmente; clave historica conservada"
+  },
+  "auditoria_preintegracion": {
+    "referencia": "Proyecto5/docs/auditoria_recaptura_p5_05b.md",
+    "fuente_privada": "%LOCALAPPDATA%/P5-57/recaptura_persona_v2/20261103_212659",
+    "jpeg_actuales_por_secuencia": {
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S6": 12
+    },
+    "filas_csv_por_secuencia": {
+      "S2": 17,
+      "S3": 15,
+      "S4": 14,
+      "S6": 12
+    },
+    "registros_ausentes": [
+      {
+        "frame_id": "S3_f0004",
+        "t_capture_ms": "20891",
+        "sha256": "34d05c64e538c6fdf7acd640ad4975f2f451005d22adb1dd4d1d12075f3fc8b9",
+        "disponible_en_zip_con_hash_coincidente": true
+      },
+      {
+        "frame_id": "S3_f0005",
+        "t_capture_ms": "22922",
+        "sha256": "99c0e1ff2f87c44df5043f69fd320599e414a1485d7e8f6149c01f11313f0b0f",
+        "disponible_en_zip_con_hash_coincidente": true
+      },
+      {
+        "frame_id": "S4_f0002",
+        "t_capture_ms": "13750",
+        "sha256": "e651ab3fe30b07543ec3a91b8e6a5c7ea86f695894c072af4431520f359fa41b",
+        "disponible_en_zip_con_hash_coincidente": true
+      },
+      {
+        "frame_id": "S4_f0008",
+        "t_capture_ms": "208203",
+        "sha256": "f1bfbb34f7e5822b38ff881bd9b0ddd656d624e96ef07f67684e578c5ffa6dac",
+        "disponible_en_zip_con_hash_coincidente": true
+      }
+    ],
+    "criterio_individual_exclusion": "No confirmado; operador declaro eliminacion manual de sobrantes",
+    "seleccion_posterior": true,
+    "captura_unica_de_54": false,
+    "revision_manual_sujetos_no_es_COCO": {
+      "persona": 17,
+      "gato": 13,
+      "peluche": 16,
+      "sin_sujeto_acordado_visible": 8
+    },
+    "jpeg_validos_400x296_con_hash_correcto": 54,
+    "duplicados_exactos": 0,
+    "outside_risk_original": 0,
+    "S6_fase_obstaculo": "4 perros de peluche autorizados como dog=16; D4-B4-D4 preservado",
+    "consentimiento_confirmado": false,
+    "sin_prueba_de_inexistencia_de_documento_privado": true,
+    "csv_fuente_modificado": false,
+    "dataset_activo_modificado": false,
+    "candidato_privado_78": {
+      "integridad": "aprobada",
+      "issue57": "rechazado_por_falta_de_fuera_de_riesgo",
+      "etiquetas_csv_no_certifican_clases_reales": {
+        "despejado": 20,
+        "obstaculo": 58
+      }
+    },
+    "software": {
+      "pytest": "276 passed, 53 subtests passed",
+      "ruff_check": "aprobado",
+      "ruff_format_check": "aprobado",
+      "python": "3.10.8"
+    },
+    "consentimiento_escrito_firmado_reportado_por_operador": true,
+    "fecha_consentimiento_real": null,
+    "alcance_publicacion_verificado": false,
+    "bloqueo_S6_por_no_ser_persona_resuelto": true,
+    "naturaleza": "Resultado historico anterior a la confirmacion final; consentimiento vigente en campo consentimiento de la raiz"
+  },
+  "auditoria_fuera_riesgo_extra": {
+    "referencia": "Proyecto5/docs/auditoria_fuera_riesgo_p5_05b.md",
+    "fuente_privada": "%LOCALAPPDATA%/P5-57/fuera_riesgo_extra",
+    "sesion_vacia": "20261103_225154",
+    "sesion_con_fotos": "20261103_225218",
+    "jpeg_integridad_correcta": 6,
+    "jpeg_fuera_riesgo_con_persona_real_validos": 0,
+    "sujeto_observado": "peluche en las seis; no persona ni dog real",
+    "geometria": "compatible visualmente con y2<148; sin cajas COCO medidas",
+    "etiquetas_csv_originales": {
+      "scene_label": "obstaculo",
+      "outside_risk": "1"
+    },
+    "session_id": "3ecf440718884a7bb6eeb59e841e1cd0",
+    "t_capture_ms": [
+      0,
+      5844,
+      13297,
+      22563,
+      24875,
+      38781
+    ],
+    "conflictos_de_union": {
+      "ids_duplicados_al_unir": [
+        "S2_f0001",
+        "S2_f0002",
+        "S2_f0003",
+        "S2_f0004",
+        "S2_f0005",
+        "S2_f0006"
+      ],
+      "rutas_iguales_con_bytes_distintos": [
+        "S2/S2_0000000000_S2_f0001.jpg"
+      ],
+      "origen_principal": "1793763347573381600",
+      "origen_extra": "1793767996073360200",
+      "diferencia_origen_ns": 4648499978600,
+      "reinicio_t_extra": "0",
+      "cambio_de_metadatos_autorizado": false,
+      "normalizacion_derivada_autorizada_por_operador": true,
+      "sesiones_originales_reasignadas": false
+    },
+    "integracion_aplicada": false,
+    "datos_fuente_modificados": false,
+    "respaldo_integral_verificado": true,
+    "candidato_combinado_conforme": false,
+    "jpeg_fuera_riesgo_con_dog_peluche_autorizado_validos_visualmente": 6,
+    "criterio_anterior_persona_real_superado_para_peluche": true,
+    "autorizacion_clase_dog": true
+  },
+  "autorizacion_estimulo_dog": {
+    "fuente": "Actualizacion explicita del operador: Sebastian autorizo perro de peluche como estimulo dog con class_id=16.",
+    "fecha_autorizacion_PM": "No indicada; no inferida",
+    "clase_dataset": "dog",
+    "class_id_modelo": 16,
+    "category_id_COCO_indicado_para_Emilio": 16,
+    "tipo_estimulo": "perro_de_peluche",
+    "animal_real": false,
+    "referencia_documental": "Proyecto5/docs/autorizacion_estimulo_dog_p5_05b.md",
+    "correspondencia": "Proyecto5/docs/correspondencia_estimulos_dog_p5_05b.csv",
+    "imagenes_con_estimulo_principal": 16,
+    "imagenes_con_estimulo_adicional": 6,
+    "cajas_COCO_generadas_por_agente": false,
+    "inferencia_detector_ejecutada": false
+  },
+  "candidato_sustitucion_por_ID": {
+    "estado": "Antecedente privado sin normalizar: rechazado; superado por candidato_normalizado_S2, sin eliminar evidencia",
+    "cantidades": {
+      "S1": 12,
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S5": 12,
+      "S6": 12
+    },
+    "total_JPEG": 78,
+    "filas_CSV": 78,
+    "etiquetas": {
+      "despejado": 20,
+      "obstaculo": 58
+    },
+    "outside_risk": 6,
+    "ids_rutas_hashes_unicos": 78,
+    "JPEG_huerfanos_reales": 0,
+    "originales_preservados": true,
+    "campos_originales_conservados": true,
+    "sustitucion_propuesta": "S2_f0001 a S2_f0006 de principal por homonimos de extra; correspondencia por sesion y SHA, sin seleccion por detector",
+    "seleccion_activa_modificada": false,
+    "tiempos_o_sesiones_alterados": false,
+    "origenes_S2": [
+      "1793763347573381600",
+      "1793767996073360200"
+    ],
+    "validacion_issue57": "rechazada por reinicio de tiempo; avisos derivados de JPEG sin CSV/fuera de riesgo no contado",
+    "referencia_entrega_preparada": "Proyecto5/docs/entrega_emilio_p5_05b.md"
+  },
+  "candidato_normalizado_S2": {
+    "referencia": "Proyecto5/docs/normalizacion_temporal_S2_p5_05b.md",
+    "correspondencia": "Proyecto5/docs/correspondencia_normalizacion_S2_p5_05b.csv",
+    "estado": "Integrado localmente byte por byte; copia privada conservada",
+    "aprobado_PM": true,
+    "origen_comun_ns": "1793763347573381600",
+    "origen_adicional_ns": "1793767996073360200",
+    "formula": "A=O_original+t_original*1000000; (t_nuevo,residuo)=divmod(A-O_comun,1000000)",
+    "residuo_adicional_ns": 978600,
+    "pausa_ultimo_principal_a_primero_extra_ns": 1817039978600,
+    "sesiones_fuente_conservadas": true,
+    "fuentes_sin_modificar": true,
+    "evaluacion_activa_sin_modificar": false,
+    "origenes_y_tiempos_fuente_preservados_en_auditoria": true,
+    "alias_adicionales_derivados": [
+      "S2_f0018",
+      "S2_f0019",
+      "S2_f0020",
+      "S2_f0021",
+      "S2_f0022",
+      "S2_f0023"
+    ],
+    "no_son_eventos_nuevos_de_captura": true,
+    "cantidades": {
+      "S1": 12,
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S5": 12,
+      "S6": 12
+    },
+    "total": 78,
+    "despejado": 20,
+    "obstaculo": 58,
+    "outside_risk": 6,
+    "ajuste": 7,
+    "csv_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
+    "sin_saltos_observados_en_registros_durante_captura": true,
+    "salto_reloj_previo_UTC": "2026-11-04T03:22:39.5000000Z",
+    "limite_reloj": "Sin calibracion independiente entre procesos; no certifica UTC ni descarta ajustes graduales",
+    "validaciones": {
+      "issue57": "aprobado_sin_errores",
+      "pytest": "287 passed, 53 subtests passed",
+      "ruff_check": "aprobado",
+      "ruff_format": "44 files already formatted",
+      "hashes": "85/85 correctos",
+      "JPEG_huerfanos": 0,
+      "ids_hashes_sesiones_compartidos_con_ajuste": 0,
+      "python": "3.10.8"
+    },
+    "puntero_privado_ignorado": "Proyecto5/resultados/normalizacion_S2_privada/ubicacion.json",
+    "interrupcion_normalizada_aceptada_PM": true,
+    "seis_adicionales_al_final_verificado": true,
+    "candidato_completo_aprobado_PM": true,
+    "pendientes_aprobacion": "Seleccion/encuadres aprobados y consentimiento de publicacion completo, firmado el 2026-11-03; quedan dependencias de integracion"
+  },
+  "autorizaciones_PM_actualizacion": {
+    "fuente": "Respuesta de Sebastian comunicada expresamente por el operador en esta sesion",
+    "fecha": "No comunicada; no inferida",
+    "S2_interrumpida_normalizacion_documentada_como_S1": true,
+    "seis_adicionales_al_final_S2_verificado": true,
+    "gatos_reales": true,
+    "perro_peluche_como_dog_16_declarado_peluche": true,
+    "encuadres_S3_S4": "Pendientes por cuadro",
+    "seleccion_sin_predicciones": "Exigencia PM; construccion por agente sin inferencia, criterio historico de cuatro exclusiones no documentado",
+    "Emilio_anotacion_sin_detecciones": true,
+    "detector_despues_con_configuracion_congelada": true
+  },
+  "revision_PM_preparada": {
+    "seleccion_78": "Proyecto5/docs/seleccion_78_p5_05b.csv",
+    "exclusiones_64": "Proyecto5/docs/exclusiones_sustituciones_p5_05b.csv",
+    "informe_seleccion": "Proyecto5/docs/seleccion_78_p5_05b.md",
+    "encuadres_25": "Proyecto5/docs/revision_encuadres_S3_S4_p5_05b.csv",
+    "informe_encuadres": "Proyecto5/docs/revision_encuadres_S3_S4_p5_05b.md",
+    "cortes": "Proyecto5/docs/cortes_sesion_S2_p5_05b.csv",
+    "propuesta_reproductor": "Proyecto5/docs/propuesta_reproductor_cortes_p5_05b.md",
+    "puntero_privado_ignorado": "Proyecto5/resultados/revision_PM_p5_05b/ubicacion.json",
+    "suite_repetida": false,
+    "candidato_regenerado": false,
+    "motivo_no_repetir": "Cambios documentales y visuales de revision, sin modificar codigo productivo ni candidato; control de conservacion SHA"
+  },
+  "seleccion_pre_recaptura_historial": {
+    "jpeg_evaluacion": 78,
+    "jpeg_ajuste": 7,
+    "despejado": 20,
+    "obstaculo": 58,
+    "outside_risk": 5,
+    "csv_evaluacion_sha256": "e4d124463349fdd050435b256f1b2b605e776f871379e964d89781f560cf5853",
+    "procedencia_detallada": "Proyecto5/docs/procedencia_capturas.json"
+  },
+  "conjunto_activo": {
+    "por_secuencia": {
+      "S1": 12,
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S5": 12,
+      "S6": 12
+    },
+    "jpeg_evaluacion": 78,
+    "jpeg_ajuste": 7,
+    "despejado": 20,
+    "obstaculo": 58,
+    "outside_risk": 6,
+    "csv_evaluacion_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
+    "JPEG_y_fuentes_no_recodificados": true,
+    "S1_S5_ajuste_intactos": true,
+    "validacion": "Proyecto5/docs/estado_final_p5_05b.json",
+    "manifiesto_SHA": "Proyecto5/datos/HASHES_p5_05b.sha256"
+  },
+  "autorizaciones_finales": {
+    "fuente": "Mensaje expreso del operador transmitiendo aprobacion de Sebastian",
+    "fecha_registro": "2026-11-04",
+    "fecha_respuesta_PM": null,
+    "URL_respuesta_PM": null,
+    "encuadres_S3_S4": true,
+    "seis_sustituciones_S2": true,
+    "normalizacion_interrupcion_documentada_S2": true,
+    "gatos_reales": true,
+    "peluche_dog_16_declarado_peluche": true,
+    "documento": "Proyecto5/docs/autorizaciones_finales_p5_05b.md"
+  },
+  "consentimiento": {
+    "operador_declara_ser_persona_retratada": true,
+    "documento_firmado_confirmado": true,
+    "fecha_firma_real": "2026-11-03",
+    "alcance_GitHub_confirmado": true,
+    "documento_privado_no_incluido": true,
+    "mayoria_de_edad_confirmada": true,
+    "fuente_confirmacion": "Declaracion expresa del operador: persona retratada, mayor de edad, consentimiento firmado el 2026-11-03 con autorizacion de publicacion GitHub; documento original privado"
+  },
+  "integracion_local": {
+    "anteriores_sustituidas": 54,
+    "nuevas_copiadas_sin_recodificar": 54,
+    "conservadas_S1_S5": 24,
+    "archivos_fuente_sin_modificar": true,
+    "historicos_84_78_preservados": true,
+    "metadatos_fuente": "Proyecto5/datos/archivo/recaptura_v2_metadatos/",
+    "candidato_regenerado": false,
+    "validacion_final_repetida": true,
+    "inferencias_ejecutadas": false,
+    "issue59_modificado": false
+  }
+}

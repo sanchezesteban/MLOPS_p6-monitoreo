@@ -293,11 +293,28 @@ def positive_seconds(value):
     return result
 
 
+def resolution(value):
+    try:
+        width, height = map(int, value.lower().split("x"))
+    except (ValueError, TypeError) as exc:
+        raise argparse.ArgumentTypeError("Usar ANCHOxALTO, por ejemplo 400x296") from exc
+    if width <= 0 or height <= 0:
+        raise argparse.ArgumentTypeError("La resolución debe tener dimensiones positivas")
+    return width, height
+
+
 def parser():
     result = argparse.ArgumentParser(description=__doc__)
     result.add_argument("--url", type=stream_url, default=DEFAULT_URL)
     result.add_argument("--destino", type=Path, default=DEFAULT_DATA)
     result.add_argument("--secuencia", choices=SEQUENCES, default="S1")
+    result.add_argument(
+        "--resolucion",
+        type=resolution,
+        default=None,
+        help="Exigir dimensiones del JPEG orientado (p. ej. 400x296); "
+        "no redimensiona ni cambia firmware",
+    )
     result.add_argument(
         "--rotacion",
         type=int,
@@ -457,6 +474,16 @@ def run(args):
                             fresh = False
                         else:
                             frame = rotate_frame(frame, args.rotacion)
+                            expected = getattr(args, "resolucion", None)
+                            if (
+                                expected is not None
+                                and (frame.shape[1], frame.shape[0]) != expected
+                            ):
+                                raise ValueError(
+                                    f"Resolución recibida {frame.shape[1]}x{frame.shape[0]}; "
+                                    f"se exige {expected[0]}x{expected[1]}. "
+                                    "Captura detenida sin redimensionar; revisar la cámara."
+                                )
                             displayed = current
                         last_display = current[1]
                     fresh = fresh and displayed is not None

@@ -1,0 +1,162 @@
+{
+  "estado": "integrado_validado_consentimiento_completo_listo_para_publicar",
+  "rama": "p5-05b-recaptura",
+  "fecha_validacion": "2026-11-04",
+  "CSV_evaluacion_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
+  "conteos": {
+    "S1": 12,
+    "S2": 17,
+    "S3": 13,
+    "S4": 12,
+    "S5": 12,
+    "S6": 12
+  },
+  "etiquetas": {
+    "despejado": 20,
+    "obstaculo": 58
+  },
+  "outside_risk": 6,
+  "integridad": {
+    "evaluacion": {
+      "JPEG": 78,
+      "hashes_correctos": 78,
+      "CSV_JPEG_correspondencia": true,
+      "ids_rutas_hashes_unicos": true,
+      "tiempos_crecientes": true,
+      "dimensiones": "400x296",
+      "huerfanos": 0
+    },
+    "ajuste": {
+      "JPEG": 7,
+      "hashes_correctos": 7,
+      "CSV_JPEG_correspondencia": true,
+      "ids_rutas_hashes_unicos": true,
+      "tiempos_crecientes": true,
+      "dimensiones": "400x296",
+      "huerfanos": 0
+    }
+  },
+  "hashes_JPEG": {
+    "correctos": 85,
+    "total": 85
+  },
+  "evaluacion_ajuste_sin_hashes_IDs_sesiones_compartidos": true,
+  "independencia_visual": "Revision previa documentada, ajuste y S1/S5 intactos; recapturas en escena diferente. No certifica independencia estadistica.",
+  "S2_adicionales_al_final": true,
+  "S2_sesiones_originales": 4,
+  "S2_normalizacion_reversible_con_residuo": true,
+  "S2_diferencia_origen_ns": 4648499978600,
+  "S2_pausa_ultimo_principal_primero_extra_ns": 1817039978600,
+  "issue57": {
+    "ok": true,
+    "errors": [],
+    "counts": {
+      "S1": 12,
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S5": 12,
+      "S6": 12
+    },
+    "total": 78,
+    "duplicates": [],
+    "labels": {
+      "despejado": 20,
+      "obstaculo": 58
+    },
+    "outside_risk": 6,
+    "sessions": [
+      "0bfc428ba10e4622b2e3697ac7fa8beb",
+      "18fd72dd3dec4e429aa17d3cc9fe8306",
+      "38471f5bb4294d87b3b1e1b0b623a256",
+      "3ecf440718884a7bb6eeb59e841e1cd0",
+      "65b863c17bcf4f41973224beed18e1af",
+      "80a436749c3047ae9074fabba4ab220e",
+      "aaa1c6bc31cb4bd890be0cd57fbe8971",
+      "af93ccf32cb64ed59163374de1f707ed",
+      "cd13ae31792e458cb3180bc7507eaa5a",
+      "e2b4a168ded24ec38bc6db62dd7dfead",
+      "f0196253338344ca8845471a5635abab"
+    ],
+    "ajuste": {
+      "ok": true,
+      "errors": [],
+      "counts": {
+        "S1": 7,
+        "S2": 0,
+        "S3": 0,
+        "S4": 0,
+        "S5": 0,
+        "S6": 0
+      },
+      "total": 7,
+      "duplicates": [],
+      "labels": {
+        "despejado": 7
+      },
+      "outside_risk": 0,
+      "sessions": [
+        "7f1d45e0e669436985dc74f5443476ea",
+        "fd4c17f067da4280b15ee5657160f8d5"
+      ]
+    }
+  },
+  "software": {
+    "python": "3.10.8",
+    "pytest": {
+      "pasaron": 287,
+      "subpruebas": 53,
+      "exit_code": 0
+    },
+    "ruff_check": {
+      "estado": "aprobado",
+      "exit_code": 0
+    },
+    "ruff_format_check": {
+      "archivos": 47,
+      "exit_code": 0
+    },
+    "python312_ejecutado": false
+  },
+  "conservacion": {
+    "ajuste": {
+      "archivos": 8,
+      "cambios": 0
+    },
+    "archivo": {
+      "archivos": 172,
+      "cambios": 0
+    },
+    "candidato_privado": {
+      "archivos": 89,
+      "cambios": 0
+    },
+    "fuente_principal": {
+      "archivos": 55,
+      "cambios": 0
+    },
+    "fuente_extras": {
+      "archivos": 8,
+      "cambios": 0
+    }
+  },
+  "anteriores_54_resguardados": true,
+  "S1_S5_ajuste_intactos": true,
+  "locales173_issue59_intactos": true,
+  "detector_ejecutado": false,
+  "COCO_o_predicciones_modificadas": false,
+  "autorizaciones_PM": "Proyecto5/docs/autorizaciones_finales_p5_05b.md",
+  "consentimiento": {
+    "firmado_confirmado": true,
+    "fecha_firma": "2026-11-03",
+    "publicacion_GitHub_confirmada": true,
+    "documento_incluido": false,
+    "mayoria_de_edad_confirmada": true
+  },
+  "dependencias": [
+    "P5-06/P5-14: coordinar IDs y reconocimiento de cortes",
+    "Emilio: anotacion ciega, COCO/manifiesto, congelado y recepcion",
+    "Limitaciones fisicas existentes conservadas en ficha_auto.md"
+  ],
+  "contexto_publicacion": "Validacion previa al push; consultar estado remoto del PR en GitHub"
+}

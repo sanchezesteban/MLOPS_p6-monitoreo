@@ -1,0 +1,24 @@
+{
+  "tipo": "snapshot_historico_no_usar_para_evaluacion_v2",
+  "repositorio": "sebastian0023/Proyecto-3-Clasificador-de-imagenes",
+  "commit_fuente": "021550eafbe1cc7d32f9474ed47f9d1dec53724a",
+  "raiz_fuente": "Proyecto5/datos/evaluacion",
+  "csv_sha256": "07fff3a7dcb727d4c4f12ced5799124708af03c415a24e69f6ca6e3a1842f511",
+  "procedencia_original_sha256": "f9d70a4be855d892a913bd9cc4089e3a16f50e35ef682e18f41b8bee96c8804d",
+  "jpeg_count": 84,
+  "por_secuencia": {
+    "S1": 18,
+    "S2": 17,
+    "S3": 13,
+    "S4": 12,
+    "S5": 12,
+    "S6": 12
+  },
+  "etiquetas": {
+    "despejado": 26,
+    "obstaculo": 58
+  },
+  "outside_risk": 5,
+  "metodo": "Copia byte a byte desde objetos Git; sin mover ni recodificar JPEG; CSV original sin cambios",
+  "archivo_creado_utc": "2026-11-04T00:12:19.164173+00:00"
+}
