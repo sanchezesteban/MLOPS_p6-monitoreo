@@ -14,6 +14,10 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import pytest
+
+pytest.importorskip("cv2")
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import capturar_esp32 as capture
@@ -42,14 +46,14 @@ class DatasetTests(unittest.TestCase):
             writer.writeheader()
             writer.writerows(rows)
 
-    def test_save_original_bytes_hash_uuid_and_relative_time(self):
+    def test_save_original_bytes_hash_numbered_id_and_relative_time(self):
         data = b"TEST ONLY - bytes preserved"
         self.save_one(data=data)
         row = core.read_rows(self.root)[0]
         self.assertEqual((self.root / row["path"]).read_bytes(), data)
         self.assertEqual(row["sha256"], core.digest(data))
         self.assertEqual(row["t_capture_ms"], "0")
-        self.assertRegex(row["frame_id"], r"^S1_[0-9a-f]{32}$")
+        self.assertEqual(row["frame_id"], "S1_f0001")
         self.assertTrue(core.inspect(self.root, minimums=False)["ok"])
         self.assertFalse((self.root / ".captura.lock").exists())
 
@@ -73,7 +77,7 @@ class DatasetTests(unittest.TestCase):
     def test_legacy_uuid_id_is_read_without_rewriting_existing_records(self):
         self.save_one()
         rows = core.read_rows(self.root)
-        rows[0]["frame_id"] = rows[0]["frame_id"].removeprefix("S1_")
+        rows[0]["frame_id"] = "a" * 32
         self.rewrite(rows)
         before = (self.root / "capturas.csv").read_bytes()
         with core.CaptureStore(self.root, "another-session"):

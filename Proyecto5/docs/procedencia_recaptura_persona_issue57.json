@@ -1,0 +1,97 @@
+{
+  "estado": "preparacion_local_sin_recapturas_nuevas",
+  "issue": 57,
+  "rama": "p5-05b-recaptura",
+  "commit_base_origin_main": "b6317b5dc3cc90f27bf19a8b948db9d83cb4ad32",
+  "pr_anterior": {
+    "numero": 79,
+    "estado": "fusionado",
+    "commit_merge": "b6317b5dc3cc90f27bf19a8b948db9d83cb4ad32",
+    "head_integrado": "bd1ff9efadf38a07d1040be0d1f1b309f820e837"
+  },
+  "motivo_comunicado_por_pm": "El detector identificaba como tv el telefono que mostraba los estimulos; recapturar S2/S3/S4/S6 con persona real.",
+  "snapshots": {
+    "protocolo_v1": {
+      "ruta": "Proyecto5/datos/archivo/protocolo_v1",
+      "commit_fuente": "021550eafbe1cc7d32f9474ed47f9d1dec53724a",
+      "jpeg": 84,
+      "csv_sha256": "07fff3a7dcb727d4c4f12ced5799124708af03c415a24e69f6ca6e3a1842f511",
+      "procedencia_original_sha256": "f9d70a4be855d892a913bd9cc4089e3a16f50e35ef682e18f41b8bee96c8804d",
+      "sin_alteraciones": true
+    },
+    "seleccion_78_pre_recaptura": {
+      "ruta": "Proyecto5/datos/archivo/seleccion_78_pre_recaptura",
+      "commit_fuente": "bd1ff9efadf38a07d1040be0d1f1b309f820e837",
+      "jpeg": 78,
+      "csv_sha256": "e4d124463349fdd050435b256f1b2b605e776f871379e964d89781f560cf5853",
+      "procedencia_original_sha256": "77ee80c4da820531fbf92d559a8237ead74d4712b0ad75fea86bf58209a1c5bb",
+      "sin_alteraciones": true
+    }
+  },
+  "conjunto_activo_preservado": {
+    "jpeg_evaluacion": 78,
+    "jpeg_ajuste": 7,
+    "despejado": 20,
+    "obstaculo": 58,
+    "outside_risk": 5,
+    "csv_evaluacion_sha256": "e4d124463349fdd050435b256f1b2b605e776f871379e964d89781f560cf5853",
+    "procedencia_detallada": "Proyecto5/docs/procedencia_capturas.json"
+  },
+  "recaptura_prevista_no_realizada": {
+    "nuevos_por_secuencia": {
+      "S2": 17,
+      "S3": 13,
+      "S4": 12,
+      "S6": 12
+    },
+    "total_nuevos": 54,
+    "conservar_sin_cambios": {
+      "S1": 12,
+      "S5": 12
+    },
+    "S6_etiquetas_previstas": [
+      "despejado",
+      "despejado",
+      "despejado",
+      "despejado",
+      "obstaculo",
+      "obstaculo",
+      "obstaculo",
+      "obstaculo",
+      "despejado",
+      "despejado",
+      "despejado",
+      "despejado"
+    ],
+    "total_final_esperado": 78,
+    "despejados_esperados": 20,
+    "obstaculos_esperados": 58,
+    "formato_nuevo_frame_id": "<sequence_id>_f<contador de al menos cuatro digitos>",
+    "resolucion_exigida": [
+      400,
+      296
+    ],
+    "rotacion_horaria_grados": 180,
+    "motores": "apagados_o_desconectados",
+    "metadatos_de_nuevas_capturas": null,
+    "dataset_nuevo_congelado": false
+  },
+  "pendientes": [
+    "54 JPEG reales y CSV autentico",
+    "Consentimiento escrito de publicacion y tratamiento previsto verificado; original fuera de Git",
+    "Decision PM sobre nuevos ejemplos outside_risk; no heredar las cinco marcas anteriores",
+    "Revision visual de escenarios e independencia de ajuste",
+    "Integracion y validacion final; entrega a Emilio",
+    "COCO/manifiesto y predicciones del mismo conjunto para #59"
+  ],
+  "publicacion": {
+    "pr_nuevo": null,
+    "titulo_previsto": "P5-05b: Recaptura real S2, S3, S4 y S6",
+    "referencia_issue": "Parte de #57",
+    "borradores_locales": [
+      "Proyecto5/docs/pr_p5_05b_recaptura.md",
+      "Proyecto5/docs/actualizacion_issue57_recaptura.md"
+    ],
+    "mensajes_enviados": false
+  }
+}

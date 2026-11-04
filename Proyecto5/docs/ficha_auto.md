@@ -1,5 +1,10 @@
 # Ficha del vehículo — P5-05 / issue #57
 
+**Recaptura P5-05b en preparación:** el PR #79 ya está integrado. Los datos y
+conteos de esta ficha describen la selección anterior conservada; todavía no
+certifican las 54 fotografías nuevas S2/S3/S4/S6. Mantener 400×296, rotación 180°
+y motores apagados; [protocolo](protocolo_recaptura_persona_issue57.md).
+
 Estado: datos integrados y validados; **pendiente de aceptación del alcance del rango físico y confirmaciones del operador**. La identificación del controlador es documental, sin inspección del chip; no se afirma cierre completo.
 
 | Dato | Valor y fuente |

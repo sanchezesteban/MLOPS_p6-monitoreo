@@ -1,10 +1,18 @@
 # Capturas ESP32-CAM y validación — issue #57
 
+Preparación vigente: [recaptura con persona real](protocolo_recaptura_persona_issue57.md)
+en p5-05b-recaptura para un PR nuevo tras el merge de #79; S2/S3/S4/S6 y
+[consentimiento escrito](consentimiento_recaptura_issue57.md).
+La selección de 78 se conserva intacta hasta integrar las 54 nuevas verificadas.
+Los nuevos IDs son S2_f0001, etc.; se continúa el máximo al reabrir sin cambiar
+IDs históricos. --resolucion 400x296 exige el tamaño orientado sin redimensionar.
+
 Instalar dependencias de captura en el entorno del proyecto y ejecutar desde la raíz. Para las pruebas/estilo se necesitan pytest y Ruff; CI requiere Python 3.12 y sus dependencias. La base de main ya fue integrada en la rama; no se modifican sus módulos para validar capturas.
 
 ```powershell
 & .\Proyecto5\.venv\Scripts\python.exe -m pip install -r Proyecto5/requirements-capturas.txt
-& .\Proyecto5\.venv\Scripts\python.exe .\Proyecto5\scripts\capturar_esp32.py --destino Proyecto5/datos/recaptura_clases --rotacion 180 --url http://192.168.68.113:81/stream
+$destino = Join-Path $env:LOCALAPPDATA ("P5-57\recaptura_persona_v2\" + (Get-Date -Format yyyyMMdd_HHmmss))
+& .\Proyecto5\.venv\Scripts\python.exe .\Proyecto5\scripts\capturar_esp32.py --destino $destino --secuencia S2 --rotacion 180 --resolucion 400x296 --intervalo 0 --url http://192.168.1.93:81/stream
 ```
 
 Mantener motores apagados/desconectados. Cerrar página de controles y cualquier otro cliente de cámara. La IP es local y variable; sin --url el programa conserva la dirección histórica. Usar un destino separado para nuevas capturas: no mezclar sesiones nuevas directamente con el conjunto revisado. El capturador continúa CSV existentes sin reemplazar JPEG; conservar una copia de seguridad antes de integrar.
@@ -23,7 +31,7 @@ La rotación (0, 90 horario, 180, 270 antihorario) se aplica antes de calcular z
 
 ## Escenarios y revisión visual
 
-Solo person/dog/cat, definidas en [politica.yaml](../config/politica.yaml), campo clases_obstaculo. No se encontró descriptor formal de P5-03 en este checkout. El PM confirmó los estímulos 2D de teléfono en la revisión del PR; conservar su procedencia, sin afirmar detección automática. Una caja del sujeto ocupa cada tercio que toca. Riesgo: borde inferior y2 >= H/2; a 400×296 el límite es 148. El teléfono y los reflejos no son cajas de person/dog/cat.
+Solo person/dog/cat, definidas en [politica.yaml](../config/politica.yaml), campo clases_obstaculo. No se encontró descriptor formal de P5-03 en este checkout. La aceptación previa de estímulos 2D corresponde al protocolo histórico: la nueva orden del PM exige persona real en S2/S3/S4/S6. Conservar la procedencia anterior, sin afirmar detección automática. Una caja del sujeto ocupa cada tercio que toca. Riesgo: borde inferior y2 >= H/2; a 400×296 el límite es 148. El teléfono y los reflejos no son cajas de person/dog/cat.
 
 - S1: vía libre. La selección vigente incluye dos fotografías de pared (59719 y 66562 ms) aceptadas expresamente por el PM como C1; esta decisión no autoriza incorporar otras tomas indeterminadas. [Autorización y trazabilidad](normalizacion_temporal_S1.md).
 - S2: sujeto central, con ejemplos en mitad inferior; los extras fuera de riesgo están arriba de 148.
@@ -43,4 +51,4 @@ CSV: sequence_id, frame_id, t_capture_ms, path, sha256, sequence_start_unix_ns, 
 
 El validador exige 6×10, >=60 distintos, >=20 B y >=20 D, sin pendientes, fuera de riesgo y ajuste de 1–2 secuencias separado por sesiones/hashes. Comprueba archivos, SHA-256, dimensiones, IDs, CSV y tiempos; no certifica clases ni detecciones. No debilitar reglas. [Ficha](ficha_auto.md), [procedencia](procedencia_capturas.json) e [informe para Emilio](entrega_emilio_issue57.md).
 
-Selección vigente autorizada en PR #79: **78 JPEG de evaluación** (S1=12, S2=17, S3=13, S4=12, S5=12, S6=12), **20 despejados**, 58 obstáculos y 5 fuera de riesgo; ajuste conserva 7 S1 despejadas. No hacen falta nuevas capturas para esta corrección. Cualquier retirada o reclasificación posterior de un negativo exige revisar nuevamente el mínimo de 20. El validador no certifica por sí solo independencia de escenas: en este caso se aplica la revisión y autorización visual del PM.
+Selección conservada del protocolo anterior en PR #79: **78 JPEG de evaluación** (S1=12, S2=17, S3=13, S4=12, S5=12, S6=12), **20 despejados**, 58 obstáculos y 5 fuera de riesgo; ajuste conserva 7 S1 despejadas. Una nueva orden del PM requiere recapturar S2/S3/S4/S6 con persona real; aún no hay reemplazo ni un nuevo congelado para anotaciones/métricas. Cualquier retirada o reclasificación de otro negativo exige revisar el mínimo de 20. La aprobación del validador actual no certifica la futura selección ni independencia visual.

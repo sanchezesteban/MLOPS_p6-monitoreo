@@ -43,7 +43,7 @@ def test_new_capture_id_and_path_are_compatible_with_upstream_contract(tmp_path,
 
 def test_legacy_uuid_requires_an_explicit_event_mapping(tmp_path, monkeypatch):
     row = captured_row(tmp_path, monkeypatch)
-    row["frame_id"] = row["frame_id"].removeprefix("S1_")
+    row["frame_id"] = "a" * 32
     errors = contract.validar_secuencia([event_from_row(row)])
     assert any("frame_id no empieza" in error for error in errors)
 
