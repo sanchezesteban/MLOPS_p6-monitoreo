@@ -1,0 +1,12 @@
+{
+  "id": "C06",
+  "nombre": "Deteccion bajo umbral y luego sobre umbral",
+  "tipo": "sintetico",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C06.yaml",
+  "expectativa_sha256": "66b0a5467bbe785ebee0f3d67b924588f1d9a27471baa1fc011648c7a93336c7",
+  "pasos": 8,
+  "fallos": [],
+  "error": null,
+  "comandos": "C06/comandos.jsonl"
+}

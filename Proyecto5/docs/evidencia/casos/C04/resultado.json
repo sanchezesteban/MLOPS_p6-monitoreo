@@ -1,0 +1,12 @@
+{
+  "id": "C04",
+  "nombre": "Obstaculo solo a la derecha",
+  "tipo": "real",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C04.yaml",
+  "expectativa_sha256": "fa67083d7391cef5cd26de3c82b6fa08627b2d1032cef1ae9d554ff9fadc7b89",
+  "pasos": 12,
+  "fallos": [],
+  "error": null,
+  "comandos": "C04/comandos.jsonl"
+}
