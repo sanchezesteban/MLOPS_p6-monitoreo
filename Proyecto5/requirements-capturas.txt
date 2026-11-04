@@ -1,0 +1,3 @@
+# OpenCV con interfaz gráfica; no instalar opencv-python-headless en este entorno.
+numpy>=1.24,<3
+opencv-python>=4.8,<5
