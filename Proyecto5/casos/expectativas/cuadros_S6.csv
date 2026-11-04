@@ -1,0 +1,13 @@
+sequence_id,frame_id,frame_id_origen,t_capture_ms,estado_via,zonas_en_riesgo,acciones_permitidas,estado_manifiesto,coincide,justificacion
+S6,S6_f0001,S6_f0001,0,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0002,S6_f0002,22281,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0003,S6_f0003,32812,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0004,S6_f0004,50625,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0005,S6_f0005,138922,izq,izquierda,FORWARD|STEER_RIGHT|STOP,obstaculo,si,"dog [1,157.2,117.5,296] toca izquierda en riesgo (y2=296 >= 148)"
+S6,S6_f0006,S6_f0006,147922,centro,izquierda+centro,STOP,obstaculo,si,"dog [132.5,148.7,266.5,296] toca centro+izquierda en riesgo (y2=296 >= 148)"
+S6,S6_f0007,S6_f0007,203562,der,derecha,FORWARD|STEER_LEFT|STOP,obstaculo,si,"dog [269.5,180.5,400,296] toca derecha en riesgo (y2=296 >= 148)"
+S6,S6_f0008,S6_f0008,220344,centro,centro+derecha,STOP,obstaculo,si,"dog [134,149.7,268.5,296] toca centro+derecha en riesgo (y2=296 >= 148)"
+S6,S6_f0009,S6_f0009,251125,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0010,S6_f0010,252844,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0011,S6_f0011,260203,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S6,S6_f0012,S6_f0012,265312,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
