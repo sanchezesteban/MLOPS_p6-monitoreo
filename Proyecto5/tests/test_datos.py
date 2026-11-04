@@ -12,12 +12,16 @@ import pytest
 
 from p5.contrato import en_riesgo, zonas_ocupadas
 from p5.datos import (
+    COLUMNAS_MANIFIESTO,
     CONJUNTOS,
+    ESTADOS,
     DatosError,
     cajas_por_ruta,
     cargar_coco,
     categorias,
     coco_vacio,
+    construir_manifiesto,
+    escribir_hashes,
     estado_esperado,
     estado_via,
     guardar_coco,
@@ -26,7 +30,9 @@ from p5.datos import (
     registrar_cuadro,
     sha256_archivo,
     sincronizar,
+    verificar_hashes,
 )
+from p5.duplicados import grupos, hamming, pares
 from p5.politica import cargar_config
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -259,3 +265,151 @@ def test_anotador_guarda_coco_sin_tocar_los_jpeg(copia):
         anotador.guardar("evaluacion", -1, [], True)
     assert {p: p.read_bytes() for p in (copia / "datos").rglob("*.jpg")} == antes
     assert not (copia / "datos/anotaciones_ajuste.json").exists()
+
+
+# --- Manifiesto -----------------------------------------------------------------------------
+
+
+def _coco_prueba(raiz: Path, s5: list[dict] | None = None) -> dict:
+    """COCO sintetico SOLO de prueba: S1 vacio, S5 con una caja que cruza las tres zonas."""
+    coco = coco_vacio("evaluacion", raiz)
+    for c in leer_capturas("evaluacion", raiz):
+        if c.sequence_id == "S1":
+            registrar_cuadro(coco, c, [], True)
+        elif c.sequence_id == "S5":
+            cajas = s5 or [{"clase": "person", "bbox": [50, 150, 300, 140]}]
+            registrar_cuadro(coco, c, cajas, False)
+    return coco
+
+
+def test_manifiesto_columnas_de_58_estados_y_vacio_explicito(copia):
+    res = construir_manifiesto("evaluacion", _coco_prueba(copia), CLASES, copia, {"S1", "S5"})
+    assert res.errores == [] and res.discrepancias == []
+    assert COLUMNAS_MANIFIESTO[:8] == [
+        "sequence_id",
+        "frame_id",
+        "t_capture_ms",
+        "ruta",
+        "ancho",
+        "alto",
+        "sha256",
+        "estado_esperado_via",
+    ]
+    assert len(res.filas) == 24
+    assert all(set(f) == set(COLUMNAS_MANIFIESTO) for f in res.filas)
+    assert all(f["estado_esperado_via"] in ESTADOS for f in res.filas)
+    s1 = [f for f in res.filas if f["sequence_id"] == "S1"]
+    assert {(f["estado_esperado_via"], f["n_cajas"]) for f in s1} == {("libre", 0)}
+    assert {f["estado_esperado_via"] for f in res.filas if f["sequence_id"] == "S5"} == {
+        "bloqueado"
+    }
+
+
+def test_vacio_no_depende_del_campo_sin_objetos(copia):
+    coco = _coco_prueba(copia)
+    for img in coco["images"]:
+        img.pop("sin_objetos")  # un COCO de otra herramienta no lo trae
+    res = construir_manifiesto("evaluacion", coco, CLASES, copia, {"S1", "S5"})
+    assert res.errores == []
+    assert [f["estado_esperado_via"] for f in res.filas if f["sequence_id"] == "S1"] == [
+        "libre"
+    ] * 12
+
+
+def test_manifiesto_reporta_errores_de_integridad(copia):
+    coco = _coco_prueba(copia)
+    s1 = [i for i in coco["images"] if i["sequence_id"] == "S1"]
+    coco["images"].remove(s1[0])  # cuadro sin anotar
+    s1[1]["sin_objetos"] = True
+    coco["annotations"].append(  # incoherente con sin_objetos y fuera del cuadro
+        {"id": 1, "image_id": s1[1]["id"], "category_id": 0, "bbox": [390, 10, 20, 20]}
+    )
+    res = construir_manifiesto("evaluacion", coco, CLASES, copia, {"S1", "S5"})
+    texto = "\n".join(res.errores)
+    assert "S1_f0001" in texto and "sin anotar" in texto
+    assert "sin_objetos=true pero tiene 1" in texto
+    assert "fuera del cuadro" in texto
+    res = construir_manifiesto("evaluacion", _coco_prueba(copia), CLASES, copia, {"S1"})
+    assert any("no en el manifiesto" in e for e in res.errores)  # COCO con S5 de mas
+
+
+def test_manifiesto_reporta_discrepancias_sin_corregirlas(copia):
+    caja_centro = [{"clase": "cat", "bbox": [150, 150, 60, 100]}]
+    res = construir_manifiesto(
+        "evaluacion", _coco_prueba(copia, caja_centro), CLASES, copia, {"S1", "S5"}
+    )
+    assert res.errores == []
+    assert len(res.discrepancias) == 12 and all("S5_f" in d for d in res.discrepancias)
+    s5 = {f["estado_esperado_via"] for f in res.filas if f["sequence_id"] == "S5"}
+    assert s5 == {"centro"}
+
+
+def test_manifiesto_detecta_jpeg_alterado(copia):
+    jpeg = copia / leer_capturas("evaluacion", copia)[0].ruta
+    jpeg.write_bytes(jpeg.read_bytes() + b"\0")
+    res = construir_manifiesto("evaluacion", _coco_prueba(copia), CLASES, copia, {"S1"})
+    assert any("SHA-256" in e for e in res.errores)
+
+
+# --- Congelado y duplicados ------------------------------------------------------------------
+
+
+def test_hashes_formato_sha256sum_y_deteccion_de_cambios(copia):
+    guardar_coco(copia / "datos/anotaciones.json", _coco_prueba(copia))
+    destino = escribir_hashes(copia)
+    lineas = destino.read_text(encoding="utf-8").splitlines()
+    assert len(lineas) == 85 + 2 + 1  # JPEG, capturas.csv y el COCO
+    assert all(len(x.split("  ")[0]) == 64 for x in lineas)
+    assert verificar_hashes(copia) == []
+    (copia / "datos/anotaciones.json").write_text("{}", encoding="utf-8")
+    (copia / "datos/evaluacion/S1/extra.jpg").write_bytes(b"x")
+    problemas = verificar_hashes(copia)
+    assert "datos/anotaciones.json: SHA-256 distinto" in problemas
+    assert "datos/evaluacion/S1/extra.jpg: no esta en datos/HASHES.sha256" in problemas
+
+
+def test_grupos_de_casi_duplicados_son_transitivos_como_en_p2():
+    hashes = {"a": 0b0, "b": 0b111, "c": 0b111111, "d": (1 << 64) - 1}
+    assert hamming(hashes["a"], hashes["c"]) == 6
+    assert [p[:2] for p in pares(hashes, 3)] == [("a", "b"), ("b", "c")]
+    assert grupos(hashes, 3) == [["a", "b", "c"], ["d"]]
+
+
+def test_revisar_anotaciones_se_niega_a_escribir_en_datos(copia):
+    ruta = RAIZ / "scripts" / "revisar_anotaciones.py"
+    spec = importlib.util.spec_from_file_location("revisar_anotaciones", ruta)
+    modulo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modulo)
+    with pytest.raises(SystemExit, match="dentro de datos"):
+        modulo.main(["--raiz", str(copia), "--salida", str(copia / "datos" / "revision")])
+
+
+# --- Datos entregados (solo cuando existen en el repo) --------------------------------------
+
+
+MANIFIESTO = RAIZ / "datos" / "manifiesto.csv"
+
+
+@pytest.mark.skipif(not MANIFIESTO.is_file(), reason="manifiesto aun no generado")
+@pytest.mark.parametrize("conjunto", sorted(CONJUNTOS))
+def test_manifiesto_entregado_coincide_con_el_coco_y_los_bytes(conjunto):
+    conj = CONJUNTOS[conjunto]
+    with (RAIZ / conj.manifiesto).open(encoding="utf-8", newline="") as f:
+        filas = list(csv.DictReader(f))
+    assert filas and list(filas[0]) == COLUMNAS_MANIFIESTO
+    coco = cargar_coco(RAIZ / conj.coco, conjunto)
+    secuencias = {f["sequence_id"] for f in filas}
+    res = construir_manifiesto(conjunto, coco, CLASES, RAIZ, secuencias)
+    assert res.errores == []
+    regenerado = [{k: str(v) for k, v in f.items()} for f in res.filas]
+    assert filas == regenerado, "manifiesto desactualizado: correr construir_manifiesto.py"
+    for f in filas:
+        assert f["frame_id"].startswith(f"{f['sequence_id']}_f")
+        assert f["estado_esperado_via"] in ESTADOS
+
+
+@pytest.mark.skipif(
+    not (RAIZ / "datos" / "HASHES.sha256").is_file(), reason="datos aun no congelados"
+)
+def test_hashes_entregados_verifican():
+    assert verificar_hashes(RAIZ) == []
