@@ -10,7 +10,9 @@ Python 3.12 es la referencia del proyecto y CI. Usa las dependencias existentes
 de [requirements.txt](../requirements.txt); no se agrega ninguna. El evaluador usa
 la biblioteca estándar y el validador del [contrato v1](../config/contrato_v1.md)
 (jsonschema). No importa ONNX, OpenCV, política ni control; no necesita imágenes,
-red, pesos o vehículo. También se comprueba localmente con el entorno Python 3.10.
+red, pesos o vehículo. Se comprobó con Python 3.12.16 en un entorno separado
+y se conservó intacto el entorno anterior de Python 3.10; ver
+[evidencia de validación](evidencia/p5-07-validacion.md).
 
 Desde la raíz del repositorio, en PowerShell:
 
@@ -29,12 +31,18 @@ PYTHONPATH=src python -m p5.metricas --gt <coco> --pred <jsonl> --iou 0.5 --sali
 Usa una carpeta nueva o que aún no contenga `metricas.json`: jamás se sobrescribe
 un informe anterior. Las salidas quedan ignoradas por Git según las reglas existentes.
 
-Para la corrida real futura, una vez verificados los insumos (los nombres
-COCO/JSONL siguientes son rutas propuestas, aún no disponibles):
+El siguiente comando es únicamente para la corrida real futura: el COCO y
+el manifiesto deben completarse y congelarse; el JSONL es una ruta propuesta.
 
 ```powershell
-& .\.venv\Scripts\python.exe -m p5.metricas --gt .\datos\anotaciones.coco.json --pred .\resultados\detector_congelado\detecciones.jsonl --manifiesto .\datos\manifiesto.csv --cuadros-esperados 78 --iou 0.5 --salida .\resultados
+& .\.venv\Scripts\python.exe -m p5.metricas --gt .\datos\anotaciones.json --pred .\resultados\detector_congelado\detecciones.jsonl --manifiesto .\datos\manifiesto.csv --cuadros-esperados 78 --iou 0.5 --salida .\resultados
 ```
+
+La ruta integrada del COCO es [datos/anotaciones.json](../datos/anotaciones.json),
+con [datos/manifiesto.csv](../datos/manifiesto.csv). Actualmente ambos cubren
+24 imágenes (S1 y S5); faltan las 54 recapturas de S2/S3/S4/S6. **No ejecutar
+el comando anterior hasta completar y congelar los 78 cuadros**. El JSONL
+indicado es una salida futura, no un archivo definitivo recibido.
 
 El informe real irá en `resultados/metricas.json`, sin fabricarlo con ejemplos.
 `--cuadros-esperados 78` rechaza otra cantidad, incluidos los 84 antiguos. No
@@ -140,20 +148,41 @@ Desde Proyecto5:
 & .\.venv\Scripts\python.exe -B -m ruff format --check .
 ```
 
-Estado consultado el 2026-11-03:
+Validación local con Python 3.12.16: 96 pruebas de métricas aprobadas; Ruff
+check y format aprobados (83 archivos). Desde Proyecto5, la suite completa
+resultó en 484 aprobadas, 10 omitidas y un fallo en
+`test_recorrer.py::test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos`:
+espera S2_f0001, pero el CSV vigente empieza en S2_f0007. Es la incompatibilidad
+de IDs pendiente con P5-14; no se alteraron ni la prueba ni los datos para aprobar.
+Nueve omisiones son por pesos ausentes (sin inferencia real); una, por congelado
+COCO pendiente. [Detalle y entorno](evidencia/p5-07-validacion.md).
+
+Estado actualizado el 2026-11-04:
 
 | Dependencia | Estado comprobado | Falta para corrida real |
 |---|---|---|
 | [#53](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/53) | Cerrado; v1 integrado | Nada para pruebas de software |
-| [#56](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/56) | Abierto; [PR #81](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/81) abierto sin fusionar | JSONL de los 78 cuadros y configuración/modelo usados |
-| [PR #80](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/80) | Descriptor disponible, abierto sin fusionar | Integración del detector, sin copiar su código aquí |
-| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Emilio confirmó acceso a las 78 fotografías y está comenzando las anotaciones, según comunicación del operador; aún no se recibieron insumos congelados | COCO definitivo, manifiesto, HASHES.sha256, commit y correspondencia |
-| [#57 / PR #79](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/79) | Entrega separada, 78 evaluación y 7 ajuste | Anotar exactamente la selección autorizada |
+| [#56](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/56) | Cerrado; runtime y CLI integrados | JSONL nuevo de los 78 cuadros vigentes, generado después de anotar, con modelo/configuración congelados |
+| [Descriptor](../modelo/descriptor.yaml) | Integrado; person=0, cat=15, dog=16 | Registrar hashes y configuración efectivos de la corrida futura |
+| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Cerrado; COCO/manifiesto integrados de fase 1, con 24 imágenes S1/S5 | Emilio debe completar las 54 recapturas y entregar COCO/manifiesto de 78, HASHES.sha256, commit y correspondencia de IDs |
+| [#57 / PR #84](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/84) | Recaptura integrada: 78 evaluación y 7 ajuste; seis fuera de riesgo | Anotar exactamente esta selección, sin reutilizar el JSONL histórico |
 
 La evidencia de cuatro imágenes de #81 no sustituye la evaluación completa.
-Los 78 cuadros son 20 negativos y 58 positivos, con cinco ejemplos fuera de
-riesgo; el soporte de objetos se obtendrá del COCO, no de esas cifras. No usar
-ajuste, descartes, pruebas ni los 84 antiguos.
+Los 78 cuadros son 20 negativos y 58 positivos, con seis ejemplos fuera de
+riesgo según las etiquetas de captura; el soporte de objetos se obtendrá del COCO,
+no de esas cifras. No usar ajuste, descartes, pruebas ni los 84 antiguos.
+
+Los issues cerrados no certifican que la nueva selección esté anotada y congelada.
+El JSONL histórico de 78 eventos solo comparte 24 hashes con el conjunto vigente;
+no permite evaluar las 54 recapturas. El congelado de captura
+[HASHES_p5_05b.sha256](../datos/HASHES_p5_05b.sha256) no sustituye el futuro
+`datos/HASHES.sha256` que incluirá COCO/manifiesto.
+
+P5-06/P5-14 deben acordar los IDs: con el código integrado hay 38 diferencias
+(S2=17, S3=10, S4=11) entre numeración por posición y conservación del ID de captura.
+Usar la [correspondencia preparada](compatibilidad_ids_consumidores_p5_05b.csv)
+y coordinar los [cortes de sesión](propuesta_reproductor_cortes_p5_05b.md).
+No relajar el rechazo de ID/ruta contradictorios ni modificar IDs fuente.
 
 Listo ahora: algoritmo, validación, pruebas y corrida sintética auditable. Para
 cerrar #59 faltan la corrida real en [resultados/](../resultados/), sus entradas

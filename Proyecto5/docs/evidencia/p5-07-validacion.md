@@ -1,4 +1,87 @@
-# Evidencia local P5-07 — 2026-11-03
+# Evidencia local P5-07 — actualización 2026-11-04
+
+Rama `p5-07-metricas`, HEAD `6eb42d1fc4898caff95366c6f20e343e43488b0a`.
+Solo se actualiza documentación de P5-07: no se cambia el algoritmo, los IDs,
+las pruebas de otros módulos, los JPEG, COCO, CSV ni los contratos.
+
+## Entorno separado Python 3.12
+
+Se descargó CPython **3.12.16** mediante uv **0.13.7** a un directorio temporal
+fuera del repositorio (`--no-bin --no-registry`); se creó otro entorno virtual
+sin activar ni modificar `.venv/`, PATH, el registro de Python o el lanzador.
+Se instalaron juntos, sin cambiar sus restricciones:
+
+- [requirements.txt](../../requirements.txt).
+- [requirements-capturas.txt](../../requirements-capturas.txt).
+- [requirements-datos.txt](../../requirements-datos.txt).
+
+Versiones relevantes: pytest 8.3.3, Ruff 0.16.8, jsonschema 4.23.0,
+NumPy 2.5.3, Pillow 12.3.0, OpenCV 4.14.0.94, PyYAML 6.0.3,
+certifi 2026.10.23, onnxruntime 1.30.0, ImageHash 4.3.2.
+`pip check`: **No broken requirements found.** Instalar onnxruntime no ejecutó
+el detector; no se descargaron pesos ni se realizó inferencia real.
+
+Desde Proyecto5, `$python312` identifica el ejecutable del entorno separado:
+
+```powershell
+& $python312 -B -m pytest -p no:cacheprovider tests/test_metricas.py
+& $python312 -B -m pytest -p no:cacheprovider -rs
+& $python312 -B -m ruff check --no-cache .
+& $python312 -B -m ruff format --check --no-cache .
+& $python312 -m pip check
+```
+
+## Resultados actuales
+
+| Verificación | Resultado ejecutado |
+|---|---|
+| Métricas | **96 aprobadas** |
+| Suite completa desde Proyecto5 (directorio de CI) | **484 aprobadas, 1 fallida, 10 omitidas** |
+| Ruff check | **All checks passed!** |
+| Ruff format --check | **83 files already formatted** |
+| Dependencias | **pip check aprobado** |
+
+La única falla restante es
+`tests/test_recorrer.py::test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos`,
+línea 288: espera `S2_f0001`, pero el lector conserva `S2_f0007`, primer ID de la
+selección actual. El código y los datos que provocan esa discrepancia no cambiaron
+en esta revisión documental. No se renumeró ni se debilitó la prueba: requiere
+coordinar P5-06/P5-14 junto con las
+[38 diferencias de IDs](../compatibilidad_ids_consumidores_p5_05b.csv) y
+[cortes de sesión S2](../propuesta_reproductor_cortes_p5_05b.md).
+
+Nueve pruebas se omitieron por ausencia de pesos (ocho del detector real y una
+del recorrido real), respetando la prohibición de inferencia. Otra se omitió por
+no existir el congelado final `datos/HASHES.sha256`.
+
+Una primera ejecución desde la raíz del repositorio también falló en
+`test_casos_sinteticos_con_politica_y_adaptador_reales` por la ruta relativa
+`config/watchdog.yaml`. Repetir desde Proyecto5, como hace CI, resolvió ese fallo
+sin cambiar código. Las cifras vigentes de la tabla corresponden a esa ejecución.
+
+## Estado de las entradas; ninguna evaluación real
+
+Los issues #56 y #58 están cerrados y sus módulos integrados. El COCO y manifiesto
+actuales contienen **24 imágenes S1/S5**; faltan las **54 recapturas S2/S3/S4/S6**
+para los 78 cuadros autorizados. La ruta existente es
+[datos/anotaciones.json](../../datos/anotaciones.json), no un export definitivo
+inventado. Las etiquetas de captura suman 20 despejados, 58 obstáculos y **seis**
+fuera de riesgo; no son TP/FP/FN ni soporte de objetos anotados.
+
+Emilio debe completar COCO/manifiesto, coordinar los IDs y congelar por commit con
+`datos/HASHES.sha256`. El manifiesto de captura `HASHES_p5_05b.sha256` no sustituye
+ese congelado de anotaciones. El JSONL histórico de 78 eventos solo comparte 24
+hashes con las imágenes vigentes; faltan predicciones nuevas posteriores a la
+anotación y con configuración congelada. No se usaron anotaciones antiguas para
+calcular métricas definitivas ni se generó `resultados/metricas.json`.
+
+## Evidencia histórica del 2026-11-03
+
+Lo siguiente conserva los comandos y resultados de la revisión anterior; sus
+260 pruebas, entorno 3.10 y estados entonces abiertos de #56/#58 no describen
+la validación actual. Las cifras vigentes están arriba.
+
+### Registro original del 2026-11-03
 
 Rama `p5-07-metricas` creada directamente de `origin/main`:
 `7b6a88b1754d906d6376d089c2d8b9bf8f32c292`, tras `git fetch origin`.
