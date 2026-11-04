@@ -8,7 +8,7 @@ manifiesto -> detector -> PerceptionEvent -> Watchdog/Politica -> AdaptadorVirtu
 
 El detector queda detrás de la interfaz `p5.detector.Detector`:
 
-- `DetectorONNX` (P5-04, #81) es el detector real YOLOX-Nano sobre las capturas de #79.
+- `DetectorONNX` (P5-04, #81) es el detector real YOLOX-Nano sobre las capturas de #79 y la recaptura de #84.
 - `DetectorSimulado` lee un guion de detecciones y **no abre las anotaciones COCO**; sirve
   para probar el runner sin pesos.
 
@@ -24,7 +24,7 @@ cd Proyecto5
 PYTHONPATH=src python scripts/descargar_modelo.py --destino modelo/
 ```
 
-Después, sobre las capturas reales de #79:
+Después, sobre las capturas reales de #79/#84:
 
 ```bash
 PYTHONPATH=src python -m p5.recorrer \
@@ -148,9 +148,9 @@ evento `status: error` con `error_msg`, que termina en STOP seguro. La prueba
 
 ## Pendientes
 
-1. Que #79 y #81 estén en `main`; después se rebasa este PR y se repite la evidencia si
-   cambia el detector o el manifiesto.
-2. Documentar los límites del detector real en las secuencias S2 y S6, donde el detector
-   no siempre ve `person`/`dog`/`cat` ≥ 0.50 (limitación reportada en #81).
+1. Mantener la evidencia sincronizada si cambia el dataset (por ejemplo, otra recaptura)
+   o el detector; la corrida actual usa el manifiesto de #79/#84.
+2. Documentar los límites del detector real en S2, S3, S4 y S6, donde no siempre ve
+   `person`/`dog`/`cat` ≥ 0.50 (limitación reportada en #81).
 3. La inyección de fallo real (C9) está cubierta en `recorrido-real/fallo_detector/` con
    un JPEG truncado; falta enlazarla desde el cierre de #66.
