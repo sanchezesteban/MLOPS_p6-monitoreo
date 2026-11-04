@@ -30,7 +30,12 @@ Verificado el 3 nov 2026 sobre `main` (`6980269`): `python scripts/validar_captu
 
 ### `frame_id`
 
-`frame_id = <sequence_id>_fNNNN`, consecutivo dentro de cada secuencia en orden de `t_capture_ms` (`S1_f0001`, `S1_f0002`, …). Es el mismo que asignan `p5.recorrer` (P5-14) y `p5.expectativas` (P5-15) al leer `capturas.csv`, que numeran en el orden de las filas; por eso `p5.datos.leer_capturas` **se detiene** si una secuencia no viene ordenada, en vez de numerar distinto. El identificador original de P5-05 se conserva en `frame_id_origen` (en S1 es un UUID; en S2–S6 viene como `S2_<uuid>`).
+`frame_id = <sequence_id>_fNNNN`, con la regla acordada para conservar el identificador de origen (instrucción del PM, 4 nov):
+
+- Si el `frame_id` de `capturas.csv` ya es `<sequence_id>_fNNNN` (S2, S3, S4 y S6 de la recaptura P5-05b), **se conserva tal cual, con sus huecos** (S2 empieza en `S2_f0007`; S3 salta de `S3_f0003` a `S3_f0006`).
+- Si es un UUID (S1, S5 y ajuste), se numera por posición dentro de la secuencia en orden de `t_capture_ms` (`S1_f0001`, `S1_f0002`, …). S1, S5 y `AJ1` conservan así exactamente los IDs de la fase 1 (`tests/datos/ids_fase1_p5_06.csv`).
+
+Es la misma regla que `p5.recorrer` (P5-14) y `normalizar_frame_id` de `p5.expectativas` (P5-15); los 78 coinciden con la columna `frame_id_reproductor_P514_cache` de [`compatibilidad_ids_consumidores_p5_05b.csv`](compatibilidad_ids_consumidores_p5_05b.csv) (lo comprueba `tests/test_datos.py`). `p5.datos.leer_capturas` **se detiene** si una secuencia no viene ordenada por tiempo, si mezcla IDs prefijados y UUID, o si un ID prefijado no crece con el tiempo, en vez de numerar distinto. El identificador original de P5-05 se conserva siempre en `frame_id_origen`.
 
 Ajuste usa `sequence_id = AJ1` (de su `S1` original, conservado en `sequence_id_origen`) y `frame_id = AJ1_f0001…`: nunca choca con evaluación y cumple la regla del contrato de que `frame_id` empiece con `{sequence_id}_`.
 
@@ -79,6 +84,18 @@ Columnas de #58, en este orden: `sequence_id, frame_id, t_capture_ms, ruta, anch
 ## Recaptura de S2, S3, S4 y S6
 
 En `docs/detector.md` ([PR #82](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/82), P5-09), Edith encontró que, con el detector real YOLOX-nano, en S2 y S6 el detector ve el teléfono como `tv` y deja de ver al sujeto en pantalla, lo que hace fallar C7. El 3 nov Sebastián (PM A) decidió recapturar S2, S3, S4 y S6 con una persona real; S1 y S5 no cambian. Las versiones anteriores de S2, S3, S4 y S6 (estímulos en teléfono) **no se anotaron**. La recaptura la sube Bryan (P5-05); al llegar se repite la validación de P5-05, el análisis de pHash y esta anotación.
+
+### Cortes de sesión de S2
+
+S2 tiene cuatro sesiones de captura y, por tanto, tres pausas reales entre cuadros consecutivos. Están en [`cortes_sesion_S2_p5_05b.csv`](cortes_sesion_S2_p5_05b.csv) (P5-05b):
+
+| Transición | Pausa en `capturas.csv` (ms) | Pausa reconstruida (ns) |
+|---|---:|---:|
+| `S2_f0008` → `S2_f0009` | 241906 | 241906000000 |
+| `S2_f0016` → `S2_f0017` | 1992758 | 1992758000000 |
+| `S2_f0017` → `S2_f0018` | 1817039 | 1817039978600 |
+
+El manifiesto **no normaliza ni recorta** esas pausas: conserva el `t_capture_ms` real de `capturas.csv` y el `session_id` de cada cuadro, así que cada corte se reconoce por el cambio de `session_id` y el salto de tiempo. Las etiquetas por cuadro no dependen de la pausa. **Reproducir las pausas al recorrer S2 le toca a P5-14** (`p5.recorrer`); este paquete no modifica el recorrido ni otros módulos ajenos (ver la [propuesta al reproductor](propuesta_reproductor_cortes_p5_05b.md)).
 
 ## Partición ajuste/evaluación
 
