@@ -89,6 +89,15 @@ def test_frame_id_normalizado_como_el_recorrido_y_uuid_conservado(tmp_path):
     ]
 
 
+def test_t_capture_ms_se_escribe_como_en_el_manifiesto(tmp_path):
+    # con :g, 3781241 salia como 3.78124e+06 y perdia precision
+    manifiesto = copia(
+        tmp_path, "manifiesto.csv", lambda t: t.replace(",aaaa0002,100,", ",aaaa0002,3781241,")
+    )
+    _, filas, _ = correr(tmp_path, manifiesto=manifiesto)
+    assert filas["S1_f0002"]["t_capture_ms"] == "3781241"
+
+
 def test_normalizar_frame_id_respeta_ids_ya_normalizados():
     contadores: dict[str, int] = {}
     assert normalizar_frame_id("S2", "S2_f0007", contadores) == "S2_f0007"

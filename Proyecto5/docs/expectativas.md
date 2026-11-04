@@ -53,7 +53,7 @@ Una imagen del COCO sin anotaciones es un cuadro **vacío explícito**. Un cuadr
 | C04 | real | S4 | No girar a la derecha; al menos un movimiento |
 | C05 | real | S5 | STOP con las tres zonas ocupadas |
 | C06 | sintético | eventos en el YAML | 0.20 se ignora, 0.40–0.45 avance lento (≤ 0.2), 0.60 STOP, 0.40 tras el bloqueo sigue en STOP |
-| C07 | real | S6 | Movimiento antes, sin movimiento entre el primer y el último cuadro con el centro ocupado, y reanuda a más tardar en 5 cuadros despejados (histéresis de 3 + 2 de margen) |
+| C07 | real | S6 | Movimiento antes, sin movimiento entre el primer y el último cuadro con el centro ocupado, y reanuda a más tardar en 4 cuadros despejados (histéresis de 3 + 1 de margen; S6 solo tiene 4 tras el último centro) |
 
 Las secuencias son las de evaluación de P5-05 (#79, `datos/evaluacion/capturas.csv`). El recorrido las reproduce a **100 ms fijos** por cuadro, así que `plazo_reaccion_ms` es 100 en todos los casos: un cuadro, igual que `plazo_reaccion_ms` de `config/watchdog.yaml`. Con `plazo_reaccion_cuadros: 0` el STOP sale en el mismo cuadro donde la anotación pone el obstáculo. Los eventos sintéticos de C06 van también cada 100 ms.
 

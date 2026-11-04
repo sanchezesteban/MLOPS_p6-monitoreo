@@ -15,7 +15,10 @@ requisitos:
       Entre el primer y el ultimo cuadro con el centro ocupado no hay movimiento, aunque un cuadro
       intermedio quede despejado (evita alternar por un solo cuadro).
   - tipo: reanuda_tras_despeje
-    max_cuadros: 5
+    max_cuadros: 4
     justificacion: >-
-      Tras el ultimo cuadro con el centro ocupado, reanuda a mas tardar en 5 cuadros despejados
-      (histeresis declarada de 3 cuadros mas 2 de margen por perdidas del detector).
+      Tras el ultimo cuadro con el centro ocupado (S6_f0008), reanuda a mas tardar en 4 cuadros
+      despejados: histeresis declarada de 3 cuadros mas 1 de margen por perdidas del detector.
+      S6 solo tiene 4 cuadros despejados despues (f0009-f0012), asi que un limite mayor no se
+      podria observar. S6_f0007 (der) queda dentro del tramo sin movimiento: un solo cuadro
+      con el centro libre no basta para reanudar.

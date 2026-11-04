@@ -70,6 +70,11 @@ def sha256(ruta: Path) -> str:
     return hashlib.sha256(ruta.read_bytes()).hexdigest()
 
 
+def _ms(valor: float) -> str:
+    """El tiempo tal como viene en el manifiesto: entero sin notacion cientifica."""
+    return str(int(valor)) if valor.is_integer() else repr(valor)
+
+
 def _norm(ruta: str) -> str:
     return PurePosixPath(ruta.replace("\\", "/")).as_posix().lstrip("./")
 
@@ -208,7 +213,7 @@ def expectativas(
                 "sequence_id": c.sequence_id,
                 "frame_id": c.frame_id,
                 "frame_id_origen": c.frame_id_origen,
-                "t_capture_ms": f"{c.t_capture_ms:g}",
+                "t_capture_ms": _ms(c.t_capture_ms),
                 "estado_via": estado,
                 "zonas_en_riesgo": "+".join(
                     z for z in ("izquierda", "centro", "derecha") if z in zonas
