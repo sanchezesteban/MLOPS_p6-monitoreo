@@ -16,7 +16,7 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 ## Reloj y unidades
 
 - Todos los `t_*_ms` (`t_capture_ms`, `t_decision_ms`, `t_command_ms`, `valid_until_ms`) son milisegundos en el **reloj de la ejecución**: un solo origen por `run_id`, monotónico y controlable. Las pruebas lo avanzan a mano para disparar watchdog y vencimientos sin esperar al reloj físico.
-- El manifiesto guarda el tiempo relativo a la secuencia; el reproductor suma un desfase por secuencia y deja un hueco mayor que el plazo del watchdog entre secuencias.
+- El manifiesto guarda el tiempo real de captura; el reproductor de `p5.recorrer` arma el reloj de la ejecución: dentro de cada secuencia avanza `replay_dt_ms` (100 ms por defecto) por cuadro y entre secuencias suma un hueco mayor que los plazos del watchdog. El tiempo real queda como procedencia en `t_capture_origen_ms`.
 - `t_capture_ms` es estrictamente creciente dentro del `run_id`.
 - `frame_id` es único dentro de un `run_id` y empieza con `{sequence_id}_` (p. ej. `seq01_f0007`).
 - Hashes: SHA-256 en hex minúsculas (64 caracteres) calculado sobre los bytes del archivo.
@@ -36,6 +36,7 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 | `hardware` | string | CPU y SO |
 | `virtual_mode` | bool | `true` = adaptador virtual, motores desconectados |
 | `t_start_utc` | string | Fecha ISO 8601 de inicio (solo informativa; no se usa para decidir) |
+| `replay_dt_ms` | número > 0 o ausente | Intervalo de reproducción por cuadro dentro de cada secuencia; ausente si la corrida no reproduce un manifiesto |
 
 ## Evento de percepción (A → B, uno por cuadro)
 
@@ -46,6 +47,7 @@ El JSON Schema revisa la forma: campos, tipos, rangos y que no haya campos desco
 | `sequence_id` | string | |
 | `frame_id` | string | Único en la corrida; empieza con `{sequence_id}_` |
 | `t_capture_ms` | número ≥ 0 | Reloj de la ejecución (mismo origen que los tiempos del comando), estrictamente creciente en el `run_id` |
+| `t_capture_origen_ms` | número ≥ 0 o `null` | Opcional: tiempo de captura original del manifiesto (procedencia); `null` si no aplica |
 | `image_path` | string o `null` | Ruta del cuadro relativa a la carpeta de datos (`--datos`), separador `/`; `null` solo si `status=error` y no hubo archivo |
 | `image_sha256` | hex64 o `null` | Hash de los bytes del cuadro; `null` solo con `status=error` |
 | `image_width`, `image_height` | entero ≥ 1 o `null` | `null` solo con `status=error` (imagen ilegible) |

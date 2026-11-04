@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "generado_utc": "2026-11-04T09:06:02+00:00",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "casos": [
+    {
+      "id": "C08",
+      "nombre": "Corte de cuadros y cuadro vencido",
+      "tipo": "sintetico",
+      "estado": "fail",
+      "expectativa": "/private/tmp/casos-fallo-new/expectativas/C08.yaml",
+      "expectativa_sha256": "a7866e8fa7b8b8fa94a71d1c9b1ce28be0414fca4911531aa979f8fdc3319b05",
+      "pasos": 5,
+      "fallos": [
+        "c08_f0004: accion STOP no permitida (esperaba ['FORWARD'])"
+      ],
+      "error": null,
+      "comandos": "C08/comandos.jsonl"
+    }
+  ],
+  "resumen": {
+    "total": 1,
+    "pass": 0,
+    "fail": 1,
+    "error": 0
+  },
+  "resultado": "fail",
+  "codigo_salida": 1
+}

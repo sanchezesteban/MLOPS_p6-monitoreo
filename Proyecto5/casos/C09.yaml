@@ -1,0 +1,34 @@
+# Entrada del caso para el runner (P5-13). La expectativa vive aparte, en `expectativa:`.
+# C09: fallo del detector (timeout), imagen ilegible y salida no finita.
+id: C09
+nombre: Error del detector, imagen ilegible y salida no finita
+tipo: sintetico
+estado_inicial: INICIO
+entrada:
+  sequence_id: c09
+  run_id: run-c09
+  image_width: 640
+  image_height: 480
+  eventos:
+    - {tipo: cuadro, frame_id: c09_f0001, t_capture_ms: 0, detections: []}
+    - {tipo: cuadro, frame_id: c09_f0002, t_capture_ms: 100, detections: []}
+    - {tipo: cuadro, frame_id: c09_f0003, t_capture_ms: 200, detections: []}
+    - tipo: cuadro
+      frame_id: c09_f0004
+      t_capture_ms: 300
+      status: error
+      error_msg: "timeout del detector"
+      detections: []
+    - tipo: cuadro
+      frame_id: c09_f0005
+      t_capture_ms: 400
+      status: error
+      error_msg: "imagen ilegible: JPEG corrupto"
+      detections: []
+    # Salida no finita: el contrato debe rechazarla y el runner debe dejar un STOP seguro.
+    - tipo: cuadro
+      frame_id: c09_f0006
+      t_capture_ms: 500
+      detections:
+        - {class_name: person, class_id: 0, confidence: .nan, bbox: [250, 120, 390, 470]}
+expectativa: expectativas/C09.yaml

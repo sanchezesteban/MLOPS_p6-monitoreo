@@ -6,6 +6,7 @@ pillow==12.3.0
 PyYAML==6.0.3
 jsonschema==4.23.0
 pytest==8.3.3
+certifi==2026.10.23  # raices TLS de scripts/descargar_modelo.py
 
 # Indirectas de jsonschema
 attrs==26.1.0

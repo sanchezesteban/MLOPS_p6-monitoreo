@@ -25,7 +25,12 @@
     "status": {"enum": ["ok", "stale", "error"]},
     "error_msg": {"type": ["string", "null"]},
     "synthetic": {"type": "boolean"},
-    "detections": {"type": "array", "items": {"$ref": "#/$defs/detection"}}
+    "detections": {"type": "array", "items": {"$ref": "#/$defs/detection"}},
+    "t_capture_origen_ms": {
+      "description": "Tiempo de captura original del manifiesto (procedencia); null si no aplica",
+      "type": ["number", "null"],
+      "minimum": 0
+    }
   },
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},

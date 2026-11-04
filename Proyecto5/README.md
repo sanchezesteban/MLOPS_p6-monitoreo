@@ -62,6 +62,37 @@ cuadros, incluidos negativos, errores y omisiones. [Guía y comandos de Windows]
 [casos sintéticos calculados a mano](tests/fixtures/metricas/README.md).
 La corrida real queda pendiente de COCO/manifiesto congelados (#58) y predicciones
 del detector (#56); los ejemplos no son evidencia de su desempeño.
+## Pesos del detector
+
+YOLOX-Nano preentrenado en COCO (Apache-2.0), en ONNX para CPU. URL pública, versión,
+tamaño, SHA-256, licencia y clases en [`modelo/descriptor.yaml`](modelo/descriptor.yaml).
+Los pesos no van en Git; se descargan sin credenciales:
+
+```bash
+python scripts/descargar_modelo.py --destino modelo/
+```
+
+Sale con código 1 y no deja archivo si el SHA-256 o el tamaño no coinciden.
+
+## Inferencia por imagen
+
+Detector real en CPU sobre imágenes o carpetas elegidas (recorre subcarpetas). Escribe
+`run.json` y `detecciones.jsonl` (un evento del contrato v1 por imagen) en una carpeta nueva.
+Se corre desde `Proyecto5/` con `src` en `PYTHONPATH` (el paquete `p5` no se instala; sin
+esto sale `No module named 'p5'`):
+
+```bash
+PYTHONPATH=src python -m p5.detectar --imagenes <carpeta|archivos...> --config config/detector.yaml --salida <carpeta nueva>
+```
+
+En PowerShell: `$env:PYTHONPATH = "src"` y después el mismo `python -m p5.detectar …`.
+
+Una imagen sin objetos sale con `status=ok` y `detections=[]`; una ilegible, con
+`status=error`. Preprocesamiento, umbral (0.30) y NMS (0.45) en
+[`config/detector.yaml`](config/detector.yaml) y en `src/p5/detector_onnx.py`.
+
+Origen, licencia, clases, transformaciones, congelado, resultados en S2/S6 y límites
+conocidos del detector: [`docs/detector.md`](docs/detector.md).
 
 ## Estado
 

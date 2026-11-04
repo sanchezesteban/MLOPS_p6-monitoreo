@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "generado_utc": "2026-11-04T09:05:55+00:00",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "casos": [
+    {
+      "id": "C08",
+      "nombre": "Corte de cuadros y cuadro vencido",
+      "tipo": "sintetico",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C08.yaml",
+      "expectativa_sha256": "e08fa504ffaa52c8e7cf098a15ae06cc1bb84e6153d57e3569d847a0c58c0bad",
+      "pasos": 5,
+      "fallos": [],
+      "error": null,
+      "comandos": "C08/comandos.jsonl"
+    },
+    {
+      "id": "C09",
+      "nombre": "Error del detector, imagen ilegible y salida no finita",
+      "tipo": "sintetico",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C09.yaml",
+      "expectativa_sha256": "61ac8ffd91c7f0082b1a32d0f2a5143842109085d80d1dfa9da87a5c4a084f4c",
+      "pasos": 6,
+      "fallos": [],
+      "error": null,
+      "comandos": "C09/comandos.jsonl"
+    },
+    {
+      "id": "C10",
+      "nombre": "Emergencia, rearme y cierre",
+      "tipo": "sintetico",
+      "estado": "pass",
+      "expectativa": "casos/expectativas/C10.yaml",
+      "expectativa_sha256": "727847427cf8ec398078c56cb676f75a2e30a95d7e32c3412b5a0d76dc5ffecc",
+      "pasos": 11,
+      "fallos": [],
+      "error": null,
+      "comandos": "C10/comandos.jsonl"
+    }
+  ],
+  "resumen": {
+    "total": 3,
+    "pass": 3,
+    "fail": 0,
+    "error": 0
+  },
+  "resultado": "pass",
+  "codigo_salida": 0
+}

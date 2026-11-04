@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "run_id": "det-p5-09-s2-s6",
+  "commit": "6980269065daf1cbb5b315d081ae51459b7d9d19",
+  "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "config_sha256": "677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03",
+  "data_manifest_sha256": "5c10fe22e46b1077f41c26133cad363f0db64263f7ea3857c06e500f53c78822",
+  "runtime": "onnxruntime 1.30.0 CPUExecutionProvider",
+  "hardware": "AMD64 AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD Windows-11-10.0.26200-SP0",
+  "virtual_mode": true,
+  "t_start_utc": "2026-11-04T00:55:36.456809Z"
+}

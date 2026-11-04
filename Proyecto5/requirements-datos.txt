@@ -1,0 +1,12 @@
+# Dependencias extra SOLO para el conteo informativo de casi duplicados por pHash de P5-06
+# (scripts/contar_datos.py, src/p5/duplicados.py). El detector, la politica, el recorrido, el
+# anotador y el manifiesto no las necesitan. Instalar junto con la base para respetar sus
+# versiones de NumPy y Pillow:
+#     pip install -r requirements.txt -r requirements-datos.txt
+# Versiones resueltas con Python 3.12 el 3 nov 2026. ImageHash 4.3.2 es la misma version que
+# fija Proyecto2/requirements.lock.txt.
+ImageHash==4.3.2
+
+# Indirectas de ImageHash (numpy y pillow ya estan fijadas en requirements.txt)
+PyWavelets==1.10.0
+scipy==1.18.1

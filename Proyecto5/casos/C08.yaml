@@ -1,0 +1,26 @@
+# Entrada del caso para el runner (P5-13). La expectativa vive aparte, en `expectativa:`.
+# C08: corte de cuadros, avance del reloj y cuadro vencido. No usa detector ni datos reales.
+id: C08
+nombre: Corte de cuadros y cuadro vencido
+tipo: sintetico
+estado_inicial: INICIO
+entrada:
+  sequence_id: c08
+  run_id: run-c08
+  image_width: 640
+  image_height: 480
+  max_frame_age_ms: 300  # se reemplaza por config/control.yaml cuando llegue P5-12 (#64)
+  eventos:
+    - {tipo: cuadro, frame_id: c08_f0001, t_capture_ms: 0, detections: []}
+    - {tipo: cuadro, frame_id: c08_f0002, t_capture_ms: 100, detections: []}
+    - {tipo: cuadro, frame_id: c08_f0003, t_capture_ms: 200, detections: []}
+    # No llegan mas cuadros: el reloj avanza y el watchdog debe parar sin esperar otro cuadro.
+    - {tipo: watchdog, id: watchdog_1, t_ms: 600, razon: sin_cuadros}
+    # Cuadro viejo despues del corte: debe rechazarse y no reanudar movimiento.
+    - tipo: cuadro
+      frame_id: c08_f0004
+      t_capture_ms: 650
+      status: stale
+      error_msg: "cuadro vencido: 450 ms > max_frame_age_ms 300"
+      detections: []
+expectativa: expectativas/C08.yaml

@@ -4,6 +4,7 @@
   "sequence_id": "seq01",
   "frame_id": "seq01_f0007",
   "t_capture_ms": 700,
+  "t_capture_origen_ms": 700,
   "image_path": "cuadros/seq01/f0007.jpg",
   "image_sha256": "4b597c6b5d5a9f926c06fbe077926b90921e1678e4446ad3a4722093b100f611",
   "image_width": 640,

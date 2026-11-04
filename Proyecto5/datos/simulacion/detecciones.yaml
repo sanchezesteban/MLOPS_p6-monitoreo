@@ -1,0 +1,69 @@
+# Guion de detecciones simuladas (P5-14). No son anotaciones COCO.
+# frame_id: lista de detecciones; los cuadros sin entrada son vacios.
+frames:
+  seq02_f0003:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq02_f0004:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq02_f0005:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq02_f0006:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq02_f0007:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq02_f0008:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq03_f0003:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+  seq03_f0004:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+  seq03_f0005:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+  seq03_f0006:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+  seq03_f0007:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+  seq03_f0008:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+  seq04_f0003:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq04_f0004:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq04_f0005:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq04_f0006:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq04_f0007:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq04_f0008:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq05_f0003:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq05_f0004:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq05_f0005:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq05_f0006:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq05_f0007:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq05_f0008:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [20.0, 250.0, 180.0, 460.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [460.0, 250.0, 620.0, 460.0]}
+  seq06_f0003:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq06_f0004:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}
+  seq06_f0005:
+    - {class_name: person, class_id: 0, confidence: 0.9, bbox: [250.0, 120.0, 390.0, 470.0]}

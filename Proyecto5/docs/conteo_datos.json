@@ -1,0 +1,90 @@
+{
+  "errores": [],
+  "conjuntos": {
+    "evaluacion": {
+      "coco": "datos/anotaciones.json",
+      "secuencias": {
+        "S1": {
+          "cuadros": 12,
+          "positivos": 0,
+          "negativos": 12,
+          "estados": {
+            "libre": 12
+          }
+        },
+        "S5": {
+          "cuadros": 12,
+          "positivos": 12,
+          "negativos": 0,
+          "estados": {
+            "bloqueado": 12
+          }
+        }
+      },
+      "cuadros": 24,
+      "unicos_sha256": 24,
+      "duplicados_sha256": 0,
+      "positivos": 12,
+      "negativos": 12,
+      "instancias_por_clase": {
+        "cat": 12,
+        "dog": 12,
+        "person": 12
+      },
+      "cajas_por_riesgo": {
+        "en_riesgo": 36
+      }
+    },
+    "ajuste": {
+      "coco": "datos/anotaciones_ajuste.json",
+      "secuencias": {
+        "AJ1": {
+          "cuadros": 7,
+          "positivos": 0,
+          "negativos": 7,
+          "estados": {
+            "libre": 7
+          }
+        }
+      },
+      "cuadros": 7,
+      "unicos_sha256": 7,
+      "duplicados_sha256": 0,
+      "positivos": 0,
+      "negativos": 7,
+      "instancias_por_clase": {},
+      "cajas_por_riesgo": {}
+    }
+  },
+  "sha256_compartidos_ajuste_evaluacion": 0,
+  "phash": {
+    "umbral_hamming": 5,
+    "grupos_evaluacion": 24,
+    "grupos_negativos_evaluacion": 12,
+    "grupos_con_mas_de_un_cuadro": [
+      [
+        "AJ1_f0004",
+        "AJ1_f0005"
+      ]
+    ],
+    "pares_ajuste_evaluacion": []
+  },
+  "metas": {
+    "unicos_sha256": [
+      24,
+      60
+    ],
+    "secuencias": [
+      2,
+      6
+    ],
+    "positivos": [
+      12,
+      20
+    ],
+    "negativos": [
+      12,
+      20
+    ]
+  }
+}

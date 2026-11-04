@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-sim-001",
+  "commit": "d69086e",
+  "model_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "data_manifest_sha256": "8018c9e0423b9c1b86f07fd4dc7c0cc56c388e25d38041d933e61c1e5b0497b3",
+  "runtime": "simulado: DetectorSimulado (simulado, sin onnxruntime)",
+  "hardware": "macOS-26.6.2-arm64-arm-64bit",
+  "virtual_mode": true,
+  "t_start_utc": "2026-11-04T09:00:05+00:00",
+  "replay_dt_ms": 100
+}

@@ -22,16 +22,22 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: Proyecto5/requirements.txt
+          cache-dependency-path: |
+            Proyecto5/requirements.txt
+            Proyecto5/requirements-capturas.txt
 
-      # requirements.txt fija también las dependencias indirectas: el árbol de
-      # este job es el mismo que se probó en local con `pip freeze`.
-      - name: Instalar dependencias (fijadas)
-        run: pip install -r requirements.txt
+      # requirements.txt fija la base; requirements-capturas.txt añade OpenCV.
+      # Resolver ambos juntos conserva las restricciones de NumPy de la base.
+      - name: Instalar dependencias base y captura
+        run: pip install -r requirements.txt -r requirements-capturas.txt
 
       # El build DEBE fallar si el lint o las pruebas fallan: sin `continue-on-error`.
       - name: Ruff (lint)
         run: ruff check .
 
+      # Pesos publicos del detector (P5-03); sin ellos se omiten las pruebas del modelo real.
+      - name: Descargar pesos del detector (verifica SHA-256)
+        run: python scripts/descargar_modelo.py --destino modelo/
+
       - name: pytest
-        run: pytest
+        run: pytest -rs

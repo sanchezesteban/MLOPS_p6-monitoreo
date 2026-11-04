@@ -1,0 +1,13 @@
+# Expectativa del caso C08 (P5-13). Solo la lee el runner; nunca es entrada del sistema.
+id: C08
+pasos:
+  - {id: c08_f0001, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c08_f0002, acciones_permitidas: [FORWARD, STOP]}
+  - {id: c08_f0003, acciones_permitidas: [FORWARD, STOP]}
+  - {id: watchdog_1, acciones_permitidas: [STOP], motivo: watchdog}
+  - {id: c08_f0004, acciones_permitidas: [STOP], motivo: cuadro_vencido}
+requisitos:
+  - {tipo: movimiento_minimo, min_cuadros: 1}
+  - {tipo: stop_por_watchdog, evento: watchdog_1, plazo_ms: 300}
+  - {tipo: sin_movimiento_despues_de, evento: watchdog_1}
+  - {tipo: cuadro_vencido_rechazado, frame_id: c08_f0004}
