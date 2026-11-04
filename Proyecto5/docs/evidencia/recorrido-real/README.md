@@ -6,7 +6,7 @@ Corrida del **4 nov 2026** con:
 - Capturas reales S1–S6 de P5-05 (#79) y recaptura de S2/S3/S4/S6 (#84), selección vigente en `main`.
 - Política (#73), adaptador (#74) y watchdog (#76) de `main`.
 - `--reproducir-cortes`: dentro de cada sesión 100 ms por cuadro y, al cambiar `session_id`, el delta real de `t_capture_ms`. Los 5 cortes quedan en `cortes.json`.
-- Commit del código del recorrido: `38baa69`.
+- Commit del código del recorrido: `51d96ed` (incluye #75 y #85 mergeados).
 
 ```bash
 cd Proyecto5
@@ -22,7 +22,7 @@ PYTHONPATH=src python -m p5.recorrer \
     --replay-dt-ms 100 \
     --salida resultados/recorrido-real \
     --run-id run-eventos-001 \
-    --commit 38baa69
+    --commit 51d96ed
 ```
 
 Resultado:

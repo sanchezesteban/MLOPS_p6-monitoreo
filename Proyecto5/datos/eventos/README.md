@@ -5,7 +5,7 @@ capturas de `datos/evaluacion/`, separada por `sequence_id` para que `p5.casos` 
 reproducir C01–C07. No son la verdad de referencia ni expectativas: son eventos del
 contrato v1 (`PerceptionEvent`), con las detecciones del detector y el reloj de replay.
 
-- **Corrida:** `run-eventos-001`, commit `38baa69`.
+- **Corrida:** `run-eventos-001`, commit `51d96ed`.
 - **Modelo:** `c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d`.
 - **Manifiesto:** `datos/evaluacion/capturas.csv`, SHA-256 `f8a04169…`.
 - **Modo:** `cortes_sesion`; 5 cortes de sesión aplicados (S1, S2 ×3, S3).
