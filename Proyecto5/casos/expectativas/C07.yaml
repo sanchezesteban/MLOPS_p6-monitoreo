@@ -1,0 +1,24 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+id: C07
+secuencia: S6
+acciones_por_cuadro: cuadros_S6.csv
+estados_requeridos: [libre, centro]
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 100  # un cuadro del replay fijo de P5-14; igual a config/watchdog.yaml
+requisitos:
+  - tipo: movimiento_minimo
+    min_cuadros: 1
+    justificacion: Antes de que aparezca el obstaculo la via esta libre.
+  - tipo: sin_movimiento_entre_obstaculos
+    justificacion: >-
+      Entre el primer y el ultimo cuadro con el centro ocupado no hay movimiento, aunque un cuadro
+      intermedio quede despejado (evita alternar por un solo cuadro).
+  - tipo: reanuda_tras_despeje
+    max_cuadros: 4
+    justificacion: >-
+      Tras el ultimo cuadro con el centro ocupado (S6_f0008), reanuda a mas tardar en 4 cuadros
+      despejados: histeresis declarada de 3 cuadros mas 1 de margen por perdidas del detector.
+      S6 solo tiene 4 cuadros despejados despues (f0009-f0012), asi que un limite mayor no se
+      podria observar. S6_f0007 (der) queda dentro del tramo sin movimiento: un solo cuadro
+      con el centro libre no basta para reanudar.

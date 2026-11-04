@@ -1,0 +1,13 @@
+sequence_id,frame_id,frame_id_origen,t_capture_ms,estado_via,zonas_en_riesgo,acciones_permitidas,estado_manifiesto,coincide,justificacion
+S1,S1_f0001,3ca02f25fb7243ac9ebef27983af9b31,0,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0002,183b685daed549809d266566ca62ce4c,6828,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0003,83c8f36fbd374035b523d10c2040af0a,37094,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0004,e4cb176a369941f08a28ee05836bafd9,50062,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0005,cb3a6daa6529446b80399e34ae6aae9c,59719,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0006,a364a69c557a49eaac35d3d4148acd24,66562,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0007,4ee55b80fcbd4c2e8314e1d8dbd17aac,103562,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0008,a246085a50444c4ca96550f2a0009206,129000,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0009,92b8210f1e994224b991ad2d499bd25f,157890,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0010,e07625641a4443f2969d5b06c5508475,3781241,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0011,8e76f0bf9ada44dca0ac9ef5a47dfb82,3813428,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados
+S1,S1_f0012,d870be1f14774192beea928b9343af3f,3840022,libre,,FORWARD|STEER_LEFT|STEER_RIGHT|STOP,despejado,si,sin objetos anotados

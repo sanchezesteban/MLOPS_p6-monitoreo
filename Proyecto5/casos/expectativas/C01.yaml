@@ -1,0 +1,12 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+id: C01
+secuencia: S1
+acciones_por_cuadro: cuadros_S1.csv  # generado con p5.expectativas desde el COCO y el manifiesto
+estados_requeridos: [libre]  # la secuencia debe tener cuadros en estos estados para probar el caso
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 100  # un cuadro del replay fijo de P5-14; igual a config/watchdog.yaml
+requisitos:
+  - tipo: movimiento_minimo
+    min_cuadros: 1
+    justificacion: Via libre en todos los cuadros; detenerse siempre no cumple C1.
