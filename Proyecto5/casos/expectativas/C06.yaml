@@ -4,7 +4,7 @@
 # incierto (avance lento a velocidad_precaucion 0.2), < 0.30 se ignora.
 id: C06
 plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
-plazo_reaccion_ms: 500  # TENTATIVO: se ajusta con el ritmo de captura (#57) y el watchdog (#64)
+plazo_reaccion_ms: 100  # un cuadro del replay fijo de P5-14; igual a config/watchdog.yaml
 cuadros:
   - frame_id: c06_f0001
     acciones_permitidas: [FORWARD, STOP]

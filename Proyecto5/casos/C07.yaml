@@ -5,6 +5,6 @@ nombre: Libre, obstaculo persistente y desaparicion
 tipo: real
 estado_inicial: INICIO
 entrada:
-  secuencia: seq06  # secuencia de evaluacion de P5-05 (#57); id por confirmar con Bryan y Emilio
-  manifiesto: datos/manifiesto.csv
+  secuencia: S6  # sequence_id de evaluacion de P5-05 (#79)
+  manifiesto: datos/evaluacion/capturas.csv
 expectativa: expectativas/C07.yaml

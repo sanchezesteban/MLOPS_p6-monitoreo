@@ -5,6 +5,6 @@ nombre: Via libre
 tipo: real
 estado_inicial: INICIO
 entrada:
-  secuencia: seq01  # secuencia de evaluacion de P5-05 (#57); id por confirmar con Bryan y Emilio
-  manifiesto: datos/manifiesto.csv
+  secuencia: S1  # sequence_id de evaluacion de P5-05 (#79)
+  manifiesto: datos/evaluacion/capturas.csv
 expectativa: expectativas/C01.yaml

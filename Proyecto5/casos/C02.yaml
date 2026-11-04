@@ -5,6 +5,6 @@ nombre: Obstaculo central
 tipo: real
 estado_inicial: INICIO
 entrada:
-  secuencia: seq02  # secuencia de evaluacion de P5-05 (#57); id por confirmar con Bryan y Emilio
-  manifiesto: datos/manifiesto.csv
+  secuencia: S2  # sequence_id de evaluacion de P5-05 (#79)
+  manifiesto: datos/evaluacion/capturas.csv
 expectativa: expectativas/C02.yaml

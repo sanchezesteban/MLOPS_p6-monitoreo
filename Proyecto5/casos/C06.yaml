@@ -12,21 +12,21 @@ entrada:
   image_height: 480
   eventos:
     - {frame_id: c06_f0001, t_capture_ms: 0, detections: []}
-    - {frame_id: c06_f0002, t_capture_ms: 200, detections: []}
-    - {frame_id: c06_f0003, t_capture_ms: 400, detections: []}
+    - {frame_id: c06_f0002, t_capture_ms: 100, detections: []}
+    - {frame_id: c06_f0003, t_capture_ms: 200, detections: []}
     - frame_id: c06_f0004
-      t_capture_ms: 600
+      t_capture_ms: 300
       detections: [{class_name: person, class_id: 0, confidence: 0.20, bbox: [250, 120, 390, 470]}]
     - frame_id: c06_f0005
-      t_capture_ms: 800
+      t_capture_ms: 400
       detections: [{class_name: person, class_id: 0, confidence: 0.40, bbox: [250, 120, 390, 470]}]
     - frame_id: c06_f0006
-      t_capture_ms: 1000
+      t_capture_ms: 500
       detections: [{class_name: person, class_id: 0, confidence: 0.45, bbox: [250, 120, 390, 470]}]
     - frame_id: c06_f0007
-      t_capture_ms: 1200
+      t_capture_ms: 600
       detections: [{class_name: person, class_id: 0, confidence: 0.60, bbox: [250, 120, 390, 470]}]
     - frame_id: c06_f0008
-      t_capture_ms: 1400
+      t_capture_ms: 700
       detections: [{class_name: person, class_id: 0, confidence: 0.40, bbox: [250, 120, 390, 470]}]
 expectativa: expectativas/C06.yaml

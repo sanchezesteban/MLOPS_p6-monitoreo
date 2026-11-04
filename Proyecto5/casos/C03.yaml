@@ -5,6 +5,6 @@ nombre: Obstaculo solo a la izquierda
 tipo: real
 estado_inicial: INICIO
 entrada:
-  secuencia: seq03  # secuencia de evaluacion de P5-05 (#57); id por confirmar con Bryan y Emilio
-  manifiesto: datos/manifiesto.csv
+  secuencia: S3  # sequence_id de evaluacion de P5-05 (#79)
+  manifiesto: datos/evaluacion/capturas.csv
 expectativa: expectativas/C03.yaml
