@@ -274,19 +274,30 @@ def test_detector_real_sin_pesos_es_error_claro(tmp_path):
     assert codigo == 1
 
 
-def test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos():
+def test_manifiesto_real_genera_frame_id_con_prefijo_y_tiempos_monotonos():
     frames = leer_manifiesto(CAPTURAS, DATOS_EVAL)
     cfg = cargar_config_watchdog(WATCHDOG)
     normalizados = normalizar_tiempos(frames, 100.0, hueco_entre_secuencias(cfg, 100.0))
 
     assert len(frames) == 78
     assert {f.sequence_id for f in frames} == {"S1", "S2", "S3", "S4", "S5", "S6"}
+
+    with CAPTURAS.open(encoding="utf-8", newline="") as archivo:
+        primeros_csv: dict[str, str] = {}
+        for fila in csv.DictReader(archivo):
+            primeros_csv.setdefault(fila["sequence_id"], fila["frame_id"])
+
     first = {}
     for frame in frames:
         first.setdefault(frame.sequence_id, frame)
-    assert first["S1"].frame_id == "S1_f0001"
-    assert first["S2"].frame_id == "S2_f0001"
-    assert all(f.frame_id.startswith(f"{f.sequence_id}_f") for f in frames)
+        prefijo = f"{frame.sequence_id}_f"
+        assert frame.frame_id.startswith(prefijo)
+        assert frame.frame_id[len(prefijo) :].isdigit()
+
+    assert len({f.frame_id for f in frames}) == len(frames)
+    assert first["S1"].frame_id == "S1_f0001"  # UUID historico -> posicional
+    # #84 conserva los IDs prefijados de S2; el dataset empieza en S2_f0007.
+    assert first["S2"].frame_id == primeros_csv["S2"]
     assert all(a.t_capture_ms < b.t_capture_ms for a, b in pairwise(normalizados))
     assert all(f.t_capture_origen_ms == f.t_capture_ms for f in frames)
 

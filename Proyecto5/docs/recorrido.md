@@ -85,13 +85,14 @@ Las secuencias representan:
 | `seq06` | Obstáculo persistente y desaparición con histéresis (C7) |
 | `seq00_fallo` | Cuadros vacíos, error del detector y cuadro vencido al final |
 
-## Secuencias reales S1–S6 (#79)
+## Secuencias reales S1–S6 (#79 y #84)
 
-El manifiesto de #79 usa `sequence_id` S1–S6 y `frame_id` con UUID. El runner normaliza
-los identificadores a `S1_f0001`, `S1_f0002`, …, `S6_f0012`, que es lo que exige
-`validar_secuencia` (prefijo de la secuencia y sin repetidos). También conserva el orden
-del CSV y reproduce cada secuencia a 100 ms por cuadro con el hueco entre secuencias
-descrito arriba.
+El manifiesto real usa `sequence_id` S1–S6. El runner **conserva** los `frame_id` que ya
+vienen como `<secuencia>_fNNNN` (por ejemplo `S2_f0007`…`S2_f0023`, porque #84 mantuvo la
+numeración original al recortar cuadros) y **renumera** los UUID a `<secuencia>_fNNNN` en el
+orden del CSV (`S1_f0001`, `S5_f0001`, …). Ambos casos cumplen `validar_secuencia`
+(prefijo de la secuencia y sin repetidos). También conserva el orden del CSV y reproduce
+cada secuencia a 100 ms por cuadro con el hueco entre secuencias descrito arriba.
 
 | Secuencia | Escenario | Cuadros |
 |---|---|---:|
