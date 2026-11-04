@@ -86,8 +86,50 @@ Una imagen sin objetos sale con `status=ok` y `detections=[]`; una ilegible, con
 Origen, licencia, clases, transformaciones, congelado, resultados en S2/S6 y límites
 conocidos del detector: [`docs/detector.md`](docs/detector.md).
 
+## Recorrido integral
+
+Sobre las 78 capturas reales, con el detector en CPU y los cortes de sesión de S1/S2/S3:
+
+```bash
+PYTHONPATH=src python -m p5.recorrer \
+    --datos datos/evaluacion \
+    --manifiesto datos/evaluacion/capturas.csv \
+    --config config/politica.yaml \
+    --watchdog-config config/watchdog.yaml \
+    --detector real \
+    --detector-config config/detector.yaml \
+    --reproducir-cortes \
+    --replay-dt-ms 100 \
+    --salida resultados/recorrido
+```
+
+La salida debe ser una carpeta nueva. Escribe `run.json`, `cortes.json`,
+`detecciones.jsonl`, `decisiones.jsonl` y `comandos.jsonl`. Detalle del reloj y de los
+cortes en [`docs/recorrido.md`](docs/recorrido.md).
+
+## Casos C01–C10
+
+```bash
+PYTHONPATH=src python -m p5.casos \
+    --casos casos \
+    --config config/politica.yaml \
+    --control-config config/watchdog.yaml \
+    --salida resultados/casos
+```
+
+Los casos reales usan `datos/eventos/S1.jsonl` … `S6.jsonl`. La corrida del 4 nov 2026 da
+**7/10**; los fallos de C02, C03 y C07 son límites del detector y están explicados en
+[`docs/evidencia/casos/`](docs/evidencia/casos/README.md).
+
 ## Estado
 
-Esqueleto inicial de la entrega (P5-02). El README final, con los comandos del detector,
-el recorrido completo, los casos C1–C10, las métricas y el benchmark, se cierra en el
-issue #68.
+El detector real, el recorrido integral y los eventos por secuencia están implementados.
+La corrida de casos del 4 nov 2026 da **7/10**: C01, C04, C05, C06 y C08–C10 pasan; C02,
+C03 y C07 fallan por recall del detector congelado, documentado en
+[`docs/evidencia/casos/`](docs/evidencia/casos/README.md) y en
+[`docs/detector.md`](docs/detector.md). El recorrido real reproduce los cortes de sesión
+de S1, S2 y S3 con `--reproducir-cortes`; la evidencia está en
+[`docs/evidencia/recorrido-real/`](docs/evidencia/recorrido-real/README.md).
+
+El README final, con el índice E1–E7, las métricas y el benchmark, se cierra en el issue
+#68 cuando estén mergeados #59/#60 y la fase 2 de P5-06 (#87).
