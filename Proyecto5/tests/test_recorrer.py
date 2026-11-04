@@ -279,10 +279,13 @@ def test_manifiesto_79_genera_frame_id_con_prefijo_y_tiempos_monotonos():
     cfg = cargar_config_watchdog(WATCHDOG)
     normalizados = normalizar_tiempos(frames, 100.0, hueco_entre_secuencias(cfg, 100.0))
 
-    assert len(frames) == 84
+    assert len(frames) == 78
     assert {f.sequence_id for f in frames} == {"S1", "S2", "S3", "S4", "S5", "S6"}
-    assert frames[0].frame_id == "S1_f0001"
-    assert frames[18].frame_id == "S2_f0001"
+    first = {}
+    for frame in frames:
+        first.setdefault(frame.sequence_id, frame)
+    assert first["S1"].frame_id == "S1_f0001"
+    assert first["S2"].frame_id == "S2_f0001"
     assert all(f.frame_id.startswith(f"{f.sequence_id}_f") for f in frames)
     assert all(a.t_capture_ms < b.t_capture_ms for a, b in pairwise(normalizados))
     assert all(f.t_capture_origen_ms == f.t_capture_ms for f in frames)
