@@ -83,6 +83,9 @@ Una imagen sin objetos sale con `status=ok` y `detections=[]`; una ilegible, con
 `status=error`. Preprocesamiento, umbral (0.30) y NMS (0.45) en
 [`config/detector.yaml`](config/detector.yaml) y en `src/p5/detector_onnx.py`.
 
+Origen, licencia, clases, transformaciones, congelado, resultados en S2/S6 y límites
+conocidos del detector: [`docs/detector.md`](docs/detector.md).
+
 ## Estado
 
 Esqueleto inicial de la entrega (P5-02). El README final, con los comandos del detector,
