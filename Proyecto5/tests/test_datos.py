@@ -43,19 +43,101 @@ CLASES = cargar_config(RAIZ / "config" / "politica.yaml").clases_obstaculo
 
 
 @pytest.mark.parametrize("conjunto", sorted(CONJUNTOS))
-def test_frame_id_consecutivo_por_secuencia_en_orden_temporal(conjunto):
+def test_frame_id_conserva_los_prefijados_y_numera_los_uuid_en_orden_temporal(conjunto):
     cuadros = leer_capturas(conjunto)
     assert cuadros
     por_seq: dict[str, list] = {}
     for c in cuadros:
         por_seq.setdefault(c.sequence_id, []).append(c)
     for seq, propios in por_seq.items():
-        assert [c.frame_id for c in propios] == [
-            f"{seq}_f{n:04d}" for n in range(1, len(propios) + 1)
-        ]
         tiempos = [c.t_capture_ms for c in propios]
         assert tiempos == sorted(set(tiempos)), f"{seq}: t_capture_ms no estrictamente creciente"
+        origen = propios[0].sequence_id_origen
+        if propios[0].frame_id_origen.startswith(f"{origen}_f"):
+            # S2-S6 de P5-05b: el id de origen se conserva, con huecos.
+            assert [c.frame_id for c in propios] == [c.frame_id_origen for c in propios]
+        else:
+            assert [c.frame_id for c in propios] == [
+                f"{seq}_f{n:04d}" for n in range(1, len(propios) + 1)
+            ]
     assert len({c.frame_id for c in cuadros}) == len(cuadros)
+
+
+def test_s1_s5_y_aj1_conservan_exactamente_los_ids_de_la_fase_1():
+    with (RAIZ / "tests/datos/ids_fase1_p5_06.csv").open(encoding="utf-8", newline="") as f:
+        fase1 = list(csv.DictReader(f))
+    assert len(fase1) == 31
+    actuales = {
+        (c.conjunto, c.frame_id_origen): c
+        for c in leer_capturas("evaluacion") + leer_capturas("ajuste")
+    }
+    for fila in fase1:
+        c = actuales[(fila["conjunto"], fila["frame_id_origen"])]
+        assert (c.sequence_id, c.frame_id, c.sha256) == (
+            fila["sequence_id"],
+            fila["frame_id"],
+            fila["sha256"],
+        )
+
+
+def test_los_78_frame_id_coinciden_con_la_columna_de_p5_14():
+    ruta = RAIZ / "docs/compatibilidad_ids_consumidores_p5_05b.csv"
+    with ruta.open(encoding="utf-8", newline="") as f:
+        esperados = {r["path"]: r for r in csv.DictReader(f)}
+    cuadros = leer_capturas("evaluacion")
+    assert len(cuadros) == len(esperados) == 78
+    for c in cuadros:
+        fila = esperados[c.path_capturas]
+        assert c.frame_id == fila["frame_id_reproductor_P514_cache"]
+        assert (c.sha256, c.session_id) == (fila["sha256"], fila["session_id"])
+
+
+@pytest.mark.skipif(
+    importlib.util.find_spec("p5.expectativas") is None,
+    reason="p5.expectativas (P5-15, #75) aun no esta en esta rama",
+)
+def test_frame_id_coincide_con_normalizar_frame_id_de_p5_15():
+    from p5.expectativas import normalizar_frame_id
+
+    for conjunto in ("evaluacion", "ajuste"):
+        contadores: dict[str, int] = {}
+        for c in leer_capturas(conjunto):
+            assert c.frame_id == normalizar_frame_id(c.sequence_id, c.frame_id_origen, contadores)
+
+
+def test_huecos_del_id_prefijado_se_conservan_sin_renumerar(tmp_path):
+    def con_hueco(filas):
+        s3 = [f for f in filas if f["sequence_id"] == "S3"]
+        s3[0]["frame_id"] = "S3_f0001"
+        s3[1]["frame_id"] = "S3_f0005"
+        for i, f in enumerate(s3[2:], 6):
+            f["frame_id"] = f"S3_f{i:04d}"
+        return filas
+
+    raiz = _copiar_csv(tmp_path, con_hueco)
+    s3 = [c for c in leer_capturas("evaluacion", raiz) if c.sequence_id == "S3"]
+    assert [c.frame_id for c in s3[:3]] == ["S3_f0001", "S3_f0005", "S3_f0006"]
+
+
+def test_secuencia_que_mezcla_ids_prefijados_y_uuid_se_rechaza(tmp_path):
+    def mezclar(filas):
+        next(f for f in filas if f["sequence_id"] == "S1")["frame_id"] = "S1_f0001"
+        return filas
+
+    raiz = _copiar_csv(tmp_path, mezclar)
+    with pytest.raises(DatosError, match="mezcla"):
+        leer_capturas("evaluacion", raiz)
+
+
+def test_id_prefijado_que_no_crece_con_el_tiempo_se_rechaza(tmp_path):
+    def invertir_ids(filas):
+        s4 = [f for f in filas if f["sequence_id"] == "S4"]
+        s4[0]["frame_id"], s4[1]["frame_id"] = s4[1]["frame_id"], s4[0]["frame_id"]
+        return filas
+
+    raiz = _copiar_csv(tmp_path, invertir_ids)
+    with pytest.raises(DatosError, match="orden temporal"):
+        leer_capturas("evaluacion", raiz)
 
 
 def test_ajuste_nunca_comparte_frame_id_ni_ruta_con_evaluacion():

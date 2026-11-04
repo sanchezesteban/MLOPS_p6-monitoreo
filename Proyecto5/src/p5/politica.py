@@ -255,6 +255,11 @@ class Politica:
                 cfg.velocidad_precaucion,
                 0.0,
             )
+        if riesgo:
+            # solo quedan inciertos laterales en riesgo: bajan la velocidad, pero nunca giran
+            return self._mover(
+                evento, "PRECAUCION", "obstaculo_incierto_lateral", cfg.velocidad_precaucion, 0.0
+            )
         if any(o.certeza == "cierto" and "centro" in o.zonas for o in obs):
             return self._mover(
                 evento, "PRECAUCION", "obstaculo_centro_lejos", cfg.velocidad_precaucion, 0.0

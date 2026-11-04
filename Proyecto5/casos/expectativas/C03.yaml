@@ -1,0 +1,15 @@
+# Expectativa del caso (P5-15). Solo la lee el runner para comparar; nunca es entrada del
+# detector ni de la politica. Cambios posteriores al congelado llevan justificacion geometrica.
+id: C03
+secuencia: S3
+acciones_por_cuadro: cuadros_S3.csv
+estados_requeridos: [izq]
+plazo_reaccion_cuadros: 0  # el STOP sale en el mismo cuadro donde la anotacion pone el obstaculo
+plazo_reaccion_ms: 100  # un cuadro del replay fijo de P5-14; igual a config/watchdog.yaml
+requisitos:
+  - tipo: movimiento_minimo
+    min_cuadros: 1
+    justificacion: El centro esta libre; avanzar o corregir a la derecha es seguro.
+justificacion: >-
+  Obstaculo solo en la zona izquierda en riesgo. Se permite FORWARD, STEER_RIGHT o STOP;
+  STEER_LEFT dirige el auto hacia la zona ocupada.

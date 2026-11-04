@@ -5,9 +5,11 @@ datos. El detector, la politica y el recorrido nunca importan este modulo ni lee
 `datos/anotaciones*.json` o `datos/manifiesto*.csv` (`docs/datos.md`).
 
 - Los cuadros salen de los `capturas.csv` de Bryan (P5-05), que no se modifican. Cada
-  secuencia debe venir ordenada por `t_capture_ms`; `frame_id` es `<secuencia>_f0001`, ... en
-  ese orden (el mismo que asignan `p5.recorrer` y `p5.expectativas`). El id original queda en
-  `frame_id_origen`.
+  secuencia debe venir ordenada por `t_capture_ms`. Si el id del CSV ya es
+  `<secuencia>_fNNNN` (S2, S3, S4 y S6 de P5-05b, con huecos) se conserva tal cual; si es un
+  UUID (S1, S5 y ajuste) se numera `<secuencia>_f0001`, ... por posicion en ese orden. Es la
+  misma regla que `p5.recorrer` (P5-14) y `normalizar_frame_id` de `p5.expectativas` (P5-15).
+  El id original queda siempre en `frame_id_origen`.
 - Ajuste usa `sequence_id` `AJ<n>` (de su `S<n>`) para que sus `frame_id` nunca choquen con
   evaluacion y cumplan el prefijo del contrato.
 - COCO: `bbox` en `xywh` pixeles del cuadro original; `categories` con los indices COCO del
@@ -110,8 +112,19 @@ def _sequence_id(conjunto: Conjunto, origen: str) -> str:
     return f"{conjunto.prefijo}{m.group(1)}"
 
 
+def _frame_id(seq: str, origen: str, crudo: str) -> str | None:
+    """`frame_id` conservado si el CSV ya trae `<origen>_fNNNN` (None si es un UUID)."""
+    m = re.fullmatch(rf"{re.escape(origen)}_f(\d{{4}})", crudo)
+    return f"{seq}_f{m.group(1)}" if m else None
+
+
 def leer_capturas(conjunto: str, raiz: Path = RAIZ) -> list[Cuadro]:
-    """Cuadros del `capturas.csv` del conjunto, con `frame_id` consecutivo por secuencia.
+    """Cuadros del `capturas.csv` del conjunto con su `frame_id` canonico.
+
+    Regla acordada con P5-14 y P5-15 (instruccion del PM: conservar el `frame_id` de origen):
+    si el id del CSV ya es `<secuencia>_fNNNN` se conserva, con sus huecos; si es un UUID se
+    numera por posicion dentro de la secuencia, en orden de `t_capture_ms`. Una secuencia no
+    puede mezclar ambos tipos, y los numeros conservados deben crecer con el tiempo.
 
     Exige que cada secuencia ya venga ordenada por `t_capture_ms` estrictamente creciente:
     `p5.recorrer` y `p5.expectativas` numeran en el orden de las filas, asi que un CSV
@@ -124,6 +137,9 @@ def leer_capturas(conjunto: str, raiz: Path = RAIZ) -> list[Cuadro]:
     cuadros: list[Cuadro] = []
     contadores: dict[str, int] = {}
     previo: dict[str, int] = {}
+    tipo: dict[str, bool] = {}  # secuencia -> trae ids `_fNNNN` conservados
+    vistos: set[str] = set()
+    previo_id: dict[str, str] = {}
     for n, fila in enumerate(filas, 2):
         origen = fila["sequence_id"].strip()
         t = int(fila["t_capture_ms"])
@@ -135,14 +151,30 @@ def leer_capturas(conjunto: str, raiz: Path = RAIZ) -> list[Cuadro]:
         previo[origen] = t
         seq = _sequence_id(conj, origen)
         contadores[seq] = contadores.get(seq, 0) + 1
+        crudo = fila["frame_id"].strip()
+        conservado = _frame_id(seq, origen, crudo)
+        if tipo.setdefault(seq, conservado is not None) != (conservado is not None):
+            raise DatosError(
+                f"{ruta_csv}:{n}: {origen} mezcla ids `{origen}_fNNNN` y UUID ({crudo}); "
+                "avisar a P5-05 antes de numerar"
+            )
+        frame_id = conservado or f"{seq}_f{contadores[seq]:04d}"
+        if frame_id in vistos:
+            raise DatosError(f"{ruta_csv}:{n}: frame_id repetido {frame_id}")
+        if conservado and seq in previo_id and id_imagen(frame_id) <= id_imagen(previo_id[seq]):
+            raise DatosError(
+                f"{ruta_csv}:{n}: {crudo} no sigue el orden temporal de {previo_id[seq]}"
+            )
+        vistos.add(frame_id)
+        previo_id[seq] = frame_id
         path = fila["path"].strip().replace("\\", "/")
         cuadros.append(
             Cuadro(
                 conjunto=conjunto,
                 sequence_id=seq,
                 sequence_id_origen=origen,
-                frame_id=f"{seq}_f{contadores[seq]:04d}",
-                frame_id_origen=fila["frame_id"].strip(),
+                frame_id=frame_id,
+                frame_id_origen=crudo,
                 t_capture_ms=t,
                 ruta=f"{conj.carpeta}/{path}",
                 path_capturas=path,

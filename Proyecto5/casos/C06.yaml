@@ -1,0 +1,32 @@
+# Entrada del caso para el runner (P5-13). La expectativa vive aparte, en `expectativa:`,
+# y nunca se entrega al detector ni a la politica.
+# Detecciones sinteticas (synthetic=true) para aislar la regla de confianza; cuadro 640x480.
+# La caja central [250,120,390,470] toca el centro y esta en riesgo (y2=470 >= 240).
+id: C06
+nombre: Deteccion bajo umbral y luego sobre umbral
+tipo: sintetico
+estado_inicial: INICIO
+entrada:
+  sequence_id: c06
+  image_width: 640
+  image_height: 480
+  eventos:
+    - {frame_id: c06_f0001, t_capture_ms: 0, detections: []}
+    - {frame_id: c06_f0002, t_capture_ms: 100, detections: []}
+    - {frame_id: c06_f0003, t_capture_ms: 200, detections: []}
+    - frame_id: c06_f0004
+      t_capture_ms: 300
+      detections: [{class_name: person, class_id: 0, confidence: 0.20, bbox: [250, 120, 390, 470]}]
+    - frame_id: c06_f0005
+      t_capture_ms: 400
+      detections: [{class_name: person, class_id: 0, confidence: 0.40, bbox: [250, 120, 390, 470]}]
+    - frame_id: c06_f0006
+      t_capture_ms: 500
+      detections: [{class_name: person, class_id: 0, confidence: 0.45, bbox: [250, 120, 390, 470]}]
+    - frame_id: c06_f0007
+      t_capture_ms: 600
+      detections: [{class_name: person, class_id: 0, confidence: 0.60, bbox: [250, 120, 390, 470]}]
+    - frame_id: c06_f0008
+      t_capture_ms: 700
+      detections: [{class_name: person, class_id: 0, confidence: 0.40, bbox: [250, 120, 390, 470]}]
+expectativa: expectativas/C06.yaml

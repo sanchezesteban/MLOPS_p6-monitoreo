@@ -12,6 +12,32 @@
             "libre": 12
           }
         },
+        "S2": {
+          "cuadros": 17,
+          "positivos": 17,
+          "negativos": 0,
+          "estados": {
+            "libre": 6,
+            "centro": 11
+          }
+        },
+        "S3": {
+          "cuadros": 13,
+          "positivos": 13,
+          "negativos": 0,
+          "estados": {
+            "izq": 9,
+            "centro": 4
+          }
+        },
+        "S4": {
+          "cuadros": 12,
+          "positivos": 12,
+          "negativos": 0,
+          "estados": {
+            "der": 12
+          }
+        },
         "S5": {
           "cuadros": 12,
           "positivos": 12,
@@ -19,20 +45,32 @@
           "estados": {
             "bloqueado": 12
           }
+        },
+        "S6": {
+          "cuadros": 12,
+          "positivos": 4,
+          "negativos": 8,
+          "estados": {
+            "libre": 8,
+            "izq": 1,
+            "der": 1,
+            "centro": 2
+          }
         }
       },
-      "cuadros": 24,
-      "unicos_sha256": 24,
+      "cuadros": 78,
+      "unicos_sha256": 78,
       "duplicados_sha256": 0,
-      "positivos": 12,
-      "negativos": 12,
+      "positivos": 58,
+      "negativos": 20,
       "instancias_por_clase": {
-        "cat": 12,
-        "dog": 12,
-        "person": 12
+        "cat": 25,
+        "dog": 34,
+        "person": 23
       },
       "cajas_por_riesgo": {
-        "en_riesgo": 36
+        "en_riesgo": 76,
+        "fuera_de_riesgo": 6
       }
     },
     "ajuste": {
@@ -59,31 +97,46 @@
   "sha256_compartidos_ajuste_evaluacion": 0,
   "phash": {
     "umbral_hamming": 5,
-    "grupos_evaluacion": 24,
-    "grupos_negativos_evaluacion": 12,
+    "grupos_evaluacion": 72,
+    "grupos_negativos_evaluacion": 20,
     "grupos_con_mas_de_un_cuadro": [
       [
         "AJ1_f0004",
         "AJ1_f0005"
+      ],
+      [
+        "S2_f0007",
+        "S2_f0008"
+      ],
+      [
+        "S2_f0021",
+        "S2_f0022"
+      ],
+      [
+        "S3_f0001",
+        "S3_f0002",
+        "S3_f0003",
+        "S3_f0006",
+        "S3_f0007"
       ]
     ],
     "pares_ajuste_evaluacion": []
   },
   "metas": {
     "unicos_sha256": [
-      24,
+      78,
       60
     ],
     "secuencias": [
-      2,
+      6,
       6
     ],
     "positivos": [
-      12,
+      58,
       20
     ],
     "negativos": [
-      12,
+      20,
       20
     ]
   }
