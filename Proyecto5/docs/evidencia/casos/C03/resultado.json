@@ -1,0 +1,17 @@
+{
+  "id": "C03",
+  "nombre": "Obstaculo solo a la izquierda",
+  "tipo": "real",
+  "estado": "fail",
+  "expectativa": "casos/expectativas/C03.yaml",
+  "expectativa_sha256": "8d78e6f8de4c61d77c3dcf1e2a098bfbd8257e6c2b855e12d483161ca0c0e3bd",
+  "pasos": 13,
+  "fallos": [
+    "S3_f0003: accion FORWARD no permitida (esperaba ['STOP'])",
+    "S3_f0010: accion FORWARD no permitida (esperaba ['STOP'])",
+    "casos/expectativas/C03.yaml: S3_f0003 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+    "casos/expectativas/C03.yaml: S3_f0010 quedo bloqueado y no hubo STOP en 0 cuadro(s)"
+  ],
+  "error": null,
+  "comandos": "C03/comandos.jsonl"
+}

@@ -10,7 +10,14 @@ from pathlib import Path
 import pytest
 import yaml
 
-from p5.casos import CasoInvalidoError, InsumoFaltanteError, Paso, cargar_caso, main
+from p5.casos import (
+    CasoInvalidoError,
+    InsumoFaltanteError,
+    Paso,
+    cargar_caso,
+    cargar_expectativa,
+    main,
+)
 from p5.contrato import validar_evento
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -455,6 +462,14 @@ def test_cargar_caso_exige_expectativa_existente(tmp_path):
     )
     with pytest.raises(CasoInvalidoError, match="no existe la expectativa"):
         cargar_caso(ruta)
+
+
+def test_expectativa_usa_ruta_relativa_para_la_evidencia():
+    caso = cargar_caso(CASOS / "C01.yaml")
+    expectativa = cargar_expectativa(caso)
+
+    assert not expectativa.ruta.is_absolute()
+    assert expectativa.ruta == Path("casos/expectativas/C01.yaml")
 
 
 def test_evento_sintetico_invalido_por_contrato_se_registra(tmp_path):

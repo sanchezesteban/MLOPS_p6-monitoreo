@@ -1,0 +1,19 @@
+{
+  "id": "C02",
+  "nombre": "Obstaculo central",
+  "tipo": "real",
+  "estado": "fail",
+  "expectativa": "casos/expectativas/C02.yaml",
+  "expectativa_sha256": "44998bff4fb3220c40296dcf01c2b1b1d4c4ec8f1a2dd8e8a9f232e04c105d90",
+  "pasos": 17,
+  "fallos": [
+    "S2_f0011: accion FORWARD no permitida (esperaba ['STOP'])",
+    "S2_f0012: accion FORWARD no permitida (esperaba ['STOP'])",
+    "S2_f0013: accion FORWARD no permitida (esperaba ['STOP'])",
+    "casos/expectativas/C02.yaml: S2_f0011 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+    "casos/expectativas/C02.yaml: S2_f0012 quedo bloqueado y no hubo STOP en 0 cuadro(s)",
+    "casos/expectativas/C02.yaml: S2_f0013 quedo bloqueado y no hubo STOP en 0 cuadro(s)"
+  ],
+  "error": null,
+  "comandos": "C02/comandos.jsonl"
+}

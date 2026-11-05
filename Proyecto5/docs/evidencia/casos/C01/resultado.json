@@ -1,0 +1,12 @@
+{
+  "id": "C01",
+  "nombre": "Via libre",
+  "tipo": "real",
+  "estado": "pass",
+  "expectativa": "casos/expectativas/C01.yaml",
+  "expectativa_sha256": "d45ba4168bc01774f3284358d21c3164a8f170a3e8ec589737d5afeb3fb6f18c",
+  "pasos": 12,
+  "fallos": [],
+  "error": null,
+  "comandos": "C01/comandos.jsonl"
+}

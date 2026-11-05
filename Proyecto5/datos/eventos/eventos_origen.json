@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-eventos-001",
+  "commit": "51d96ed",
+  "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "data_manifest_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
+  "replay_dt_ms": 100,
+  "detecciones_sha256": "479feb163400d6c557564bd592705ef8230a29d81f51192f83e782d9f4b9cc36",
+  "cortes_sha256": "a196235a70cbbb859b890d1e39066f45cd01d68b925817d157868a1b138783da",
+  "modo": "cortes_sesion",
+  "cortes_total": 5,
+  "secuencias": {
+    "S1": 12,
+    "S2": 17,
+    "S3": 13,
+    "S4": 12,
+    "S5": 12,
+    "S6": 12
+  },
+  "total": 78,
+  "generado_utc": "2026-11-04T20:24:16+00:00"
+}
