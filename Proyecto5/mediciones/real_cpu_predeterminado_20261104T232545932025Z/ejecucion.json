@@ -1,0 +1,40 @@
+{
+  "PYTHONPATH": "src",
+  "argv_sin_interprete": [
+    "-B",
+    "-m",
+    "p5.benchmark",
+    "--modo",
+    "real",
+    "--imagen",
+    "datos/evaluacion/S2/S2_0000058828_S2_f0008.jpg",
+    "--calentamientos",
+    "10",
+    "--ejecuciones",
+    "100",
+    "--salida",
+    "mediciones/real_cpu_predeterminado_20261104T232545932025Z"
+  ],
+  "benchmark_sha256": "406d219f2f8e3e05614bf01f05765bdc09d9e0ce47b796e3083246e4ed966bdf",
+  "codigo_salida": 0,
+  "configuraciones_main_sha256": {
+    "config\\detector.yaml": "677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03",
+    "config\\politica.yaml": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+    "config\\watchdog.yaml": "ba91fbd0ec64599890c0a1d8d10d8afc59b014a0274da361dd41e1f0ca88a41a"
+  },
+  "evidencia_final": true,
+  "fase": "definitiva",
+  "fin_utc": "2026-11-04T23:25:49.496171+00:00",
+  "git_head": "e3530d67d6a3bb86d13bcd44e93d60118deb1ef0",
+  "imagen_sha256": "98c6d6431d0bd1a44ca6c69790344f4f21b3cc8c647b2b6f0495fbf9f8e5e8b7",
+  "inicio_utc": "2026-11-04T23:25:45.933073+00:00",
+  "main_integrado": "5a38de810cf2760cd6b1f28921fbf453ea029a33",
+  "merge_sin_commit": true,
+  "modelo_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "nota_rutas": "Entradas y salida definitiva relativas a Proyecto5; ensayo en carpeta privada.",
+  "python": "3.12.16 (main, Oct 26 2026, 14:10:56) [MSC v.1944 64 bit (AMD64)]",
+  "repeticiones_para_mejorar_tiempos": false,
+  "seleccion_por_resultados": false,
+  "stderr": "",
+  "stdout": "DETECTOR_CPU_LOCAL: 100 validas; 110 intentos -> mediciones\\real_cpu_predeterminado_20261104T232545932025Z\n"
+}

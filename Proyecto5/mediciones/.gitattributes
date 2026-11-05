@@ -1,0 +1,4 @@
+# Auditoria original: CRLF del adaptador y espacios de contexto del diff son intencionales.
+# Las reglas solo afectan a estos dos archivos; los hashes originales no se alteran.
+real_cpu_predeterminado_20261104T232545932025Z/comandos.jsonl whitespace=cr-at-eol
+real_cpu_predeterminado_20261104T232545932025Z/codigo_benchmark.patch -whitespace

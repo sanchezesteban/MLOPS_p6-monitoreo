@@ -1,0 +1,235 @@
+{
+  "advertencias": [
+    "Presupuesto local: no prueba seguridad fisica ni latencia de red/camara/motores.",
+    "La etapa politica incluye evento, validacion, watchdog y adaptador virtual con flush.",
+    "No se incluyen en estadisticas calentamientos ni fallos; consultar ambos registros."
+  ],
+  "archivos": {
+    "contexto.json": {
+      "archivo": "contexto.json",
+      "bytes": 4247,
+      "sha256": "7d8b444b30c16299390a978501a5ea3c733f3fce1ed226583656493cd99d818b"
+    },
+    "fallos.csv": {
+      "archivo": "fallos.csv",
+      "bytes": 129,
+      "sha256": "98a8cdf184978b3c68ab8f495fc7e0eebd7025cb5dc529612065de158a67cd99"
+    },
+    "tiempos.csv": {
+      "archivo": "tiempos.csv",
+      "bytes": 12206,
+      "sha256": "af44428196b79e7b494fbbcd917e0ed77206265e955befa4ee08cfb586069d74"
+    }
+  },
+  "calentamientos_validos_excluidos": 10,
+  "completa": true,
+  "condiciones": {
+    "adaptador": "p5.control.AdaptadorVirtual (JSONL + flush, sin motores)",
+    "arquitectura": "AMD64",
+    "carga_y_decodificacion_imagen_fuera_del_cronometro": true,
+    "commit": "e3530d67d6a3bb86d13bcd44e93d60118deb1ef0",
+    "configuraciones": {
+      "descriptor": {
+        "archivo": "descriptor.yaml",
+        "bytes": 3342,
+        "sha256": "3fce7b2c7f522c3032bec9bf7391ca8a816a44ec21c6d6362b88b8a1615c5ff5"
+      },
+      "detector": {
+        "archivo": "detector.yaml",
+        "bytes": 1045,
+        "sha256": "677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03"
+      },
+      "politica": {
+        "archivo": "politica.yaml",
+        "bytes": 1406,
+        "sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9"
+      },
+      "watchdog": {
+        "archivo": "watchdog.yaml",
+        "bytes": 1098,
+        "sha256": "ba91fbd0ec64599890c0a1d8d10d8afc59b014a0274da361dd41e1f0ca88a41a"
+      }
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i7-13650HX",
+    "cpu_advertencia": null,
+    "cpu_fuente": "registro Windows ProcessorNameString",
+    "cpu_logicos": 20,
+    "cpu_modelo_confirmado": true,
+    "entrada": {
+      "alto": 296,
+      "ancho": 400,
+      "archivo": "S2_0000058828_S2_f0008.jpg",
+      "bytes": 14571,
+      "bytes_rgb": 355200,
+      "origen": "imagen explicita",
+      "sha256": "98c6d6431d0bd1a44ca6c69790344f4f21b3cc8c647b2b6f0495fbf9f8e5e8b7"
+    },
+    "estado_politica": "continuo desde calentamiento; misma instancia en toda la corrida",
+    "evidencia": "DETECTOR_CPU_LOCAL",
+    "hilos": {
+      "inter_op": 0,
+      "intra_op": 0,
+      "misma_configuracion_que_detector": true,
+      "modo": "predeterminado",
+      "nota": "Sin SessionOptions, igual que DetectorONNX; 0 significa automatico, no un hilo.",
+      "solicitados": null
+    },
+    "implementaciones": {
+      "benchmark.py": {
+        "archivo": "benchmark.py",
+        "bytes": 26680,
+        "sha256": "406d219f2f8e3e05614bf01f05765bdc09d9e0ce47b796e3083246e4ed966bdf"
+      },
+      "contrato.py": {
+        "archivo": "contrato.py",
+        "bytes": 9377,
+        "sha256": "81639613631ec871a42cb6f315ca951ac352f5aa19154aacb1c68b3c4e198f56"
+      },
+      "control.py": {
+        "archivo": "control.py",
+        "bytes": 6881,
+        "sha256": "c5a749b08ff3244c3437fc258ec78e9f21e705723d4eb73c91830d6e6ae5cb96"
+      },
+      "detector_onnx.py": {
+        "archivo": "detector_onnx.py",
+        "bytes": 13068,
+        "sha256": "cfd474c82d1a600e774a54b82d3a93d9fd81b3aed0f61cd0852e5a20c7572f20"
+      },
+      "politica.py": {
+        "archivo": "politica.py",
+        "bytes": 12328,
+        "sha256": "baeca4db757b536b83fa42153c8142604290cee9f302c1ec340413078abe62c5"
+      },
+      "watchdog.py": {
+        "archivo": "watchdog.py",
+        "bytes": 11078,
+        "sha256": "166d7e79ebfd4691209dd6ca0e653060f2fb4367dd5eb4de9240335c686bf48a"
+      }
+    },
+    "inicializacion_sesion_fuera_del_cronometro": true,
+    "modo": "real",
+    "network_durante_medicion": false,
+    "numpy": "2.5.3",
+    "onnxruntime": "1.30.0",
+    "pausas_reproduccion": false,
+    "pesos": {
+      "archivo": "yolox_nano.onnx",
+      "bytes": 3659407,
+      "cargados": true,
+      "sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d"
+    },
+    "plazos": {
+      "max_edad_ms": 300,
+      "plazo_reaccion_ms": 100,
+      "vencimiento_ms": 250
+    },
+    "providers_sesion": [
+      "CPUExecutionProvider"
+    ],
+    "python": "3.12.16",
+    "referencia_metodologica_P4": {
+      "archivo": "medir_recursos.py",
+      "bytes": 14572,
+      "sha256": "1e0e271622ad73953f6b2cb0b197ebe3d1dc3ea63a316aefecee77afa4b9c444"
+    },
+    "reloj": "time.perf_counter",
+    "runtime_inferencia": "onnxruntime CPUExecutionProvider",
+    "sistema_operativo": "Windows-11-10.0.26300-SP0",
+    "synthetic": false,
+    "unidad": "ms",
+    "variables_hilos": {
+      "MKL_NUM_THREADS": null,
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null
+    }
+  },
+  "contraste_watchdog": {
+    "max_edad_ms": {
+      "max_ms": {
+        "dentro_del_plazo": true,
+        "margen_ms": 277.94150000027,
+        "valor_ms": 22.058499999729975
+      },
+      "p95_ms": {
+        "dentro_del_plazo": true,
+        "margen_ms": 280.8044150002843,
+        "valor_ms": 19.19558499971572
+      },
+      "plazo_ms": 300
+    },
+    "plazo_reaccion_ms": {
+      "max_ms": {
+        "dentro_del_plazo": true,
+        "margen_ms": 77.94150000027003,
+        "valor_ms": 22.058499999729975
+      },
+      "p95_ms": {
+        "dentro_del_plazo": true,
+        "margen_ms": 80.80441500028428,
+        "valor_ms": 19.19558499971572
+      },
+      "plazo_ms": 100
+    },
+    "vencimiento_ms": {
+      "max_ms": {
+        "dentro_del_plazo": true,
+        "margen_ms": 227.94150000027003,
+        "valor_ms": 22.058499999729975
+      },
+      "p95_ms": {
+        "dentro_del_plazo": true,
+        "margen_ms": 230.80441500028428,
+        "valor_ms": 19.19558499971572
+      },
+      "plazo_ms": 250
+    }
+  },
+  "ejecuciones_validas": 100,
+  "estadisticas": {
+    "inferencia_ms": {
+      "max_ms": 14.623000000028696,
+      "n": 100,
+      "p50_ms": 8.828450000237353,
+      "p95_ms": 10.444850000612858
+    },
+    "politica_adaptador_ms": {
+      "max_ms": 4.826800000046205,
+      "n": 100,
+      "p50_ms": 0.9184499999719264,
+      "p95_ms": 1.375170000028447
+    },
+    "posprocesamiento_ms": {
+      "max_ms": 5.2235000002838206,
+      "n": 100,
+      "p50_ms": 3.443900000092981,
+      "p95_ms": 4.662869999810937
+    },
+    "preprocesamiento_ms": {
+      "max_ms": 3.1696999994892394,
+      "n": 100,
+      "p50_ms": 2.5651999999354302,
+      "p95_ms": 3.0150800002047617
+    },
+    "total_local_ms": {
+      "max_ms": 22.058499999729975,
+      "n": 100,
+      "p50_ms": 15.868200000113575,
+      "p95_ms": 19.19558499971572
+    }
+  },
+  "fallos": {},
+  "fallos_totales": 0,
+  "intentos_por_fase": {
+    "calentamiento": 10,
+    "medicion": 100
+  },
+  "intentos_totales": 110,
+  "metodo_percentiles": "numpy.percentile(method='linear'); indice=(n-1)*q",
+  "parametros": {
+    "calentamientos": 10,
+    "ejecuciones": 100,
+    "max_intentos": 1000,
+    "regla": "se requieren calentamientos validos; todo intento fallido se conserva"
+  },
+  "version": "p5-08/1.0"
+}
