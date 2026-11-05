@@ -214,7 +214,8 @@ p50=15.868 ms, p95=19.196 ms, máximo=22.059 ms; p95 y máximo quedan por debajo
 ## Entradas, etiquetas y expectativas
 
 - Entradas de inferencia: `datos/evaluacion/capturas.csv` y los JPEG de `datos/evaluacion/`.
-  El detector solo recibe la imagen y el manifiesto; no lee etiquetas.
+  El detector solo recibe la imagen y el manifiesto; no lee etiquetas. `capturas.csv`
+  incluye `scene_label` y `outside_risk`, que el recorrido no lee (ver `docs/datos.md`).
 - Verdad de referencia: `datos/anotaciones.json` y `datos/manifiesto.csv`; no se usan en
   inferencia, recorrido ni política.
 - Expectativas de casos: `casos/expectativas/`; el runner las lee solo al final para
@@ -232,7 +233,7 @@ C03 y C07 fallan por recall del detector congelado, documentado en
 de S1, S2 y S3 con `--reproducir-cortes`; la evidencia está en
 [`docs/evidencia/recorrido-real/`](docs/evidencia/recorrido-real/README.md).
 
-El README final se cierra en el issue #68. Índice E1–E7:
+Índice E1–E7:
 
 | ID | Rúbrica | Dónde |
 |---|---|---|
