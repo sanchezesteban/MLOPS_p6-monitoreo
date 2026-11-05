@@ -1,0 +1,129 @@
+{
+  "condiciones": {
+    "adaptador": "p5.control.AdaptadorVirtual (JSONL + flush, sin motores)",
+    "arquitectura": "x86_64",
+    "carga_y_decodificacion_imagen_fuera_del_cronometro": true,
+    "commit": "ba81495dda1b818225199d07cff92607713ff4ad",
+    "configuraciones": {
+      "descriptor": {
+        "archivo": "descriptor.yaml",
+        "bytes": 3342,
+        "sha256": "3fce7b2c7f522c3032bec9bf7391ca8a816a44ec21c6d6362b88b8a1615c5ff5"
+      },
+      "detector": {
+        "archivo": "detector.yaml",
+        "bytes": 1045,
+        "sha256": "677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03"
+      },
+      "politica": {
+        "archivo": "politica.yaml",
+        "bytes": 1406,
+        "sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9"
+      },
+      "watchdog": {
+        "archivo": "watchdog.yaml",
+        "bytes": 1098,
+        "sha256": "ba91fbd0ec64599890c0a1d8d10d8afc59b014a0274da361dd41e1f0ca88a41a"
+      }
+    },
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+    "cpu_advertencia": null,
+    "cpu_fuente": "/proc/cpuinfo: model name",
+    "cpu_logicos": 2,
+    "cpu_modelo_confirmado": true,
+    "entrada": {
+      "alto": 296,
+      "ancho": 400,
+      "archivo": "S2_0000058828_S2_f0008.jpg",
+      "bytes": 14571,
+      "bytes_rgb": 355200,
+      "origen": "imagen explicita",
+      "sha256": "98c6d6431d0bd1a44ca6c69790344f4f21b3cc8c647b2b6f0495fbf9f8e5e8b7"
+    },
+    "estado_politica": "continuo desde calentamiento; misma instancia en toda la corrida",
+    "evidencia": "DETECTOR_CPU_LOCAL",
+    "hilos": {
+      "inter_op": 0,
+      "intra_op": 0,
+      "misma_configuracion_que_detector": true,
+      "modo": "predeterminado",
+      "nota": "Sin SessionOptions, igual que DetectorONNX; 0 significa automatico, no un hilo.",
+      "solicitados": null
+    },
+    "implementaciones": {
+      "benchmark.py": {
+        "archivo": "benchmark.py",
+        "bytes": 26680,
+        "sha256": "406d219f2f8e3e05614bf01f05765bdc09d9e0ce47b796e3083246e4ed966bdf"
+      },
+      "contrato.py": {
+        "archivo": "contrato.py",
+        "bytes": 9377,
+        "sha256": "81639613631ec871a42cb6f315ca951ac352f5aa19154aacb1c68b3c4e198f56"
+      },
+      "control.py": {
+        "archivo": "control.py",
+        "bytes": 6881,
+        "sha256": "c5a749b08ff3244c3437fc258ec78e9f21e705723d4eb73c91830d6e6ae5cb96"
+      },
+      "detector_onnx.py": {
+        "archivo": "detector_onnx.py",
+        "bytes": 13068,
+        "sha256": "cfd474c82d1a600e774a54b82d3a93d9fd81b3aed0f61cd0852e5a20c7572f20"
+      },
+      "politica.py": {
+        "archivo": "politica.py",
+        "bytes": 12328,
+        "sha256": "baeca4db757b536b83fa42153c8142604290cee9f302c1ec340413078abe62c5"
+      },
+      "watchdog.py": {
+        "archivo": "watchdog.py",
+        "bytes": 11078,
+        "sha256": "166d7e79ebfd4691209dd6ca0e653060f2fb4367dd5eb4de9240335c686bf48a"
+      }
+    },
+    "inicializacion_sesion_fuera_del_cronometro": true,
+    "modo": "real",
+    "network_durante_medicion": false,
+    "numpy": "2.5.3",
+    "onnxruntime": "1.30.0",
+    "pausas_reproduccion": false,
+    "pesos": {
+      "archivo": "yolox_nano.onnx",
+      "bytes": 3659407,
+      "cargados": true,
+      "sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d"
+    },
+    "plazos": {
+      "max_edad_ms": 300,
+      "plazo_reaccion_ms": 100,
+      "vencimiento_ms": 250
+    },
+    "providers_sesion": [
+      "CPUExecutionProvider"
+    ],
+    "python": "3.12.3",
+    "referencia_metodologica_P4": {
+      "archivo": "medir_recursos.py",
+      "bytes": 14572,
+      "sha256": "1e0e271622ad73953f6b2cb0b197ebe3d1dc3ea63a316aefecee77afa4b9c444"
+    },
+    "reloj": "time.perf_counter",
+    "runtime_inferencia": "onnxruntime CPUExecutionProvider",
+    "sistema_operativo": "Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+    "synthetic": false,
+    "unidad": "ms",
+    "variables_hilos": {
+      "MKL_NUM_THREADS": null,
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "parametros": {
+    "calentamientos": 10,
+    "ejecuciones": 100,
+    "max_intentos": 1000,
+    "regla": "se requieren calentamientos validos; todo intento fallido se conserva"
+  },
+  "version": "p5-08/1.0"
+}

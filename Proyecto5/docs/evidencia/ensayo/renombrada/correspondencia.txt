@@ -1,0 +1,6 @@
+muestra_1.jpg <- datos/evaluacion/S1/S1_0000000000_3ca02f25fb7243ac9ebef27983af9b31.jpg
+muestra_2.jpg <- datos/evaluacion/S2/S2_0000046797_S2_f0007.jpg
+muestra_3.jpg <- datos/evaluacion/S3/S3_0000778675_S3_f0012.jpg
+muestra_4.jpg <- datos/evaluacion/S4/S4_0000191438_S4_f0006.jpg
+muestra_5.jpg <- datos/evaluacion/S5/S5_0000000000_S5_20800b49d3044edf9c90975516e5fbcc.jpg
+truncada.jpg <- primeros 2000 bytes de datos/evaluacion/S2/S2_0000046797_S2_f0007.jpg

@@ -1,0 +1,11 @@
+Prueba: mismas imagenes con nombres neutros. Se comparan status, clases, confianzas y cajas.
+
+IDENTICO muestra_1.jpg  = S1_0000000000_3ca02f25fb7243ac9ebef27983af9b31.jpg: sin detecciones
+IDENTICO muestra_2.jpg  = S2_0000046797_S2_f0007.jpg: person 0.874 [171, 176, 284, 294], kite 0.329 [105, 11, 397, 228]
+IDENTICO muestra_3.jpg  = S3_0000778675_S3_f0012.jpg: person 0.690 [20, 176, 133, 292]
+IDENTICO muestra_4.jpg  = S4_0000191438_S4_f0006.jpg: person 0.880 [297, 161, 399, 292], umbrella 0.301 [125, 0, 397, 173]
+IDENTICO muestra_5.jpg  = S5_0000000000_S5_20800b49d3044edf9c90975516e5fbcc.jpg: cat 0.867 [244, 156, 321, 289], cat 0.754 [177, 159, 253, 287], cat 0.701 [113, 157, 237, 290]
+
+truncada.jpg: status=error error_msg='imagen ilegible: OSError: image file is truncated (41 bytes not processed)' detections=[]
+
+Resultado: las 5 renombradas dan resultado identico; la imagen truncada sale como status=error (no como via libre).

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "run_id": "ensayo-renombradas",
+  "commit": "ba81495dda1b818225199d07cff92607713ff4ad",
+  "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "config_sha256": "677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03",
+  "data_manifest_sha256": "c2786641dbc4b39a8234fbe1c754604c3aa12472a4c1a7f46a7d01cbe784c77d",
+  "runtime": "onnxruntime 1.30.0 CPUExecutionProvider",
+  "hardware": "x86_64 x86_64 Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+  "virtual_mode": true,
+  "t_start_utc": "2026-11-05T04:48:16.345453Z"
+}

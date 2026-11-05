@@ -1,0 +1,12 @@
+$ PYTHONPATH=src python -m p5.casos --casos casos --config config/politica.yaml --control-config config/watchdog.yaml --caso C05 --salida <carpeta nueva>   # expectativa original
+C05  pass   Varios obstaculos sin zona libre
+
+Resultado: 1/1 casos pasan (codigo de salida 0)
+[exit=0]
+
+$ PYTHONPATH=src python -m p5.casos --casos casos_fallo_inducido --config config/politica.yaml --control-config config/watchdog.yaml --caso C05 --salida <carpeta nueva>   # copia con S5_f0005: STOP -> FORWARD
+C05  fail   Varios obstaculos sin zona libre
+       - S5_f0005: accion STOP no permitida (esperaba ['FORWARD'])
+
+Resultado: 0/1 casos pasan (codigo de salida 1)
+[exit=1]
