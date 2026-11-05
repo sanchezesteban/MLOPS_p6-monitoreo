@@ -1,0 +1,357 @@
+{
+ "identidad": {
+  "equipo": "Mini Tesla P5 (grupos A y B)",
+  "ruta": "clon aislado de https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes",
+  "version": "main @ ba81495 (merge del PR #91); el PR #92 solo agrega el prompt, sin código",
+  "fecha": "2026-11-05 (UTC)",
+  "entorno": "macOS 26.6.2 arm64, Apple M4, Python 3.12.13, onnxruntime 1.30.0, CPUExecutionProvider",
+  "modo": "adaptador virtual; motores desconectados; sin red en la corrida de recorrido (sandbox-exec deny network)",
+  "estado": "DEFINITIVA",
+  "aviso": "Se evaluaron detección, decisiones y comandos en reproducción; no se verificó movimiento físico del auto."
+ },
+ "requisitos": [
+  {
+   "id": "M1",
+   "estado": "CUMPLE",
+   "evidencia": "YOLOX-Nano descargado con SHA-256 coincidente con el descriptor; inferencia nueva sobre 5 imágenes elegidas (S2 central, S3 y S4 laterales, S5 con 3 objetos, S1 negativa), también con nombres alternativos: salidas idénticas. `p5.detectar` no abre anotaciones.",
+   "accion": "Ninguna."
+  },
+  {
+   "id": "M2",
+   "estado": "CUMPLE",
+   "evidencia": "Recorrido real de 78 cuadros: 88 decisiones y 89 comandos ligados por frame_id. Avance (AVANCE, 0.4) en vía libre y BLOQUEADO/STOP ante persona y gatos en el centro.",
+   "accion": "Ninguna."
+  },
+  {
+   "id": "M3",
+   "estado": "CUMPLE",
+   "evidencia": "Auditor propio con reloj controlado (auditor_m3.py): STOP por watchdog sin cuadro nuevo, cuadro vencido rechazado, status=error a STOP, emergencia enclavada, sin reanudar con rearme + cuadro viejo, reanuda con rearme + cuadros frescos, cierre con STOP. C08–C10 del equipo también pasan.",
+   "accion": "Ninguna."
+  }
+ ],
+ "compuerta": "NO ACTIVADA",
+ "criterios": [
+  {
+   "id": "1.1",
+   "criterio": "Detector identificado y recargable",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "SHA-256 c789161e… coincide (descargar_modelo.py exit 0); descriptor.yaml y docs/detector.md con origen, licencia, clases y transformaciones; inferencia nueva en CPU.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "1.2",
+   "criterio": "Salidas de detección correctas",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "Cajas en píxeles del cuadro de 400×296 (5 de 5 TP en S2 con IoU ≥ 0.5); confianza mínima observada 0.3013 ≥ umbral 0.30; 3 gatos en una imagen; 30 cuadros ok con detections=[] explícito.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "1.3",
+   "criterio": "Evaluación auditable",
+   "max": 7,
+   "confirmados": 7,
+   "pendientes": 0,
+   "evidencia": "78 cuadros únicos por hash (58 positivos, 20 negativos, 82 objetos: 23 person, 25 cat, 34 dog); ajuste (7 JPEG, solo S1) sin solapamiento por hash con evaluación; configuración congelada; matching propio (calculo_metricas.py) coincide con p5.metricas.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "1.4",
+   "criterio": "Calidad medida del detector",
+   "max": 6,
+   "confirmados": 3.5,
+   "pendientes": 0,
+   "evidencia": "F1 micro = 0.65625 (TP 42, FP 4, FN 40). puntos = floor(12 × 0.65625) / 2 = floor(7.875) / 2 = 3.5. Predicciones reproducidas con el detector real, no solo recalculadas.",
+   "correccion": "Subir el recall de cat (0.32) y dog (0.35): el «dog» es un peluche que COCO lee como teddy bear (0.88 en S6_f0006).",
+   "no_otorgados": 2.5
+  },
+  {
+   "id": "2.1",
+   "criterio": "Política explícita y configurable",
+   "max": 5,
+   "confirmados": 5,
+   "pendientes": 0,
+   "evidencia": "politica.yaml + docs/politica.md; estados INICIO/AVANCE/PRECAUCION/CORRECCION/BLOQUEADO/FALLA/STOPPED; 4 de 4 configuraciones inválidas rechazadas con ConfigPoliticaError (umbral 1.7, clave desconocida, zonas invertidas, velocidad 5).",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "2.2",
+   "criterio": "Decisiones reproducidas en C1–C7",
+   "max": 14,
+   "confirmados": 8,
+   "pendientes": 0,
+   "evidencia": "C1, C4, C5 y C6 = 2 cada uno. C2, C3 y C7 = 0: la política emitió FORWARD con un obstáculo anotado en el centro (S2_f0011–13, S3_f0003 y f0010, S6_f0006 y f0008) porque el detector no lo vio. Regla: comando inseguro = caso completo 0.",
+   "correccion": "Ver «Sensibilidad». Mejorar la percepción en S2, S3 y S6, o una política conservadora ante cambios bruscos.",
+   "no_otorgados": 6
+  },
+  {
+   "id": "2.3",
+   "criterio": "Control integrado",
+   "max": 6,
+   "confirmados": 5,
+   "pendientes": 0,
+   "evidencia": "recorrer y casos usan la misma Politica, Watchdog y AdaptadorVirtual; el adaptador registra speed, steering y valid_until_ms; comandos fuera de rango/NaN se rechazan y quedan como STOP. El mapeo al controlador sigue provisional.",
+   "correccion": "docs/mapeo_actuacion.md dice que la ficha «todavía no existe en el repo» pero docs/ficha_auto.md ya existe; las constantes siguen como placeholders (rango físico «No caracterizado»).",
+   "no_otorgados": 1
+  },
+  {
+   "id": "3.1",
+   "criterio": "Pérdida de percepción C8",
+   "max": 8,
+   "confirmados": 8,
+   "pendientes": 0,
+   "evidencia": "Auditor: tras 5 cuadros con AVANCE, +520 ms sin cuadros y tick() dan STOP (comando_vencido); un cuadro con t_capture=0 con reloj en 920 ms da STOP stale_frame. C08 del equipo pasa.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "3.2",
+   "criterio": "Fallo del detector C9",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "status=error a STOP (detector_error); validar_evento rechaza confianza NaN, 1.5 y caja invertida; C09 pasa.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "3.3",
+   "criterio": "Emergencia y cierre C10",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "Emergencia a STOP; 6 cuadros despejados sin rearme siguen en FALLA 0.0; rearme + cuadro viejo no reanuda; rearme + cuadros frescos reanuda; cerrar() deja STOP shutdown. C10 pasa.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "4.1",
+   "criterio": "Cadena por cuadro/evento",
+   "max": 6,
+   "confirmados": 5.5,
+   "pendientes": 0,
+   "evidencia": "image_sha256 coincide con el JPEG en 78/78; model_sha256 coincide con el archivo; manifiesto coincide; 88 decisiones y 89 comandos con 10 eventos watchdog y 1 shutdown. config_sha256 es el hash de politica.yaml.",
+   "correccion": "El encabezado no hashea detector.yaml ni watchdog.yaml (-0.5).",
+   "no_otorgados": 0.5
+  },
+  {
+   "id": "4.2",
+   "criterio": "Benchmark auditable",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "10 calentamientos + 100 válidas (110 intentos, 0 fallos); recálculo propio idéntico: total p50 15.868 / p95 19.196 / máx 22.058 ms. Ejecución propia (Apple M4): p50 8.024 / p95 10.778 / máx 22.481 ms; total >= suma de etapas en 100/100.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "4.3",
+   "criterio": "Presupuesto temporal y límites",
+   "max": 3,
+   "confirmados": 2.5,
+   "pendientes": 0,
+   "evidencia": "watchdog.yaml: plazo 100 ms, edad máx. 300 ms, vencimiento 250 ms; p95 y máximo por debajo; límites del detector y distinción virtual/físico documentados.",
+   "correccion": "watchdog.yaml asume ~10 cuadros/s, la ficha mide ~49 JPEG/s y el replay usa 100 ms: aclarar la relación (-0.5).",
+   "no_otorgados": 0.5
+  },
+  {
+   "id": "5.1",
+   "criterio": "Arranque sin intervención humana",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "venv nuevo con requirements.txt sin errores; descarga con hash sin credenciales; recorrido en sandbox sin red: 0 de 78 cuadros distintos frente a la corrida con red; modo real del adaptador lanza NotImplementedError (sin imports de hardware).",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "5.2",
+   "criterio": "Comprobaciones independientes",
+   "max": 6,
+   "confirmados": 6,
+   "pendientes": 0,
+   "evidencia": "Rutas/salidas elegidas por mí; con solo C01: exit 0, expectativa contradictoria (S1_f0008 solo STOP) → exit 1, restaurada → exit 0.",
+   "correccion": "—",
+   "no_otorgados": 0
+  },
+  {
+   "id": "5.3",
+   "criterio": "Paquete legible y coherente",
+   "max": 3,
+   "confirmados": 3,
+   "pendientes": 0,
+   "evidencia": "README con índice E1–E7 y comandos que funcionaron tal cual; las cifras del README coinciden con mis recálculos; ruff y ruff format limpios; pytest verde; sin secretos.",
+   "correccion": "—",
+   "no_otorgados": 0
+  }
+ ],
+ "subtotales": [
+  {
+   "bloque": "1",
+   "nombre": "Detector y calidad",
+   "max": 25,
+   "confirmados": 22.5
+  },
+  {
+   "bloque": "2",
+   "nombre": "Decisiones y control",
+   "max": 25,
+   "confirmados": 18
+  },
+  {
+   "bloque": "3",
+   "nombre": "Fallos y parada",
+   "max": 20,
+   "confirmados": 20
+  },
+  {
+   "bloque": "4",
+   "nombre": "Trazabilidad y medición",
+   "max": 15,
+   "confirmados": 14.0
+  },
+  {
+   "bloque": "5",
+   "nombre": "Reproducción y entrega",
+   "max": 15,
+   "confirmados": 15
+  }
+ ],
+ "base": 89.5,
+ "pendientes": 0,
+ "no_otorgados": 10.5,
+ "calificacion_final": 89.5,
+ "formula_1_4": "floor(12*0.65625)/2 = 3.5",
+ "metricas": [
+  {
+   "clase": "person",
+   "tp": 22,
+   "fp": 3,
+   "fn": 1,
+   "soporte": 23,
+   "precision": "0.880000",
+   "recall": "0.956522",
+   "f1": "0.916667"
+  },
+  {
+   "clase": "cat",
+   "tp": 8,
+   "fp": 1,
+   "fn": 17,
+   "soporte": 25,
+   "precision": "0.888889",
+   "recall": "0.320000",
+   "f1": "0.470588"
+  },
+  {
+   "clase": "dog",
+   "tp": 12,
+   "fp": 0,
+   "fn": 22,
+   "soporte": 34,
+   "precision": "1.000000",
+   "recall": "0.352941",
+   "f1": "0.521739"
+  },
+  {
+   "clase": "micro",
+   "tp": 42,
+   "fp": 4,
+   "fn": 40,
+   "soporte": 82,
+   "precision": "0.913043",
+   "recall": "0.512195",
+   "f1": "0.656250"
+  }
+ ],
+ "casos": [
+  {
+   "caso": "C1",
+   "tipo": "real",
+   "entrada": "S1 despejada (12 cuadros)",
+   "resultado": "2 STOP (esperando_liberacion) y 10 FORWARD 0.4",
+   "estado": "pass",
+   "puntos": "2"
+  },
+  {
+   "caso": "C2",
+   "tipo": "real",
+   "entrada": "S2 obstáculo central",
+   "resultado": "FORWARD en S2_f0011, f0012 y f0013 (esperaba STOP)",
+   "estado": "FAIL",
+   "puntos": "0"
+  },
+  {
+   "caso": "C3",
+   "tipo": "real",
+   "entrada": "S3 solo izquierda",
+   "resultado": "FORWARD en S3_f0003 y f0010 (esperaba STOP)",
+   "estado": "FAIL",
+   "puntos": "0"
+  },
+  {
+   "caso": "C4",
+   "tipo": "real",
+   "entrada": "S4 solo derecha",
+   "resultado": "dentro de las acciones permitidas",
+   "estado": "pass",
+   "puntos": "2"
+  },
+  {
+   "caso": "C5",
+   "tipo": "real",
+   "entrada": "S5 varios obstáculos (29 TP)",
+   "resultado": "BLOQUEADO/STOP",
+   "estado": "pass",
+   "puntos": "2"
+  },
+  {
+   "caso": "C6",
+   "tipo": "sintético",
+   "entrada": "bajo umbral y luego sobre umbral",
+   "resultado": "incierto y luego obstáculo cierto",
+   "estado": "pass",
+   "puntos": "2"
+  },
+  {
+   "caso": "C7",
+   "tipo": "real",
+   "entrada": "S6 libre, obstáculo, libre",
+   "resultado": "FORWARD en S6_f0006 y f0008; el detector da 0 TP en S6",
+   "estado": "FAIL",
+   "puntos": "0"
+  },
+  {
+   "caso": "C8",
+   "tipo": "sintético",
+   "entrada": "corte de cuadros + cuadro vencido",
+   "resultado": "STOP watchdog y stale_frame (auditor propio)",
+   "estado": "pass",
+   "puntos": "en 3.1"
+  },
+  {
+   "caso": "C9",
+   "tipo": "sintético",
+   "entrada": "excepción, imagen ilegible, no finita",
+   "resultado": "STOP detector_error; NaN rechazado",
+   "estado": "pass",
+   "puntos": "en 3.2"
+  },
+  {
+   "caso": "C10",
+   "tipo": "sintético",
+   "entrada": "emergencia, rearme, cierre",
+   "resultado": "STOP enclavado; reanuda solo con rearme y cuadros frescos",
+   "estado": "pass",
+   "puntos": "en 3.3"
+  }
+ ],
+ "sensibilidad_2_2": "Sensibilidad en 2.2: con la lectura estricta del prompt («comando inseguro para la escena → caso completo 0») C2, C3 y C7 valen 0 y la base es 89.5. Si se concediera 1 punto por caso (expectativa y trazabilidad, sin el comando), la base subiría a 92.5. La nota reportada usa la lectura estricta."
+}
