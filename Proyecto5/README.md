@@ -130,12 +130,28 @@ PYTHONPATH=src python scripts/exportar_eventos.py \
     --detecciones resultados/recorrido/detecciones.jsonl \
     --run resultados/recorrido/run.json \
     --cortes resultados/recorrido/cortes.json \
-    --salida datos/eventos
+    --salida resultados/eventos
 ```
 
+Para que el runner los use, en una copia: `--salida datos/eventos --force`:
+
+```bash
+PYTHONPATH=src python scripts/exportar_eventos.py \
+    --detecciones resultados/recorrido/detecciones.jsonl \
+    --run resultados/recorrido/run.json \
+    --cortes resultados/recorrido/cortes.json \
+    --salida datos/eventos --force
+```
+
+Límite: al regenerar en otra máquina, el `run_id` cambia y las confianzas pueden variar del
+orden de 1e-6 (runtime/CPU), por eso el contenido difiere de los `datos/eventos/*.jsonl`
+versionados; no es un error del detector ni de la política.
+
 El script valida cada evento, exige un `run_id`, `frame_id` canónico y tiempos crecientes.
-Si el contenido de un archivo cambia, falla salvo `--force`; para verificar sin tocar la
-evidencia versionada, usa una carpeta temporal como salida. Después, el runner:
+Si el contenido de un archivo que ya existe en la salida cambia, falla salvo `--force`. Por
+eso el primer comando escribe en `resultados/eventos/`, que no está versionado, y verifica
+sin tocar la evidencia; `--force` sobre `datos/eventos/` solo se usa en la copia. Después, el
+runner, que lee `datos/eventos/`:
 
 ```bash
 PYTHONPATH=src python -m p5.casos \
