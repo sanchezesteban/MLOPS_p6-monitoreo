@@ -26,8 +26,8 @@ Proyecto5/
 ├── datos/        secuencias capturadas y manifiestos
 ├── src/p5/       contrato, política, adaptador, runner y recorrido
 ├── casos/        casos C01–C10 en YAML
-├── resultados/   salidas generadas (no se versionan)
-├── mediciones/   benchmark y medición de recursos
+├── resultados/   salidas generadas; se versiona el informe definitivo de métricas
+├── mediciones/   benchmark y medición de recursos; se versiona la corrida real
 ├── docs/         documentos, decisiones y evidencias
 ├── tests/        pruebas con pytest
 └── scripts/      herramientas de apoyo
@@ -40,47 +40,27 @@ Proyecto5/
 - Las versiones exactas están en [`requirements.txt`](requirements.txt), incluidas las
   dependencias indirectas.
 
+## Versión de entrega
+
+Tag anotado `p5-entrega` (#70); el commit de entrega es el del tag. Python 3.12, CPU,
+modo virtual y motores desconectados.
+
 ## Arranque
 
 ```bash
 cd Proyecto5
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-capturas.txt
 pytest
 ruff check .
+ruff format --check .
 ```
 
-Las pruebas del contrato no necesitan pesos ni datos: validan los ejemplos de
-`config/ejemplos/` y rechazan los mensajes fuera de contrato.
-
-## Métricas de detección (P5-07)
-
-`PYTHONPATH=src python -m p5.metricas --gt <coco> --pred <jsonl> --iou 0.5 --salida <dir>`
-calcula TP/FP/FN, Precision/Recall/F1 y soporte por clase y micro sobre todos los
-cuadros, incluidos negativos, errores y omisiones. [Guía y comandos de Windows](docs/metricas.md),
-[casos sintéticos calculados a mano](tests/fixtures/metricas/README.md).
-La evaluación definitiva autorizada usa los 78 cuadros congelados de #58 y
-predicciones nuevas del detector real, con los cortes de sesión de #88. IoU=0.50:
-**TP=42, FP=4, FN=40; Precision micro=0.913043, Recall=0.512195 y F1=0.656250**.
-Los 78 cuadros fueron válidos, incluidos 20 negativos. Los ejemplos sintéticos y
-el ensayo anterior S1/S5 permanecen separados de la
-[evidencia definitiva](resultados/metricas/metricas.json).
-
-Comandos ejecutados desde Proyecto5 con Python 3.12.16, ONNX Runtime 1.30.0,
-CPUExecutionProvider y los YAML congelados de main, sin ajustar umbral o NMS:
-
-```powershell
-$env:PYTHONPATH = "src"
-python -B -m p5.recorrer --datos datos/evaluacion --manifiesto datos/evaluacion/capturas.csv --config config/politica.yaml --watchdog-config config/watchdog.yaml --detector real --detector-config config/detector.yaml --reproducir-cortes --replay-dt-ms 100 --run-id p5-07-definitiva-20261105T002327358258Z --salida resultados/recorrido_metricas_78_20261105T002327358258Z
-python -B -m p5.metricas --gt datos/anotaciones.json --pred resultados/recorrido_metricas_78_20261105T002327358258Z/detecciones.jsonl --manifiesto datos/manifiesto.csv --iou 0.50 --cuadros-esperados 78 --salida resultados/metricas
-```
-
-Para reproducir, elegir una carpeta de recorrido nueva y otra salida de métricas
-(por ejemplo, `resultados/metricas_reproduccion`), sin sobrescribir la evidencia
-versionada. El recorrido y sus JSONL se conservan localmente, ignorados por Git;
-solo el informe final de métricas se publica. [Resultados por clase, hashes y
-reproducción](docs/metricas.md), [validación](docs/evidencia/p5-07-validacion.md).
+`requirements-capturas.txt` aporta OpenCV para las pruebas y scripts de captura.
+`requirements-datos.txt` solo hace falta para el conteo informativo de casi duplicados
+por pHash de P5-06. Las pruebas del contrato no necesitan pesos ni datos: validan los
+ejemplos de `config/ejemplos/` y rechazan los mensajes fuera de contrato.
 
 ## Pesos del detector
 
@@ -102,10 +82,15 @@ Se corre desde `Proyecto5/` con `src` en `PYTHONPATH` (el paquete `p5` no se ins
 esto sale `No module named 'p5'`):
 
 ```bash
-PYTHONPATH=src python -m p5.detectar --imagenes <carpeta|archivos...> --config config/detector.yaml --salida <carpeta nueva>
+PYTHONPATH=src python -m p5.detectar \
+    --imagenes datos/evaluacion/S1 \
+    --config config/detector.yaml \
+    --salida resultados/inferencia_s1
 ```
 
-En PowerShell: `$env:PYTHONPATH = "src"` y después el mismo `python -m p5.detectar …`.
+Cambia `datos/evaluacion/S1` por la carpeta o los archivos que quieras; la salida debe ser
+una carpeta nueva. En PowerShell: `$env:PYTHONPATH = "src"` y después el mismo
+`python -m p5.detectar …`.
 
 Una imagen sin objetos sale con `status=ok` y `detections=[]`; una ilegible, con
 `status=error`. Preprocesamiento, umbral (0.30) y NMS (0.45) en
@@ -137,6 +122,37 @@ cortes en [`docs/recorrido.md`](docs/recorrido.md).
 
 ## Casos C01–C10
 
+Los eventos versionados están en `datos/eventos/S1.jsonl` … `S6.jsonl`. Para regenerarlos
+con la corrida de «Recorrido integral»:
+
+```bash
+PYTHONPATH=src python scripts/exportar_eventos.py \
+    --detecciones resultados/recorrido/detecciones.jsonl \
+    --run resultados/recorrido/run.json \
+    --cortes resultados/recorrido/cortes.json \
+    --salida resultados/eventos
+```
+
+Para que el runner los use, en una copia: `--salida datos/eventos --force`:
+
+```bash
+PYTHONPATH=src python scripts/exportar_eventos.py \
+    --detecciones resultados/recorrido/detecciones.jsonl \
+    --run resultados/recorrido/run.json \
+    --cortes resultados/recorrido/cortes.json \
+    --salida datos/eventos --force
+```
+
+Límite: al regenerar en otra máquina, el `run_id` cambia y las confianzas pueden variar del
+orden de 1e-6 (runtime/CPU), por eso el contenido difiere de los `datos/eventos/*.jsonl`
+versionados; no es un error del detector ni de la política.
+
+El script valida cada evento, exige un `run_id`, `frame_id` canónico y tiempos crecientes.
+Si el contenido de un archivo que ya existe en la salida cambia, falla salvo `--force`. Por
+eso el primer comando escribe en `resultados/eventos/`, que no está versionado, y verifica
+sin tocar la evidencia; `--force` sobre `datos/eventos/` solo se usa en la copia. Después, el
+runner, que lee `datos/eventos/`:
+
 ```bash
 PYTHONPATH=src python -m p5.casos \
     --casos casos \
@@ -145,9 +161,67 @@ PYTHONPATH=src python -m p5.casos \
     --salida resultados/casos
 ```
 
-Los casos reales usan `datos/eventos/S1.jsonl` … `S6.jsonl`. La corrida del 4 nov 2026 da
-**7/10**; los fallos de C02, C03 y C07 son límites del detector y están explicados en
-[`docs/evidencia/casos/`](docs/evidencia/casos/README.md).
+La corrida del 4 nov 2026 da **7/10**; los fallos de C02, C03 y C07 son límites del
+detector y están explicados en [`docs/evidencia/casos/`](docs/evidencia/casos/README.md).
+
+## Métricas de detección (P5-07)
+
+Calcula TP/FP/FN, Precision/Recall/F1 y soporte por clase y micro sobre todos los
+cuadros, incluidos negativos, errores y omisiones. No abre imágenes, pesos ni hardware.
+Detalle y casos calculados a mano: [`docs/metricas.md`](docs/metricas.md).
+
+Requiere una corrida de la sección «Recorrido integral». Desde `Proyecto5`:
+
+```bash
+PYTHONPATH=src python -m p5.metricas \
+    --gt datos/anotaciones.json \
+    --pred resultados/recorrido/detecciones.jsonl \
+    --manifiesto datos/manifiesto.csv \
+    --iou 0.50 \
+    --cuadros-esperados 78 \
+    --salida resultados/metricas_reproduccion
+```
+
+La carpeta de salida debe ser nueva. La evaluación definitiva de los 78 cuadros
+(20 negativos, IoU 0.50) está en
+[`resultados/metricas/metricas.json`](resultados/metricas/metricas.json):
+**TP=42, FP=4, FN=40; Precision micro=0.913043, Recall=0.512195, F1=0.656250**.
+[Guía y comandos de Windows](docs/metricas.md),
+[validación](docs/evidencia/p5-07-validacion.md).
+
+## Benchmark por etapas (P5-08)
+
+Mide preprocesamiento, inferencia, posprocesamiento y política + adaptador con
+10 calentamientos excluidos y 100 mediciones válidas. No incluye red, cámara ni
+frenado físico. Detalle y protocolo: [`docs/benchmark.md`](docs/benchmark.md).
+
+Desde `Proyecto5`:
+
+```bash
+PYTHONPATH=src python -m p5.benchmark \
+    --modo real \
+    --imagen datos/evaluacion/S2/S2_0000058828_S2_f0008.jpg \
+    --calentamientos 10 \
+    --ejecuciones 100 \
+    --salida mediciones/reproduccion_p5_08
+```
+
+La carpeta de salida debe ser nueva. La evidencia real está en
+[`mediciones/real_cpu_predeterminado_20261104T232545932025Z/`](mediciones/real_cpu_predeterminado_20261104T232545932025Z/):
+p50=15.868 ms, p95=19.196 ms, máximo=22.059 ms; p95 y máximo quedan por debajo de
+100 y 250 ms. [Validación](docs/evidencia/p5-08-validacion.md).
+
+## Entradas, etiquetas y expectativas
+
+- Entradas de inferencia: `datos/evaluacion/capturas.csv` y los JPEG de `datos/evaluacion/`.
+  El detector solo recibe la imagen y el manifiesto; no lee etiquetas. `capturas.csv`
+  incluye `scene_label` y `outside_risk`, que el recorrido no lee (ver `docs/datos.md`).
+- Verdad de referencia: `datos/anotaciones.json` y `datos/manifiesto.csv`; no se usan en
+  inferencia, recorrido ni política.
+- Expectativas de casos: `casos/expectativas/`; el runner las lee solo al final para
+  comparar y nunca se pasan a la política ni al detector.
+
+Ningún módulo de inferencia, política o control importa `p5.datos` ni `p5.expectativas`.
 
 ## Estado
 
@@ -159,22 +233,14 @@ C03 y C07 fallan por recall del detector congelado, documentado en
 de S1, S2 y S3 con `--reproducir-cortes`; la evidencia está en
 [`docs/evidencia/recorrido-real/`](docs/evidencia/recorrido-real/README.md).
 
-La fase 2 de P5-06 (#87) ya está integrada. El README final se cierra en el issue #68
-cuando estén mergeados #59/#60; hasta entonces, el índice E1–E7 queda así:
+Índice E1–E7:
 
-| Índice | Tema | Dónde |
+| ID | Rúbrica | Dónde |
 |---|---|---|
-| E1 | Entrega, arranque y comandos | este README; `docs/evidencia/` |
-| E2 | Contrato A→B y B→adaptador | [`config/contrato_v1.md`](config/contrato_v1.md) |
-| E3 | Datos, anotaciones y congelado | [`docs/datos.md`](docs/datos.md), [`docs/conteo_datos.md`](docs/conteo_datos.md) |
-| E4 | Detector, pesos y límites | [`docs/detector.md`](docs/detector.md) |
-| E5 | Política, adaptador, watchdog, recorrido y casos | [`docs/politica.md`](docs/politica.md), [`docs/watchdog.md`](docs/watchdog.md), [`docs/recorrido.md`](docs/recorrido.md), [`docs/casos.md`](docs/casos.md) |
-| E6 | Métricas TP/FP/FN y P/R/F1 | [guía y resultados](docs/metricas.md), [evidencia definitiva de 78 cuadros](resultados/metricas/metricas.json) |
-| E7 | Benchmark por etapas y recursos | [implementación y protocolo](docs/benchmark.md); [validación](docs/evidencia/p5-08-validacion.md); [medición real 10/100](mediciones/real_cpu_predeterminado_20261104T232545932025Z/) |
-
-E7 se midió en CPU Intel Core i7-13650HX, con ONNX Runtime 1.30.0 y sus hilos
-predeterminados, usando S2_f0008 y los pesos/configuración congelados. Hubo 10
-calentamientos excluidos, 100 mediciones válidas y cero fallos. Total local:
-p50=15,868200 ms, p95=19,195585 ms y máximo=22,058500 ms; p95 y máximo caben en
-100 y 250 ms. Recálculo idéntico; [alcance y auditoría](docs/evidencia/p5-08-validacion.md).
-No incluye red, cámara ni frenado físico; no es una evaluación de calidad de los 78 cuadros.
+| E1 | Repo, README, versiones e instalación | [`README.md`](README.md), [`requirements.txt`](requirements.txt) |
+| E2 | Detector | [`modelo/descriptor.yaml`](modelo/descriptor.yaml), [`scripts/descargar_modelo.py`](scripts/descargar_modelo.py), [`config/detector.yaml`](config/detector.yaml), [`src/p5/detector_onnx.py`](src/p5/detector_onnx.py), [`docs/detector.md`](docs/detector.md) |
+| E3 | Secuencias etiquetadas | [`datos/`](datos/), [`docs/datos.md`](docs/datos.md), [`docs/conteo_datos.md`](docs/conteo_datos.md) |
+| E4 | Política y adaptador | [`config/contrato_v1.md`](config/contrato_v1.md), [`config/politica.yaml`](config/politica.yaml), [`config/watchdog.yaml`](config/watchdog.yaml), [`docs/politica.md`](docs/politica.md), [`docs/watchdog.md`](docs/watchdog.md), [`docs/mapeo_actuacion.md`](docs/mapeo_actuacion.md) |
+| E5 | Diez casos | [`casos/`](casos/), [`docs/casos.md`](docs/casos.md), [`docs/evidencia/casos/`](docs/evidencia/casos/README.md) |
+| E6 | Resultados primarios y métricas | [`docs/evidencia/recorrido-real/`](docs/evidencia/recorrido-real/README.md), [`datos/eventos/`](datos/eventos/README.md), [`docs/metricas.md`](docs/metricas.md), [`resultados/metricas/metricas.json`](resultados/metricas/metricas.json), [métricas del #59](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/59) |
+| E7 | Benchmark y límites | [#60](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/60), [`docs/benchmark.md`](docs/benchmark.md), [`mediciones/real_cpu_predeterminado_20261104T232545932025Z/`](mediciones/real_cpu_predeterminado_20261104T232545932025Z/), [`docs/detector.md`](docs/detector.md) §6, [`docs/recorrido.md`](docs/recorrido.md) |

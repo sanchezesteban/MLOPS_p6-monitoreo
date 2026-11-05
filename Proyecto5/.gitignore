@@ -51,3 +51,6 @@ datos/**/.captura.lock
 
 # Fuentes de recaptura conservadas; solo la selección revisada entra al PR.
 /datos/recaptura_clases/
+
+# Reproducciones locales del benchmark; la medición vigente ya está versionada.
+mediciones/reproduccion_*
