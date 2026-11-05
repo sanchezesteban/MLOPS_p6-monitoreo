@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "run_id": "run-20261105T044656",
+  "commit": "ba81495",
+  "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+  "data_manifest_sha256": "f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181",
+  "runtime": "yolox_nano: DetectorONNX (CPU)",
+  "hardware": "Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+  "virtual_mode": true,
+  "t_start_utc": "2026-11-05T04:46:56+00:00",
+  "replay_dt_ms": 100
+}

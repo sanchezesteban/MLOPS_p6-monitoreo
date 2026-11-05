@@ -1,0 +1,11 @@
+--- casos/expectativas/cuadros_S5.csv
++++ casos_fallo_inducido/expectativas/cuadros_S5.csv
+@@ -3,7 +3,7 @@
+ S5,S5_f0002,S5_c7a3b6924ea941729c79454147278964,41969,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"cat [53.5,153.8,145.5,292.3] toca centro+
+ S5,S5_f0003,S5_d6a2fa0ec7e84c46bccdc688d33dec46,61172,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"cat [81.5,153.8,184,292.8] toca centro+iz
+ S5,S5_f0004,S5_6674d0ebd4da4c82b042d13c768c5178,90094,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"cat [94.5,149.5,165,281.5] toca centro+iz
+-S5,S5_f0005,S5_52b5eb49fe7e42ecac277de67598a8e2,107813,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"dog [100,148.3,158.5,280.3] toca centro+
++S5,S5_f0005,S5_52b5eb49fe7e42ecac277de67598a8e2,107813,bloqueado,izquierda+centro+derecha,FORWARD,obstaculo,si,"dog [100,148.3,158.5,280.3] toca cent
+ S5,S5_f0006,S5_b49cb616cfd843b58c140c86e6160632,133250,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"dog [99,149.8,174,296] toca centro+izqui
+ S5,S5_f0007,S5_075c2d366feb45c98ff42edb99c48768,145438,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"dog [89,147.3,151,283.3] toca centro+izq
+ S5,S5_f0008,S5_7b2fa103939c4356936073e092cc6242,155375,bloqueado,izquierda+centro+derecha,STOP,obstaculo,si,"dog [50,169.3,146.5,292.3] toca centro+i

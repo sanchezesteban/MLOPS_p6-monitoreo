@@ -1,0 +1,39 @@
+{
+  "intentos": 110,
+  "calentamientos_excluidos": 10,
+  "mediciones_validas": 100,
+  "fallidas": 0,
+  "metodo": "interpolacion lineal, posicion (n-1)*q",
+  "etapas": {
+    "preprocesamiento_ms": {
+      "p50_ms": 2.5651999999354302,
+      "p95_ms": 3.0150800002047617,
+      "max_ms": 3.1696999994892394,
+      "coincide_con_resumen": true
+    },
+    "inferencia_ms": {
+      "p50_ms": 8.828450000237353,
+      "p95_ms": 10.444850000612858,
+      "max_ms": 14.623000000028696,
+      "coincide_con_resumen": true
+    },
+    "posprocesamiento_ms": {
+      "p50_ms": 3.443900000092981,
+      "p95_ms": 4.662869999810937,
+      "max_ms": 5.2235000002838206,
+      "coincide_con_resumen": true
+    },
+    "politica_adaptador_ms": {
+      "p50_ms": 0.9184499999719264,
+      "p95_ms": 1.375170000028447,
+      "max_ms": 4.826800000046205,
+      "coincide_con_resumen": true
+    },
+    "total_local_ms": {
+      "p50_ms": 15.868200000113575,
+      "p95_ms": 19.19558499971572,
+      "max_ms": 22.058499999729975,
+      "coincide_con_resumen": true
+    }
+  }
+}

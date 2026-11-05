@@ -1,0 +1,79 @@
+commit: ba81495dda1b818225199d07cff92607713ff4ad  fecha: 2026-11-05T04:46:32Z  python: Python 3.12.3  so: Linux 6.18.44-fc-v236 x86_64
+
+$ pip install -r requirements.txt -r requirements-capturas.txt
+[exit=0  16.5s]
+
+$ pytest
+603 passed, 9 skipped in 5.33s
+[exit=0  6.0s]
+
+$ ruff check .
+All checks passed!
+[exit=0  0.0s]
+
+$ ruff format --check .
+96 files already formatted
+[exit=0  0.0s]
+
+$ python scripts/descargar_modelo.py --destino modelo/
+descargando https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_nano.onnx
+archivo: modelo/yolox_nano.onnx
+bytes:   3659407
+sha256:  c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d (coincide con descriptor.yaml)
+[exit=0  0.8s]
+
+$ PYTHONPATH=src python -m p5.detectar --imagenes datos/evaluacion/S1 --config config/detector.yaml --salida resultados/inferencia_s1
+12 imagenes: 12 ok (12 sin objetos), 0 con error, 0 detecciones -> resultados/inferencia_s1
+[exit=0  0.6s]
+
+$ PYTHONPATH=src python -m p5.recorrer --datos datos/evaluacion --manifiesto datos/evaluacion/capturas.csv --config config/politica.yaml --watchdog-config config/watchdog.yaml --detector real --detector-config config/detector.yaml --reproducir-cortes --replay-dt-ms 100 --salida resultados/recorrido
+Recorrido run-20261105T044656: 78 cuadros, 88 decisiones, 89 comandos
+Cortes de sesion: 5 (cortes_sesion)
+Salida: resultados/recorrido
+[exit=0  1.8s]
+
+$ PYTHONPATH=src python scripts/exportar_eventos.py --detecciones resultados/recorrido/detecciones.jsonl --run resultados/recorrido/run.json --cortes resultados/recorrido/cortes.json --salida resultados/eventos
+Eventos exportados: 78 (S1=12, S2=17, S3=13, S4=12, S5=12, S6=12)
+Modo: cortes_sesion; cortes: 5
+Salida: resultados/eventos
+[exit=0  0.2s]
+
+$ PYTHONPATH=src python -m p5.casos --casos casos --config config/politica.yaml --control-config config/watchdog.yaml --salida resultados/casos
+C01  pass   Via libre
+C02  fail   Obstaculo central
+       - S2_f0011: accion FORWARD no permitida (esperaba ['STOP'])
+       - S2_f0012: accion FORWARD no permitida (esperaba ['STOP'])
+       - S2_f0013: accion FORWARD no permitida (esperaba ['STOP'])
+       - casos/expectativas/C02.yaml: S2_f0011 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+       - casos/expectativas/C02.yaml: S2_f0012 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+       - casos/expectativas/C02.yaml: S2_f0013 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+C03  fail   Obstaculo solo a la izquierda
+       - S3_f0003: accion FORWARD no permitida (esperaba ['STOP'])
+       - S3_f0010: accion FORWARD no permitida (esperaba ['STOP'])
+       - casos/expectativas/C03.yaml: S3_f0003 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+       - casos/expectativas/C03.yaml: S3_f0010 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+C04  pass   Obstaculo solo a la derecha
+C05  pass   Varios obstaculos sin zona libre
+C06  pass   Deteccion bajo umbral y luego sobre umbral
+C07  fail   Libre, obstaculo persistente y desaparicion
+       - S6_f0006: accion FORWARD no permitida (esperaba ['STOP'])
+       - S6_f0008: accion FORWARD no permitida (esperaba ['STOP'])
+       - casos/expectativas/C07.yaml: S6_f0006 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+       - casos/expectativas/C07.yaml: S6_f0008 quedo bloqueado y no hubo STOP en 0 cuadro(s)
+       - casos/expectativas/C07.yaml: hubo movimiento entre S6_f0006 y S6_f0008
+C08  pass   Corte de cuadros y cuadro vencido
+C09  pass   Error del detector, imagen ilegible y salida no finita
+C10  pass   Emergencia, rearme y cierre
+
+Resultado: 7/10 casos pasan (codigo de salida 1)
+[exit=1  0.3s]
+
+$ PYTHONPATH=src python -m p5.metricas --gt datos/anotaciones.json --pred resultados/recorrido/detecciones.jsonl --manifiesto datos/manifiesto.csv --iou 0.50 --cuadros-esperados 78 --salida resultados/metricas_reproduccion
+NO_CERTIFICADA_COMO_CORRIDA_REAL: 78 cuadros -> resultados/metricas_reproduccion/metricas.json
+{"f1": 0.6562499999999999, "fn": 40, "fp": 4, "precision": 0.9130434782608695, "recall": 0.5121951219512195, "support": 82, "tp": 42}
+[exit=0  0.2s]
+
+$ PYTHONPATH=src python -m p5.benchmark --modo real --imagen datos/evaluacion/S2/S2_0000058828_S2_f0008.jpg --calentamientos 10 --ejecuciones 100 --salida mediciones/reproduccion_p5_08
+DETECTOR_CPU_LOCAL: 100 validas; 110 intentos -> mediciones/reproduccion_p5_08
+[exit=0  2.4s]
+
