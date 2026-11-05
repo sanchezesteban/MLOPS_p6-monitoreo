@@ -1,0 +1,3671 @@
+{
+  "evidence": "NO_CERTIFICADA_COMO_CORRIDA_REAL",
+  "frame_details": [
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000000000_3ca02f25fb7243ac9ebef27983af9b31.jpg",
+      "gt_frame_id": "S1_f0001",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1001,
+      "image_sha256": "338bc1c17952690f5ddf565d65ed043e1472731279954e46eba59cbbf7387bb4",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0001",
+      "prediction_t_capture_ms": 0.0,
+      "record_lines": [
+        1
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000000000_e07625641a4443f2969d5b06c5508475.jpg",
+      "gt_frame_id": "S1_f0010",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1010,
+      "image_sha256": "384d2da4402aa294be6778a0b571c328a4b002bcc59d4b8e4cfbc0c905ead8cd",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0010",
+      "prediction_t_capture_ms": 3624151.0,
+      "record_lines": [
+        10
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000006828_183b685daed549809d266566ca62ce4c.jpg",
+      "gt_frame_id": "S1_f0002",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1002,
+      "image_sha256": "e3a40048a4ec337386ff39ee26b99ab57904673f10e8f001636a5dff0ae3490c",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0002",
+      "prediction_t_capture_ms": 100.0,
+      "record_lines": [
+        2
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000032187_8e76f0bf9ada44dca0ac9ef5a47dfb82.jpg",
+      "gt_frame_id": "S1_f0011",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1011,
+      "image_sha256": "4b9bdaa55f9430da60681a1e4bb34732a82d4f59f9d4e78e6b32597e4a11bcd9",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0011",
+      "prediction_t_capture_ms": 3624251.0,
+      "record_lines": [
+        11
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000037094_83c8f36fbd374035b523d10c2040af0a.jpg",
+      "gt_frame_id": "S1_f0003",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1003,
+      "image_sha256": "76302699732540e0854645d6d50e6722eee90fc5a35df845f8fbbf2aa8e3e129",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0003",
+      "prediction_t_capture_ms": 200.0,
+      "record_lines": [
+        3
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000050062_e4cb176a369941f08a28ee05836bafd9.jpg",
+      "gt_frame_id": "S1_f0004",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1004,
+      "image_sha256": "e4ebf5b1cb8e3a8176be14dd212083e7044f394a77500a5c96b0374d5819c4a6",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0004",
+      "prediction_t_capture_ms": 300.0,
+      "record_lines": [
+        4
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000058781_d870be1f14774192beea928b9343af3f.jpg",
+      "gt_frame_id": "S1_f0012",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1012,
+      "image_sha256": "51654ac7a7d729467935854ab2aea16586ea0c0ab7179220b10db4c96e0c4db6",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0012",
+      "prediction_t_capture_ms": 3624351.0,
+      "record_lines": [
+        12
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000059719_cb3a6daa6529446b80399e34ae6aae9c.jpg",
+      "gt_frame_id": "S1_f0005",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1005,
+      "image_sha256": "ec422ab550c9816b3891c89e25a9ea184d005b4623ef9140192b42d930ca2dd8",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0005",
+      "prediction_t_capture_ms": 400.0,
+      "record_lines": [
+        5
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000066562_a364a69c557a49eaac35d3d4148acd24.jpg",
+      "gt_frame_id": "S1_f0006",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1006,
+      "image_sha256": "488a4d9556a20fd6e3b308f15f31b42ea0c3772e9a9cf9402abb45c84a4d8969",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0006",
+      "prediction_t_capture_ms": 500.0,
+      "record_lines": [
+        6
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000103562_4ee55b80fcbd4c2e8314e1d8dbd17aac.jpg",
+      "gt_frame_id": "S1_f0007",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1007,
+      "image_sha256": "b5d4d6c5c6f85808a52ca491299314b44acd803fbb75d8a4b033b6ae5c06e26d",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0007",
+      "prediction_t_capture_ms": 600.0,
+      "record_lines": [
+        7
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000129000_a246085a50444c4ca96550f2a0009206.jpg",
+      "gt_frame_id": "S1_f0008",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1008,
+      "image_sha256": "7525557346c56ee0222cda77ded260e952c370186f3f7fa385b9f00fa8b84103",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0008",
+      "prediction_t_capture_ms": 700.0,
+      "record_lines": [
+        8
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S1/S1_0000157890_92b8210f1e994224b991ad2d499bd25f.jpg",
+      "gt_frame_id": "S1_f0009",
+      "gt_sequence_id": "S1",
+      "ignored_detections": 0,
+      "image_id": 1009,
+      "image_sha256": "3874ab8716c4d1c7d58797eaaf3a6d44ce4201084a61466e804cdd35d745ea27",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S1_f0009",
+      "prediction_t_capture_ms": 800.0,
+      "record_lines": [
+        9
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000046797_S2_f0007.jpg",
+      "gt_frame_id": "S2_f0007",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2007,
+      "image_sha256": "4681760de40049edc393e1217a38251bd72610f2243a897909f9c3c782d6ec60",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 200701,
+              "best_free_iou": 0.7490036688213088,
+              "confidence": 0.8741694986054043,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0007",
+      "prediction_t_capture_ms": 3624751.0,
+      "record_lines": [
+        13
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000058828_S2_f0008.jpg",
+      "gt_frame_id": "S2_f0008",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2008,
+      "image_sha256": "98c6d6431d0bd1a44ca6c69790344f4f21b3cc8c647b2b6f0495fbf9f8e5e8b7",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 200801,
+              "best_free_iou": 0.8881691178234505,
+              "confidence": 0.8952662538956986,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0008",
+      "prediction_t_capture_ms": 3624851.0,
+      "record_lines": [
+        14
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000300734_S2_f0009.jpg",
+      "gt_frame_id": "S2_f0009",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2009,
+      "image_sha256": "e068f41b2d6aa859dee044c9ca48b47e146573a2f20d88da8b91f3d55298f163",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            200901
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0009",
+      "prediction_t_capture_ms": 3866757.0,
+      "record_lines": [
+        15
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000362702_S2_f0010.jpg",
+      "gt_frame_id": "S2_f0010",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2010,
+      "image_sha256": "6a291f9048266de2f2edfe3e4895fec3522bb41ac300aabcaea85ead571f2aad",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201001
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0010",
+      "prediction_t_capture_ms": 3866857.0,
+      "record_lines": [
+        16
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000370780_S2_f0011.jpg",
+      "gt_frame_id": "S2_f0011",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2011,
+      "image_sha256": "8877d3e1100610aae6922ea84c29d3053e6cfd699d56b0c1a4a5e2aa7b475b58",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201101
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0011",
+      "prediction_t_capture_ms": 3866957.0,
+      "record_lines": [
+        17
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000383421_S2_f0012.jpg",
+      "gt_frame_id": "S2_f0012",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2012,
+      "image_sha256": "955114f5e62541f8c79edbd934c617fc48661f9bab37c7393bf7aebde484b3fb",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201201
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0012",
+      "prediction_t_capture_ms": 3867057.0,
+      "record_lines": [
+        18
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000652140_S2_f0013.jpg",
+      "gt_frame_id": "S2_f0013",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2013,
+      "image_sha256": "92401c3296a2ec5a4233bb59d3c40276d5ec3662e3c492eba7d337400752fde6",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201301
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0013",
+      "prediction_t_capture_ms": 3867157.0,
+      "record_lines": [
+        19
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000673390_S2_f0014.jpg",
+      "gt_frame_id": "S2_f0014",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2014,
+      "image_sha256": "47a32132f70b4ab1c489b03206430cf0d1b6d7d765f5e45fbae593052c79cbd5",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201401
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 1,
+          "matches": [
+            {
+              "annotation_id": null,
+              "best_free_iou": 0.0,
+              "confidence": 0.6588182408891754,
+              "prediction_index": 0,
+              "result": "fp"
+            }
+          ],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0014",
+      "prediction_t_capture_ms": 3867257.0,
+      "record_lines": [
+        20
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000788812_S2_f0015.jpg",
+      "gt_frame_id": "S2_f0015",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2015,
+      "image_sha256": "3ec48e56d54f99d33072a3c8cd6bf3acc1f22941318ccdd33e90b0eaad8c061b",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201501
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0015",
+      "prediction_t_capture_ms": 3867357.0,
+      "record_lines": [
+        21
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0000838702_S2_f0016.jpg",
+      "gt_frame_id": "S2_f0016",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2016,
+      "image_sha256": "fea41a97367acc15b15f6277f402292c16d9204bc363898bf6029be6edfc7ea2",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201601
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0016",
+      "prediction_t_capture_ms": 3867457.0,
+      "record_lines": [
+        22
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0002831460_S2_f0017.jpg",
+      "gt_frame_id": "S2_f0017",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2017,
+      "image_sha256": "943c8778ecbd7c231afbbf873ac9abb8c787a30b63be546fa4bec38fb6404e52",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 201701,
+              "best_free_iou": 0.8487805016351139,
+              "confidence": 0.8566384423640727,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0017",
+      "prediction_t_capture_ms": 5860215.0,
+      "record_lines": [
+        23
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0004648499_S2_f0018.jpg",
+      "gt_frame_id": "S2_f0018",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2018,
+      "image_sha256": "ccc6d112963e43097505a6a0d1477350f5bd3ead94fa2141f33d2d2f1d598b6e",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201801
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0018",
+      "prediction_t_capture_ms": 7677254.0,
+      "record_lines": [
+        24
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0004654343_S2_f0019.jpg",
+      "gt_frame_id": "S2_f0019",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2019,
+      "image_sha256": "2f6bc34b752fe605170245bef857ff36a4692d0596422141ee3a722cabfc29a6",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            201901
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0019",
+      "prediction_t_capture_ms": 7677354.0,
+      "record_lines": [
+        25
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0004661796_S2_f0020.jpg",
+      "gt_frame_id": "S2_f0020",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2020,
+      "image_sha256": "1b60cac677e8434c9b9f05e6274b883d00952ab376b4b21fe09bdf7cad0947b3",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            202001
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0020",
+      "prediction_t_capture_ms": 7677454.0,
+      "record_lines": [
+        26
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0004671062_S2_f0021.jpg",
+      "gt_frame_id": "S2_f0021",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 1,
+      "image_id": 2021,
+      "image_sha256": "e04ad1e1194daeb6738e5ad25dfdeb444f5773680e8e28f6686173cb4945eb4e",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 202101,
+              "best_free_iou": 0.893827465520831,
+              "confidence": 0.6275629394937994,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0021",
+      "prediction_t_capture_ms": 7677554.0,
+      "record_lines": [
+        27
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0004673374_S2_f0022.jpg",
+      "gt_frame_id": "S2_f0022",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 0,
+      "image_id": 2022,
+      "image_sha256": "7b5e698f59591bd9dcb1478d143e27ceb641d62817ebeec2e976a34c932c699e",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 202201,
+              "best_free_iou": 0.7194208383454077,
+              "confidence": 0.5393848908459447,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0022",
+      "prediction_t_capture_ms": 7677654.0,
+      "record_lines": [
+        28
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S2/S2_0004687280_S2_f0023.jpg",
+      "gt_frame_id": "S2_f0023",
+      "gt_sequence_id": "S2",
+      "ignored_detections": 2,
+      "image_id": 2023,
+      "image_sha256": "282598e635182c30fb5db2b8bda37e8ac39a64c7126158cab95271c298717a34",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            202301
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S2_f0023",
+      "prediction_t_capture_ms": 7677754.0,
+      "record_lines": [
+        29
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000000000_S3_f0001.jpg",
+      "gt_frame_id": "S3_f0001",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3001,
+      "image_sha256": "fc33fdaa2ebb1f987b53b97324b676ab43c3904242d1fc4a73809470a68dffaf",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300101
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0001",
+      "prediction_t_capture_ms": 7678154.0,
+      "record_lines": [
+        30
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000009485_S3_f0002.jpg",
+      "gt_frame_id": "S3_f0002",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 1,
+      "image_id": 3002,
+      "image_sha256": "8a285a88f9315008f47401e88c0d6f3da35f04b304d8162473d141b49f7e7d89",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300201
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0002",
+      "prediction_t_capture_ms": 7678254.0,
+      "record_lines": [
+        31
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000020688_S3_f0003.jpg",
+      "gt_frame_id": "S3_f0003",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 1,
+      "image_id": 3003,
+      "image_sha256": "886512493eabde2c187c43deedadeaaf5971b414ba46a347f6b335d8fbf26e7f",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300301
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0003",
+      "prediction_t_capture_ms": 7678354.0,
+      "record_lines": [
+        32
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000026782_S3_f0006.jpg",
+      "gt_frame_id": "S3_f0006",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 1,
+      "image_id": 3006,
+      "image_sha256": "94c9c75c81c86728b9946a73cc092ebc119797edee44238dc1f80d5c0533284b",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300601
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0006",
+      "prediction_t_capture_ms": 7678454.0,
+      "record_lines": [
+        33
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000030797_S3_f0007.jpg",
+      "gt_frame_id": "S3_f0007",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3007,
+      "image_sha256": "a41abc95e693506fcb508f7985b450b82709b9b352c59990872c030b5283e89b",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300701
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0007",
+      "prediction_t_capture_ms": 7678554.0,
+      "record_lines": [
+        34
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000705238_S3_f0008.jpg",
+      "gt_frame_id": "S3_f0008",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 1,
+      "image_id": 3008,
+      "image_sha256": "4be932177ae9f0b59d47244b0e8d2fb9f70046f6c0b7e68ec1d3799fc57db940",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300801
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0008",
+      "prediction_t_capture_ms": 8352995.0,
+      "record_lines": [
+        35
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000710831_S3_f0009.jpg",
+      "gt_frame_id": "S3_f0009",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3009,
+      "image_sha256": "fe67e123e738a6cb78a3e579c2d2dd860ac064611ff910c9fe1e9a6661baa645",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            300901
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0009",
+      "prediction_t_capture_ms": 8353095.0,
+      "record_lines": [
+        36
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000715566_S3_f0010.jpg",
+      "gt_frame_id": "S3_f0010",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 1,
+      "image_id": 3010,
+      "image_sha256": "85470b6deae7e3522c397e656c0d3833af3fe90574500ded1e2080ec4928e057",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            301001
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0010",
+      "prediction_t_capture_ms": 8353195.0,
+      "record_lines": [
+        37
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000723144_S3_f0011.jpg",
+      "gt_frame_id": "S3_f0011",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3011,
+      "image_sha256": "b8e1e982365ed0d4632b2a63ae62d056b916eb51567e75896c5758066c4fea37",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            301101
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0011",
+      "prediction_t_capture_ms": 8353295.0,
+      "record_lines": [
+        38
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000778675_S3_f0012.jpg",
+      "gt_frame_id": "S3_f0012",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3012,
+      "image_sha256": "65f9aa67f78918f618705712b1a5501c5ed751303afef6d288fb7a243357c140",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 301201,
+              "best_free_iou": 0.9326188446393048,
+              "confidence": 0.6904242951241883,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0012",
+      "prediction_t_capture_ms": 8353395.0,
+      "record_lines": [
+        39
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000790941_S3_f0013.jpg",
+      "gt_frame_id": "S3_f0013",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 1,
+      "image_id": 3013,
+      "image_sha256": "ff06a56b55a1f591aee016d609fb850a007a690e16e882c559c36134d1780d2c",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 301301,
+              "best_free_iou": 0.8316691009042813,
+              "confidence": 0.9078128520771145,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0013",
+      "prediction_t_capture_ms": 8353495.0,
+      "record_lines": [
+        40
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000798050_S3_f0014.jpg",
+      "gt_frame_id": "S3_f0014",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3014,
+      "image_sha256": "cb9e81ea14435c0edc53498b478cfb799b05415d0507827f1bdb48a27e37cd92",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 301401,
+              "best_free_iou": 0.9070785225527161,
+              "confidence": 0.8520630252354238,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0014",
+      "prediction_t_capture_ms": 8353595.0,
+      "record_lines": [
+        41
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S3/S3_0000808894_S3_f0015.jpg",
+      "gt_frame_id": "S3_f0015",
+      "gt_sequence_id": "S3",
+      "ignored_detections": 0,
+      "image_id": 3015,
+      "image_sha256": "a2bb01a4f52a296399b96bae4ac325fc7fff9a80d5d9d6eabed8ef903116bf75",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 301501,
+              "best_free_iou": 0.8288432256107537,
+              "confidence": 0.44633229874811775,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S3_f0015",
+      "prediction_t_capture_ms": 8353695.0,
+      "record_lines": [
+        42
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000000000_S4_f0001.jpg",
+      "gt_frame_id": "S4_f0001",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4001,
+      "image_sha256": "946281686b4a5f5a6795cea847a50b597fbd02df7aab988dcd87ca8ba3dbcc87",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            400101
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0001",
+      "prediction_t_capture_ms": 8354095.0,
+      "record_lines": [
+        43
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000017406_S4_f0003.jpg",
+      "gt_frame_id": "S4_f0003",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4003,
+      "image_sha256": "eb8e899e5dea09afd69469f685f4e3dbbc803c8f44518e611d84cf606ef09780",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            400301
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0003",
+      "prediction_t_capture_ms": 8354195.0,
+      "record_lines": [
+        44
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000019860_S4_f0004.jpg",
+      "gt_frame_id": "S4_f0004",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4004,
+      "image_sha256": "4791d904125f7b56fbb7f5117d3791ba731f7fbc05712b602183a90e5d3c2182",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            400401
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0004",
+      "prediction_t_capture_ms": 8354295.0,
+      "record_lines": [
+        45
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000020047_S4_f0005.jpg",
+      "gt_frame_id": "S4_f0005",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 1,
+      "image_id": 4005,
+      "image_sha256": "76723b57a3ce1602dc1e7452b9ed3b324aa4b4702e4700de4146ee9a1de1927c",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            400501
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0005",
+      "prediction_t_capture_ms": 8354395.0,
+      "record_lines": [
+        46
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000191438_S4_f0006.jpg",
+      "gt_frame_id": "S4_f0006",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 1,
+      "image_id": 4006,
+      "image_sha256": "e930a9421e10ae05cd537918df3890ad0dd539815e88da9d4c032687e61f8e76",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 400601,
+              "best_free_iou": 0.9081968741375944,
+              "confidence": 0.8797653101728429,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0006",
+      "prediction_t_capture_ms": 8354495.0,
+      "record_lines": [
+        47
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000203063_S4_f0007.jpg",
+      "gt_frame_id": "S4_f0007",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 1,
+      "image_id": 4007,
+      "image_sha256": "e2b44a800ecb3af862c3ea8ee814afb22878606d9fea6c998da32824337269a7",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 400701,
+              "best_free_iou": 0.8445667925613805,
+              "confidence": 0.803861162604548,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0007",
+      "prediction_t_capture_ms": 8354595.0,
+      "record_lines": [
+        48
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000226610_S4_f0009.jpg",
+      "gt_frame_id": "S4_f0009",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4009,
+      "image_sha256": "3d4ed7fbb454c438acacb826ba4d1403d6d828f40f39333c89daaf5b1d4929d9",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 400901,
+              "best_free_iou": 0.8781941399279662,
+              "confidence": 0.8150603455420509,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0009",
+      "prediction_t_capture_ms": 8354695.0,
+      "record_lines": [
+        49
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000235594_S4_f0010.jpg",
+      "gt_frame_id": "S4_f0010",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4010,
+      "image_sha256": "c8865faf2c76ff06be684e68a557103b84668b7e2e0dd2d1118cea6aa595ab74",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 401001,
+              "best_free_iou": 0.8333983160395488,
+              "confidence": 0.8516986827031019,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0010",
+      "prediction_t_capture_ms": 8354795.0,
+      "record_lines": [
+        50
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000451313_S4_f0011.jpg",
+      "gt_frame_id": "S4_f0011",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 1,
+      "image_id": 4011,
+      "image_sha256": "434d5b5caf85b9976030514794d5daa3ccc25cca87fb7b3125b98f0b17e45404",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            401101
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0011",
+      "prediction_t_capture_ms": 8354895.0,
+      "record_lines": [
+        51
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000458891_S4_f0012.jpg",
+      "gt_frame_id": "S4_f0012",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4012,
+      "image_sha256": "c7d5d9612b4ec3f86329176538cf196872b65924bf1b7cb43762a684419f9667",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            401201
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0012",
+      "prediction_t_capture_ms": 8354995.0,
+      "record_lines": [
+        52
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000469797_S4_f0013.jpg",
+      "gt_frame_id": "S4_f0013",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 0,
+      "image_id": 4013,
+      "image_sha256": "a9e2dba3368587e55a274566330d0b50d17e1c4b1236f47f462cd8c2f5e4cfdd",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            401301
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0013",
+      "prediction_t_capture_ms": 8355095.0,
+      "record_lines": [
+        53
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S4/S4_0000491594_S4_f0014.jpg",
+      "gt_frame_id": "S4_f0014",
+      "gt_sequence_id": "S4",
+      "ignored_detections": 2,
+      "image_id": 4014,
+      "image_sha256": "38e2f07a473f81badf429a5f6a41cc0bab68210bf7e165e0600234ae9d6956f2",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            401401
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S4_f0014",
+      "prediction_t_capture_ms": 8355195.0,
+      "record_lines": [
+        54
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000000000_S5_20800b49d3044edf9c90975516e5fbcc.jpg",
+      "gt_frame_id": "S5_f0001",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5001,
+      "image_sha256": "7d619ac1cafef6c267bf8f19fd94315aa03e3fe31394ab43dad83bc8eafa2d6e",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 1,
+          "matches": [
+            {
+              "annotation_id": 500103,
+              "best_free_iou": 0.8445155295551612,
+              "confidence": 0.8671686259052613,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500102,
+              "best_free_iou": 0.7541953686489056,
+              "confidence": 0.7539955739947573,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": null,
+              "best_free_iou": 0.47155514595654197,
+              "confidence": 0.7005941999784824,
+              "prediction_index": 2,
+              "result": "fp"
+            }
+          ],
+          "tp": 2,
+          "unmatched_gt": [
+            500101
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0001",
+      "prediction_t_capture_ms": 8355595.0,
+      "record_lines": [
+        55
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000041969_S5_c7a3b6924ea941729c79454147278964.jpg",
+      "gt_frame_id": "S5_f0002",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 1,
+      "image_id": 5002,
+      "image_sha256": "cdc1f4fb30f64dd0f9b1609cceacc48771c2d02b8c59450d227af0e98bbd0c6a",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500201,
+              "best_free_iou": 0.9487144726202696,
+              "confidence": 0.8104434928490036,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500203,
+              "best_free_iou": 0.8670752379232747,
+              "confidence": 0.7875515340446952,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500202,
+              "best_free_iou": 0.8638451736407033,
+              "confidence": 0.7579969625179253,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 3,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0002",
+      "prediction_t_capture_ms": 8355695.0,
+      "record_lines": [
+        56
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000061172_S5_d6a2fa0ec7e84c46bccdc688d33dec46.jpg",
+      "gt_frame_id": "S5_f0003",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5003,
+      "image_sha256": "eb01183d6e0a19dd79939420ed0f4d79fae1c0f8d1c0dcea23a4f9259e5e0ea1",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500302,
+              "best_free_iou": 0.8746993875115089,
+              "confidence": 0.8550444147986695,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500301,
+              "best_free_iou": 0.8300436590521554,
+              "confidence": 0.841641243189116,
+              "prediction_index": 1,
+              "result": "tp"
+            }
+          ],
+          "tp": 2,
+          "unmatched_gt": [
+            500303
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0003",
+      "prediction_t_capture_ms": 8355795.0,
+      "record_lines": [
+        57
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000090094_S5_6674d0ebd4da4c82b042d13c768c5178.jpg",
+      "gt_frame_id": "S5_f0004",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 2,
+      "image_id": 5004,
+      "image_sha256": "2a2d6722e75747cad282f3e1f3ddfa889ab89e45817b83e3ae6154785dd2a13e",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 2,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500402,
+              "best_free_iou": 0.88771313116489,
+              "confidence": 0.6618037578887765,
+              "prediction_index": 0,
+              "result": "tp"
+            }
+          ],
+          "tp": 1,
+          "unmatched_gt": [
+            500401,
+            500403
+          ]
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 1,
+          "matches": [
+            {
+              "annotation_id": null,
+              "best_free_iou": 0.0,
+              "confidence": 0.358644073843708,
+              "prediction_index": 2,
+              "result": "fp"
+            }
+          ],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0004",
+      "prediction_t_capture_ms": 8355895.0,
+      "record_lines": [
+        58
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000107813_S5_52b5eb49fe7e42ecac277de67598a8e2.jpg",
+      "gt_frame_id": "S5_f0005",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5005,
+      "image_sha256": "0350abacdcdbf1b625e1346f34c7a8f5007385bd0d3b74013e16ae35771f5cd4",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500503,
+              "best_free_iou": 0.7343636520857746,
+              "confidence": 0.8303755850102235,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500502,
+              "best_free_iou": 0.8561156761557852,
+              "confidence": 0.5259516689291956,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500501,
+              "best_free_iou": 0.71578292339436,
+              "confidence": 0.3954289452545936,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 3,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0005",
+      "prediction_t_capture_ms": 8355995.0,
+      "record_lines": [
+        59
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000133250_S5_b49cb616cfd843b58c140c86e6160632.jpg",
+      "gt_frame_id": "S5_f0006",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 1,
+      "image_id": 5006,
+      "image_sha256": "a0ebce9569e196c2a0f21b003c753d3a020c9c0d4fa7bbe41ba3a8cb892b38a2",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500601,
+              "best_free_iou": 0.5850495819103905,
+              "confidence": 0.4731296155277036,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500603,
+              "best_free_iou": 0.8614664385313516,
+              "confidence": 0.4406441981293554,
+              "prediction_index": 1,
+              "result": "tp"
+            }
+          ],
+          "tp": 2,
+          "unmatched_gt": [
+            500602
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0006",
+      "prediction_t_capture_ms": 8356095.0,
+      "record_lines": [
+        60
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000145438_S5_075c2d366feb45c98ff42edb99c48768.jpg",
+      "gt_frame_id": "S5_f0007",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5007,
+      "image_sha256": "f2fb6f505076f548936ea34f604d2704dc86f184612eba226f364c80ea1e8690",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500703,
+              "best_free_iou": 0.8065403448110909,
+              "confidence": 0.8628174463416087,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500702,
+              "best_free_iou": 0.7412790318867523,
+              "confidence": 0.8351614767375608,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500701,
+              "best_free_iou": 0.7331743772623399,
+              "confidence": 0.8207558304834706,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 3,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0007",
+      "prediction_t_capture_ms": 8356195.0,
+      "record_lines": [
+        61
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000155375_S5_7b2fa103939c4356936073e092cc6242.jpg",
+      "gt_frame_id": "S5_f0008",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 1,
+      "image_id": 5008,
+      "image_sha256": "dda5f2b026c9365eda9687d813ed9b67ab2f1ab15a1b3c617c2918aab814fe80",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 500803,
+              "best_free_iou": 0.5082018666666666,
+              "confidence": 0.4386110185169585,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 500802,
+              "best_free_iou": 0.9137474174222799,
+              "confidence": 0.4359591483606735,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 2,
+          "unmatched_gt": [
+            500801
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0008",
+      "prediction_t_capture_ms": 8356295.0,
+      "record_lines": [
+        62
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000175188_S5_c4e7679414f84afd9a95199569c1e17e.jpg",
+      "gt_frame_id": "S5_f0009",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5009,
+      "image_sha256": "6a815f6ade759b01bb33ba33b8644c522cc625dab3e2b27093acb585509558f0",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 1,
+          "fp": 1,
+          "matches": [
+            {
+              "annotation_id": 500903,
+              "best_free_iou": 0.9072187540094319,
+              "confidence": 0.7571814930651186,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": null,
+              "best_free_iou": 0.39043235294112205,
+              "confidence": 0.6673235629236842,
+              "prediction_index": 1,
+              "result": "fp"
+            },
+            {
+              "annotation_id": 500901,
+              "best_free_iou": 0.7524339323472893,
+              "confidence": 0.6275343900246071,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 2,
+          "unmatched_gt": [
+            500902
+          ]
+        }
+      },
+      "prediction_frame_id": "S5_f0009",
+      "prediction_t_capture_ms": 8356395.0,
+      "record_lines": [
+        63
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000193141_S5_224e2f5965494b0683da7386e9056020.jpg",
+      "gt_frame_id": "S5_f0010",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 1,
+      "image_id": 5010,
+      "image_sha256": "34acc7eb0467e32b6921d0e415a3d13ddd11fe266bb5b319de19c4ccdf8390b6",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 501003,
+              "best_free_iou": 0.8781261151745093,
+              "confidence": 0.8804135604977432,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 501001,
+              "best_free_iou": 0.8745533961871753,
+              "confidence": 0.8707339016966387,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 501002,
+              "best_free_iou": 0.8193861620802353,
+              "confidence": 0.8243241928876444,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 3,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0010",
+      "prediction_t_capture_ms": 8356495.0,
+      "record_lines": [
+        64
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000197688_S5_d08e1432ab1942aeb1f14f614fdc78a5.jpg",
+      "gt_frame_id": "S5_f0011",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5011,
+      "image_sha256": "ab361e43f42e41291917d4aa9062c2d130698fbb1a34370e85dd1fdfd06569b1",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 501102,
+              "best_free_iou": 0.8396725109506863,
+              "confidence": 0.8551620863849649,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 501101,
+              "best_free_iou": 0.6904444073460089,
+              "confidence": 0.8499731917705873,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 501103,
+              "best_free_iou": 0.797977078511,
+              "confidence": 0.7985430140869099,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 3,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0011",
+      "prediction_t_capture_ms": 8356595.0,
+      "record_lines": [
+        65
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S5/S5_0000220891_S5_425be420bfc74c2281b7649cdc7249a9.jpg",
+      "gt_frame_id": "S5_f0012",
+      "gt_sequence_id": "S5",
+      "ignored_detections": 0,
+      "image_id": 5012,
+      "image_sha256": "33c87830d9bf01d2bc0de809883799accbfdd202fb3a8d601a97aec4fac1025b",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [
+            {
+              "annotation_id": 501201,
+              "best_free_iou": 0.8604615065029775,
+              "confidence": 0.88302483663416,
+              "prediction_index": 0,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 501203,
+              "best_free_iou": 0.8593352383784083,
+              "confidence": 0.8522417908421289,
+              "prediction_index": 1,
+              "result": "tp"
+            },
+            {
+              "annotation_id": 501202,
+              "best_free_iou": 0.850012963016342,
+              "confidence": 0.7687243006196738,
+              "prediction_index": 2,
+              "result": "tp"
+            }
+          ],
+          "tp": 3,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S5_f0012",
+      "prediction_t_capture_ms": 8356695.0,
+      "record_lines": [
+        66
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000000000_S6_f0001.jpg",
+      "gt_frame_id": "S6_f0001",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 1,
+      "image_id": 6001,
+      "image_sha256": "edb9db4f00615fb5d1f772bab8d3b4b36d9710fcbdfc89384fa5489ee53fff7d",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0001",
+      "prediction_t_capture_ms": 8357095.0,
+      "record_lines": [
+        67
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000022281_S6_f0002.jpg",
+      "gt_frame_id": "S6_f0002",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 1,
+      "image_id": 6002,
+      "image_sha256": "80844409ad75e4ccefc6151e1ef021f67f78588a8b386d27dcc1f40125457c44",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0002",
+      "prediction_t_capture_ms": 8357195.0,
+      "record_lines": [
+        68
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000032812_S6_f0003.jpg",
+      "gt_frame_id": "S6_f0003",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 0,
+      "image_id": 6003,
+      "image_sha256": "9022b0ea0d678980179dde106c3380c65f4cebb91f4b533b1d52a6fc6c2a5eb5",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0003",
+      "prediction_t_capture_ms": 8357295.0,
+      "record_lines": [
+        69
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000050625_S6_f0004.jpg",
+      "gt_frame_id": "S6_f0004",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 2,
+      "image_id": 6004,
+      "image_sha256": "cee8bd3a9ce03b60307138156ffa1d02b2a724172818e9c9a6b190d818931a40",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0004",
+      "prediction_t_capture_ms": 8357395.0,
+      "record_lines": [
+        70
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000138922_S6_f0005.jpg",
+      "gt_frame_id": "S6_f0005",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 1,
+      "image_id": 6005,
+      "image_sha256": "8b575c542b4fad6b213a9b0ee1e6ba6d0b3e62a8f962101f0e6629caf12e84d0",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            600501
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0005",
+      "prediction_t_capture_ms": 8357495.0,
+      "record_lines": [
+        71
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000147922_S6_f0006.jpg",
+      "gt_frame_id": "S6_f0006",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 1,
+      "image_id": 6006,
+      "image_sha256": "7bb989e55e0a1edec9b722e974f52634b7a497cf6d801b83b54bc6e1344da999",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            600601
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0006",
+      "prediction_t_capture_ms": 8357595.0,
+      "record_lines": [
+        72
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000203562_S6_f0007.jpg",
+      "gt_frame_id": "S6_f0007",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 0,
+      "image_id": 6007,
+      "image_sha256": "ffdc400c3316c660a9a97e510fed67d373da6b047d2a30e2ee9ea932bfe8b51e",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            600701
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0007",
+      "prediction_t_capture_ms": 8357695.0,
+      "record_lines": [
+        73
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000220344_S6_f0008.jpg",
+      "gt_frame_id": "S6_f0008",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 1,
+      "image_id": 6008,
+      "image_sha256": "d98184f7d6f12324f95c7f6259f60a157896dc2fa1a34028a9d55e080227fb9a",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 1,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": [
+            600801
+          ]
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0008",
+      "prediction_t_capture_ms": 8357795.0,
+      "record_lines": [
+        74
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000251125_S6_f0009.jpg",
+      "gt_frame_id": "S6_f0009",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 0,
+      "image_id": 6009,
+      "image_sha256": "550acb71761584b72c8d98680c68544670effc7cb311853fd29ddf493e2e9bf0",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0009",
+      "prediction_t_capture_ms": 8357895.0,
+      "record_lines": [
+        75
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000252844_S6_f0010.jpg",
+      "gt_frame_id": "S6_f0010",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 1,
+      "image_id": 6010,
+      "image_sha256": "a46d3d6ecb4037fdb7cdfe935950fe800e62fc3138de911cd87c0b7468b9b4c5",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0010",
+      "prediction_t_capture_ms": 8357995.0,
+      "record_lines": [
+        76
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000260203_S6_f0011.jpg",
+      "gt_frame_id": "S6_f0011",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 0,
+      "image_id": 6011,
+      "image_sha256": "77c992f2a4140b17a1e5581b6bdaf2953d0a8e948f01c468b9d80d58456718f3",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0011",
+      "prediction_t_capture_ms": 8358095.0,
+      "record_lines": [
+        77
+      ],
+      "status": "ok"
+    },
+    {
+      "association": "frame_id",
+      "error_msg": null,
+      "file_name": "datos/evaluacion/S6/S6_0000265312_S6_f0012.jpg",
+      "gt_frame_id": "S6_f0012",
+      "gt_sequence_id": "S6",
+      "ignored_detections": 0,
+      "image_id": 6012,
+      "image_sha256": "b9f1115fd5241f7911eaae8ea00b58ee607b662e09cf8cfe10baeb3084269489",
+      "issues": [],
+      "per_class": {
+        "cat": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "dog": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        },
+        "person": {
+          "fn": 0,
+          "fp": 0,
+          "matches": [],
+          "tp": 0,
+          "unmatched_gt": []
+        }
+      },
+      "prediction_frame_id": "S6_f0012",
+      "prediction_t_capture_ms": 8358195.0,
+      "record_lines": [
+        78
+      ],
+      "status": "ok"
+    }
+  ],
+  "frames": {
+    "duplicate": 0,
+    "error": 0,
+    "evaluated": 78,
+    "expected": 78,
+    "invalid": 0,
+    "missing": 0,
+    "negative": 20,
+    "ok": 78,
+    "stale": 0
+  },
+  "gt_annotations": {
+    "evaluated": 82,
+    "out_of_scope": 0,
+    "total": 82
+  },
+  "implementation": {
+    "contrato": {
+      "bytes": 9377,
+      "file": "contrato.py",
+      "sha256": "81639613631ec871a42cb6f315ca951ac352f5aa19154aacb1c68b3c4e198f56"
+    },
+    "event_schema": {
+      "bytes": 2274,
+      "file": "evento_percepcion.schema.json",
+      "sha256": "11051226dd88da44ed84be9fd7b43851843e803217df52bc103dba64a3b54909"
+    },
+    "metricas": {
+      "bytes": 23180,
+      "file": "metricas.py",
+      "sha256": "39797afeda30376b1039ef652d620f50665c21f704877e4239686fbb489fc7f1"
+    },
+    "python": "3.12.16"
+  },
+  "input_integrity_ok": true,
+  "inputs": {
+    "gt": {
+      "bytes": 42037,
+      "file": "anotaciones.json",
+      "sha256": "2afc9ec45ee5cc25006dfe6b596e4174c44d65eeff9b7f26a12a91523b7da767"
+    },
+    "manifest": {
+      "bytes": 18384,
+      "file": "manifiesto.csv",
+      "sha256": "16520fb328f1ce5f07b43acbf9cd6112b12b6ad8c321ef1d9e4d417d61e60e58"
+    },
+    "pred": {
+      "bytes": 58144,
+      "file": "detecciones.jsonl",
+      "sha256": "ce503347206af0dd910608d2613a4229c5036240f3487ed752d44151d3fb5ff1"
+    }
+  },
+  "invalid_records": [],
+  "micro": {
+    "f1": 0.6562499999999999,
+    "fn": 40,
+    "fp": 4,
+    "precision": 0.9130434782608695,
+    "recall": 0.5121951219512195,
+    "support": 82,
+    "tp": 42
+  },
+  "parameters": {
+    "classes": {
+      "cat": 15,
+      "dog": 16,
+      "person": 0
+    },
+    "confidence_filter": null,
+    "contract_version": "1.0",
+    "expected_frame_count": 78,
+    "failure_policy": "reject frame detections; all its GT become FN",
+    "iou": 0.5,
+    "matching": "confidence_desc_greedy_best_free_iou",
+    "ties": "prediction input index; annotation type/id lexicographic"
+  },
+  "per_class": {
+    "cat": {
+      "f1": 0.47058823529411764,
+      "fn": 17,
+      "fp": 1,
+      "precision": 0.8888888888888888,
+      "recall": 0.32,
+      "support": 25,
+      "tp": 8
+    },
+    "dog": {
+      "f1": 0.5217391304347826,
+      "fn": 22,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 0.35294117647058826,
+      "support": 34,
+      "tp": 12
+    },
+    "person": {
+      "f1": 0.9166666666666666,
+      "fn": 1,
+      "fp": 3,
+      "precision": 0.88,
+      "recall": 0.9565217391304348,
+      "support": 23,
+      "tp": 22
+    }
+  },
+  "prediction_runs": [
+    {
+      "config_sha256": "2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9",
+      "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+      "run_id": "p5-07-definitiva-20261105T002327358258Z",
+      "synthetic": false
+    }
+  ],
+  "report_version": "p5-07/1.0",
+  "unknown_predictions": [],
+  "warnings": [
+    "detecciones de clases fuera de person/cat/dog excluidas del alcance"
+  ]
+}
