@@ -29,27 +29,61 @@ PYTHONPATH=src python -m p5.metricas --gt <coco> --pred <jsonl> --iou 0.5 --sali
 ```
 
 Usa una carpeta nueva o que aún no contenga `metricas.json`: jamás se sobrescribe
-un informe anterior. Las salidas quedan ignoradas por Git según las reglas existentes.
+un informe anterior. Las salidas quedan ignoradas por Git según las reglas existentes,
+salvo el informe definitivo añadido expresamente en este PR.
 
-El siguiente comando es únicamente para la corrida definitiva futura: confirmar
-el congelado del COCO/manifiesto y del detector; el JSONL es una ruta propuesta.
+La corrida definitiva autorizada se ejecutó con el recorrido nuevo del
+2026-11-05 UTC (4 de noviembre en México), sin reutilizar el JSONL histórico:
 
 ```powershell
-& .\.venv\Scripts\python.exe -m p5.metricas --gt .\datos\anotaciones.json --pred .\resultados\detector_congelado\detecciones.jsonl --manifiesto .\datos\manifiesto.csv --cuadros-esperados 78 --iou 0.5 --salida .\resultados
+python -B -m p5.metricas --gt datos/anotaciones.json --pred resultados/recorrido_metricas_78_20261105T002327358258Z/detecciones.jsonl --manifiesto datos/manifiesto.csv --cuadros-esperados 78 --iou 0.50 --salida resultados/metricas
 ```
 
 La ruta integrada del COCO es [datos/anotaciones.json](../datos/anotaciones.json),
 con [datos/manifiesto.csv](../datos/manifiesto.csv). El
 [PR #87](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/87)
 integrado en main aporta los **78 cuadros de evaluación**, sus anotaciones y
-[HASHES.sha256](../datos/HASHES.sha256). **No ejecutar el comando anterior hasta
-integrar y verificar los cortes de sesión del PR #88 y confirmar la configuración
-congelada del detector**. El JSONL indicado es una salida futura, no una corrida
-definitiva recibida.
+[HASHES.sha256](../datos/HASHES.sha256). El PR #88 también está integrado;
+se verificaron sus cinco cortes de sesión y la cadencia de 100 ms dentro de cada
+sesión. Los comandos exactos del recorrido y del evaluador están en el
+[README](../README.md#métricas-de-detección-p5-07).
 
-El informe real irá en `resultados/metricas.json`, sin fabricarlo con ejemplos.
+El [informe definitivo](../resultados/metricas/metricas.json) está en
+`resultados/metricas/metricas.json`, calculado desde las predicciones nuevas.
 `--cuadros-esperados 78` rechaza otra cantidad, incluidos los 84 antiguos. No
 prueba por sí solo que sean los 78 correctos: cotejar manifiesto, hashes y commit.
+
+Al reproducir, usar carpetas nuevas: el informe versionado ya existe y el CLI
+rechaza sobrescribirlo. Por ejemplo, mantener --gt/--pred/--manifiesto y cambiar
+--salida a resultados/metricas_reproduccion. Con los mismos bytes de entrada y
+el mismo entorno se obtuvo un segundo informe idéntico byte por byte.
+
+## Resultados definitivos
+
+| Clase | TP | FP | FN | Soporte | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| person | 22 | 3 | 1 | 23 | 0.880000 | 0.956522 | 0.916667 |
+| cat | 8 | 1 | 17 | 25 | 0.888889 | 0.320000 | 0.470588 |
+| dog | 12 | 0 | 22 | 34 | 1.000000 | 0.352941 | 0.521739 |
+| **Micro** | **42** | **4** | **40** | **82** | **0.913043** | **0.512195** | **0.656250** |
+
+Los conteos coinciden con la referencia de los PM y con un emparejamiento
+independiente. F1 exacto es 21/32; el JSON conserva 0.6562499999999999, una unidad
+de precisión binaria por debajo de 0.65625 al aplicar la fórmula con float.
+No se editaron las cifras ni el algoritmo para forzar la coincidencia.
+
+78 cuadros esperados/evaluados/ok, 20 negativos; cero missing/error/stale/invalid/
+duplicate y ninguna predicción desconocida. Se incluyeron todas las anotaciones
+person/cat/dog, también fuera de riesgo; 37 detecciones de otras clases quedaron
+fuera del alcance y están advertidas. No significa que se detectaran todos los
+obstáculos: hubo 40 FN. No se calculó accuracy ni se ajustó el detector.
+
+Modelo YOLOX-Nano SHA-256
+`c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d`,
+CPUExecutionProvider y sesión predeterminada de DetectorONNX; Python 3.12.16,
+ONNX Runtime 1.30.0, Windows 11. Configuraciones de main sin cambios: umbral
+0.30 y NMS 0.45 del detector, política y watchdog congelados. IoU de evaluación
+0.50 es independiente del NMS. [Hashes, cortes y validación](evidencia/p5-07-validacion.md).
 
 ## Entradas e identidad
 
@@ -140,7 +174,7 @@ penalizadas; **1** informe con defectos de entrada (input_integrity_ok=false:
 desconocidos, duplicados, eventos inválidos); **2** entrada estructural/IO/config
 inválida o informe existente. Código 0 no implica buen desempeño ni cierre del issue.
 
-## Pruebas e integración pendiente
+## Pruebas e integración verificada
 
 Desde Proyecto5:
 
@@ -152,46 +186,45 @@ Desde Proyecto5:
 ```
 
 Validación local con Python 3.12.16 tras integrar main: 96 pruebas de métricas
-aprobadas; suite completa con 532 aprobadas y nueve omitidas por pesos ausentes;
-Ruff check y format aprobados (86 archivos). La prueba de IDs y la comprobación
+aprobadas; suite completa con **554 aprobadas, ninguna omitida**;
+Ruff check y format aprobados (89 archivos). La prueba de IDs y la comprobación
 del congelado ya pasan con los cambios oficiales de main. No se modificaron
 pruebas ni datos de otros módulos para lograrlo.
 [Detalle y entorno](evidencia/p5-07-validacion.md).
 
-Estado actualizado el 2026-11-04:
+Estado de la entrega definitiva (2026-11-05 UTC):
 
-| Dependencia | Estado comprobado | Falta para corrida real |
+| Dependencia | Estado comprobado | Resultado de integración |
 |---|---|---|
 | [#53](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/53) | Cerrado; v1 integrado | Nada para pruebas de software |
-| [#56](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/56) | Cerrado; runtime y CLI integrados | JSONL nuevo de los 78 cuadros vigentes, generado después de anotar, con modelo/configuración congelados |
-| [Descriptor](../modelo/descriptor.yaml) | Integrado; person=0, cat=15, dog=16 | Registrar hashes y configuración efectivos de la corrida futura |
-| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Cerrado; PR #87 integrado con COCO/manifiesto de 78 y HASHES.sha256 | Conservar este congelado y confirmar su referencia para la corrida definitiva |
-| [#57 / PR #84](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/84) | Recaptura integrada: 78 evaluación y 7 ajuste; seis fuera de riesgo | Usar exactamente esta selección y generar predicciones nuevas para la corrida definitiva |
-| [PR #88](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/88) | Pendiente de integración; cortes de sesión de P5-14 | Integrar y comprobar recorrido, IDs y cortes antes de evaluar los 78 |
+| [#56](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/56) | Cerrado; runtime y CLI integrados | JSONL nuevo de los 78 cuadros, posterior al congelado COCO |
+| [Descriptor](../modelo/descriptor.yaml) | Integrado; person=0, cat=15, dog=16 | Modelo y configuraciones comprobados por SHA-256 |
+| [#58](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/issues/58) | Cerrado; PR #87 integrado con COCO/manifiesto de 78 y HASHES.sha256 | Congelado verificado, sin cambios de anotaciones |
+| [#57 / PR #84](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/84) | Recaptura integrada: 78 evaluación y 7 ajuste; seis fuera de riesgo | Se evaluó exactamente esta selección; ajuste excluido |
+| [PR #88](https://github.com/sebastian0023/Proyecto-3-Clasificador-de-imagenes/pull/88) | Fusionado en main 5a38de8 | IDs, rutas, hashes y cinco cortes de sesión verificados |
 
 La evidencia de cuatro imágenes de #81 no sustituye la evaluación completa.
 Los 78 cuadros son 20 negativos y 58 positivos, con seis ejemplos fuera de
-riesgo según las etiquetas de captura; el soporte de objetos se obtendrá del COCO,
+riesgo según las etiquetas de captura; el soporte de objetos es 82 según COCO,
 no de esas cifras. No usar ajuste, descartes, pruebas ni los 84 antiguos.
 
 El congelado integrado [HASHES.sha256](../datos/HASHES.sha256) contiene 91
 entradas, incluidos JPEG de evaluación/ajuste y sus COCO/manifiestos. Se verificó
 su integridad. El [congelado de captura](../datos/HASHES_p5_05b.sha256) se conserva
-como procedencia adicional. Las predicciones históricas integradas no sustituyen
-una corrida definitiva nueva con la configuración aprobada.
+como procedencia adicional. Se generaron predicciones nuevas con la configuración
+aprobada; las predicciones históricas no se usaron como evidencia de esta corrida.
 
 El PR #87 resolvió la discrepancia de IDs observada antes de esta integración;
-el ensayo autorizado de S1/S5 comprobó 24 asociaciones de ID/ruta/hash sin
-contradicciones. Conservar la [correspondencia](compatibilidad_ids_consumidores_p5_05b.csv)
-y coordinar los [cortes de sesión](propuesta_reproductor_cortes_p5_05b.md) con
-P5-06/P5-14 al integrar #88. No modificar IDs fuente ni relajar validaciones.
+la corrida definitiva comprobó las 78 asociaciones de ID/ruta/hash sin
+contradicciones. Se conserva la [correspondencia](compatibilidad_ids_consumidores_p5_05b.csv)
+y se comprobaron los [cortes de sesión](propuesta_reproductor_cortes_p5_05b.md)
+con el código integrado de P5-14. No se modificaron IDs fuente ni validaciones.
 
-Se ejecutó únicamente el ensayo autorizado de **S1/S5: 24 inferencias nuevas**.
+El ensayo anterior de **S1/S5: 24 inferencias** sigue separado de la definitiva.
 Sus entradas, predicciones, informe y hashes permanecen fuera del repositorio y
 de resultados, rotulados **ENSAYO / NO EVIDENCIA FINAL**. No forman parte de la
 evidencia definitiva ni se usan para ajustar umbral, NMS o pesos.
 
-Listo ahora: algoritmo, validación, pruebas, corrida sintética y ensayo acotado.
-Para cerrar #59 faltan #88, confirmar la configuración congelada, ejecutar los
-78 cuadros en [resultados/](../resultados/) y el recálculo/aprobación de cifras
-por el PM A. No se declara completo con el ensayo ni con resultados sintéticos.
+La programación, pruebas, corrida definitiva y recálculo están completos; queda
+la revisión final del PR #89 por los PM y su merge por Sebastián. Se mantiene
+«Parte de #59»: no se cierra manualmente la issue ni se fusiona el PR desde esta tarea.

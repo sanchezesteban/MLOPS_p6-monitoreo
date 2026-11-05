@@ -1,6 +1,129 @@
-# Evidencia local P5-07 — actualización 2026-11-04
+# P5-07: evaluaci?n definitiva de 78 cuadros ? 2026-11-05 UTC
 
-## Estado tras integrar PR #87 y guardar el ensayo autorizado
+## Alcance y procedencia
+
+Evaluaci?n definitiva autorizada por Sebasti?n y Esteban, despu?s de integrar
+los PR #87 y #88. Main: 5a38de810cf2760cd6b1f28921fbf453ea029a33; merge local:
+e5a1d509f11bd231995cad68d8b0d87df2a4a879. No se modific? el algoritmo de m?tricas,
+el detector, los YAML congelados, fotograf?as, COCO, manifiestos o IDs de otros m?dulos.
+
+Run nuevo: `p5-07-definitiva-20261105T002327358258Z`, iniciado el 5 de noviembre
+UTC (4 de noviembre, hora de M?xico). Se ejecut? p5.recorrer con DetectorONNX real,
+CPUExecutionProvider, configuraci?n predeterminada de sesi?n y los tres YAML de main.
+Python 3.12.16; ONNX Runtime 1.30.0; Windows 11. Modelo YOLOX-Nano, sin ajuste:
+`c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d`.
+Umbral del detector 0.30, NMS 0.45; IoU de evaluaci?n 0.50.
+
+Al generar el recorrido el HEAD todav?a era 9ab4744 y el merge no ten?a commit.
+El run.json local conserva ese HEAD real; el c?digo del recorrido proced?a de
+main 5a38de8, sin cambios. La integraci?n se confirm? despu?s en e5a1d50.
+No se editaron esos metadatos para atribuir la captura a un commit posterior.
+El modo virtual del adaptador y reloj de replay no significa detecciones sint?ticas:
+los 78 eventos tienen synthetic=false y el modelo real. No se movieron motores.
+
+## Entradas y trazabilidad
+
+| Archivo | SHA-256 |
+|---|---|
+| COCO: datos/anotaciones.json | 2afc9ec45ee5cc25006dfe6b596e4174c44d65eeff9b7f26a12a91523b7da767 |
+| Manifiesto COCO: datos/manifiesto.csv | 16520fb328f1ce5f07b43acbf9cd6112b12b6ad8c321ef1d9e4d417d61e60e58 |
+| Capturas: datos/evaluacion/capturas.csv | f8a04169513825fb2c943772c4353924eb453fe88ba1f2419fe70971487f6181 |
+| Predicciones nuevas: detecciones.jsonl | ce503347206af0dd910608d2613a4229c5036240f3487ed752d44151d3fb5ff1 |
+| Informe definitivo: metricas.json | 15c00f5df5b633c2d66fc244b8b6886c058795e9937a998a599054f939f74569 |
+| detector.yaml | 677098403456a3708760223574b6d9c9b3cc758e93b80d02e385ac7e90182d03 |
+| politica.yaml | 2f31ff7a17c2277fa0c39ab14e038e9d3dbfc8c3ac109e16515b789727595ac9 |
+| watchdog.yaml | ba91fbd0ec64599890c0a1d8d10d8afc59b014a0274da361dd41e1f0ca88a41a |
+
+COCO y manifiesto contienen 78 im?genes y 82 objetos person/cat/dog. Se comprobaron
+las 91 entradas de HASHES.sha256 y los 313 archivos fuente inventariados antes de
+inferir: todos permanecen intactos. El manifiesto de captura alimenta al recorrido;
+el manifiesto COCO alimenta al evaluador. No se intercambian ni reescriben.
+El config_sha256 del evento identifica la pol?tica; los otros YAML se verifican
+por separado. Las clases se relacionan por nombre can?nico, no por igualdad de IDs.
+
+## Recorrido e integridad
+
+Carpeta local nueva, ignorada por Git:
+`resultados/recorrido_metricas_78_20261105T002327358258Z/`.
+Contiene run.json, cortes.json, detecciones.jsonl, decisiones.jsonl y comandos.jsonl.
+78 eventos nuevos, 88 decisiones y 89 comandos. Los comandos incluyen los STOP
+por discontinuidades y cierre; no sustituyen ni inventan cuadros.
+
+| Secuencia | Cuadros |
+|---|---:|
+| S1 | 12 |
+| S2 | 17 |
+| S3 | 13 |
+| S4 | 12 |
+| S5 | 12 |
+| S6 | 12 |
+
+Las 78 identidades, rutas y hashes coinciden exactamente entre im?genes, COCO,
+manifiesto y eventos. 20 im?genes negativas, todas evaluadas. 78 eventos ok,
+cero missing/error/stale/invalid/duplicate, sin predicciones desconocidas.
+Cadencia virtual 100 ms dentro de sesi?n; separaci?n entre secuencias 400 ms.
+Se conserv? t_capture_origen_ms y se verificaron los cinco cambios de sesi?n:
+
+| Secuencia | Cuadro previo ? siguiente | Delta de captura y replay (ms) |
+|---|---|---:|
+| S1 | S1_f0009 ? S1_f0010 | 3623351 |
+| S2 | S2_f0008 ? S2_f0009 | 241906 |
+| S2 | S2_f0016 ? S2_f0017 | 1992758 |
+| S2 | S2_f0017 ? S2_f0018 | 1817039 |
+| S3 | S3_f0007 ? S3_f0008 | 674441 |
+
+## Resultado verificado
+
+| Clase | TP | FP | FN | Soporte | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| person | 22 | 3 | 1 | 23 | 0.880000 | 0.956522 | 0.916667 |
+| cat | 8 | 1 | 17 | 25 | 0.888889 | 0.320000 | 0.470588 |
+| dog | 12 | 0 | 22 | 34 | 1.000000 | 0.352941 | 0.521739 |
+| Micro | 42 | 4 | 40 | 82 | 0.913043 | 0.512195 | 0.656250 |
+
+Un emparejamiento independiente desde COCO/JSONL confirm? los tres conteos por
+clase. Los micro coinciden con la referencia de los PM. F1 exacto = 21/32 =
+0.65625; el JSON calculado contiene 0.6562499999999999 por la f?rmula con float.
+La diferencia es 1.1102230246251565e-16, una ULP. Se conserva sin editar ni redondear.
+
+Hay 37 detecciones de otras clases fuera del alcance person/cat/dog, advertidas
+en el informe. No se eliminaron predicciones para mejorar cifras ni se cambiaron
+anotaciones o par?metros. Los 40 FN son limitaciones observadas del detector,
+no cuadros omitidos. No se afirma detecci?n correcta de todos los obst?culos.
+
+El evaluador mantiene evidence=NO_CERTIFICADA_COMO_CORRIDA_REAL: esa etiqueta
+conservadora indica que el JSON por s? solo no certifica la procedencia. La corrida
+real queda documentada por el comando, synthetic=false, modelo, entradas y hashes;
+no se alter? la etiqueta ni se sustituyeron datos por el ensayo S1/S5.
+
+## Pruebas y reproducci?n
+
+- M?tricas: **96 aprobadas**.
+- Suite completa de Proyecto5: **554 aprobadas, ninguna omitida**.
+- Ruff check y format --check: aprobados (89 archivos).
+- Segundo c?lculo sobre el mismo JSONL: informe **id?ntico byte por byte**, sin
+  repetir inferencia ni sobrescribir el original.
+- Comandos exactos del recorrido y m?tricas: [README](../../README.md#m?tricas-de-detecci?n-p5-07).
+- Uso, f?rmulas, errores y reproducci?n en carpeta nueva: [gu?a](../metricas.md).
+- [?nico resultado generado versionado](../../resultados/metricas/metricas.json).
+
+El ensayo anterior S1/S5 contin?a fuera del repositorio, identificado ENSAYO /
+NO EVIDENCIA FINAL. Tampoco se publican las simulaciones como resultado definitivo.
+El recorrido y el rec?lculo auxiliares quedan locales e ignorados, tal como se pidi?.
+
+Programaci?n, integraci?n y corrida definitiva completas; revisi?n final de los PM
+pendiente en el PR #89. Mantener Parte de #59, sin cierre manual de la issue ni
+merge del PR a main desde esta tarea.
+
+## Archivo hist?rico anterior a la evaluaci?n definitiva
+
+Los apartados siguientes conservan estados, comandos y resultados previos.
+Las referencias a insumos o PR pendientes y las cifras de pruebas hist?ricas no
+describen la entrega definitiva documentada arriba.
+
+## Evidencia local P5-07 — actualización 2026-11-04
+
+### Estado tras integrar PR #87 y guardar el ensayo autorizado
 
 Merge de main `e2b544b4c4aa6c418d86baae34f564cf6211d454` en
 `p5-07-metricas`, commit `136b75409b03e23a17fb1193493168052cd9e251`.
@@ -42,13 +165,13 @@ oficiales de main. Falta integrar y verificar los cortes de sesión del PR #88,
 confirmar la configuración congelada y ejecutar/aprobar la corrida definitiva.
 Se mantiene «Parte de #59».
 
-## Registro previo al PR #87 (histórico; no describe el estado actual)
+### Registro previo al PR #87 (histórico; no describe el estado actual)
 
 Rama `p5-07-metricas`, HEAD `6eb42d1fc4898caff95366c6f20e343e43488b0a`.
 Solo se actualiza documentación de P5-07: no se cambia el algoritmo, los IDs,
 las pruebas de otros módulos, los JPEG, COCO, CSV ni los contratos.
 
-## Entorno separado Python 3.12
+### Entorno separado Python 3.12
 
 Se descargó CPython **3.12.16** mediante uv **0.13.7** a un directorio temporal
 fuera del repositorio (`--no-bin --no-registry`); se creó otro entorno virtual
@@ -75,7 +198,7 @@ Desde Proyecto5, `$python312` identifica el ejecutable del entorno separado:
 & $python312 -m pip check
 ```
 
-## Resultados actuales
+### Resultados actuales
 
 | Verificación | Resultado ejecutado |
 |---|---|
@@ -103,7 +226,7 @@ Una primera ejecución desde la raíz del repositorio también falló en
 `config/watchdog.yaml`. Repetir desde Proyecto5, como hace CI, resolvió ese fallo
 sin cambiar código. Las cifras vigentes de la tabla corresponden a esa ejecución.
 
-## Estado de las entradas; ninguna evaluación real
+### Estado de las entradas; ninguna evaluación real
 
 Los issues #56 y #58 están cerrados y sus módulos integrados. El COCO y manifiesto
 actuales contienen **24 imágenes S1/S5**; faltan las **54 recapturas S2/S3/S4/S6**
@@ -119,13 +242,13 @@ hashes con las imágenes vigentes; faltan predicciones nuevas posteriores a la
 anotación y con configuración congelada. No se usaron anotaciones antiguas para
 calcular métricas definitivas ni se generó `resultados/metricas.json`.
 
-## Evidencia histórica del 2026-11-03
+### Evidencia histórica del 2026-11-03
 
 Lo siguiente conserva los comandos y resultados de la revisión anterior; sus
 260 pruebas, entorno 3.10 y estados entonces abiertos de #56/#58 no describen
 la validación actual. Las cifras vigentes están arriba.
 
-### Registro original del 2026-11-03
+#### Registro original del 2026-11-03
 
 Rama `p5-07-metricas` creada directamente de `origin/main`:
 `7b6a88b1754d906d6376d089c2d8b9bf8f32c292`, tras `git fetch origin`.
@@ -137,7 +260,7 @@ Entorno existente: **Python 3.10.8**. `py --list-paths` solo encontró 3.10;
 del proyecto; esto no sustituye ejecutar el CI. Sin nuevas dependencias;
 `pip check`: `No broken requirements found.`
 
-## Comprobaciones ejecutadas
+### Comprobaciones ejecutadas
 
 Desde Proyecto5, con `.venv/Scripts/python.exe -B`:
 
@@ -160,7 +283,7 @@ incoherentes. Son casos SINTÉTICOS en memoria; no se crean anotaciones reales.
 La identidad GT se obtiene de categories[].name, independientemente del orden
 del arreglo y sin comparar category_id con class_id.
 
-## Corrida CLI SINTÉTICA
+### Corrida CLI SINTÉTICA
 
 ```powershell
 $env:PYTHONPATH=(Resolve-Path .\src).Path
@@ -202,7 +325,7 @@ F1=2/9 (diferencia final de representación binaria de float).
 Por clase: person=(1,1,1), cat=(0,2,1), dog=(0,0,2), en orden TP/FP/FN.
 Una negativa con predicción aporta FP; error y omisión conservan sus FN.
 
-## Límites y cierre pendiente
+### Límites y cierre pendiente
 
 #53 cerrado. #56/#58 y PR #80/#81 abiertos sin fusionar al consultar GitHub.
 No hay COCO/manifiesto congelados en main ni entradas disponibles suficientes

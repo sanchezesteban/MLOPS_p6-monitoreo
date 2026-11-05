@@ -60,8 +60,28 @@ Las pruebas del contrato no necesitan pesos ni datos: validan los ejemplos de
 calcula TP/FP/FN, Precision/Recall/F1 y soporte por clase y micro sobre todos los
 cuadros, incluidos negativos, errores y omisiones. [Guía y comandos de Windows](docs/metricas.md),
 [casos sintéticos calculados a mano](tests/fixtures/metricas/README.md).
-La corrida real queda pendiente de COCO/manifiesto congelados (#58) y predicciones
-del detector (#56); los ejemplos no son evidencia de su desempeño.
+La evaluación definitiva autorizada usa los 78 cuadros congelados de #58 y
+predicciones nuevas del detector real, con los cortes de sesión de #88. IoU=0.50:
+**TP=42, FP=4, FN=40; Precision micro=0.913043, Recall=0.512195 y F1=0.656250**.
+Los 78 cuadros fueron válidos, incluidos 20 negativos. Los ejemplos sintéticos y
+el ensayo anterior S1/S5 permanecen separados de la
+[evidencia definitiva](resultados/metricas/metricas.json).
+
+Comandos ejecutados desde Proyecto5 con Python 3.12.16, ONNX Runtime 1.30.0,
+CPUExecutionProvider y los YAML congelados de main, sin ajustar umbral o NMS:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -B -m p5.recorrer --datos datos/evaluacion --manifiesto datos/evaluacion/capturas.csv --config config/politica.yaml --watchdog-config config/watchdog.yaml --detector real --detector-config config/detector.yaml --reproducir-cortes --replay-dt-ms 100 --run-id p5-07-definitiva-20261105T002327358258Z --salida resultados/recorrido_metricas_78_20261105T002327358258Z
+python -B -m p5.metricas --gt datos/anotaciones.json --pred resultados/recorrido_metricas_78_20261105T002327358258Z/detecciones.jsonl --manifiesto datos/manifiesto.csv --iou 0.50 --cuadros-esperados 78 --salida resultados/metricas
+```
+
+Para reproducir, elegir una carpeta de recorrido nueva y otra salida de métricas
+(por ejemplo, `resultados/metricas_reproduccion`), sin sobrescribir la evidencia
+versionada. El recorrido y sus JSONL se conservan localmente, ignorados por Git;
+solo el informe final de métricas se publica. [Resultados por clase, hashes y
+reproducción](docs/metricas.md), [validación](docs/evidencia/p5-07-validacion.md).
+
 ## Pesos del detector
 
 YOLOX-Nano preentrenado en COCO (Apache-2.0), en ONNX para CPU. URL pública, versión,
@@ -149,5 +169,5 @@ cuando estén mergeados #59/#60; hasta entonces, el índice E1–E7 queda así:
 | E3 | Datos, anotaciones y congelado | [`docs/datos.md`](docs/datos.md), [`docs/conteo_datos.md`](docs/conteo_datos.md) |
 | E4 | Detector, pesos y límites | [`docs/detector.md`](docs/detector.md) |
 | E5 | Política, adaptador, watchdog, recorrido y casos | [`docs/politica.md`](docs/politica.md), [`docs/watchdog.md`](docs/watchdog.md), [`docs/recorrido.md`](docs/recorrido.md), [`docs/casos.md`](docs/casos.md) |
-| E6 | Métricas TP/FP/FN y P/R/F1 | pendiente de #59 (`src/p5/metricas.py` en su rama) |
+| E6 | Métricas TP/FP/FN y P/R/F1 | [guía y resultados](docs/metricas.md), [evidencia definitiva de 78 cuadros](resultados/metricas/metricas.json) |
 | E7 | Benchmark por etapas y recursos | pendiente de #60 (`src/p5/benchmark.py` en su rama) |
