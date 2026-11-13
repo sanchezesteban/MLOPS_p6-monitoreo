@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block titulo %}Corridas{% endblock %}{% block cuerpo %}
+<h2>Corridas</h2>
+{% if not runs %}<div class="vacio">Sin corridas registradas.</div>{% else %}
+<table><tr><th>run_id</th><th>Escenario</th><th>Inicio</th><th>Fuente</th><th>Modelo</th><th>Commit</th><th>Frames</th><th>Estados</th><th>Zonas</th><th>G1 p95 ms</th><th>G2 fps</th><th>G4 baja</th><th>G5 traz.</th><th>Alertas</th><th>Config</th></tr>
+{% for r in runs %}{% set m = r.metricas %}<tr>
+<td><a href="/eventos?run={{ r.run_id }}">{{ r.run_id }}</a></td><td>{{ r.escenario }}</td><td>{{ r.inicio }}</td>
+<td>{{ r.fuente_tipo }} · {{ r.source_id }} @ {{ r.fps }} fps<br><code>{{ r.manifiesto }}</code></td>
+<td>{{ r.model_nombre }} <code>{{ r.model_sha256[:12] }}</code></td><td><code>{{ (r.git_commit or '')[:10] }}</code>{% if r.git_sucio %} (sucio){% endif %}</td>
+<td>{{ r.frames }}</td><td>{{ m.estados }}</td><td>{{ m.zonas }}</td>
+<td>{{ m.G1_tiempo_inferencia.p95_ms|fmt(2) }}</td><td>{{ m.G2_fps_procesamiento.fps|fmt(2) }}</td>
+<td>{{ m.G4_proporcion_baja.proporcion|fmt(3) }}</td><td>{{ m.G5_cobertura_trazabilidad.cobertura|fmt(3) }}</td>
+<td><a href="/alertas?run={{ r.run_id }}">{{ r.n_alertas }}</a></td><td><a href="/config/{{ r.config_sha256 }}">{{ r.config_id }}</a></td></tr>{% endfor %}
+</table>{% endif %}{% endblock %}

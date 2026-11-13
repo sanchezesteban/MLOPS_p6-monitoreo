@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block titulo %}Eventos{% endblock %}{% block cuerpo %}
+<h2>Eventos de inferencia</h2>
+<form class="filtros" method="get">{% include "_run_select.html" %}
+<label>Zona<select name="zona"><option value="">todas</option>{% for z in ["aceptada","duda","baja"] %}<option {% if f.zona==z %}selected{% endif %}>{{ z }}</option>{% endfor %}</select></label>
+<label>Estado<select name="estado"><option value="">todos</option>{% for s in ["ok","sin_detecciones","error"] %}<option {% if f.estado==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label>
+<button>Filtrar</button></form>
+<p>{{ eventos|length }} eventos.</p>
+{% if not eventos %}<div class="vacio">No hay eventos con esos filtros.</div>{% else %}
+<table><tr><th>event_id</th><th>frame_id</th><th>t_captura</th><th>Estado</th><th>Zona</th><th>Score</th><th>Clase</th><th>Cand.</th><th>Captura</th><th>Ventana</th><th>Alertas</th></tr>
+{% for e in eventos %}<tr>
+<td><a href="/eventos/{{ e.event_id }}">{{ e.event_id }}</a></td><td>{{ e.frame_id }}</td><td>{{ e.t_captura }}</td>
+<td class="s-{{ e.estado }}">{{ e.estado }}</td><td class="z-{{ e.zona }}">{{ e.zona or "—" }}</td>
+<td>{{ e.score_principal|fmt(3) }}</td><td>{{ e.clase_principal or "—" }}</td><td>{{ e.n_detecciones }}</td>
+<td>{% if e.image_ref %}<a href="/archivo/{{ e.image_ref }}"><img class="mini" src="/archivo/{{ e.image_ref }}" alt="captura"></a>{% else %}—{% endif %}</td>
+<td>{{ e.window_id }}</td>
+<td>{% for a in alertas_por_evento.get(e.event_id, []) %}<a href="/alertas/{{ a }}">{{ a }}</a> {% endfor %}</td></tr>{% endfor %}
+</table>{% endif %}{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block titulo %}{{ e.event_id }}{% endblock %}{% block cuerpo %}
+<h2>Evento {{ e.event_id }}</h2>
+<div style="display:flex;gap:1.5rem;flex-wrap:wrap"><div style="flex:1;min-width:420px">
+<table class="kv">
+<tr><td>Corrida</td><td><a href="/eventos?run={{ e.run_id }}">{{ e.run_id }}</a>{% if run %} ({{ run.escenario }}, commit <code>{{ (run.git_commit or '')[:10] }}</code>){% endif %}</td></tr>
+<tr><td>Frame / fuente</td><td>{{ e.frame_id }} · {{ e.source_id }}</td></tr>
+<tr><td>t_captura → t_fin</td><td>{{ e.t_captura }} → {{ e.t_fin }}</td></tr>
+<tr><td>Imagen de origen</td><td><code>{{ e.image_source }}</code><br>sha256 <code>{{ e.image_source_sha256 }}</code></td></tr>
+<tr><td>Tarea / modelo</td><td>{{ e.task }} · {{ e.model_nombre }} <code>{{ e.model_sha256 }}</code> · synthetic={{ e.synthetic }}</td></tr>
+<tr><td>Estado</td><td class="s-{{ e.estado }}">{{ e.estado }} {% if e.error_msg %}— {{ e.error_msg }}{% endif %}</td></tr>
+<tr><td>Score principal / zona</td><td>{{ e.score_principal|fmt(4) }} · <span class="z-{{ e.zona }}">{{ e.zona or "sin zona (estado aparte)" }}</span></td></tr>
+<tr><td>Tiempos (ms)</td><td>lectura {{ e.lectura_ms|fmt(2) }} · pre {{ e.pre_ms|fmt(2) }} · inferencia {{ e.inferencia_ms|fmt(2) }} · post {{ e.post_ms|fmt(2) }}</td></tr>
+<tr><td>Configuración</td><td><a href="/config/{{ e.config_sha256 }}">{{ config.config_id if config else "" }} <code>{{ e.config_sha256[:16] }}</code></a> · detector <code>{{ e.detector_config_sha256[:16] }}</code></td></tr>
+<tr><td>Ventana</td><td>{% if ventana %}<a href="/ventanas?run={{ e.run_id }}#{{ ventana.window_id }}">{{ ventana.window_id }}</a> — {{ ventana.bajos }}/{{ ventana.puntuados }} bajos, {% if ventana.suficiente %}suficiente{% else %}INSUFICIENTE{% endif %}{% endif %}</td></tr>
+<tr><td>Alertas</td><td>{% for a in alertas %}<a href="/alertas/{{ a.alert_id }}">{{ a.alert_id }}</a> ({{ a.rule_id }}) {% else %}ninguna{% endfor %}</td></tr>
+<tr><td>Captura</td><td>{% if e.image_ref %}<code>{{ e.image_ref }}</code> · {{ e.captura_motivo }}<br>sha256 <code>{{ e.image_sha256 }}</code>{% else %}no capturada por la política{% endif %}</td></tr>
+</table></div>
+<div>{% if e.image_ref %}<img class="grande" src="/archivo/{{ e.image_ref }}" alt="captura del evento">{% endif %}</div></div>
+<h3>Candidatas del detector ({{ e.detecciones|length }})</h3>
+{% if not e.detecciones %}<div class="vacio">Sin candidatas: {{ e.estado }}.</div>{% else %}
+<table><tr><th>#</th><th>Clase</th><th>class_id</th><th>Score</th><th>Zona</th><th>Caja xyxy (px)</th></tr>
+{% for d in e.detecciones %}<tr><td>{{ loop.index }}</td><td>{{ d.class_name }}</td><td>{{ d.class_id }}</td><td>{{ d.score|fmt(4) }}</td><td class="z-{{ d.zona }}">{{ d.zona }}</td><td>{{ d.bbox_xyxy }}</td></tr>{% endfor %}
+</table>{% endif %}{% endblock %}

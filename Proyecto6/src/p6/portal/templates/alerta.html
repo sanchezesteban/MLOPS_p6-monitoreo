@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block titulo %}{{ a.alert_id }}{% endblock %}{% block cuerpo %}
+<h2>Alerta {{ a.alert_id }} <span class="badge sev-{{ a.severidad }}">{{ a.severidad }}</span></h2>
+<table class="kv">
+<tr><td>Regla</td><td>{{ a.rule_id }} ({{ a.regla }})</td></tr>
+<tr><td>Estado</td><td>{{ a.estado }}</td></tr>
+<tr><td>Apertura / última actualización / resolución</td><td>{{ a.t_apertura }} / {{ a.t_actualizacion }} / {{ a.t_resolucion or "—" }}</td></tr>
+<tr><td>Motivo</td><td>{{ a.motivo }}</td></tr>
+<tr><td>Último motivo evaluado</td><td>{{ a.motivo_ultimo }}</td></tr>
+<tr><td>Acción sugerida</td><td>{{ a.accion_sugerida }}</td></tr>
+<tr><td>Configuración</td><td><a href="/config/{{ a.config_sha256 }}"><code>{{ a.config_sha256 }}</code></a></td></tr>
+<tr><td>Corrida</td><td><a href="/eventos?run={{ a.run_id }}">{{ a.run_id }}</a></td></tr>
+</table>
+<h3>Ventanas que la sustentan</h3>
+<table><tr><th>window_id</th><th>Frames</th><th>Puntuados</th><th>Bajos</th><th>Proporción baja</th><th>Suficiente</th><th>Cierre</th></tr>
+{% for v in ventanas %}<tr><td><a href="/ventanas?run={{ a.run_id }}#{{ v.window_id }}">{{ v.window_id }}</a></td><td>{{ v.frame_desde }} … {{ v.frame_hasta }} ({{ v.frames }})</td><td>{{ v.puntuados }}</td><td>{{ v.bajos }}</td><td>{{ v.proporcion_baja|fmt(3) }}</td><td>{{ "sí" if v.suficiente else "NO" }}</td><td>{{ v.t_cierre }}</td></tr>{% endfor %}</table>
+<h3>Eventos que la originaron ({{ eventos|length }})</h3>
+<table><tr><th>event_id</th><th>frame</th><th>Estado</th><th>Zona</th><th>Score</th><th>Clase</th><th>Captura</th></tr>
+{% for e in eventos %}<tr><td><a href="/eventos/{{ e.event_id }}">{{ e.event_id }}</a></td><td>{{ e.frame_id }}</td><td class="s-{{ e.estado }}">{{ e.estado }}</td><td class="z-{{ e.zona }}">{{ e.zona or "—" }}</td><td>{{ e.score_principal|fmt(3) }}</td><td>{{ e.clase_principal or "—" }}</td>
+<td>{% if e.image_ref %}<a href="/archivo/{{ e.image_ref }}"><img class="mini" src="/archivo/{{ e.image_ref }}" alt="captura"></a>{% else %}—{% endif %}</td></tr>{% endfor %}</table>
+{% endblock %}
