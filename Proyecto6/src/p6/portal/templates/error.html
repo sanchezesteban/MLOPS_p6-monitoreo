@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block titulo %}Error {{ codigo }}{% endblock %}{% block cuerpo %}
+<h2>Error {{ codigo }}</h2><div class="vacio">{{ detalle }}</div>
+<p><a href="javascript:history.back()">Volver</a></p>{% endblock %}

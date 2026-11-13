@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block titulo %}Gráficas{% endblock %}{% block cuerpo %}
+<h2>Gráficas históricas por corrida</h2>
+<form class="filtros" method="get">{% include "_run_select.html" %}<button>Ver</button></form>
+{% if not d %}<div class="vacio">Elige una corrida para ver su historia de confianza, ventanas y alertas.</div>
+{% else %}{% set r = d.run %}
+<p><b>{{ r.run_id }}</b> ({{ r.escenario }}) · {{ r.frames }} frames a {{ r.fps }} fps · modelo <code>{{ r.model_sha256[:12] }}</code> · config <a href="/config/{{ r.config_sha256 }}"><code>{{ r.config_sha256[:12] }}</code></a> · commit <code>{{ (r.git_commit or '')[:10] }}</code> · <a href="/exportar/eventos.csv?run={{ r.run_id }}">exportar CSV</a></p>
+<h3>Score principal por frame</h3>
+{% if puntuados == 0 %}<div class="vacio">Esta corrida no tiene frames puntuados: solo estados sin detecciones o error (se marcan abajo).</div>{% endif %}
+{{ d.svg_scores|safe }}
+<h3>Proporción de frames bajos por ventana</h3>
+{{ d.svg_ventanas|safe }}
+<h3>Métricas adicionales por ventana</h3>
+<table><tr><th>Ventana</th><th>FPS captura</th><th>Latencia e2e p95 ms</th><th>Prop. sin detecciones</th><th>Tasa de errores</th><th>CPU %</th><th>KS vs referencia</th></tr>
+{% for w in extra.por_ventana %}<tr><td>{{ w.window_id }}</td><td>{{ w.fps_captura|fmt(2) }}</td><td>{{ w.latencia_e2e_p95_ms|fmt(1) }}</td><td>{{ w.proporcion_sin_detecciones|fmt(3) }}</td><td>{{ w.tasa_errores|fmt(3) }}</td><td>{{ w.cpu_pct|fmt(1) }}</td><td>{{ w.ks_vs_referencia|fmt(3) }}</td></tr>{% endfor %}</table>
+{% set inc = extra.corrida["M-TDET_M-TREC_incidente"] %}
+<h3>Incidente declarado en el manifiesto</h3>
+{% if not inc.incidente %}<div class="vacio">El manifiesto de esta corrida no declara un incidente (sin columna <code>fase</code> o sin fase anómala).</div>
+{% else %}<p>Inicio: frame {{ inc.incidente.frame_inicio }} ({{ inc.incidente.t_inicio }}) · recuperación: frame {{ inc.incidente.frame_fin }} ({{ inc.incidente.t_fin }})</p>
+<table><tr><th>Regla</th><th>Alerta</th><th>Tiempo de detección (s)</th><th>Tiempo de recuperación (s)</th></tr>
+{% for regla, v in inc.por_regla.items() %}<tr><td>{{ regla }}</td><td><a href="/alertas/{{ v.alert_id }}">{{ v.alert_id }}</a></td><td>{{ v.tiempo_deteccion_s|fmt(3) }}</td><td>{{ v.tiempo_recuperacion_s|fmt(3) }}</td></tr>{% else %}<tr><td colspan="4">Ninguna alerta se abrió después del inicio del incidente.</td></tr>{% endfor %}</table>{% endif %}
+{% endif %}{% endblock %}

@@ -9,6 +9,8 @@
 |---|---|
 | `6184d32` | **Código y configuración ejecutados** en las corridas `ref-carrito`, `c1-normal` y `c2-baja-confianza`. Cada `run.json` registra `git_commit = 6184d32a8e96…` y `git_sucio = 0`, es decir, `src/` y `config/` sin cambios locales. |
 | commits posteriores en la misma rama o PR | Solo agregan esta evidencia y la documentación; no cambian `src/` ni `config/` de las corridas base. Los extras agregan código **nuevo** en PRs aparte, y sus corridas registran su propio commit. |
+| `4bb00ad` (PR P6-02) | Commit ejecutado en las corridas **extra** `s-sostenido` y `s-interrupcion`. Solo agrega entradas (`scripts/preparar_extras.py`, `escenarios/s_*.csv`, `datos/s_sostenido_jpeg5/`); `src/` y `config/` son idénticos a `6184d32`, así que `config_sha256` es el mismo. |
+| commits posteriores de P6-02 | Agregan funciones **nuevas** que no usa el monitor: `src/p6/extras.py` (métricas M-01 a M-08, calculadas fuera de línea desde los JSONL) y las rutas `/graficas`, `/capturas` y `/exportar` del portal. Además agregan sus pruebas, las capturas y la documentación. No cambian `fuente`, `detector`, `politica`, `reglas`, `almacen` ni `monitor`, que se pueden comparar con `git diff 6184d32 -- Proyecto6/src/p6/{fuente,detector,politica,metricas,reglas,almacen,monitor}.py`. |
 
 Para comprobar que el código de las corridas base no cambió, ejecuta `git diff 6184d32 -- Proyecto6/config`, que no debe mostrar diferencias. Las funciones que usan las corridas base están en `src/p6/{fuente,detector,politica,metricas,reglas,almacen,monitor}.py`.
 
@@ -44,7 +46,7 @@ Para comprobar que el código de las corridas base no cambió, ejecuta `git diff
 | R7.1 Reproducibilidad | `README.md`, `requirements.txt`, `.github/workflows/p6-ci.yml` | CI: ruff, pytest y recálculo |
 | R7.2 Evidencias | Este índice | — |
 | R7.3 Autoría y procedencia | `README.md → Autoría y procedencia` | — |
-| Extras | `docs/extras.md` | — |
+| Extras | [`docs/extras.md`](../docs/extras.md) (inventario F-01–F-03, M-01–M-08, S-01–S-02) y [`docs/escenarios_extra.md`](../docs/escenarios_extra.md) | `evidencias/escenarios/<run>/metricas_extra.json`, `evidencias/escenarios/s-*/`, `evidencias/extras/portal/*.png`, `tests/test_extras.py` |
 
 ## Correspondencia del evento con la guía (R4.1)
 

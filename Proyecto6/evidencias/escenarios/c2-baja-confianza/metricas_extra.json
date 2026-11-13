@@ -1,0 +1,89 @@
+{
+  "run_id": "c2-baja-confianza",
+  "referencia_compatible": true,
+  "corrida": {
+    "M-FPSCAP_fps_captura": 4.999915406046639,
+    "M-E2E_latencia_e2e": {
+      "n": 66,
+      "p50_ms": 25.31063699996139,
+      "p95_ms": 34.805708000021696
+    },
+    "M-SINDET_proporcion_sin_detecciones": 0.10606060606060606,
+    "M-ERR_tasa_errores": 0.0,
+    "M-CPU_cpu_proceso": {
+      "n": 7,
+      "max_pct": 16.8,
+      "media_pct": 13.385714285714286
+    },
+    "M-KS_ks_vs_referencia": 0.236047953699876,
+    "M-TDET_M-TREC_incidente": {
+      "incidente": null,
+      "por_regla": {}
+    }
+  },
+  "por_ventana": [
+    {
+      "window_id": "c2-baja-confianza-w000",
+      "fps_captura": 4.997304942339522,
+      "latencia_e2e_p95_ms": 60.47479199992267,
+      "proporcion_sin_detecciones": 0.1,
+      "tasa_errores": 0.0,
+      "cpu_pct": 16.8,
+      "ks_vs_referencia": 0.5826558265582655
+    },
+    {
+      "window_id": "c2-baja-confianza-w001",
+      "fps_captura": 5.002977822429831,
+      "latencia_e2e_p95_ms": 31.758619000015642,
+      "proporcion_sin_detecciones": 0.2,
+      "tasa_errores": 0.0,
+      "cpu_pct": 12.6,
+      "ks_vs_referencia": 0.35060975609756095
+    },
+    {
+      "window_id": "c2-baja-confianza-w002",
+      "fps_captura": 4.999933262002026,
+      "latencia_e2e_p95_ms": 41.60507200003849,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 14.0,
+      "ks_vs_referencia": 0.2682926829268293
+    },
+    {
+      "window_id": "c2-baja-confianza-w003",
+      "fps_captura": 5.000116138808451,
+      "latencia_e2e_p95_ms": 30.79525200007538,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 12.6,
+      "ks_vs_referencia": 0.22926829268292684
+    },
+    {
+      "window_id": "c2-baja-confianza-w004",
+      "fps_captura": 5.000532934575384,
+      "latencia_e2e_p95_ms": 43.53351899999325,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.0,
+      "ks_vs_referencia": 0.2682926829268293
+    },
+    {
+      "window_id": "c2-baja-confianza-w005",
+      "fps_captura": 5.000199716310199,
+      "latencia_e2e_p95_ms": 31.27840699994522,
+      "proporcion_sin_detecciones": 0.2,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.0,
+      "ks_vs_referencia": 0.35060975609756095
+    },
+    {
+      "window_id": "c2-baja-confianza-w006",
+      "fps_captura": 5.000082706367659,
+      "latencia_e2e_p95_ms": 27.237904000003255,
+      "proporcion_sin_detecciones": 0.3333333333333333,
+      "tasa_errores": 0.0,
+      "cpu_pct": 11.7,
+      "ks_vs_referencia": null
+    }
+  ]
+}

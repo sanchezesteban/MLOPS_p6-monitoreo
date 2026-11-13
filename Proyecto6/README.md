@@ -77,6 +77,9 @@ PYTHONPATH=src python -m p6.portal --db evidencias/monitoreo.db      # http://12
 | `/alertas/{id}` | Regla, configuración, ventanas que la sustentan y eventos que la originaron, con sus capturas |
 | `/ventanas` | Cada ventana con su estado suficiente o INSUFICIENTE, las decisiones de las 3 reglas y las métricas por ventana |
 | `/config/{sha}` | Texto exacto de `monitoreo.yaml` y `detector.yaml` usados |
+| `/graficas?run=` | *Extra F-01:* historia del score por frame con umbrales y alertas, proporción por ventana frente a la referencia, métricas adicionales e incidente |
+| `/capturas` | *Extra F-02:* galería de capturas conservadas, con filtros |
+| `/exportar/eventos.csv` | *Extra F-03:* exportación CSV con los mismos filtros de `/eventos` |
 
 ## Reproducir los escenarios
 
@@ -92,6 +95,11 @@ python -m p6.referencia --run var/ref --config config/monitoreo.yaml --salida va
 python -m p6.monitor --manifiesto escenarios/c1_normal.csv --escenario C1 --run-id c1 --db var/m.db --salida var/c1
 python -m p6.monitor --manifiesto escenarios/c2_baja_confianza.csv --escenario C2 --run-id c2 --db var/m.db --salida var/c2
 python -m p6.recalcular --run var/c2              # recálculo independiente; código 1 si algo no coincide
+python -m p6.extras --run var/c2                  # métricas adicionales (extras M)
+# Escenarios adicionales (extras S)
+python scripts/preparar_extras.py                 # ya versionado: escenarios/s_*.csv y datos/s_sostenido_jpeg5/
+python -m p6.monitor --manifiesto escenarios/s_sostenido.csv --escenario S-sostenido --run-id s1 --db var/m.db --salida var/s1
+python -m p6.monitor --manifiesto escenarios/s_interrupcion.csv --escenario S-interrupcion --run-id s2 --db var/m.db --salida var/s2
 python -m p6.portal --db var/m.db
 ```
 
@@ -107,7 +115,8 @@ Notas sobre la reproducción:
 | [`docs/metricas.md`](docs/metricas.md) | Inventario G1–G7: aplicabilidad, métrica base, M1–M5 y resultados |
 | [`docs/umbrales.md`](docs/umbrales.md) | Zonas, referencia, justificación de umbrales, ventanas y reglas |
 | [`docs/escenarios.md`](docs/escenarios.md) | C1 y C2: entrada, comando, esperado, observado y evidencia |
-| [`docs/extras.md`](docs/extras.md) | Inventario de adicionales reclamados |
+| [`docs/extras.md`](docs/extras.md) | Inventario de adicionales reclamados (F-01–F-03, M-01–M-08, S-01–S-02) |
+| [`docs/escenarios_extra.md`](docs/escenarios_extra.md) | Escenarios adicionales: cambio sostenido e interrupción del stream |
 
 ## Estructura
 
@@ -115,10 +124,11 @@ Notas sobre la reproducción:
 Proyecto6/
 ├── config/          monitoreo.yaml (umbrales, ventanas, reglas, captura), detector.yaml
 ├── src/p6/          fuente, detector, política, métricas, reglas, almacén, monitor,
-│                    referencia, recalcular, portal/ (FastAPI + plantillas Jinja2)
+│                    referencia, recalcular, extras (métricas adicionales),
+│                    portal/ (FastAPI + Jinja2 + gráficas SVG)
 ├── escenarios/      manifiestos de stream (referencia, C1, C2)
 ├── datos/           entrada preparada de C2 (desenfoque de capturas reales)
-├── scripts/         construir_manifiestos.py, preparar_c2.py
+├── scripts/         construir_manifiestos.py, preparar_c2.py, preparar_extras.py
 ├── evidencias/      monitoreo.db, capturas/, escenarios/<run>/, referencia/, portal/, INDICE.md
 ├── docs/            métricas, umbrales, escenarios, extras
 └── tests/           pytest (política, reglas, métricas, fuente, monitor→portal, modelo real)
