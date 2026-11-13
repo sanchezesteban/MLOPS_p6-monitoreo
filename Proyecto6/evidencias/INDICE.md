@@ -44,7 +44,7 @@ Para comprobar que el código de las corridas base no cambió, ejecuta `git diff
 | R6.1 C1 | `docs/escenarios.md#c1`, `evidencias/escenarios/c1-normal/` | Ver C1 en `docs/escenarios.md` |
 | R6.2 C2 | `docs/escenarios.md#c2`, `evidencias/escenarios/c2-baja-confianza/`, `datos/c2_desenfoque/` | Ver C2 en `docs/escenarios.md` |
 | R7.1 Reproducibilidad | `README.md`, `requirements.txt`, `.github/workflows/p6-ci.yml` | CI: ruff, pytest y recálculo |
-| R7.2 Evidencias | Este índice | — |
+| R7.2 Evidencias | Este índice; [`reproduccion/README.md`](reproduccion/README.md) (C1 y C2 reproducidos desde un clon limpio: scores idénticos, mismas zonas y alertas) | `scripts/comparar_corridas.py`; CI (`P6 CI`) ejecuta `p6.recalcular` sobre cada corrida versionada en Python 3.12 |
 | R7.3 Autoría y procedencia | `README.md → Autoría y procedencia` | — |
 | Extras | [`docs/extras.md`](../docs/extras.md) (inventario F-01–F-03, M-01–M-08, S-01–S-02) y [`docs/escenarios_extra.md`](../docs/escenarios_extra.md) | `evidencias/escenarios/<run>/metricas_extra.json`, `evidencias/escenarios/s-*/`, `evidencias/extras/portal/*.png`, `tests/test_extras.py` |
 
