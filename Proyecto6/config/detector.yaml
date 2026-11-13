@@ -1,0 +1,18 @@
+# Configuracion del detector para el Proyecto 6. Mismo formato que
+# Proyecto5/config/detector.yaml (lo lee `p5.detector_onnx.cargar_config`, reutilizado).
+# Diferencia con P5: el piso de salida baja de 0.30 a 0.05 para que la zona de baja
+# confianza sea observable (rubrica R3.2: filtrar todo bajo el umbral superior oculta
+# la evidencia). Preprocesamiento, NMS y modelo son los mismos del P5.
+version: 1
+
+modelo: ../../Proyecto5/modelo/yolox_nano.onnx        # python ../Proyecto5/scripts/descargar_modelo.py --destino ../Proyecto5/modelo/
+descriptor: ../../Proyecto5/modelo/descriptor.yaml    # SHA-256 esperado y 80 clases COCO
+
+preprocesamiento:
+  tamano_entrada: 416   # letterbox 416x416, relleno gris 114, BGR, float32 0-255
+  relleno: 114
+
+posprocesamiento:
+  umbral_confianza: 0.05  # piso de salida: candidatas con score < 0.05 no se emiten
+  nms_iou: 0.45           # NMS por clase (valor por defecto de YOLOX)
+  max_detecciones: 100

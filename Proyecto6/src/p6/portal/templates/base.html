@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>{% block titulo %}P6 monitoreo{% endblock %} · P6</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:0;color:#1d2433;background:#f6f7f9}
+header{background:#1d2433;color:#fff;padding:.7rem 1.2rem;display:flex;gap:1.4rem;align-items:center}
+header a{color:#cfe0ff;text-decoration:none;font-weight:600}
+header b{margin-right:1rem}
+main{padding:1rem 1.2rem}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:.86rem}
+th,td{border-bottom:1px solid #e3e6ea;padding:.35rem .5rem;text-align:left;vertical-align:top}
+th{background:#eef1f5;position:sticky;top:0}
+.z-aceptada{color:#11703a;font-weight:600}.z-duda{color:#9a6400;font-weight:600}.z-baja{color:#b3261e;font-weight:700}
+.s-sin_detecciones{color:#555}.s-error{color:#b3261e;font-weight:700}
+.sev-warning{background:#fff3cd}.sev-critical{background:#f8d7da}.sev-info{background:#e7f1ff}
+.badge{padding:.1rem .45rem;border-radius:.6rem;font-size:.78rem;border:1px solid #ccd}
+form.filtros{display:flex;gap:.6rem;align-items:end;margin-bottom:.8rem;flex-wrap:wrap}
+form.filtros label{display:flex;flex-direction:column;font-size:.8rem}
+.kv td:first-child{width:14rem;font-weight:600;color:#445}
+img.mini{height:48px}img.grande{max-width:420px;border:1px solid #ccd}
+code{font-size:.8rem;word-break:break-all}
+.vacio{padding:1rem;background:#fff;border:1px dashed #bbb}
+pre{background:#fff;padding:.8rem;border:1px solid #dde;overflow:auto}
+</style></head><body>
+<header><b>P6 · Centro de monitoreo CV</b>
+<a href="/runs">Corridas</a><a href="/eventos">Eventos</a><a href="/alertas">Alertas</a><a href="/ventanas">Ventanas</a></header>
+<main>{% block cuerpo %}{% endblock %}</main></body></html>

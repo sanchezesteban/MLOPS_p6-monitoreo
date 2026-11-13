@@ -1,0 +1,89 @@
+{
+  "run_id": "c1-normal",
+  "escenario": "C1",
+  "inicio": "2026-11-13T18:38:08.845Z",
+  "fin": "2026-11-13T18:38:15.881Z",
+  "git_commit": "6184d32a8e965c87d9ed9695ebce58c8a8f83eb1",
+  "git_sucio": 0,
+  "config_id": "p6-config-v1",
+  "config_sha256": "62a273b92cf80252791602df8da8a315107bfe756a8e1cdf8f11f2593e07da4c",
+  "model_nombre": "yolox_nano",
+  "model_archivo": "yolox_nano.onnx",
+  "model_sha256": "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d",
+  "detector_config_sha256": "dc30841a05248e78a06cc74c4e57421c57bb33ce9f9919e56d40c25809e7c81b",
+  "fuente_tipo": "secuencia",
+  "source_id": "carrito-p5-esp32cam",
+  "manifiesto": "escenarios/c1_normal.csv",
+  "manifiesto_sha256": "165dc7930aa17ad1ddd4f401695dae8c4d2e10146175e3a24a438e29f85bad8e",
+  "fps": 5.0,
+  "frames": 36,
+  "referencia_sha256": "5d512afca6d72e28f2c08783af5d66ce3bc58a082a9b5813ed63929d39c929c5",
+  "referencia_estado": "compatible",
+  "entorno": {
+    "python": "3.13.18",
+    "plataforma": "Linux-6.18.44-fc-v445-x86_64-with-glibc2.39",
+    "procesador": "x86_64",
+    "onnxruntime": "1.31.1",
+    "proveedor": "CPUExecutionProvider",
+    "cpus": 2
+  },
+  "metricas": {
+    "G1_tiempo_inferencia": {
+      "n": 36,
+      "p50_ms": 20.37621300007686,
+      "p95_ms": 28.466887000035968
+    },
+    "G2_fps_procesamiento": {
+      "n": 36,
+      "duracion_s": 7.030399272000068,
+      "fps": 5.1206195561860905
+    },
+    "G3_rss_proceso": {
+      "n": 4,
+      "max_mib": 102.046875,
+      "media_mib": 101.9951171875
+    },
+    "G4_proporcion_baja": {
+      "puntuados": 24,
+      "bajos": 8,
+      "proporcion": 0.3333333333333333
+    },
+    "G5_cobertura_trazabilidad": {
+      "eventos": 36,
+      "trazables": 36,
+      "cobertura": 1.0
+    },
+    "G6_version_esperada": {
+      "eventos": 36,
+      "coinciden": 36,
+      "proporcion": 1.0,
+      "versiones_reportadas": [
+        "c789161ed43c8269fcd4e67c67eeeb4e80c622da2eb296a20bc6007bd18a0b7d"
+      ]
+    },
+    "G7_alertas_activas": {
+      "al_final": 0,
+      "por_ventana": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "total_abiertas": 0
+    },
+    "estados": {
+      "ok": 24,
+      "sin_detecciones": 12,
+      "error": 0
+    },
+    "zonas": {
+      "aceptada": 8,
+      "duda": 8,
+      "baja": 8
+    },
+    "ventanas": {
+      "total": 4,
+      "suficientes": 2
+    }
+  }
+}

@@ -1,0 +1,25 @@
+# Dependencias del Proyecto 6 con versiones fijadas (probadas el 13 nov 2026, CPU).
+# Inferencia (mismas librerias que el detector reutilizado del P5)
+onnxruntime==1.31.1
+numpy==2.5.4
+pillow==13.0.0
+PyYAML==6.0.3
+certifi==2026.10.23   # raices TLS de Proyecto5/scripts/descargar_modelo.py
+# p5.contrato (Detection) importa jsonschema: mismas versiones que Proyecto5/requirements.txt
+jsonschema==4.23.0
+attrs==26.1.0
+jsonschema-specifications==2025.9.1
+referencing==0.37.0
+rpds-py==2026.9.1
+# Monitoreo y portal
+psutil==7.2.2
+fastapi==0.162.7
+starlette==1.10.0
+pydantic==2.14.3
+uvicorn==0.54.0
+Jinja2==3.1.6
+MarkupSafe==3.0.4
+# Pruebas y estilo
+pytest==9.2.0
+httpx==0.28.1
+ruff==0.17.5

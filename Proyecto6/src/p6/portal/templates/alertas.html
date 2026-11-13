@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block titulo %}Alertas{% endblock %}{% block cuerpo %}
+<h2>Alertas</h2>
+<form class="filtros" method="get">{% include "_run_select.html" %}
+<label>Estado<select name="estado"><option value="">todos</option>{% for s in ["activa","resuelta"] %}<option {% if f.estado==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label>
+<label>Severidad<select name="severidad"><option value="">todas</option>{% for s in ["info","warning","critical"] %}<option {% if f.severidad==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label>
+<button>Filtrar</button></form>
+{% if not alertas %}<div class="vacio">No hay alertas con esos filtros.</div>{% else %}
+<table><tr><th>alert_id</th><th>Momento (apertura)</th><th>Severidad</th><th>Regla</th><th>Motivo</th><th>Acción sugerida</th><th>Estado</th><th>Eventos</th><th>Captura</th></tr>
+{% for a in alertas %}<tr class="sev-{{ a.severidad }}">
+<td><a href="/alertas/{{ a.alert_id }}">{{ a.alert_id }}</a></td><td>{{ a.t_apertura }}</td><td><span class="badge">{{ a.severidad }}</span></td>
+<td>{{ a.rule_id }}</td><td>{{ a.motivo }}</td><td>{{ a.accion_sugerida }}</td>
+<td>{{ a.estado }}{% if a.t_resolucion %}<br><small>{{ a.t_resolucion }}</small>{% endif %}</td><td>{{ a.n_eventos }}</td>
+<td>{% if a.evidencia_image_ref %}<img class="mini" src="/archivo/{{ a.evidencia_image_ref }}" alt="captura">{% else %}—{% endif %}</td></tr>{% endfor %}
+</table>{% endif %}{% endblock %}

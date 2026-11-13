@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block titulo %}Ventanas{% endblock %}{% block cuerpo %}
+<h2>Ventanas evaluadas</h2>
+<form class="filtros" method="get">{% include "_run_select.html" %}<button>Filtrar</button></form>
+<p>Una ventana INSUFICIENTE no tiene el mínimo de frames puntuados: no se interpreta como normalidad.</p>
+{% if not ventanas %}<div class="vacio">Sin ventanas.</div>{% else %}
+<table><tr><th>window_id</th><th>Frames</th><th>Punt.</th><th>Bajos</th><th>Sin det.</th><th>Err.</th><th>Prop. baja</th><th>Estado</th><th>G1 p50/p95 ms</th><th>G2 fps</th><th>G3 RSS MiB</th><th>G7 activas</th><th>Decisiones de reglas</th></tr>
+{% for v in ventanas %}<tr id="{{ v.window_id }}"><td>{{ v.window_id }}</td><td>{{ v.frames }}</td><td>{{ v.puntuados }}</td><td>{{ v.bajos }}</td><td>{{ v.sin_detecciones }}</td><td>{{ v.errores }}</td>
+<td>{{ v.proporcion_baja|fmt(3) }}</td><td>{{ "suficiente" if v.suficiente else "INSUFICIENTE" }}</td>
+<td>{{ v.inferencia_p50_ms|fmt(2) }} / {{ v.inferencia_p95_ms|fmt(2) }}</td><td>{{ v.fps_procesamiento|fmt(2) }}</td><td>{{ v.rss_mib|fmt(1) }}</td><td>{{ v.alertas_activas }}</td>
+<td><small>{% for d in v.decisiones %}<b>{{ d.regla }}</b>: {{ "cumple" if d.condicion == true else ("no cumple" if d.condicion == false else "no evaluable") }} — {{ d.motivo }}<br>{% endfor %}</small></td></tr>{% endfor %}
+</table>{% endif %}{% endblock %}

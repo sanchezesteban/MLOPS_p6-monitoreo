@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block titulo %}Config {{ cfg.config_id }}{% endblock %}{% block cuerpo %}
+<h2>Configuración {{ cfg.config_id }}</h2><p>SHA-256 <code>{{ cfg.config_sha256 }}</code></p>
+<h3>config/monitoreo.yaml</h3><pre>{{ cfg.texto }}</pre>
+<h3>config/detector.yaml (sha256 <code>{{ cfg.detector_config_sha256 }}</code>)</h3><pre>{{ cfg.detector_texto }}</pre>
+{% endblock %}

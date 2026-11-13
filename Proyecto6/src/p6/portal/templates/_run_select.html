@@ -1,0 +1,3 @@
+<label>Corrida<select name="run"><option value="">todas</option>
+{% for r in runs %}<option value="{{ r.run_id }}" {% if f.run == r.run_id %}selected{% endif %}>{{ r.run_id }} ({{ r.escenario }})</option>{% endfor %}
+</select></label>

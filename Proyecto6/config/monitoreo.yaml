@@ -1,0 +1,62 @@
+# Configuracion del monitoreo del Proyecto 6. Su SHA-256 se guarda en cada evento, ventana
+# y alerta (`config_sha256`) y su texto en la tabla `configs`. Justificacion de los valores:
+# docs/umbrales.md (observaciones de la corrida de referencia `ref-carrito`).
+version: 1
+config_id: p6-config-v1
+
+fuente:
+  tipo: secuencia          # capturas reales de la ESP32-CAM del carrito (P5), reproducidas
+  fps: 5                   # frecuencia declarada: 1 frame cada 200 ms
+  politica_muestreo: >-
+    Cada imagen del manifiesto se emite una vez, en orden, cada 1/fps s. Sin descartes:
+    si la inferencia tarda mas que el intervalo, el siguiente frame sale de inmediato.
+
+detector:
+  config: detector.yaml    # YOLOX-Nano del P5, piso de salida 0.05, NMS 0.45
+
+politica:
+  # Unidad: frame. s = mayor confianza de sus candidatas.
+  # s >= superior: aceptada | inferior <= s < superior: duda | s < inferior: baja.
+  # sin_detecciones y error son estados aparte, sin zona ni score.
+  umbral_inferior: 0.25    # ~p15 de la referencia (6 de 41 frames puntuados)
+  umbral_superior: 0.50    # ~p42 de la referencia (24 de 41 aceptados)
+
+ventanas:
+  tamano_frames: 10        # 10 frames consecutivos = 2 s de stream a 5 fps
+  minimo_puntuados: 6      # con menos frames puntuados la ventana es INSUFICIENTE
+
+referencia:
+  archivo: ../evidencias/referencia/referencia.json   # la genera `python -m p6.referencia`
+
+reglas:
+  baja_confianza:
+    id: baja-confianza-v1
+    severidad: warning
+    proporcion_minima: 0.5   # >= 50 % de frames puntuados en zona baja (ref: max 0.30)
+    accion_sugerida: >-
+      Revisar las capturas de la ventana: enfoque, iluminacion, oclusion o suciedad del lente
+      de la camara; confirmar que el preprocesamiento y el modelo son los esperados.
+  cambio_sostenido:
+    id: cambio-sostenido-v1
+    severidad: critical
+    tolerancia: 0.25         # proporcion de la ventana - proporcion de referencia >= 0.25
+    ventanas_consecutivas: 3 # durante 3 ventanas suficientes seguidas (>= 6 s de stream)
+    accion_sugerida: >-
+      Investigar un posible cambio de condiciones de la escena o de la camara respecto de la
+      referencia; comparar capturas actuales y de referencia. No confirma drift ni exige
+      reentrenar.
+  evidencia_insuficiente:
+    id: evidencia-insuficiente-v1
+    severidad: info
+    ventanas_consecutivas: 3 # 3 ventanas seguidas sin el minimo de frames puntuados
+    accion_sugerida: >-
+      No hay suficientes frames puntuados para evaluar la confianza: verificar que la camara
+      apunte a la escena y que el detector emita candidatas; no interpretar como normalidad.
+
+captura:
+  # Se conservan SIEMPRE los frames en zona baja o duda y los errores; de los aceptados y
+  # sin detecciones, 1 de cada `muestra_cada` (muestra de operacion normal). Las capturas son
+  # copias byte a byte de la imagen inferida, sin expiracion automatica.
+  zonas: [baja, duda]
+  estados: [error]
+  muestra_cada: 5

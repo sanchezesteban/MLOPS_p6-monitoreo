@@ -1,3 +1,5 @@
+> **Proyecto 6 (entrega individual, Esteban Sánchez):** centro de monitoreo de computer vision en [`Proyecto6/`](Proyecto6/README.md). Índice de evidencias: [`Proyecto6/evidencias/INDICE.md`](Proyecto6/evidencias/INDICE.md).
+
 # Proyecto 3 — Clasificador de imágenes integrado al portal
 
 Clasificador multiclase de un objeto por imagen, entrenado con recortes de las cajas COCO del release aprobado del Proyecto 2 e integrado en el mismo portal.
