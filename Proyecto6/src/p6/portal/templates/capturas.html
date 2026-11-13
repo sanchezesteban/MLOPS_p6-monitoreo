@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block titulo %}Capturas{% endblock %}{% block cuerpo %}
+<h2>Revisión de capturas</h2>
+<form class="filtros" method="get">{% include "_run_select.html" %}
+<label>Zona<select name="zona"><option value="">todas</option>{% for z in ["aceptada","duda","baja"] %}<option {% if f.zona==z %}selected{% endif %}>{{ z }}</option>{% endfor %}</select></label>
+<label>Estado<select name="estado"><option value="">todos</option>{% for s in ["ok","sin_detecciones","error"] %}<option {% if f.estado==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label>
+<button>Filtrar</button></form>
+<p>{{ capturas|length }} capturas conservadas (sin expiración automática).</p>
+{% if not capturas %}<div class="vacio">No hay capturas con esos filtros.</div>{% else %}
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.8rem">
+{% for e in capturas %}<div style="background:#fff;border:1px solid #dde;padding:.4rem;font-size:.8rem">
+{% if e.existe %}<a href="/eventos/{{ e.event_id }}"><img src="/archivo/{{ e.image_ref }}" style="width:100%" alt="captura {{ e.frame_id }}"></a>
+{% else %}<div class="vacio" style="color:#b3261e">Archivo ausente: {{ e.image_ref }}</div>{% endif %}
+<a href="/eventos/{{ e.event_id }}">{{ e.event_id }}</a><br>
+<span class="s-{{ e.estado }}">{{ e.estado }}</span> · <span class="z-{{ e.zona }}">{{ e.zona or "—" }}</span> · score {{ e.score_principal|fmt(3) }} · {{ e.clase_principal or "" }}<br>
+<small>{{ e.captura_motivo }}</small>
+{% for a in alertas_por_evento.get(e.event_id, []) %}<br>⚠ <a href="/alertas/{{ a }}">{{ a }}</a>{% endfor %}
+</div>{% endfor %}</div>{% endif %}{% endblock %}

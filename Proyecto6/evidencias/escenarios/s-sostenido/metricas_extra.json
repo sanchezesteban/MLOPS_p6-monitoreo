@@ -1,0 +1,123 @@
+{
+  "run_id": "s-sostenido",
+  "referencia_compatible": true,
+  "corrida": {
+    "M-FPSCAP_fps_captura": 4.999946603379215,
+    "M-E2E_latencia_e2e": {
+      "n": 90,
+      "p50_ms": 23.396098999910464,
+      "p95_ms": 32.643442999869876
+    },
+    "M-SINDET_proporcion_sin_detecciones": 0.022222222222222223,
+    "M-ERR_tasa_errores": 0.0,
+    "M-CPU_cpu_proceso": {
+      "n": 9,
+      "max_pct": 14.7,
+      "media_pct": 12.81111111111111
+    },
+    "M-KS_ks_vs_referencia": 0.2608093126385809,
+    "M-TDET_M-TREC_incidente": {
+      "incidente": {
+        "frame_inicio": 20,
+        "t_inicio": "2026-11-13T18:44:12.922Z",
+        "frame_fin": 60,
+        "t_fin": "2026-11-13T18:44:20.922Z"
+      },
+      "por_regla": {
+        "baja-confianza-v1": {
+          "alert_id": "s-sostenido-a001",
+          "tiempo_deteccion_s": 1.824,
+          "tiempo_recuperacion_s": 1.823
+        },
+        "cambio-sostenido-v1": {
+          "alert_id": "s-sostenido-a002",
+          "tiempo_deteccion_s": 5.832,
+          "tiempo_recuperacion_s": 1.823
+        }
+      }
+    }
+  },
+  "por_ventana": [
+    {
+      "window_id": "s-sostenido-w000",
+      "fps_captura": 4.999431731260115,
+      "latencia_e2e_p95_ms": 44.86261200008812,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 14.7,
+      "ks_vs_referencia": 0.36585365853658536
+    },
+    {
+      "window_id": "s-sostenido-w001",
+      "fps_captura": 5.000101296496679,
+      "latencia_e2e_p95_ms": 39.846823999823755,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 12.5,
+      "ks_vs_referencia": 0.25853658536585367
+    },
+    {
+      "window_id": "s-sostenido-w002",
+      "fps_captura": 5.000010713911724,
+      "latencia_e2e_p95_ms": 31.150424000088606,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.0,
+      "ks_vs_referencia": 0.6073170731707318
+    },
+    {
+      "window_id": "s-sostenido-w003",
+      "fps_captura": 4.9999350175114,
+      "latencia_e2e_p95_ms": 32.973986000115474,
+      "proporcion_sin_detecciones": 0.1,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.0,
+      "ks_vs_referencia": 0.5691056910569106
+    },
+    {
+      "window_id": "s-sostenido-w004",
+      "fps_captura": 5.000010791689646,
+      "latencia_e2e_p95_ms": 33.1301710000389,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.5,
+      "ks_vs_referencia": 0.6585365853658536
+    },
+    {
+      "window_id": "s-sostenido-w005",
+      "fps_captura": 5.000258016091047,
+      "latencia_e2e_p95_ms": 31.890600999986418,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 12.6,
+      "ks_vs_referencia": 0.5585365853658537
+    },
+    {
+      "window_id": "s-sostenido-w006",
+      "fps_captura": 5.000318798102667,
+      "latencia_e2e_p95_ms": 31.387728000026982,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.0,
+      "ks_vs_referencia": 0.17804878048780487
+    },
+    {
+      "window_id": "s-sostenido-w007",
+      "fps_captura": 4.9998291891690245,
+      "latencia_e2e_p95_ms": 28.902730000027077,
+      "proporcion_sin_detecciones": 0.1,
+      "tasa_errores": 0.0,
+      "cpu_pct": 11.5,
+      "ks_vs_referencia": 0.2547425474254742
+    },
+    {
+      "window_id": "s-sostenido-w008",
+      "fps_captura": 5.000094593455811,
+      "latencia_e2e_p95_ms": 27.7222580000398,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 11.5,
+      "ks_vs_referencia": 0.3341463414634146
+    }
+  ]
+}

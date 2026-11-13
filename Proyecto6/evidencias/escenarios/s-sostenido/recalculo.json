@@ -1,0 +1,491 @@
+{
+  "run_id": "s-sostenido",
+  "capturas": {
+    "declaradas": 64,
+    "resuelven": 64
+  },
+  "comprobaciones": 71,
+  "fallidas": [],
+  "detalle": [
+    {
+      "comprobacion": "config_sha256 del run = SHA-256 de la config dada",
+      "reportado": "62a273b92cf80252791602df8da8a315107bfe756a8e1cdf8f11f2593e07da4c",
+      "recalculado": "62a273b92cf80252791602df8da8a315107bfe756a8e1cdf8f11f2593e07da4c",
+      "coincide": true
+    },
+    {
+      "comprobacion": "frames con zona/score inconsistente",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w000 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w000 puntuados/bajos",
+      "reportado": [
+        10,
+        0
+      ],
+      "recalculado": [
+        10,
+        0
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w000 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w000 proporcion_baja",
+      "reportado": 0.0,
+      "recalculado": 0.0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w000 G1 p95_ms",
+      "reportado": 21.27959099993859,
+      "recalculado": 21.27959099993859,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w001 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w001 puntuados/bajos",
+      "reportado": [
+        10,
+        2
+      ],
+      "recalculado": [
+        10,
+        2
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w001 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w001 proporcion_baja",
+      "reportado": 0.2,
+      "recalculado": 0.2,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w001 G1 p95_ms",
+      "reportado": 28.663999999935186,
+      "recalculado": 28.663999999935186,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w002 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w002 puntuados/bajos",
+      "reportado": [
+        10,
+        6
+      ],
+      "recalculado": [
+        10,
+        6
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w002 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w002 proporcion_baja",
+      "reportado": 0.6,
+      "recalculado": 0.6,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w002 G1 p95_ms",
+      "reportado": 21.749106000015672,
+      "recalculado": 21.749106000015672,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w003 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w003 puntuados/bajos",
+      "reportado": [
+        9,
+        6
+      ],
+      "recalculado": [
+        9,
+        6
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w003 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w003 proporcion_baja",
+      "reportado": 0.6666666666666666,
+      "recalculado": 0.6666666666666666,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w003 G1 p95_ms",
+      "reportado": 24.76397200007341,
+      "recalculado": 24.76397200007341,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w004 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w004 puntuados/bajos",
+      "reportado": [
+        10,
+        6
+      ],
+      "recalculado": [
+        10,
+        6
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w004 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w004 proporcion_baja",
+      "reportado": 0.6,
+      "recalculado": 0.6,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w004 G1 p95_ms",
+      "reportado": 24.590970999952333,
+      "recalculado": 24.590970999952333,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w005 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w005 puntuados/bajos",
+      "reportado": [
+        10,
+        6
+      ],
+      "recalculado": [
+        10,
+        6
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w005 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w005 proporcion_baja",
+      "reportado": 0.6,
+      "recalculado": 0.6,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w005 G1 p95_ms",
+      "reportado": 22.486959999923783,
+      "recalculado": 22.486959999923783,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w006 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w006 puntuados/bajos",
+      "reportado": [
+        10,
+        3
+      ],
+      "recalculado": [
+        10,
+        3
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w006 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w006 proporcion_baja",
+      "reportado": 0.3,
+      "recalculado": 0.3,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w006 G1 p95_ms",
+      "reportado": 22.109811000063928,
+      "recalculado": 22.109811000063928,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w007 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w007 puntuados/bajos",
+      "reportado": [
+        9,
+        1
+      ],
+      "recalculado": [
+        9,
+        1
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w007 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w007 proporcion_baja",
+      "reportado": 0.1111111111111111,
+      "recalculado": 0.1111111111111111,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w007 G1 p95_ms",
+      "reportado": 18.99006200005715,
+      "recalculado": 18.99006200005715,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w008 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w008 puntuados/bajos",
+      "reportado": [
+        10,
+        2
+      ],
+      "recalculado": [
+        10,
+        2
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w008 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w008 proporcion_baja",
+      "reportado": 0.2,
+      "recalculado": 0.2,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-w008 G1 p95_ms",
+      "reportado": 19.523240000125952,
+      "recalculado": 19.523240000125952,
+      "coincide": true
+    },
+    {
+      "comprobacion": "tamano de ventana respetado",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G1 tiempo de inferencia p50_ms",
+      "reportado": 16.19176700000935,
+      "recalculado": 16.19176700000935,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G1 tiempo de inferencia p95_ms",
+      "reportado": 22.486959999923783,
+      "recalculado": 22.486959999923783,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G2 FPS de procesamiento",
+      "reportado": 5.049488864106737,
+      "recalculado": 5.049488864106737,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G3 RSS max MiB",
+      "reportado": 102.11328125,
+      "recalculado": 102.11328125,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G4 proporcion de baja confianza",
+      "reportado": 0.36363636363636365,
+      "recalculado": 0.36363636363636365,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G5 cobertura de trazabilidad",
+      "reportado": 1.0,
+      "recalculado": 1.0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G6 version esperada = reportada",
+      "reportado": 1.0,
+      "recalculado": 1.0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 alertas activas al final",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w000",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w001",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w002",
+      "reportado": 1,
+      "recalculado": 1,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w003",
+      "reportado": 1,
+      "recalculado": 1,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w004",
+      "reportado": 2,
+      "recalculado": 2,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w005",
+      "reportado": 2,
+      "recalculado": 2,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w006",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w007",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar s-sostenido-w008",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-a001 eventos vinculados existen",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-a001 ventana de apertura cumple la condicion",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-a001 eventos vinculados en zona baja",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-a001 captura de evidencia existe",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-a002 eventos vinculados existen",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "s-sostenido-a002 captura de evidencia existe",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    }
+  ]
+}

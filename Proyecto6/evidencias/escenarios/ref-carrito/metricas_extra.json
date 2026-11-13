@@ -1,0 +1,71 @@
+{
+  "run_id": "ref-carrito",
+  "referencia_compatible": true,
+  "corrida": {
+    "M-FPSCAP_fps_captura": 4.999847029680121,
+    "M-E2E_latencia_e2e": {
+      "n": 42,
+      "p50_ms": 24.758765000001404,
+      "p95_ms": 42.5077610000244
+    },
+    "M-SINDET_proporcion_sin_detecciones": 0.023809523809523808,
+    "M-ERR_tasa_errores": 0.0,
+    "M-CPU_cpu_proceso": {
+      "n": 5,
+      "max_pct": 14.7,
+      "media_pct": 13.48
+    },
+    "M-KS_ks_vs_referencia": 0.0,
+    "M-TDET_M-TREC_incidente": {
+      "incidente": null,
+      "por_regla": {}
+    }
+  },
+  "por_ventana": [
+    {
+      "window_id": "ref-carrito-w000",
+      "fps_captura": 4.99940239088048,
+      "latencia_e2e_p95_ms": 50.51578300003712,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 14.7,
+      "ks_vs_referencia": 0.17804878048780487
+    },
+    {
+      "window_id": "ref-carrito-w001",
+      "fps_captura": 4.999966766887656,
+      "latencia_e2e_p95_ms": 39.36401600003592,
+      "proporcion_sin_detecciones": 0.1,
+      "tasa_errores": 0.0,
+      "cpu_pct": 14.0,
+      "ks_vs_referencia": 0.2547425474254742
+    },
+    {
+      "window_id": "ref-carrito-w002",
+      "fps_captura": 4.998665894951095,
+      "latencia_e2e_p95_ms": 47.106862000077854,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 13.5,
+      "ks_vs_referencia": 0.3341463414634146
+    },
+    {
+      "window_id": "ref-carrito-w003",
+      "fps_captura": 4.999979994524282,
+      "latencia_e2e_p95_ms": 42.5077610000244,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 12.5,
+      "ks_vs_referencia": 0.36585365853658536
+    },
+    {
+      "window_id": "ref-carrito-w004",
+      "fps_captura": 5.00037747849628,
+      "latencia_e2e_p95_ms": 24.758765000001404,
+      "proporcion_sin_detecciones": 0.0,
+      "tasa_errores": 0.0,
+      "cpu_pct": 12.7,
+      "ks_vs_referencia": null
+    }
+  ]
+}
