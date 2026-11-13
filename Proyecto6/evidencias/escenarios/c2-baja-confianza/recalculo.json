@@ -1,0 +1,395 @@
+{
+  "run_id": "c2-baja-confianza",
+  "capturas": {
+    "declaradas": 37,
+    "resuelven": 37
+  },
+  "comprobaciones": 57,
+  "fallidas": [],
+  "detalle": [
+    {
+      "comprobacion": "config_sha256 del run = SHA-256 de la config dada",
+      "reportado": "62a273b92cf80252791602df8da8a315107bfe756a8e1cdf8f11f2593e07da4c",
+      "recalculado": "62a273b92cf80252791602df8da8a315107bfe756a8e1cdf8f11f2593e07da4c",
+      "coincide": true
+    },
+    {
+      "comprobacion": "frames con zona/score inconsistente",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w000 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w000 puntuados/bajos",
+      "reportado": [
+        9,
+        6
+      ],
+      "recalculado": [
+        9,
+        6
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w000 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w000 proporcion_baja",
+      "reportado": 0.6666666666666666,
+      "recalculado": 0.6666666666666666,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w000 G1 p95_ms",
+      "reportado": 31.414130999905865,
+      "recalculado": 31.414130999905865,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w001 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w001 puntuados/bajos",
+      "reportado": [
+        8,
+        3
+      ],
+      "recalculado": [
+        8,
+        3
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w001 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w001 proporcion_baja",
+      "reportado": 0.375,
+      "recalculado": 0.375,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w001 G1 p95_ms",
+      "reportado": 21.96601399998599,
+      "recalculado": 21.96601399998599,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w002 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w002 puntuados/bajos",
+      "reportado": [
+        10,
+        3
+      ],
+      "recalculado": [
+        10,
+        3
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w002 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w002 proporcion_baja",
+      "reportado": 0.3,
+      "recalculado": 0.3,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w002 G1 p95_ms",
+      "reportado": 24.66993799998818,
+      "recalculado": 24.66993799998818,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w003 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w003 puntuados/bajos",
+      "reportado": [
+        10,
+        2
+      ],
+      "recalculado": [
+        10,
+        2
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w003 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w003 proporcion_baja",
+      "reportado": 0.2,
+      "recalculado": 0.2,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w003 G1 p95_ms",
+      "reportado": 22.65082799999618,
+      "recalculado": 22.65082799999618,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w004 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w004 puntuados/bajos",
+      "reportado": [
+        10,
+        2
+      ],
+      "recalculado": [
+        10,
+        2
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w004 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w004 proporcion_baja",
+      "reportado": 0.2,
+      "recalculado": 0.2,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w004 G1 p95_ms",
+      "reportado": 30.901686999982303,
+      "recalculado": 30.901686999982303,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w005 frames",
+      "reportado": 10,
+      "recalculado": 10,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w005 puntuados/bajos",
+      "reportado": [
+        8,
+        3
+      ],
+      "recalculado": [
+        8,
+        3
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w005 suficiente",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w005 proporcion_baja",
+      "reportado": 0.375,
+      "recalculado": 0.375,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w005 G1 p95_ms",
+      "reportado": 22.376393999934407,
+      "recalculado": 22.376393999934407,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w006 frames",
+      "reportado": 6,
+      "recalculado": 6,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w006 puntuados/bajos",
+      "reportado": [
+        4,
+        2
+      ],
+      "recalculado": [
+        4,
+        2
+      ],
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w006 suficiente",
+      "reportado": false,
+      "recalculado": false,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w006 proporcion_baja",
+      "reportado": 0.5,
+      "recalculado": 0.5,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-w006 G1 p95_ms",
+      "reportado": 19.265381999957754,
+      "recalculado": 19.265381999957754,
+      "coincide": true
+    },
+    {
+      "comprobacion": "tamano de ventana respetado",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G1 tiempo de inferencia p50_ms",
+      "reportado": 17.26858999995784,
+      "recalculado": 17.26858999995784,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G1 tiempo de inferencia p95_ms",
+      "reportado": 23.03260600001522,
+      "recalculado": 23.03260600001522,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G2 FPS de procesamiento",
+      "reportado": 5.0682867116879455,
+      "recalculado": 5.0682867116879455,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G3 RSS max MiB",
+      "reportado": 102.05859375,
+      "recalculado": 102.05859375,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G4 proporcion de baja confianza",
+      "reportado": 0.3559322033898305,
+      "recalculado": 0.3559322033898305,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G5 cobertura de trazabilidad",
+      "reportado": 1.0,
+      "recalculado": 1.0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G6 version esperada = reportada",
+      "reportado": 1.0,
+      "recalculado": 1.0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 alertas activas al final",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w000",
+      "reportado": 1,
+      "recalculado": 1,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w001",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w002",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w003",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w004",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w005",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "G7 activas al cerrar c2-baja-confianza-w006",
+      "reportado": 0,
+      "recalculado": 0,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-a001 eventos vinculados existen",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-a001 ventana de apertura cumple la condicion",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-a001 eventos vinculados en zona baja",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    },
+    {
+      "comprobacion": "c2-baja-confianza-a001 captura de evidencia existe",
+      "reportado": true,
+      "recalculado": true,
+      "coincide": true
+    }
+  ]
+}
